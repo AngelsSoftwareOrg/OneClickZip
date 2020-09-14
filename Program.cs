@@ -15,6 +15,7 @@ namespace OneClickZip
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new Main());
             Application.Run(new ZipDesigner());
+            //Application.Run(new HelloWorld());
 
         }
     }

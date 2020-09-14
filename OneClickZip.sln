@@ -5,32 +5,6 @@ VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneClickZip", "OneClickZip.csproj", "{90D4470D-DC6F-477C-9948-D97E121BF304}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "forms", "forms", "{8E9AEF1E-0A01-4292-ABFE-8CBE9C7B7103}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "classes", "classes", "{A72AC449-8562-4E7D-B51E-ADAB98A11641}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "main", "main", "{A5E61AE8-B250-4166-BA67-691BB39424BC}"
-	ProjectSection(SolutionItems) = preProject
-		Main.cs = Main.cs
-		Main.Designer.cs = Main.Designer.cs
-		Main.resx = Main.resx
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "zip designer", "zip designer", "{58C4DCFD-7B18-466B-9383-E80E0BD30A1C}"
-	ProjectSection(SolutionItems) = preProject
-		ZipDesigner.cs = ZipDesigner.cs
-		ZipDesigner.Designer.cs = ZipDesigner.Designer.cs
-		ZipDesigner.resx = ZipDesigner.resx
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "components", "components", "{544D78D5-55D0-4BAC-A2DB-2F7AAF463EE3}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "models", "models", "{E2AFB665-2F63-443C-BE09-63777E68BE0A}"
-	ProjectSection(SolutionItems) = preProject
-		ListViewInterpretor.cs = ListViewInterpretor.cs
-		ListViewItemExt.cs = ListViewItemExt.cs
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,12 +18,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{A5E61AE8-B250-4166-BA67-691BB39424BC} = {8E9AEF1E-0A01-4292-ABFE-8CBE9C7B7103}
-		{58C4DCFD-7B18-466B-9383-E80E0BD30A1C} = {8E9AEF1E-0A01-4292-ABFE-8CBE9C7B7103}
-		{544D78D5-55D0-4BAC-A2DB-2F7AAF463EE3} = {A72AC449-8562-4E7D-B51E-ADAB98A11641}
-		{E2AFB665-2F63-443C-BE09-63777E68BE0A} = {A72AC449-8562-4E7D-B51E-ADAB98A11641}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BD183F54-98EC-4853-8CAF-7CE9FB74E6B0}
