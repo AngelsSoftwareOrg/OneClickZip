@@ -48,6 +48,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.treeViewZipDesigner = new System.Windows.Forms.TreeView();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnZipClear = new System.Windows.Forms.Button();
             this.btnZipFileAddFolder = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -60,7 +61,7 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.btnAddSelected = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.btnZipClear = new System.Windows.Forms.Button();
+            this.btnRemoveSelectedNode = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerFormMain)).BeginInit();
             this.splitContainerFormMain.Panel2.SuspendLayout();
             this.splitContainerFormMain.SuspendLayout();
@@ -282,7 +283,7 @@
             this.splitContainerZipDesigner.Panel2.Controls.Add(this.panel3);
             this.splitContainerZipDesigner.Panel2.Controls.Add(this.panel4);
             this.splitContainerZipDesigner.Size = new System.Drawing.Size(598, 302);
-            this.splitContainerZipDesigner.SplitterDistance = 117;
+            this.splitContainerZipDesigner.SplitterDistance = 250;
             this.splitContainerZipDesigner.SplitterWidth = 3;
             this.splitContainerZipDesigner.TabIndex = 0;
             // 
@@ -293,7 +294,7 @@
             this.panel2.Location = new System.Drawing.Point(0, 58);
             this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(117, 244);
+            this.panel2.Size = new System.Drawing.Size(250, 244);
             this.panel2.TabIndex = 1;
             // 
             // treeViewZipDesigner
@@ -302,11 +303,14 @@
             this.treeViewZipDesigner.Location = new System.Drawing.Point(0, 0);
             this.treeViewZipDesigner.Margin = new System.Windows.Forms.Padding(2);
             this.treeViewZipDesigner.Name = "treeViewZipDesigner";
-            this.treeViewZipDesigner.Size = new System.Drawing.Size(117, 244);
+            this.treeViewZipDesigner.Size = new System.Drawing.Size(250, 244);
             this.treeViewZipDesigner.TabIndex = 0;
+            this.treeViewZipDesigner.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeViewZipDesigner_BeforeSelectHandler);
+            this.treeViewZipDesigner.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewZipDesigner_AfterSelectHandler);
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnRemoveSelectedNode);
             this.panel1.Controls.Add(this.btnZipClear);
             this.panel1.Controls.Add(this.btnZipFileAddFolder);
             this.panel1.Controls.Add(this.label1);
@@ -314,17 +318,27 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(117, 58);
+            this.panel1.Size = new System.Drawing.Size(250, 58);
             this.panel1.TabIndex = 0;
+            // 
+            // btnZipClear
+            // 
+            this.btnZipClear.Location = new System.Drawing.Point(32, 27);
+            this.btnZipClear.Name = "btnZipClear";
+            this.btnZipClear.Size = new System.Drawing.Size(21, 23);
+            this.btnZipClear.TabIndex = 2;
+            this.btnZipClear.Text = "c";
+            this.btnZipClear.UseVisualStyleBackColor = true;
+            this.btnZipClear.Click += new System.EventHandler(this.btnZipClear_Click);
             // 
             // btnZipFileAddFolder
             // 
             this.btnZipFileAddFolder.Location = new System.Drawing.Point(5, 26);
             this.btnZipFileAddFolder.Margin = new System.Windows.Forms.Padding(2);
             this.btnZipFileAddFolder.Name = "btnZipFileAddFolder";
-            this.btnZipFileAddFolder.Size = new System.Drawing.Size(38, 24);
+            this.btnZipFileAddFolder.Size = new System.Drawing.Size(22, 24);
             this.btnZipFileAddFolder.TabIndex = 1;
-            this.btnZipFileAddFolder.Text = "Add";
+            this.btnZipFileAddFolder.Text = "+";
             this.btnZipFileAddFolder.UseVisualStyleBackColor = true;
             this.btnZipFileAddFolder.Click += new System.EventHandler(this.btnZipFileAddFolder_Click);
             // 
@@ -345,7 +359,7 @@
             this.panel3.Location = new System.Drawing.Point(0, 58);
             this.panel3.Margin = new System.Windows.Forms.Padding(2);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(478, 244);
+            this.panel3.Size = new System.Drawing.Size(345, 244);
             this.panel3.TabIndex = 2;
             // 
             // listViewZipDesignFiles
@@ -362,7 +376,7 @@
             this.listViewZipDesignFiles.Location = new System.Drawing.Point(0, 0);
             this.listViewZipDesignFiles.Margin = new System.Windows.Forms.Padding(2);
             this.listViewZipDesignFiles.Name = "listViewZipDesignFiles";
-            this.listViewZipDesignFiles.Size = new System.Drawing.Size(478, 244);
+            this.listViewZipDesignFiles.Size = new System.Drawing.Size(345, 244);
             this.listViewZipDesignFiles.TabIndex = 1;
             this.listViewZipDesignFiles.UseCompatibleStateImageBehavior = false;
             this.listViewZipDesignFiles.View = System.Windows.Forms.View.Details;
@@ -400,7 +414,7 @@
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Margin = new System.Windows.Forms.Padding(2);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(478, 58);
+            this.panel4.Size = new System.Drawing.Size(345, 58);
             this.panel4.TabIndex = 1;
             // 
             // btnAddSelected
@@ -424,15 +438,15 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "Zip Files Designer Actions: ";
             // 
-            // btnZipClear
+            // btnRemoveSelectedNode
             // 
-            this.btnZipClear.Location = new System.Drawing.Point(49, 26);
-            this.btnZipClear.Name = "btnZipClear";
-            this.btnZipClear.Size = new System.Drawing.Size(43, 23);
-            this.btnZipClear.TabIndex = 2;
-            this.btnZipClear.Text = "Clear";
-            this.btnZipClear.UseVisualStyleBackColor = true;
-            this.btnZipClear.Click += new System.EventHandler(this.btnZipClear_Click);
+            this.btnRemoveSelectedNode.Location = new System.Drawing.Point(57, 27);
+            this.btnRemoveSelectedNode.Name = "btnRemoveSelectedNode";
+            this.btnRemoveSelectedNode.Size = new System.Drawing.Size(23, 23);
+            this.btnRemoveSelectedNode.TabIndex = 3;
+            this.btnRemoveSelectedNode.Text = "-";
+            this.btnRemoveSelectedNode.UseVisualStyleBackColor = true;
+            this.btnRemoveSelectedNode.Click += new System.EventHandler(this.btnRemoveSelectedNode_Click);
             // 
             // ZipDesigner
             // 
@@ -509,5 +523,6 @@
         private System.Windows.Forms.ColumnHeader columnZipMdlDateCreated;
         private System.Windows.Forms.ColumnHeader columnZipMdlType;
         private System.Windows.Forms.Button btnZipClear;
+        private System.Windows.Forms.Button btnRemoveSelectedNode;
     }
 }

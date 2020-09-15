@@ -81,6 +81,7 @@
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="Includes\Classes\TreeNodeInterpreter.cs" />
+    <Compile Include="Includes\Models\TreeNodeExtended.cs" />
     <Compile Include="Includes\Models\ZipFileModel.cs" />
     <Compile Include="Includes\Utilities\ConverterUtils.cs" />
     <Compile Include="Program.cs" />

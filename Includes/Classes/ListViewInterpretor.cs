@@ -31,17 +31,27 @@ namespace OneClickZip.Includes.Classes
         {
             ArrayList dirList = new ArrayList();
             ArrayList fileList = new ArrayList();
-            if (dirList.Count <= 0 && fileList.Count <= 0)
+
+            if (cshItem.IsFolder)
             {
-                if (cshItem.IsFolder)
-                {
-                    dirList.Add(cshItem);
-                }
-                else
-                {
-                    fileList.Add(cshItem);
-                }
+                dirList.Add(cshItem);
             }
+            else
+            {
+                fileList.Add(cshItem);
+            }
+
+            generateListViewCommonProcedure(targetListView, cshItem, dirList, fileList);
+        }
+
+        public static void generateListViewZipFileChildrenViewItems(ListView targetListView, CShItem cshItem)
+        {
+            ArrayList dirList = new ArrayList();
+            ArrayList fileList = new ArrayList();
+
+            dirList = cshItem.GetDirectories();
+            fileList = cshItem.GetFiles();
+
             generateListViewCommonProcedure(targetListView, cshItem, dirList, fileList);
         }
 
