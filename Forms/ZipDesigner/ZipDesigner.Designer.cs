@@ -62,7 +62,12 @@
             this.btnAddSelected = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.btnRemoveSelectedNode = new System.Windows.Forms.Button();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtFileName = new System.Windows.Forms.TextBox();
+            this.btnCreateFileName = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerFormMain)).BeginInit();
+            this.splitContainerFormMain.Panel1.SuspendLayout();
             this.splitContainerFormMain.Panel2.SuspendLayout();
             this.splitContainerFormMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerExplorers)).BeginInit();
@@ -85,6 +90,7 @@
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
+            this.panel9.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainerFormMain
@@ -93,6 +99,10 @@
             this.splitContainerFormMain.Location = new System.Drawing.Point(0, 0);
             this.splitContainerFormMain.Margin = new System.Windows.Forms.Padding(2);
             this.splitContainerFormMain.Name = "splitContainerFormMain";
+            // 
+            // splitContainerFormMain.Panel1
+            // 
+            this.splitContainerFormMain.Panel1.Controls.Add(this.panel9);
             // 
             // splitContainerFormMain.Panel2
             // 
@@ -216,6 +226,7 @@
             this.listViewSearchDirExp.TabIndex = 1;
             this.listViewSearchDirExp.UseCompatibleStateImageBehavior = false;
             this.listViewSearchDirExp.View = System.Windows.Forms.View.Details;
+            this.listViewSearchDirExp.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.listViewSearchDirExp_ColumnClickHandler);
             this.listViewSearchDirExp.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.listViewSearchDirExp_ItemDragHandler);
             this.listViewSearchDirExp.VisibleChanged += new System.EventHandler(this.ListViewSearchDirExp_VisibleChanged);
             // 
@@ -380,6 +391,7 @@
             this.listViewZipDesignFiles.TabIndex = 1;
             this.listViewZipDesignFiles.UseCompatibleStateImageBehavior = false;
             this.listViewZipDesignFiles.View = System.Windows.Forms.View.Details;
+            this.listViewZipDesignFiles.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.listViewZipDesignFiles_ColumnClickHandler);
             this.listViewZipDesignFiles.VisibleChanged += new System.EventHandler(this.listViewZipDesignFiles_VisibleChanged);
             this.listViewZipDesignFiles.DragDrop += new System.Windows.Forms.DragEventHandler(this.ListViewZipDesignFiles_DragDropHandler);
             this.listViewZipDesignFiles.DragEnter += new System.Windows.Forms.DragEventHandler(this.ListViewZipDesignFiles_DragEnter);
@@ -448,6 +460,49 @@
             this.btnRemoveSelectedNode.UseVisualStyleBackColor = true;
             this.btnRemoveSelectedNode.Click += new System.EventHandler(this.btnRemoveSelectedNode_Click);
             // 
+            // panel9
+            // 
+            this.panel9.Controls.Add(this.btnCreateFileName);
+            this.panel9.Controls.Add(this.txtFileName);
+            this.panel9.Controls.Add(this.label5);
+            this.panel9.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel9.Location = new System.Drawing.Point(0, 0);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(262, 178);
+            this.panel9.TabIndex = 0;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(3, 9);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(81, 13);
+            this.label5.TabIndex = 2;
+            this.label5.Text = "Zip File Name : ";
+            // 
+            // txtFileName
+            // 
+            this.txtFileName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtFileName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.RecentlyUsedList;
+            this.txtFileName.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.txtFileName.Enabled = false;
+            this.txtFileName.Location = new System.Drawing.Point(4, 31);
+            this.txtFileName.Name = "txtFileName";
+            this.txtFileName.Size = new System.Drawing.Size(255, 20);
+            this.txtFileName.TabIndex = 3;
+            // 
+            // btnCreateFileName
+            // 
+            this.btnCreateFileName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCreateFileName.Location = new System.Drawing.Point(147, 57);
+            this.btnCreateFileName.Name = "btnCreateFileName";
+            this.btnCreateFileName.Size = new System.Drawing.Size(112, 23);
+            this.btnCreateFileName.TabIndex = 4;
+            this.btnCreateFileName.Text = "Create a File Name";
+            this.btnCreateFileName.UseVisualStyleBackColor = true;
+            this.btnCreateFileName.Click += new System.EventHandler(this.btnCreateFileName_Click);
+            // 
             // ZipDesigner
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -457,6 +512,7 @@
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ZipDesigner";
             this.Text = "ZipDesigner";
+            this.splitContainerFormMain.Panel1.ResumeLayout(false);
             this.splitContainerFormMain.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerFormMain)).EndInit();
             this.splitContainerFormMain.ResumeLayout(false);
@@ -484,6 +540,8 @@
             this.panel3.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
+            this.panel9.ResumeLayout(false);
+            this.panel9.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -524,5 +582,9 @@
         private System.Windows.Forms.ColumnHeader columnZipMdlType;
         private System.Windows.Forms.Button btnZipClear;
         private System.Windows.Forms.Button btnRemoveSelectedNode;
+        private System.Windows.Forms.Panel panel9;
+        private System.Windows.Forms.TextBox txtFileName;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button btnCreateFileName;
     }
 }

@@ -19,6 +19,7 @@ namespace OneClickZip.Includes.Classes
         public static bool addRecursiveNode(TreeNodeExtended targetTreeNode, CShItem cshItem){
             bool isExistingParentNode = isNodeExisting(targetTreeNode, cshItem);
             TreeNodeExtended selectedNode = addParentDirectory(targetTreeNode, cshItem);
+            if (isExistingParentNode) return isExistingParentNode;
             if (cshItem.Directories.Count() <= 0) return false;
             addSubDirectories(selectedNode, cshItem);
             return isExistingParentNode;

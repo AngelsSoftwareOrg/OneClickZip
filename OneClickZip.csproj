@@ -72,6 +72,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\Options\FileNameCreatorFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Options\FileNameCreatorFrm.Designer.cs">
+      <DependentUpon>FileNameCreatorFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Includes\Classes\FileNameCreator.cs" />
+    <Compile Include="Includes\Classes\ListViewColumnSorterForFileDir.cs" />
+    <Compile Include="Includes\Classes\ListViewColumnSorter.cs" />
     <Compile Include="Includes\Classes\ListViewInterpretor.cs" />
     <Compile Include="Includes\Classes\Extensions\ListViewItemExtended.cs" />
     <Compile Include="Forms\Main.cs">
@@ -81,8 +90,14 @@
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="Includes\Classes\TreeNodeInterpreter.cs" />
+    <Compile Include="Includes\Classes\ZipfileModel.cs" />
+    <Compile Include="Includes\Interface\IFormulaExecutor.cs" />
+    <Compile Include="Includes\Models\DateFormulaModel.cs" />
     <Compile Include="Includes\Models\TreeNodeExtended.cs" />
     <Compile Include="Includes\Models\ZipFileModel.cs" />
+    <Compile Include="Includes\Resources\ResourceFilter.cs" />
+    <Compile Include="Includes\Resources\ResourcePropertiesModel.cs" />
+    <Compile Include="Includes\Resources\ResourcesUtil.cs" />
     <Compile Include="Includes\Utilities\ConverterUtils.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -94,6 +109,9 @@
     </Compile>
     <EmbeddedResource Include="Forms\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Options\FileNameCreatorFrm.resx">
+      <DependentUpon>FileNameCreatorFrm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -118,6 +136,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\CREATOR_DETAILS.properties" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

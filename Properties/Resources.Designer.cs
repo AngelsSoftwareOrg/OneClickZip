@@ -59,5 +59,15 @@ namespace OneClickZip.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] CREATOR_DETAILS {
+            get {
+                object obj = ResourceManager.GetObject("CREATOR_DETAILS", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

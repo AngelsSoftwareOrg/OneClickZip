@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ExpTreeLib;
+using OneClickZip.Forms.Options;
 using OneClickZip.Includes.Classes;
 using OneClickZip.Includes.Classes.Extensions;
 using OneClickZip.Includes.Models;
@@ -17,6 +18,12 @@ namespace OneClickZip
 {
     public partial class ZipDesigner : Form
     {
+        private readonly ListViewColumnSorter lvwColumnSorter = new ListViewColumnSorter();
+        private readonly ListViewColumnSorterForFileDir lvwColumnSorterFileDir = new ListViewColumnSorterForFileDir();
+        private ZipFileModel zipFileModel;
+
+
+
         public ZipDesigner()
         {
             InitializeComponent();
@@ -26,7 +33,11 @@ namespace OneClickZip
         }
 
 
-#region EXP Dir related functions
+#region Setter Getter
+        ZipFileModel ZipFileModel { get => zipFileModel; set => zipFileModel = value; }
+#endregion
+
+        #region EXP Dir related functions
 
         private void ListViewSearchDirExpHandlersAndControlsActivation()
         {
@@ -113,9 +124,14 @@ namespace OneClickZip
         {
             listViewZipDesignFiles.BeginUpdate();
             listViewZipDesignFiles.Items.Clear();
-            if (!isSelectedZipModelNodeRoot())
+            bool isRootNode = isSelectedZipModelNodeRoot();
+            foreach(CShItem cshItem in arrCshItem)
             {
-                foreach(CShItem cshItem in arrCshItem)
+                if (isRootNode)
+                {
+                    ListViewInterpretor.generateListViewZipFileViewItems(listViewZipDesignFiles, cshItem);
+                }
+                else
                 {
                     ListViewInterpretor.generateListViewZipFileChildrenViewItems(listViewZipDesignFiles, cshItem);
                 }
@@ -216,13 +232,13 @@ namespace OneClickZip
         private bool addZipFileNode(CShItem cshItem)
         {
             TreeNodeExtended selectedNode = (TreeNodeExtended) ((treeViewZipDesigner.SelectedNode == null) ? treeViewZipDesigner.Nodes[0] : treeViewZipDesigner.SelectedNode);
-            bool result = TreeNodeInterpreter.addRecursiveNode(selectedNode, cshItem);
+            bool isExistingNode = TreeNodeInterpreter.addRecursiveNode(selectedNode, cshItem);
 
-            if (isSelectedZipModelNodeRoot() && cshItem.IsFolder == false)
+            if (isSelectedZipModelNodeRoot() && !cshItem.IsFolder && !isExistingNode)
             {
                 TreeNodeInterpreter.addRootItemFilesAsNode(selectedNode, cshItem);
             }
-            return result;
+            return isExistingNode;
         }
         
         private bool isSelectedZipModelNodeRoot()
@@ -256,8 +272,65 @@ namespace OneClickZip
             if (treeViewZipDesigner.SelectedNode == null) return;
             treeViewZipDesigner.SelectedNode.BackColor = Color.Empty;
         }
+
         #endregion
 
 
+#region List View Sorter
+        private void listViewSearchDirExp_ColumnClickHandler(object sender, ColumnClickEventArgs e)
+        {
+            listviewSorter(sender, e);
+        }
+        private void listViewZipDesignFiles_ColumnClickHandler(object sender, ColumnClickEventArgs e)
+        {
+            listviewSorter(sender, e);
+        }
+
+        private void listviewSorter(object sender, ColumnClickEventArgs e)
+        {
+            ListView lvObj = (ListView)sender;
+
+            // Determine if clicked column is already the column that is being sorted.
+            if (e.Column == lvwColumnSorter.SortColumn)
+            {
+                // Reverse the current sort direction for this column.
+                if (lvwColumnSorter.Order == SortOrder.Ascending)
+                {
+                    lvwColumnSorter.Order = SortOrder.Descending;
+                }
+                else
+                {
+                    lvwColumnSorter.Order = SortOrder.Ascending;
+                }
+            }
+            else
+            {
+                // Set the column number that is to be sorted; default to ascending.
+                lvwColumnSorter.SortColumn = e.Column;
+                lvwColumnSorter.Order = SortOrder.Ascending;
+            }
+
+            lvObj.ListViewItemSorter = lvwColumnSorter;
+            // Perform the sort with these new sort options.
+            lvObj.Sort();
+
+            //if the first column was being sorted, then distinguised again file and folder
+            if(e.Column <= 0)
+            {
+                lvwColumnSorterFileDir.Order = lvwColumnSorter.Order; //just inherit above
+                lvObj.ListViewItemSorter = lvwColumnSorterFileDir;
+                // Perform the sort with these new sort options.
+                lvObj.Sort();
+            }
+        }
+
+
+        #endregion
+
+        private void btnCreateFileName_Click(object sender, EventArgs e)
+        {
+            FileNameCreatorFrm fileNameCreator = new FileNameCreatorFrm();
+            fileNameCreator.ShowDialog();
+        }
     }
 }
