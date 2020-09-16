@@ -58,6 +58,11 @@ public class ListViewColumnSorterForFileDir : IComparer
         CShItem cashItemX = listviewX.CshItem;
         CShItem cashItemY = (CShItem) listviewY.CshItem;
 
+
+        //TODO
+        //If dir then return -1
+        //if file
+        //  if both x and y are files, and if  asc return 1, if desc return -1
         //if(OrderOfSort == SortOrder.Ascending)
         //{
         //    if (cashItemY.IsFolder) return 1;

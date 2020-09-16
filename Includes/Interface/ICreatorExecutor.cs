@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace OneClickZip.Includes.Interface
 {
-    interface IFormulaExecutor
+    interface ICreatorExecutor
     {
-        object Generate(string formulaValue);
+        String Generate(string formulaValue);
     }
 }

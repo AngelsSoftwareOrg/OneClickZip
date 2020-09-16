@@ -13,6 +13,7 @@ using OneClickZip.Forms.Options;
 using OneClickZip.Includes.Classes;
 using OneClickZip.Includes.Classes.Extensions;
 using OneClickZip.Includes.Models;
+using OneClickZip.Includes.Resources;
 
 namespace OneClickZip
 {
@@ -30,6 +31,12 @@ namespace OneClickZip
             ListViewSearchDirExpHandlersAndControlsActivation();
             ListViewZipDesignFilesHandlersAndControlsActivation();
             ZipDesignerHandlersAndActivation();
+
+
+            //debug
+            //ResourcesUtil.GetDateFormulaProperties();
+
+            
         }
 
 

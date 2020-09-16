@@ -1,3 +1,11 @@
-.vs/
-obj/
-bin/
+/obj/
+/bin/
+/obj/Debug/DesignTimeResolveAssemblyReferences.cache
+/obj/Debug/OneClickZip.csproj.CoreCompileInputs.cache
+/obj/Debug/OneClickZip.csproj.FileListAbsolute.txt
+/obj/Debug/OneClickZip.csproj.GenerateResource.cache
+/obj/Debug/OneClickZip.csprojAssemblyReference.cache
+/obj/Debug/OneClickZip.exe
+/obj/Debug/OneClickZip.pdb
+/obj/Debug/TempPE/Properties.Resources.Designer.cs.dll
+/obj/Debug/OneClickZip.Properties.Resources.resources

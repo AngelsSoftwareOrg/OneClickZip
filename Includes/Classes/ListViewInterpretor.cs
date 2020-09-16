@@ -11,8 +11,6 @@ namespace OneClickZip.Includes.Classes
 {
     public class ListViewInterpretor
     {
-        private readonly ListViewColumnSorter lvwColumnSorter;
-
         public static void generateListViewExplorerItems(ListView targetListView, CShItem cshItem)
         {
             ArrayList dirList = new ArrayList();

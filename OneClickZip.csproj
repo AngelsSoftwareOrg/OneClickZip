@@ -91,8 +91,11 @@
     </Compile>
     <Compile Include="Includes\Classes\TreeNodeInterpreter.cs" />
     <Compile Include="Includes\Classes\ZipfileModel.cs" />
-    <Compile Include="Includes\Interface\IFormulaExecutor.cs" />
-    <Compile Include="Includes\Models\DateFormulaModel.cs" />
+    <Compile Include="Includes\Interface\ICreatorExecutor.cs" />
+    <Compile Include="Includes\Models\CreatorModel.cs" />
+    <Compile Include="Includes\Models\RandomCharsGeneratorModel.cs" />
+    <Compile Include="Includes\Models\RandomNumberGeneratorModel.cs" />
+    <Compile Include="Includes\Models\DateCreatorModel.cs" />
     <Compile Include="Includes\Models\TreeNodeExtended.cs" />
     <Compile Include="Includes\Models\ZipFileModel.cs" />
     <Compile Include="Includes\Resources\ResourceFilter.cs" />
