@@ -3,15 +3,28 @@ using OneClickZip.Includes.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace OneClickZip.Includes.Models
 {
     class RandomCharsGeneratorModel : CreatorModel, ICreatorExecutor
     {
         private List<ResourcePropertiesModel> randomCharsGenerator = ResourcesUtil.GetRandomCharsFormulaProperties();
+        private static readonly String FORMULA_CODE = "RC";
+        private readonly Dictionary<String, String> FORMULA_FUNCTION;
+
+        public RandomCharsGeneratorModel(){
+            FORMULA_FUNCTION = new Dictionary<String, String>
+            {
+                { "SHA1",  "HashSha1" },
+                { "SHA256", "HashSha256" },
+                { "SHA512", "HashSha512" }
+            };
+        }
 
         public List<ResourcePropertiesModel> GetResourcePropertiesList(bool includeHeader)
         {
@@ -25,11 +38,16 @@ namespace OneClickZip.Includes.Models
 
         public String Generate(string formulaValue)
         {
-
-            Console.WriteLine("Sha1: " + HashSha1());
-            Console.WriteLine("Sha256: " + HashSha256());
-            Console.WriteLine("Sha512: " + HashSha512());
-            return null;
+            foreach(KeyValuePair<String, String> kvp in this.GetFormulaValue(FORMULA_CODE, formulaValue))
+            {
+                if (FORMULA_FUNCTION.ContainsKey(kvp.Value))
+                {
+                    String result = (String)this.GetType().GetMethod(FORMULA_FUNCTION[kvp.Value], 
+                        BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy).Invoke(this, null);
+                    formulaValue = formulaValue.Replace(kvp.Key, result);
+                }
+            }
+            return formulaValue;
         }
 
         private string HashSha1()

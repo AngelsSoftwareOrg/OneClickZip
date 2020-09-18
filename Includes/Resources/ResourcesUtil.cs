@@ -13,12 +13,12 @@ namespace OneClickZip.Includes.Resources
     class ResourcesUtil : ResourceFilter
     {
         private static ResourceManager RESOURCE_MANAGER;
-        private static String RESOURCE_NAME = "OneClickZip.Properties.Resources";
-        private static String RESOURCE_PROPERTY_FILE_NAME = "CREATOR_DETAILS"; //CREATOR_DETAILS.properties
+        private static readonly String RESOURCE_NAME = "OneClickZip.Properties.Resources";
+        private static readonly String RESOURCE_PROPERTY_FILE_NAME = "CREATOR_DETAILS"; //CREATOR_DETAILS.properties
 
-        private static String RESOURCE_PROPERTY_NAME_DATE = "DATE_FORMULA_FUNCTION_";
-        private static String RESOURCE_PROPERTY_NAME_RANDOM_GEN = "RANDOM_NUMBER_GENERATOR_";
-        private static String RESOURCE_PROPERTY_NAME_RANDOM_CHARS = "RANDOM_CHAR_GENERATOR_";
+        private static readonly String RESOURCE_PROPERTY_NAME_DATE = "DATE_FORMULA_FUNCTION_";
+        private static readonly String RESOURCE_PROPERTY_NAME_RANDOM_GEN = "RANDOM_NUMBER_GENERATOR_";
+        private static readonly String RESOURCE_PROPERTY_NAME_RANDOM_CHARS = "RANDOM_CHAR_GENERATOR_";
         private static List<ResourcePropertiesModel> getDateFormulaProperties = new List<ResourcePropertiesModel>();
         private static List<ResourcePropertiesModel> getRandomNumberFormulaProperties = new List<ResourcePropertiesModel>();
         private static List<ResourcePropertiesModel> getRandomCharsFormulaProperties = new List<ResourcePropertiesModel>();

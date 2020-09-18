@@ -1,4 +1,5 @@
-﻿using OneClickZip.Includes.Models;
+﻿using OneClickZip.Includes.Classes;
+using OneClickZip.Includes.Models;
 using OneClickZip.Includes.Resources;
 using System;
 using System.Collections.Generic;
@@ -14,13 +15,24 @@ namespace OneClickZip.Forms.Options
 {
     public partial class FileNameCreatorFrm : Form
     {
-        DateCreatorModel dateCreatorModel = new DateCreatorModel();
-        RandomNumberGeneratorModel randomNumberGenerator = new RandomNumberGeneratorModel();
-        RandomCharsGeneratorModel randomCharGenerator = new RandomCharsGeneratorModel();
+        private FileNameCreator filenameCreator = new FileNameCreator();
 
         public FileNameCreatorFrm()
         {
             InitializeComponent();
+            CommonInitialization();
+        }
+
+        public FileNameCreatorFrm(String initialFileName)
+        {
+            InitializeComponent();
+            filenameCreator.FileFormulaName = initialFileName;
+            txtFileNameFormula.Text = initialFileName;
+            CommonInitialization();
+        }
+
+        private void CommonInitialization()
+        {
             InitializeControls();
         }
 
@@ -28,9 +40,7 @@ namespace OneClickZip.Forms.Options
         {
             listViewInstruction.Items.Clear();
             listViewInstruction.BeginUpdate();
-            AddListViewInstructionItems(dateCreatorModel.GetResourcePropertiesList(false));
-            AddListViewInstructionItems(randomNumberGenerator.GetResourcePropertiesList(false));
-            AddListViewInstructionItems(randomCharGenerator.GetResourcePropertiesList(false));
+            AddListViewInstructionItems(filenameCreator.GetResourcePropertiesList());
             listViewInstruction.EndUpdate();
         }
 
@@ -52,7 +62,7 @@ namespace OneClickZip.Forms.Options
         private void FileNameCreatorFrm_Load(object sender, EventArgs e)
         {
             //DEBUG
-            txtFileNameFormula.Text = "Sample File Name - $RC{SHA1} - $RC{SHA2} - $RC{SHA256}";
+            //txtFileNameFormula.Text = "Sample File Name - $RC{SHA1} - $RC{SHA256} - $RC{SHA512} - $DT{dddd} - $DT{hh} - $DT{ffffff} - $DT{fffffff} - $DT{yyyy}/$DT{MM}/$DT{dd} - $DT{HH}:$DT{mm}:$DT{ss} - $RN{3} - $RN{34,999}";
             //DEBUG END
         }
 
@@ -65,11 +75,36 @@ namespace OneClickZip.Forms.Options
             txtSelectedVariable.Text = rpm.PropertyValue;
         }
 
-        private void btnSimulateFormula_Click(object sender, EventArgs e)
+        private void BtnSimulateFormula_Click(object sender, EventArgs e)
         {
-            //dateCreatorModel.Generate(txtFileNameFormula.Text);
-            randomNumberGenerator.Generate(txtFileNameFormula.Text);
-            randomCharGenerator.Generate(txtFileNameFormula.Text);
+            this.filenameCreator.FileFormulaName = txtFileNameFormula.Text;
+            txtSimulatedFilename.Text = this.filenameCreator.GetDerivedFormula();
+        }
+
+        private void BtnCopyVar_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(txtSelectedVariable.Text);
+        }
+
+        private void BtnInsertVar_Click(object sender, EventArgs e)
+        {
+            txtFileNameFormula.Text = txtFileNameFormula.Text + " " + txtSelectedVariable.Text;
+        }
+
+        private void btnClearFilename_Click(object sender, EventArgs e)
+        {
+            txtFileNameFormula.Text = "";
+        }
+
+        private void btnSaveExit_Click(object sender, EventArgs e)
+        {
+            this.filenameCreator.FileFormulaName = txtFileNameFormula.Text;
+            this.Close();
+        }
+
+        public FileNameCreator GetFileCreatorName()
+        {
+            return filenameCreator;
         }
     }
 }

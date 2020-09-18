@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using OneClickZip.Includes.Resources;
 
@@ -9,6 +11,37 @@ namespace OneClickZip.Includes.Models
 {
     partial class CreatorModel
     {
+        private static String FORMULA_PATTERN_REGEX_START = "\\$";
+        private static String FORMULA_PATTERN_REGEX = "{.*?\\}";
+
+        protected List<KeyValuePair<String, String>> GetFormulaValue(String formulaCode, String actualFormulaValue)
+        {
+            List<KeyValuePair<String, String>> arrKeyValuePair = new List<KeyValuePair<String, String>>();
+            String completPattern = FORMULA_PATTERN_REGEX_START + formulaCode + FORMULA_PATTERN_REGEX;
+
+            //DEBUG
+            Console.WriteLine("Complete Formula: " + completPattern);
+
+            MatchCollection matchValueCol = Regex.Matches(actualFormulaValue, @completPattern);
+            for (var i = 0; i < matchValueCol.Count; i++)
+            {
+                String formula = matchValueCol[i].Value;
+                String value = ExtractFormulaValue(formulaCode, matchValueCol[i].Value);
+                KeyValuePair<String, String> kvp = new KeyValuePair<String, String>(formula, value);
+                arrKeyValuePair.Add(kvp);
+
+                //default
+                Console.WriteLine(formula + " - " + value);
+            }
+            return arrKeyValuePair;
+        }
+
+        private String ExtractFormulaValue(String formulaCode, String formula)
+        {
+            int prefixLength = formulaCode.Length + 2;
+            int lenToSub = formula.Length - prefixLength - 1; //the end point
+            return formula.Substring(prefixLength, lenToSub);
+        }
 
         protected List<ResourcePropertiesModel> GetConfigPropertiesList(List<ResourcePropertiesModel> listConfig, bool includeHeader)
         {
@@ -31,7 +64,6 @@ namespace OneClickZip.Includes.Models
         {
             return DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
         }
-
 
         protected String GeneratePrintoutDescriptions(List<ResourcePropertiesModel> listRpm)
         {
@@ -127,8 +159,6 @@ namespace OneClickZip.Includes.Models
             sb.Append(new String(Char.Parse("\t"), inputTabCount));
             return sb.ToString();
         }
-
-
 
     }
 }

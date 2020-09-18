@@ -22,6 +22,7 @@ namespace OneClickZip
         private readonly ListViewColumnSorter lvwColumnSorter = new ListViewColumnSorter();
         private readonly ListViewColumnSorterForFileDir lvwColumnSorterFileDir = new ListViewColumnSorterForFileDir();
         private ZipFileModel zipFileModel;
+        private FileNameCreator fileNameCreator;
 
 
 
@@ -336,8 +337,10 @@ namespace OneClickZip
 
         private void btnCreateFileName_Click(object sender, EventArgs e)
         {
-            FileNameCreatorFrm fileNameCreator = new FileNameCreatorFrm();
-            fileNameCreator.ShowDialog();
+            FileNameCreatorFrm fileNameCreatorFrm = new FileNameCreatorFrm(txtFileName.Text);
+            fileNameCreatorFrm.ShowDialog();
+            fileNameCreator = fileNameCreatorFrm.GetFileCreatorName();
+            txtFileName.Text = fileNameCreator.FileFormulaName;
         }
     }
 }
