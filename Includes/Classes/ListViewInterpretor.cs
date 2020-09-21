@@ -1,70 +1,75 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 using ExpTreeLib;
 using OneClickZip;
 using OneClickZip.Includes.Classes.Extensions;
+using OneClickZip.Includes.Models;
 using OneClickZip.Includes.Utilities;
 
 namespace OneClickZip.Includes.Classes
 {
     public class ListViewInterpretor
     {
-        public static void generateListViewExplorerItems(ListView targetListView, CShItem cshItem)
+        public static void generateListViewExplorerItems(ListViewInterpretorViewingParamModel lvParamModel)
         {
             ArrayList dirList = new ArrayList();
             ArrayList fileList = new ArrayList();
+            CShItem cshItem = lvParamModel.CshItem;
             if (cshItem.DisplayName.Equals(CShItem.strMyComputer))
             {
-                dirList = cshItem.GetDirectories();
+                lvParamModel.DirList = lvParamModel.CshItem.GetDirectories();
             }
             else
             {
-                dirList = cshItem.GetDirectories();
-                fileList = cshItem.GetFiles();
+                lvParamModel.DirList = lvParamModel.CshItem.GetDirectories();
+                lvParamModel.FileList = lvParamModel.CshItem.GetFiles();
             }
-            generateListViewCommonProcedure(targetListView, cshItem, dirList, fileList);
+            generateListViewCommonProcedure(lvParamModel);
         }
 
-        public static void generateListViewZipFileViewItems(ListView targetListView, CShItem cshItem)
+        public static void generateListViewZipFileViewItems(ListViewInterpretorViewingParamModel lvParamModel) 
         {
-            ArrayList dirList = new ArrayList();
-            ArrayList fileList = new ArrayList();
-
-            if (cshItem.IsFolder)
+            if (lvParamModel.CshItem.IsFolder)
             {
-                dirList.Add(cshItem);
+                lvParamModel.DirList.Add(lvParamModel.CshItem);
             }
             else
             {
-                fileList.Add(cshItem);
+                lvParamModel.FileList.Add(lvParamModel.CshItem);
             }
 
-            generateListViewCommonProcedure(targetListView, cshItem, dirList, fileList);
+            generateListViewCommonProcedure(lvParamModel);
         }
 
-        public static void generateListViewZipFileChildrenViewItems(ListView targetListView, CShItem cshItem)
+        public static void generateListViewZipFileChildrenViewItems(ListViewInterpretorViewingParamModel lvParamModel)
         {
-            ArrayList dirList = new ArrayList();
-            ArrayList fileList = new ArrayList();
+            TreeNodeExtended selectedNode = lvParamModel.SelectedTreeNodeExtended;
 
-            dirList = cshItem.GetDirectories();
-            fileList = cshItem.GetFiles();
-
-            generateListViewCommonProcedure(targetListView, cshItem, dirList, fileList);
+            List<String> subNodeName = new List<String>();
+            foreach(TreeNodeExtended subNode in selectedNode.Nodes)
+            {
+                subNodeName.Add(subNode.Text);
+            }
+            lvParamModel.DirList = lvParamModel.CshItem.GetDirectories();
+            lvParamModel.FileList = lvParamModel.CshItem.GetFiles();
+            generateListViewCommonProcedure(lvParamModel);
         }
 
-        private static void generateListViewCommonProcedure(ListView targetListView, CShItem cshItem, ArrayList dirList, ArrayList fileList)
+        private static void generateListViewCommonProcedure(ListViewInterpretorViewingParamModel lvParamModel)
         {
+            ArrayList dirList = lvParamModel.DirList;
+            ArrayList fileList = lvParamModel.FileList;
+            ListView targetListView = lvParamModel.TargetListView;
+
             try
             {
                 if ((dirList.Count + fileList.Count) > 0)
                 {
                     dirList.Sort();
                     fileList.Sort();
-
-                    //targetListView.BeginUpdate();
 
                     ArrayList combinationList = new ArrayList();
                     combinationList.AddRange(dirList);
@@ -85,12 +90,11 @@ namespace OneClickZip.Includes.Classes
                         lvItem.ImageIndex = SystemImageListManager.GetIconIndex(fileObj, false);
                         targetListView.Items.Add(lvItem);
                     }
-                    //targetListView.EndUpdate();
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                throw ex;
             }
             finally
             {

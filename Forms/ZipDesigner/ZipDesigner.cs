@@ -24,8 +24,6 @@ namespace OneClickZip
         private ZipFileModel zipFileModel;
         private FileNameCreator fileNameCreator;
 
-
-
         public ZipDesigner()
         {
             InitializeComponent();
@@ -40,12 +38,11 @@ namespace OneClickZip
             
         }
 
-
-#region Setter Getter
-        ZipFileModel ZipFileModel { get => zipFileModel; set => zipFileModel = value; }
+        #region Setter Getter
+        Includes.Models.ZipFileModel ZipFileModel { get => zipFileModel; set => zipFileModel = value; }
 #endregion
 
-        #region EXP Dir related functions
+#region EXP Dir related functions
 
         private void ListViewSearchDirExpHandlersAndControlsActivation()
         {
@@ -61,11 +58,13 @@ namespace OneClickZip
         }
        
         private void ExpTreeSearchDir_ExpTreeNodeSelectedEventHandler(String selectedPath, CShItem cshItem){
-
-            //DEBUG
-            Console.WriteLine(selectedPath);
             listViewSearchDirExp.Items.Clear();
-            ListViewInterpretor.generateListViewExplorerItems(listViewSearchDirExp, cshItem);
+            ListViewInterpretor.generateListViewExplorerItems(
+                new ListViewInterpretorViewingParamModel(){
+                   TargetListView = listViewSearchDirExp, 
+                   CshItem = cshItem ,
+                   IsEnlistAllDirAndFiles = true
+                });
         }
 
         /**
@@ -99,14 +98,14 @@ namespace OneClickZip
             listViewSearchDirExp.DoDragDrop(listViewSearchDirExp.SelectedItems, DragDropEffects.Move);
         }
 
-        #endregion
+#endregion
 
 
 #region ZIP Designer Controls and related functions
 
         private void ZipDesignerHandlersAndActivation()
         {
-            newZipStructureProcedure();
+            NewZipStructureProcedure();
         }
 
         private void ListViewZipDesignFilesHandlersAndControlsActivation()
@@ -115,35 +114,37 @@ namespace OneClickZip
             this.listViewZipDesignFiles.ItemActivate += new System.EventHandler(this.ListViewZipDesignFiles_ItemDoubleClicked);
         }
 
-        private void treeViewZipDesigner_AfterSelectHandler(object sender, TreeViewEventArgs e)
+        private void TreeViewZipDesigner_AfterSelectHandler(object sender, TreeViewEventArgs e)
         {
-            ArrayList arrCshItem = (ArrayList) ((TreeNodeExtended) treeViewZipDesigner.SelectedNode).MasterListFilesDir;
-            listViewZipDesignFiles.Tag = treeViewZipDesigner.SelectedNode;
-            refreshTreeViewZipDesignerListViewItems(arrCshItem);
-            selectSelectedNodeBgColor();
+            TreeNodeExtended selectedNode = (TreeNodeExtended)treeViewZipDesigner.SelectedNode;
+            listViewZipDesignFiles.Tag = selectedNode;
+            refreshTreeViewZipDesignerListViewItems(selectedNode);
+            SelectSelectedNodeBgColor();
         }
 
         private void treeViewZipDesigner_BeforeSelectHandler(object sender, TreeViewCancelEventArgs e)
         {
-            removePreviousSelectedNodeBgColor();
+            RemovePreviousSelectedNodeBgColor();
         }
 
-        private void refreshTreeViewZipDesignerListViewItems(ArrayList arrCshItem)
+        private void refreshTreeViewZipDesignerListViewItems(TreeNodeExtended selectedTreeNodeExtended)
         {
             listViewZipDesignFiles.BeginUpdate();
             listViewZipDesignFiles.Items.Clear();
-            bool isRootNode = isSelectedZipModelNodeRoot();
-            foreach(CShItem cshItem in arrCshItem)
+            bool isRootNode = IsSelectedZipModelNodeRoot();
+            foreach(CShItem cshItem in selectedTreeNodeExtended.MasterListFilesDir)
             {
-                if (isRootNode)
-                {
-                    ListViewInterpretor.generateListViewZipFileViewItems(listViewZipDesignFiles, cshItem);
-                }
-                else
-                {
-                    ListViewInterpretor.generateListViewZipFileChildrenViewItems(listViewZipDesignFiles, cshItem);
-                }
+                ListViewInterpretorViewingParamModel commonParam = new ListViewInterpretorViewingParamModel()
+                                                    {
+                                                        SelectedTreeNodeExtended = selectedTreeNodeExtended,
+                                                        TargetListView = listViewZipDesignFiles,
+                                                        CshItem = cshItem
+                                                    };
+
+                ListViewInterpretor.generateListViewZipFileViewItems(commonParam);
+
             }
+
             listViewZipDesignFiles.EndUpdate();
         }
 
@@ -181,10 +182,15 @@ namespace OneClickZip
             foreach (ListViewItemExtended lvItem in lstViewColl)
             {
                 //if node are not yet existed on the currently selected node of the tree
-                if (!addZipFileNode(lvItem.CshItem))
+                if (!AddZipFileNode(lvItem.CshItem))
                 {
-                    ListViewInterpretor.generateListViewZipFileViewItems(listViewZipDesignFiles, lvItem.CshItem);
-                    TreeNodeInterpreter.addTagObject((TreeNodeExtended) treeViewZipDesigner.SelectedNode, lvItem.CshItem);
+                    TreeNodeExtended selectedNode = (TreeNodeExtended)treeViewZipDesigner.SelectedNode;
+                    TreeNodeInterpreter.AddTagObject(selectedNode, lvItem.CshItem);
+                    ListViewInterpretor.generateListViewZipFileViewItems(new ListViewInterpretorViewingParamModel(){
+                        SelectedTreeNodeExtended= selectedNode, 
+                        TargetListView = listViewZipDesignFiles, 
+                        CshItem = lvItem.CshItem
+                    });
                 } 
 
                 //CShItem cshItem = lvItem.CshItem;
@@ -216,7 +222,7 @@ namespace OneClickZip
 
         private void btnZipClear_Click(object sender, EventArgs e)
         {
-            newZipStructureProcedure();
+            NewZipStructureProcedure();
         }
 
         private void btnAddSelected_Click(object sender, EventArgs e)
@@ -224,7 +230,7 @@ namespace OneClickZip
 
         }
 
-        private void newZipStructureProcedure()
+        private void NewZipStructureProcedure()
         {
             treeViewZipDesigner.Nodes.Clear();
             listViewZipDesignFiles.Items.Clear();
@@ -234,48 +240,52 @@ namespace OneClickZip
             treeViewZipDesigner.Nodes.Add(rootNode);
             treeViewZipDesigner.SelectedNode = rootNode;
             listViewZipDesignFiles.Tag = rootNode;
-            selectSelectedNodeBgColor();
+            SelectSelectedNodeBgColor();
         }
 
-        private bool addZipFileNode(CShItem cshItem)
+        private bool AddZipFileNode(CShItem cshItem)
         {
             TreeNodeExtended selectedNode = (TreeNodeExtended) ((treeViewZipDesigner.SelectedNode == null) ? treeViewZipDesigner.Nodes[0] : treeViewZipDesigner.SelectedNode);
-            bool isExistingNode = TreeNodeInterpreter.addRecursiveNode(selectedNode, cshItem);
+            bool isExistingNode = TreeNodeInterpreter.AddRecursiveNode(selectedNode, cshItem);
 
-            if (isSelectedZipModelNodeRoot() && !cshItem.IsFolder && !isExistingNode)
+            if (IsSelectedZipModelNodeRoot() && !cshItem.IsFolder && !isExistingNode)
             {
-                TreeNodeInterpreter.addRootItemFilesAsNode(selectedNode, cshItem);
+                TreeNodeInterpreter.AddRootItemFilesAsNode(selectedNode, cshItem);
             }
             return isExistingNode;
         }
         
-        private bool isSelectedZipModelNodeRoot()
+        private bool IsSelectedZipModelNodeRoot()
         {
             return (treeViewZipDesigner.SelectedNode.Name == "ROOT");
         }
 
-        private void btnRemoveSelectedNode_Click(object sender, EventArgs e)
+        private void BtnRemoveSelectedNode_Click(object sender, EventArgs e)
         {
             if (treeViewZipDesigner.SelectedNode == null) return;
-            if (isSelectedZipModelNodeRoot())
+            if (IsSelectedZipModelNodeRoot())
             {
-                newZipStructureProcedure();
+                NewZipStructureProcedure();
                 return;
             }
-            TreeNode parentNode = treeViewZipDesigner.SelectedNode.Parent;
-            treeViewZipDesigner.SelectedNode.Remove();
+
+            TreeNodeExtended parentNode = (TreeNodeExtended)treeViewZipDesigner.SelectedNode.Parent;
+            TreeNodeExtended selectedNode = (TreeNodeExtended) treeViewZipDesigner.SelectedNode;
+            parentNode.RemoveItemByNodeName(selectedNode.Text);
+            selectedNode.Remove();
             treeViewZipDesigner.SelectedNode = parentNode;
-            selectSelectedNodeBgColor();
-            refreshTreeViewZipDesignerListViewItems(((TreeNodeExtended)treeViewZipDesigner.SelectedNode).MasterListFilesDir);
+            SelectSelectedNodeBgColor();
+            refreshTreeViewZipDesignerListViewItems(parentNode);
+
         }
 
-        private void selectSelectedNodeBgColor()
+        private void SelectSelectedNodeBgColor()
         {
             if (treeViewZipDesigner.SelectedNode == null) return;
             treeViewZipDesigner.SelectedNode.BackColor = Color.Gray;
         }
         
-        private void removePreviousSelectedNodeBgColor()
+        private void RemovePreviousSelectedNodeBgColor()
         {
             if (treeViewZipDesigner.SelectedNode == null) return;
             treeViewZipDesigner.SelectedNode.BackColor = Color.Empty;
@@ -335,6 +345,9 @@ namespace OneClickZip
 
         #endregion
 
+
+
+#region "Main GUI Controls"
         private void btnCreateFileName_Click(object sender, EventArgs e)
         {
             FileNameCreatorFrm fileNameCreatorFrm = new FileNameCreatorFrm(txtFileName.Text);
@@ -342,5 +355,18 @@ namespace OneClickZip
             fileNameCreator = fileNameCreatorFrm.GetFileCreatorName();
             txtFileName.Text = fileNameCreator.FileFormulaName;
         }
+
+        private void lnkCopSaveLocation_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Clipboard.SetText(txtZipFileLocation.Text);
+        }
+        private void btnExpandAll_Click(object sender, EventArgs e)
+        {
+            treeViewZipDesigner.ExpandAll();
+        }
+        #endregion
+
+
+
     }
 }

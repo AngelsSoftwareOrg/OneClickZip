@@ -48,8 +48,10 @@ namespace OneClickZip.Forms.Options
         {
             foreach (ResourcePropertiesModel rpm in arrayRpm)
             {
-                ListViewItem lvItem = new ListViewItem(new string[] { rpm.PropertyValue, rpm.Description });
-                lvItem.Tag = rpm;
+                ListViewItem lvItem = new ListViewItem(new string[] { rpm.PropertyValue, rpm.Description })
+                {
+                    Tag = rpm
+                };
                 listViewInstruction.Items.Add(lvItem);
             }
         }

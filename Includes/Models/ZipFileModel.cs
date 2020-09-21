@@ -4,18 +4,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using OneClickZip.Includes.Classes;
 
 namespace OneClickZip.Includes.Models
 {
     class ZipFileModel
     {
-        private readonly TreeView zipStructureData;
+        private TreeView treeViewZipFileStructure;
+        private FileNameCreator fileNameCreator;
 
-        public ZipFileModel(TreeView zipStructureData)
+
+        public ZipFileModel()
         {
-            this.zipStructureData = zipStructureData;
+        }
+        public ZipFileModel(TreeView treeViewZipFileStructure)
+        {
+            this.treeViewZipFileStructure = treeViewZipFileStructure;
         }
 
-        public TreeView ZipStructureData => zipStructureData;
+        public ZipFileModel(TreeView treeViewZipFileStructure, FileNameCreator fileNameCreator)
+        {
+            this.treeViewZipFileStructure = treeViewZipFileStructure;
+            this.fileNameCreator = fileNameCreator;
+        }
+
+        public string ZipFileName { get => fileNameCreator.FileFormulaName; }
+
+        public TreeView TreeViewZipFileStructure { get => treeViewZipFileStructure; set => treeViewZipFileStructure = value; }
+
+        public FileNameCreator FileNameCreator { get => fileNameCreator; set => fileNameCreator = value; }
     }
 }

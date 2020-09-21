@@ -94,9 +94,9 @@
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="Includes\Classes\TreeNodeInterpreter.cs" />
-    <Compile Include="Includes\Classes\ZipfileModel.cs" />
     <Compile Include="Includes\Interface\ICreatorExecutor.cs" />
     <Compile Include="Includes\Models\CreatorModel.cs" />
+    <Compile Include="Includes\Models\ListViewInterpretorViewingParamModel.cs" />
     <Compile Include="Includes\Models\RandomCharsGeneratorModel.cs" />
     <Compile Include="Includes\Models\RandomNumberGeneratorModel.cs" />
     <Compile Include="Includes\Models\DateCreatorModel.cs" />
