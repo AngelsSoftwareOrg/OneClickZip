@@ -12,8 +12,11 @@ namespace OneClickZip.Includes.Models
     public class TreeNodeExtended : TreeNode
     {
         private readonly ArrayList masterListFilesDir = new ArrayList();
+        private bool isStructuredNode;
 
-        public TreeNodeExtended() : base(){}
+        public TreeNodeExtended() : base(){
+            isStructuredNode = true;
+        }
 
         public void AddItem(CShItem cshItem)
         {
@@ -28,6 +31,7 @@ namespace OneClickZip.Includes.Models
         public void RemoveItem(CShItem cshItem)
         {
             this.masterListFilesDir.Remove(cshItem);
+            this.RemoveSubNode(cshItem.DisplayName);
         }
 
         public void RemoveItemByNodeName(String nodeName)
@@ -35,9 +39,6 @@ namespace OneClickZip.Includes.Models
             List<CShItem> listForRemoval = new List<CShItem>();
             foreach (CShItem cshItem in this.masterListFilesDir)
             {
-
-                Console.WriteLine(cshItem.Text);
-
                 if (cshItem.Name == nodeName || cshItem.Text == nodeName)
                 {
                     listForRemoval.Add(cshItem);
@@ -46,29 +47,25 @@ namespace OneClickZip.Includes.Models
 
             foreach (CShItem cshItem in listForRemoval)
             {
-                this.masterListFilesDir. Remove(cshItem);
+                this.masterListFilesDir.Remove(cshItem);
             }
         }
 
-        public void removeSubNode(String nodeName)
+        private void RemoveSubNode(String nodeName)
         {
-            foreach (CShItem cshItem in this.masterListFilesDir)
+            List<TreeNode> listNodesForRemoval = new List<TreeNode>();
+            foreach(TreeNode node in this.Nodes)
             {
-                ArrayList combinationList = new ArrayList();
-                combinationList.AddRange(cshItem.Directories);
-                combinationList.AddRange(cshItem.Files);
-
-                List<CShItem> listForRemoval = new List<CShItem>();
-                foreach (CShItem cshSubItem in combinationList)
-                {
-                    
-                }
+                if (nodeName == node.Text) listNodesForRemoval.Add(node);
+            }
+            foreach (TreeNode node in listNodesForRemoval)
+            {
+                node.Remove();
             }
         }
-
-
 
         public ArrayList MasterListFilesDir => this.masterListFilesDir;
 
+        public bool IsStructuredNode { get => isStructuredNode; set => isStructuredNode = value; }
     }
 }

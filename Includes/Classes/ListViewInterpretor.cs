@@ -13,7 +13,7 @@ namespace OneClickZip.Includes.Classes
 {
     public class ListViewInterpretor
     {
-        public static void generateListViewExplorerItems(ListViewInterpretorViewingParamModel lvParamModel)
+        public static void GenerateListViewExplorerItems(ListViewInterpretorViewingParamModel lvParamModel)
         {
             ArrayList dirList = new ArrayList();
             ArrayList fileList = new ArrayList();
@@ -27,10 +27,10 @@ namespace OneClickZip.Includes.Classes
                 lvParamModel.DirList = lvParamModel.CshItem.GetDirectories();
                 lvParamModel.FileList = lvParamModel.CshItem.GetFiles();
             }
-            generateListViewCommonProcedure(lvParamModel);
+            GenerateListViewCommonProcedure(lvParamModel);
         }
 
-        public static void generateListViewZipFileViewItems(ListViewInterpretorViewingParamModel lvParamModel) 
+        public static void GenerateListViewZipFileViewItems(ListViewInterpretorViewingParamModel lvParamModel) 
         {
             if (lvParamModel.CshItem.IsFolder)
             {
@@ -41,10 +41,10 @@ namespace OneClickZip.Includes.Classes
                 lvParamModel.FileList.Add(lvParamModel.CshItem);
             }
 
-            generateListViewCommonProcedure(lvParamModel);
+            GenerateListViewCommonProcedure(lvParamModel);
         }
 
-        public static void generateListViewZipFileChildrenViewItems(ListViewInterpretorViewingParamModel lvParamModel)
+        public static void GenerateListViewZipFileChildrenViewItems(ListViewInterpretorViewingParamModel lvParamModel)
         {
             TreeNodeExtended selectedNode = lvParamModel.SelectedTreeNodeExtended;
 
@@ -55,10 +55,10 @@ namespace OneClickZip.Includes.Classes
             }
             lvParamModel.DirList = lvParamModel.CshItem.GetDirectories();
             lvParamModel.FileList = lvParamModel.CshItem.GetFiles();
-            generateListViewCommonProcedure(lvParamModel);
+            GenerateListViewCommonProcedure(lvParamModel);
         }
 
-        private static void generateListViewCommonProcedure(ListViewInterpretorViewingParamModel lvParamModel)
+        private static void GenerateListViewCommonProcedure(ListViewInterpretorViewingParamModel lvParamModel)
         {
             ArrayList dirList = lvParamModel.DirList;
             ArrayList fileList = lvParamModel.FileList;
@@ -80,7 +80,7 @@ namespace OneClickZip.Includes.Classes
                         ListViewItemExtended lvItem=null;
                         if (targetListView.View == View.Details)
                         {
-                            lvItem = new ListViewItemExtended(fileObj, getFileObjectDetails(fileObj));
+                            lvItem = new ListViewItemExtended(fileObj, GetFileObjectDetails(fileObj));
                         }
                         else
                         {
@@ -103,7 +103,7 @@ namespace OneClickZip.Includes.Classes
             }
         }
 
-        private static String[] getFileObjectDetails(CShItem fileObj)
+        private static String[] GetFileObjectDetails(CShItem fileObj)
         {
             //DirectoryInfo di = new DirectoryInfo(fileObj.Path);
             //FileInfo fi = new FileInfo(fileObj.Path);
@@ -120,10 +120,29 @@ namespace OneClickZip.Includes.Classes
         /**
          * encapsulated procedures to make icons appeared on the list view
          */
-        public static void refreshToShowExplorerIcons(ListView targetListView)
+        public static void RefreshToShowExplorerIcons(ListView targetListView)
         {
             SystemImageListManager.SetListViewImageList(targetListView, false, false);
             SystemImageListManager.SetListViewImageList(targetListView, true, false);
+        }
+
+        public static void RefreshListViewItemsForZipFileDesigner(ListView targetListView,  TreeNodeExtended selectedTreeNodeExtended)
+        {
+            targetListView.BeginUpdate();
+            targetListView.Items.Clear();
+            //bool isRootNode = TreeNodeInterpreter.IsSelectedZipModelNodeRoot(selectedTreeNodeExtended.TreeView);
+            foreach (CShItem cshItem in selectedTreeNodeExtended.MasterListFilesDir)
+            {
+                ListViewInterpretorViewingParamModel commonParam = new ListViewInterpretorViewingParamModel()
+                {
+                    SelectedTreeNodeExtended = selectedTreeNodeExtended,
+                    TargetListView = targetListView,
+                    CshItem = cshItem
+                };
+
+                ListViewInterpretor.GenerateListViewZipFileViewItems(commonParam);
+            }
+            targetListView.EndUpdate();
         }
 
     }

@@ -82,6 +82,7 @@
     <Compile Include="Forms\Options\FileNameCreatorFrm.Designer.cs">
       <DependentUpon>FileNameCreatorFrm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Includes\Classes\DefaultIcons.cs" />
     <Compile Include="Includes\Classes\FileNameCreator.cs" />
     <Compile Include="Includes\Classes\ListViewColumnSorterForFileDir.cs" />
     <Compile Include="Includes\Classes\ListViewColumnSorter.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Includes\Models\DateCreatorModel.cs" />
     <Compile Include="Includes\Models\TreeNodeExtended.cs" />
     <Compile Include="Includes\Models\ZipFileModel.cs" />
+    <Compile Include="Includes\Models\ZipFileStatisticsModel.cs" />
     <Compile Include="Includes\Resources\ResourceFilter.cs" />
     <Compile Include="Includes\Resources\ResourcePropertiesModel.cs" />
     <Compile Include="Includes\Resources\ResourcesUtil.cs" />
