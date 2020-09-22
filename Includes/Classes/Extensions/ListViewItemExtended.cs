@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Windows.Forms;
 using ExpTreeLib;
+using OneClickZip.Includes.Models;
 
 namespace OneClickZip.Includes.Classes.Extensions
 {
     public class ListViewItemExtended : ListViewItem
     {
-        private CShItem cshItem;
+        private CustomFileItem customFileItem;
         
-        public ListViewItemExtended(CShItem cshItem) : base(cshItem.GetFileName())
+        public ListViewItemExtended(CustomFileItem customFileItem) : base(customFileItem.GetCustomFileName())
         {
-            this.cshItem = cshItem;
+            this.customFileItem = customFileItem;
         }
-        public ListViewItemExtended(CShItem cshItem, string[] items) : base(items)
+        public ListViewItemExtended(CustomFileItem customFileItem, string[] items) : base(items)
         {
-            this.cshItem = cshItem;
+            this.customFileItem = customFileItem;
         }
 
-        public CShItem CshItem { get => cshItem; }
+        public CustomFileItem CustomFileItem { get => customFileItem; }
     }
 
 }

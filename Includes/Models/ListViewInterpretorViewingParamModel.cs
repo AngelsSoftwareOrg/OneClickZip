@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ExpTreeLib;
+using OneClickZip.Includes.Classes.Extensions;
 
 namespace OneClickZip.Includes.Models
 {
@@ -12,7 +13,7 @@ namespace OneClickZip.Includes.Models
     {
         private TreeNodeExtended selectedTreeNodeExtended;
         private ListView targetListView;
-        private CShItem cshItem;
+        private CustomFileItem customFileItem;
         private ArrayList dirList;
         private ArrayList fileList;
         private bool isEnlistAllDirAndFiles;
@@ -26,9 +27,9 @@ namespace OneClickZip.Includes.Models
 
         public TreeNodeExtended SelectedTreeNodeExtended { get => selectedTreeNodeExtended; set => selectedTreeNodeExtended = value; }
         public ListView TargetListView { get => targetListView; set => targetListView = value; }
-        public CShItem CshItem { get => cshItem; set => cshItem = value; }
         public ArrayList DirList { get => dirList; set => dirList = value; }
         public ArrayList FileList { get => fileList; set => fileList = value; }
         public bool IsEnlistAllDirAndFiles { get => isEnlistAllDirAndFiles; set => isEnlistAllDirAndFiles = value; }
+        public CustomFileItem CustomFileItem { get => customFileItem; set => customFileItem = value; }
     }
 }

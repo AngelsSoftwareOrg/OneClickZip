@@ -17,28 +17,28 @@ namespace OneClickZip.Includes.Classes
         {
             ArrayList dirList = new ArrayList();
             ArrayList fileList = new ArrayList();
-            CShItem cshItem = lvParamModel.CshItem;
-            if (cshItem.DisplayName.Equals(CShItem.strMyComputer))
+            CustomFileItem customeFileName = lvParamModel.CustomFileItem;
+            if (customeFileName.GetCustomFileName().Equals(CShItem.strMyComputer))
             {
-                lvParamModel.DirList = lvParamModel.CshItem.GetDirectories();
+                lvParamModel.DirList = customeFileName.GetShellInfoDirectories();
             }
             else
             {
-                lvParamModel.DirList = lvParamModel.CshItem.GetDirectories();
-                lvParamModel.FileList = lvParamModel.CshItem.GetFiles();
+                lvParamModel.DirList = customeFileName.GetShellInfoDirectories();
+                lvParamModel.FileList = customeFileName.GetShellInfoFiles();
             }
             GenerateListViewCommonProcedure(lvParamModel);
         }
 
         public static void GenerateListViewZipFileViewItems(ListViewInterpretorViewingParamModel lvParamModel) 
         {
-            if (lvParamModel.CshItem.IsFolder)
+            if (lvParamModel.CustomFileItem.IsFolder)
             {
-                lvParamModel.DirList.Add(lvParamModel.CshItem);
+                lvParamModel.DirList.Add(lvParamModel.CustomFileItem);
             }
             else
             {
-                lvParamModel.FileList.Add(lvParamModel.CshItem);
+                lvParamModel.FileList.Add(lvParamModel.CustomFileItem);
             }
 
             GenerateListViewCommonProcedure(lvParamModel);
@@ -53,8 +53,8 @@ namespace OneClickZip.Includes.Classes
             {
                 subNodeName.Add(subNode.Text);
             }
-            lvParamModel.DirList = lvParamModel.CshItem.GetDirectories();
-            lvParamModel.FileList = lvParamModel.CshItem.GetFiles();
+            lvParamModel.DirList = lvParamModel.CustomFileItem.GetShellInfoDirectories();
+            lvParamModel.FileList = lvParamModel.CustomFileItem.GetShellInfoFiles();
             GenerateListViewCommonProcedure(lvParamModel);
         }
 
@@ -75,7 +75,7 @@ namespace OneClickZip.Includes.Classes
                     combinationList.AddRange(dirList);
                     combinationList.AddRange(fileList);
 
-                    foreach (CShItem fileObj in combinationList)
+                    foreach (CustomFileItem fileObj in combinationList)
                     {
                         ListViewItemExtended lvItem=null;
                         if (targetListView.View == View.Details)
@@ -87,7 +87,10 @@ namespace OneClickZip.Includes.Classes
                             lvItem = new ListViewItemExtended(fileObj);
                         }
 
-                        lvItem.ImageIndex = SystemImageListManager.GetIconIndex(fileObj, false);
+                        if (!fileObj.IsCustomFolder)
+                        {
+                            lvItem.ImageIndex = SystemImageListManager.GetIconIndex(fileObj.CshItem, false);
+                        }
                         targetListView.Items.Add(lvItem);
                     }
                 }
@@ -103,15 +106,13 @@ namespace OneClickZip.Includes.Classes
             }
         }
 
-        private static String[] GetFileObjectDetails(CShItem fileObj)
+        private static String[] GetFileObjectDetails(CustomFileItem fileObj)
         {
-            //DirectoryInfo di = new DirectoryInfo(fileObj.Path);
-            //FileInfo fi = new FileInfo(fileObj.Path);
-
+            
             return new string[] {
-                fileObj.DisplayName, //file name
+                fileObj.GetCustomFileName(), //file name
                 fileObj.LastWriteTime.ToString(), //date modified
-                (fileObj.IsFolder) ? "" : ConverterUtils.humanReadableFileSize(fileObj.Length, 2), //file size
+                (fileObj.IsFolder) ? "" : ConverterUtils.humanReadableFileSize(fileObj.FileLength, 2), //file size
                 fileObj.CreationTime.ToString(), // created date time
                 fileObj.TypeName //file type
             };
@@ -131,13 +132,13 @@ namespace OneClickZip.Includes.Classes
             targetListView.BeginUpdate();
             targetListView.Items.Clear();
             //bool isRootNode = TreeNodeInterpreter.IsSelectedZipModelNodeRoot(selectedTreeNodeExtended.TreeView);
-            foreach (CShItem cshItem in selectedTreeNodeExtended.MasterListFilesDir)
+            foreach (CustomFileItem customeFileItem in selectedTreeNodeExtended.MasterListFilesDir)
             {
                 ListViewInterpretorViewingParamModel commonParam = new ListViewInterpretorViewingParamModel()
                 {
                     SelectedTreeNodeExtended = selectedTreeNodeExtended,
                     TargetListView = targetListView,
-                    CshItem = cshItem
+                    CustomFileItem = customeFileItem
                 };
 
                 ListViewInterpretor.GenerateListViewZipFileViewItems(commonParam);

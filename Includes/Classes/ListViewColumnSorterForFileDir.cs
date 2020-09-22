@@ -55,8 +55,8 @@ public class ListViewColumnSorterForFileDir : IComparer
 
         // Compare the two items
 
-        CShItem cashItemX = listviewX.CshItem;
-        CShItem cashItemY = (CShItem) listviewY.CshItem;
+        CShItem cashItemX = listviewX.CustomFileItem.CshItem;
+        CShItem cashItemY = (CShItem) listviewY.CustomFileItem.CshItem;
 
 
         //TODO

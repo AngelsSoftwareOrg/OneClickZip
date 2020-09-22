@@ -97,11 +97,12 @@
     <Compile Include="Includes\Classes\TreeNodeInterpreter.cs" />
     <Compile Include="Includes\Interface\ICreatorExecutor.cs" />
     <Compile Include="Includes\Models\CreatorModel.cs" />
+    <Compile Include="Includes\Models\CustomFileItem.cs" />
     <Compile Include="Includes\Models\ListViewInterpretorViewingParamModel.cs" />
     <Compile Include="Includes\Models\RandomCharsGeneratorModel.cs" />
     <Compile Include="Includes\Models\RandomNumberGeneratorModel.cs" />
     <Compile Include="Includes\Models\DateCreatorModel.cs" />
-    <Compile Include="Includes\Models\TreeNodeExtended.cs" />
+    <Compile Include="Includes\Classes\Extensions\TreeNodeExtended.cs" />
     <Compile Include="Includes\Models\ZipFileModel.cs" />
     <Compile Include="Includes\Models\ZipFileStatisticsModel.cs" />
     <Compile Include="Includes\Resources\ResourceFilter.cs" />
@@ -124,14 +125,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="Forms\ZipDesigner\ZipDesigner.resx">
       <DependentUpon>ZipDesigner.cs</DependentUpon>
     </EmbeddedResource>
@@ -140,6 +136,11 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -160,6 +161,15 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\Icons\PlusMinus 24px.png" />
+    <None Include="Resources\Icons\delete 24px.png" />
+    <None Include="Resources\Icons\clear 24px.png" />
+    <None Include="Resources\Icons\folder Plus 24px.png" />
+    <None Include="Resources\Icons\folder Plus 16px.png" />
+    <None Include="Resources\Icons\folder Plus 32px.png" />
+    <None Include="Resources\Icons\folder Plus 32px.jpg" />
+    <Content Include="Resources\Icons\folder Plus 512px.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

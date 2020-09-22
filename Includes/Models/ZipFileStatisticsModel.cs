@@ -30,7 +30,6 @@ namespace OneClickZip.Includes.Models
             get => estimatedFileSizeCount; 
             set  
             {
-                Console.WriteLine(value);
                 if (value > long.MaxValue) value = long.MaxValue;
                 estimatedFileSizeCount = value; 
             }
