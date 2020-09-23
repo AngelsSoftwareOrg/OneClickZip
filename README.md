@@ -1,2 +1,3 @@
 # OneClickZip
-A GUI Batch File Creator aims to automate in creating a zip file for selected files or folder aims to ease the burden of the user to manual zip file a certain file and folder over and over again with an intention for making a back up for it.
+A GUI application that will able to design your own zip file structure with dynamic contents, and you can add a folder with filtering rules as well to extract specific files and folders.
+You can make a one click zip shortcut, that aims to quickly automate your zipping design without minding to open up the main application.
