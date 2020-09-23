@@ -58,6 +58,9 @@
     <Reference Include="ExpTreeLib, Version=3.0.2.1143, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\ExpTreeLib.3.2.0\lib\ExpTreeLib.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
@@ -83,6 +86,7 @@
       <DependentUpon>FileNameCreatorFrm.cs</DependentUpon>
     </Compile>
     <Compile Include="Includes\Classes\DefaultIcons.cs" />
+    <Compile Include="Includes\Classes\Extensions\TreeNodeSerializable.cs" />
     <Compile Include="Includes\Classes\FileNameCreator.cs" />
     <Compile Include="Includes\Classes\ListViewColumnSorterForFileDir.cs" />
     <Compile Include="Includes\Classes\ListViewColumnSorter.cs" />
@@ -94,7 +98,11 @@
     <Compile Include="Forms\Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="Includes\Classes\SystemIconsImageList.cs" />
     <Compile Include="Includes\Classes\TreeNodeInterpreter.cs" />
+    <Compile Include="Includes\Classes\FileSerialization.cs" />
+    <Compile Include="Includes\Classes\TreeNodeSerialize\SerializableTreeNode.cs" />
+    <Compile Include="Includes\Classes\TreeNodeSerialize\SerializableTreeViewOperation.cs" />
     <Compile Include="Includes\Interface\ICreatorExecutor.cs" />
     <Compile Include="Includes\Models\CreatorModel.cs" />
     <Compile Include="Includes\Models\CustomFileItem.cs" />
@@ -171,5 +179,6 @@
     <None Include="Resources\Icons\folder Plus 32px.jpg" />
     <Content Include="Resources\Icons\folder Plus 512px.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

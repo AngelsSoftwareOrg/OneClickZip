@@ -8,6 +8,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -79,8 +80,7 @@ namespace OneClickZip.Forms.Options
 
         private void BtnSimulateFormula_Click(object sender, EventArgs e)
         {
-            this.filenameCreator.FileFormulaName = txtFileNameFormula.Text;
-            txtSimulatedFilename.Text = this.filenameCreator.GetDerivedFormula();
+            DeriveCreateFileNameFormula();
         }
 
         private void BtnCopyVar_Click(object sender, EventArgs e)
@@ -100,8 +100,57 @@ namespace OneClickZip.Forms.Options
 
         private void btnSaveExit_Click(object sender, EventArgs e)
         {
+            DeriveCreateFileNameFormula();
+
+            if (IsFileNameCreatedValid())
+            {
+                this.filenameCreator.FileFormulaName = txtFileNameFormula.Text;
+                this.Close();
+            }
+        }
+
+        private void DeriveCreateFileNameFormula()
+        {
             this.filenameCreator.FileFormulaName = txtFileNameFormula.Text;
-            this.Close();
+            txtSimulatedFilename.Text = this.filenameCreator.GetDerivedFormula();
+            CountFileNameCharacters();
+        }
+
+        private void CountFileNameCharacters()
+        {
+            long totalCount = 0;
+            totalCount = (txtSimulatedFilename.Text == null) ? 0 : txtSimulatedFilename.Text.Length;
+            String labelDisplay = "(Character Count: {0})";
+            lblCharCount.Text = String.Format(labelDisplay, totalCount);
+        }
+        private bool IsFileNameCreatedValid()
+        {
+            if(txtSimulatedFilename.Text == null)
+            {
+                MessageBox.Show("Please input Zip File Name to use.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            if (txtSimulatedFilename.Text.Trim().Length<=0)
+            {
+                MessageBox.Show("Please input Zip File Name to use.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            if (txtSimulatedFilename.Text.Trim().Length >= 256)
+            {
+                MessageBox.Show("Please limit your zip file name within 256 characters", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            MatchCollection matchValueCol = Regex.Matches(txtFileNameFormula.Text.Trim(), CreatorModel.FORMULA_PATTER_REGEX_COMPLETE);
+            if (matchValueCol.Count <= 0)
+            {
+                MessageBox.Show("It seems you had no dynamic reference added in your file name. It is better to " +
+                    "add a dynamic value to minimize overwriting the same zip file on the system", 
+                    "Warning to prevent OVERWRITING", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return true;
+            }
+
+            return true;
         }
 
         public FileNameCreator GetFileCreatorName()

@@ -13,6 +13,7 @@ namespace OneClickZip.Includes.Models
     {
         private static String FORMULA_PATTERN_REGEX_START = "\\$";
         private static String FORMULA_PATTERN_REGEX = "{.*?\\}";
+        public static string FORMULA_PATTER_REGEX_COMPLETE = "\\$.*?\\{.*?\\}";
 
         protected List<KeyValuePair<String, String>> GetFormulaValue(String formulaCode, String actualFormulaValue)
         {
@@ -20,7 +21,7 @@ namespace OneClickZip.Includes.Models
             String completPattern = FORMULA_PATTERN_REGEX_START + formulaCode + FORMULA_PATTERN_REGEX;
 
             //DEBUG
-            Console.WriteLine("Complete Formula: " + completPattern);
+            //Console.WriteLine("Complete Formula: " + completPattern);
 
             MatchCollection matchValueCol = Regex.Matches(actualFormulaValue, @completPattern);
             for (var i = 0; i < matchValueCol.Count; i++)
@@ -31,7 +32,7 @@ namespace OneClickZip.Includes.Models
                 arrKeyValuePair.Add(kvp);
 
                 //default
-                Console.WriteLine(formula + " - " + value);
+                //Console.WriteLine(formula + " - " + value);
             }
             return arrKeyValuePair;
         }
@@ -143,12 +144,12 @@ namespace OneClickZip.Includes.Models
             //how many tab had this property value
             //repeat = (repeat <= 0) ? 1 : repeat;
 
-            Console.WriteLine(valueToAsses 
-                                + ", Length: " + valueToAsses.Length 
-                                + ", Asses: " + (charPerTab - (valueToAsses.Length % charPerTab))
-                                + ", inputTabCount : " + inputTabCount
-                                + ", longestTabCount : " + longestTabCount
-                                + ", tab : " + (new String(Char.Parse("t"), inputTabCount)));
+            //Console.WriteLine(valueToAsses 
+            //                    + ", Length: " + valueToAsses.Length 
+            //                    + ", Asses: " + (charPerTab - (valueToAsses.Length % charPerTab))
+            //                    + ", inputTabCount : " + inputTabCount
+            //                    + ", longestTabCount : " + longestTabCount
+            //                    + ", tab : " + (new String(Char.Parse("t"), inputTabCount)));
 
 
 

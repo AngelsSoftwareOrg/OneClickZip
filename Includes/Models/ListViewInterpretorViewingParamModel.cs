@@ -17,6 +17,7 @@ namespace OneClickZip.Includes.Models
         private ArrayList dirList;
         private ArrayList fileList;
         private bool isEnlistAllDirAndFiles;
+        private CShItem cshItem;
 
         public ListViewInterpretorViewingParamModel()
         {
@@ -31,5 +32,7 @@ namespace OneClickZip.Includes.Models
         public ArrayList FileList { get => fileList; set => fileList = value; }
         public bool IsEnlistAllDirAndFiles { get => isEnlistAllDirAndFiles; set => isEnlistAllDirAndFiles = value; }
         public CustomFileItem CustomFileItem { get => customFileItem; set => customFileItem = value; }
+        public CShItem CshItem { get => cshItem; set => cshItem = value; }
+
     }
 }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace OneClickZip.Includes.Resources
 {
-    class ResourcesUtil : ResourceFilter
+    public class ResourcesUtil : IDisposable 
     {
         private static ResourceManager RESOURCE_MANAGER;
         private static readonly String RESOURCE_NAME = "OneClickZip.Properties.Resources";
@@ -23,11 +23,20 @@ namespace OneClickZip.Includes.Resources
         private static List<ResourcePropertiesModel> getRandomNumberFormulaProperties = new List<ResourcePropertiesModel>();
         private static List<ResourcePropertiesModel> getRandomCharsFormulaProperties = new List<ResourcePropertiesModel>();
 
+        private static readonly String FILE_DESIGNER_FILTER_NAME = "FILE_DESIGNER_FILTER_NAME";
+        private static readonly String FILE_BATCH_ONE_CLICK_FILTER_NAME = "FILE_BATCH_ONE_CLICK_FILTER_NAME";
+        private static readonly String FILE_DESIGNER_EXTENSION_NAME = "FILE_DESIGNER_EXTENSION_NAME";
+        private static readonly String FILE_BATCH_ONE_CLICK_EXTENSION_NAME = "FILE_BATCH_ONE_CLICK_EXTENSION_NAME";
+
+
         static ResourcesUtil()
         {
             RESOURCE_MANAGER = new ResourceManager(RESOURCE_NAME, typeof(ResourcesUtil).Assembly);
         }
-
+        private static string getSetting(String settingName)
+        {
+            return RESOURCE_MANAGER.GetString(settingName);
+        }
 
         public static List<ResourcePropertiesModel> GetDateFormulaProperties()
         {
@@ -79,10 +88,30 @@ namespace OneClickZip.Includes.Resources
 
         private static List<String> GetResourcePropertiesModel()
         {
-            List<String> results = new List<String>();
             String fileObject = Encoding.UTF8.GetString((Byte[])RESOURCE_MANAGER.GetObject(RESOURCE_PROPERTY_FILE_NAME));
             return fileObject.Split(Char.Parse("\n")).ToList<string>();
         }
 
+        public static String GetFileDesignerFilterName()
+        {
+            return getSetting(FILE_DESIGNER_FILTER_NAME);
+        }
+        public static String GetFileBatchFilterName()
+        {
+            return getSetting(FILE_BATCH_ONE_CLICK_FILTER_NAME);
+        }
+        public static String GetFileDesignerExtensionName()
+        {
+            return getSetting(FILE_DESIGNER_EXTENSION_NAME);
+        }
+        public static String GetFileBatchExtensionName()
+        {
+            return getSetting(FILE_BATCH_ONE_CLICK_EXTENSION_NAME);
+        }
+
+        public void Dispose()
+        {
+            RESOURCE_MANAGER = null;
+        }
     }
 }

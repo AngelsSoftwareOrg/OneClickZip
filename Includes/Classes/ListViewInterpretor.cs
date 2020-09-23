@@ -13,12 +13,13 @@ namespace OneClickZip.Includes.Classes
 {
     public class ListViewInterpretor
     {
+
         public static void GenerateListViewExplorerItems(ListViewInterpretorViewingParamModel lvParamModel)
         {
             ArrayList dirList = new ArrayList();
             ArrayList fileList = new ArrayList();
             CustomFileItem customeFileName = lvParamModel.CustomFileItem;
-            if (customeFileName.GetCustomFileName().Equals(CShItem.strMyComputer))
+            if (customeFileName.GetCustomFileName.Equals(CShItem.strMyComputer))
             {
                 lvParamModel.DirList = customeFileName.GetShellInfoDirectories();
             }
@@ -87,9 +88,13 @@ namespace OneClickZip.Includes.Classes
                             lvItem = new ListViewItemExtended(fileObj);
                         }
 
-                        if (!fileObj.IsCustomFolder)
+                        if (fileObj.IsCustomFolder)
                         {
-                            lvItem.ImageIndex = SystemImageListManager.GetIconIndex(fileObj.CshItem, false);
+                            lvItem.ImageIndex = DefaultIcons.SYSTEM_ICONS.GetIconIndexForDirectories();
+                        }
+                        else
+                        {
+                            lvItem.ImageIndex = DefaultIcons.SYSTEM_ICONS.GetIconIndex(fileObj.FilePathFull);
                         }
                         targetListView.Items.Add(lvItem);
                     }
@@ -108,9 +113,8 @@ namespace OneClickZip.Includes.Classes
 
         private static String[] GetFileObjectDetails(CustomFileItem fileObj)
         {
-            
             return new string[] {
-                fileObj.GetCustomFileName(), //file name
+                fileObj.GetCustomFileName, //file name
                 fileObj.LastWriteTime.ToString(), //date modified
                 (fileObj.IsFolder) ? "" : ConverterUtils.humanReadableFileSize(fileObj.FileLength, 2), //file size
                 fileObj.CreationTime.ToString(), // created date time
@@ -123,8 +127,8 @@ namespace OneClickZip.Includes.Classes
          */
         public static void RefreshToShowExplorerIcons(ListView targetListView)
         {
-            SystemImageListManager.SetListViewImageList(targetListView, false, false);
-            SystemImageListManager.SetListViewImageList(targetListView, true, false);
+            targetListView.SmallImageList = DefaultIcons.SYSTEM_ICONS.SmallIconsImageList;
+            targetListView.LargeImageList = DefaultIcons.SYSTEM_ICONS.LargeIconsImageList;
         }
 
         public static void RefreshListViewItemsForZipFileDesigner(ListView targetListView,  TreeNodeExtended selectedTreeNodeExtended)

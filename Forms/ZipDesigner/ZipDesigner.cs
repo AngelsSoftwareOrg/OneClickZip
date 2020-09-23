@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ using OneClickZip.Includes.Classes.Extensions;
 using OneClickZip.Includes.Models;
 using OneClickZip.Includes.Resources;
 using OneClickZip.Includes.Utilities;
+using static OneClickZip.Includes.Classes.FileSerialization;
 
 namespace OneClickZip
 {
@@ -34,8 +36,8 @@ namespace OneClickZip
             TreeNodeInterpreter.RefreshToShowTreeViewIcons(treeViewZipDesigner);
         }
 
-        #region Setter Getter
-        Includes.Models.ZipFileModel ZipFileModel { get => zipFileModel; set => zipFileModel = value; }
+#region Setter Getter
+        ZipFileModel ZipFileModel { get => zipFileModel; set => zipFileModel = value; }
 #endregion
 
 #region EXP Dir related functions
@@ -59,7 +61,8 @@ namespace OneClickZip
                 new ListViewInterpretorViewingParamModel(){
                    TargetListView = listViewSearchDirExp, 
                    CustomFileItem = new CustomFileItem(cshItem.DisplayName, cshItem),
-                   IsEnlistAllDirAndFiles = true
+                   IsEnlistAllDirAndFiles = true,
+                   CshItem = cshItem
                 });
         }
 
@@ -168,7 +171,7 @@ namespace OneClickZip
         {
             TreeNodeExtended newTreeNode = TreeNodeInterpreter.AddNewCustomFolderNode(treeViewZipDesigner);
             treeViewZipDesigner.SelectedNode = newTreeNode;
-            
+            editTreeViewNodeLabel();
         }
 
         private void btnZipClear_Click(object sender, EventArgs e)
@@ -230,7 +233,7 @@ namespace OneClickZip
                     /* Cancel the label edit action, inform the user, and place the node in edit mode again. */
                     e.CancelEdit = true;
                     MessageBox.Show("Invalid tree node label.\n" + "The invalid characters are: '@','.', ',', '!'",
-                        "Node Label Edit");
+                        "Node Label Edit", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     e.Node.BeginEdit();
                 }
             }
@@ -238,12 +241,20 @@ namespace OneClickZip
             {
                 /* Cancel the label edit action, inform the user, and place the node in edit mode again. */
                 e.CancelEdit = true;
-                MessageBox.Show("Invalid tree node label.\nThe label cannot be blank", "Node Label Edit");
+                MessageBox.Show("Invalid tree node label.\nThe label cannot be blank", 
+                    "Node Label Edit", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 e.Node.BeginEdit();
             }
         }
 
- #endregion
+        private void treeViewZipDesigner_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F2)
+            {
+                editTreeViewNodeLabel();
+            }
+        }
+#endregion
 
 
 #region List View Sorter
@@ -335,18 +346,120 @@ namespace OneClickZip
             txtEstimatedZipFileSize.Text = ConverterUtils.humanReadableFileSize(statistic.EstimatedFileSizeCount).ToString();
         }
 
-        #endregion
 
-#region Main Menu Strip
+        private void btnSaveZipDesign_Click(object sender, EventArgs e)
+        {
+            SaveProjectAsCurrent();
+        }
+
+        private bool IsProjectDataCompleted()
+        {
+            String message;
+
+            if(fileNameCreator == null)
+            {
+                message = "Please fill up a new Zip File Name.";
+            }
+            else if (fileNameCreator.FileFormulaName == null)
+            {
+                message = "Please fill up a new Zip File Name.";
+            }
+            else if (fileNameCreator.FileFormulaName.Trim().Length<=0)
+            {
+                message = "Please fill up a new Zip File Name.";
+            }
+            else if (((TreeNodeExtended) treeViewZipDesigner.Nodes[0]).MasterListFilesDir.Count <= 0)
+            {
+                message = "Please add at least a file or folder on the zip designer";
+            }
+            else
+            {
+                return true;
+            }
+
+            MessageBox.Show(message, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+            return false;
+        }
+
+#endregion
+
+        #region Main Menu Strip
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveProjectAsCurrent();
+        }
 
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveProjectAsNew();
+        }
+
+        private void SaveProjectAsNew()
+        {
+            if (!IsProjectDataCompleted()) return;
+            ZipFileModel zipFileModel = new ZipFileModel(treeViewZipDesigner, fileNameCreator);
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = ResourcesUtil.GetFileDesignerFilterName();
+            saveFileDialog.Title = "Save a File Designer project";
+            saveFileDialog.ShowDialog();
+
+            // If the file name is not an empty string open it for saving.
+            if (saveFileDialog.FileName != "")
+            {
+                if (saveFileDialog.CheckPathExists)
+                {
+                    //FileSerialization.SaveObjectToFile(Serialization.BinarySerialization, saveFileDialog.FileName, zipFileModel);
+
+                    //FileSerialization.SaveObjectToFile(Serialization.BinarySerialization, saveFileDialog.FileName, 
+                    //    ( ((CustomFileItem) ((TreeNodeExtended) treeViewZipDesigner.Nodes[0]).MasterListFilesDir[0])).CshItem);
+
+
+
+
+
+
+                    //txtZipFileLocation.Text = saveFileDialog.FileName;
+                    //zipFileModel.FilePath = saveFileDialog.FileName;
+                    //this.zipFileModel = zipFileModel;
+                }
+            }
+        }
+
+        private void SaveProjectAsCurrent()
+        {
+            if (zipFileModel == null)
+            {
+                SaveProjectAsNew();
+                return;
+            }
+            else if (zipFileModel.FilePath == null)
+            {
+                SaveProjectAsNew();
+                return;
+            }
+            else if (zipFileModel.FilePath.Length <= 0)
+            {
+                SaveProjectAsNew();
+                return;
+            }
+
+            if (IsProjectDataCompleted())
+            {
+                zipFileModel.TreeViewZipFileStructure = treeViewZipDesigner;
+                zipFileModel.FileNameCreator = fileNameCreator;
+                FileSerialization.SaveObjectToFile(Serialization.BinarySerialization, zipFileModel.FilePath, zipFileModel);
+            }
+        }
 #endregion
 
-#region Context Strip for Zip File Tree View
+        #region Context Strip for Zip File Tree View
 
         private void expandToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -368,8 +481,13 @@ namespace OneClickZip
 
         private void tsmTvdEditLabel_Click(object sender, EventArgs e)
         {
+            editTreeViewNodeLabel();
+        }
+
+        private void editTreeViewNodeLabel()
+        {
             if (treeViewZipDesigner.SelectedNode == null) return;
-            TreeNodeExtended selectedNode = (TreeNodeExtended) treeViewZipDesigner.SelectedNode;
+            TreeNodeExtended selectedNode = (TreeNodeExtended)treeViewZipDesigner.SelectedNode;
             if (selectedNode.IsRootNode)
             {
                 MessageBox.Show("No tree node selected or selected node is a root node.\n" +
@@ -386,8 +504,12 @@ namespace OneClickZip
         }
 
 
-#endregion
 
+
+
+
+
+        #endregion
 
     }
 

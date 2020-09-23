@@ -44,6 +44,7 @@
             this.txtSelectedVariable = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnSaveExit = new System.Windows.Forms.Button();
+            this.lblCharCount = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.SuspendLayout();
@@ -87,6 +88,7 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.lblCharCount);
             this.panel3.Controls.Add(this.btnClearFilename);
             this.panel3.Controls.Add(this.btnInsertVar);
             this.panel3.Controls.Add(this.btnCopyVar);
@@ -150,9 +152,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(3, 125);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(243, 17);
+            this.label3.Size = new System.Drawing.Size(139, 17);
             this.label3.TabIndex = 13;
-            this.label3.Text = "Here\'s your new simulated Filename: ";
+            this.label3.Text = "Simulated Filename: ";
             // 
             // txtSimulatedFilename
             // 
@@ -211,6 +213,15 @@
             this.btnSaveExit.UseVisualStyleBackColor = true;
             this.btnSaveExit.Click += new System.EventHandler(this.btnSaveExit_Click);
             // 
+            // lblCharCount
+            // 
+            this.lblCharCount.AutoSize = true;
+            this.lblCharCount.Location = new System.Drawing.Point(134, 125);
+            this.lblCharCount.Name = "lblCharCount";
+            this.lblCharCount.Size = new System.Drawing.Size(137, 17);
+            this.lblCharCount.TabIndex = 18;
+            this.lblCharCount.Text = "(Character Count: 0)";
+            // 
             // FileNameCreatorFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -248,5 +259,6 @@
         private System.Windows.Forms.Button btnInsertVar;
         private System.Windows.Forms.Button btnCopyVar;
         private System.Windows.Forms.Button btnClearFilename;
+        private System.Windows.Forms.Label lblCharCount;
     }
 }

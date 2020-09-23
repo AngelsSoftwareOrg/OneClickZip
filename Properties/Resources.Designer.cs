@@ -91,6 +91,42 @@ namespace OneClickZip.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to oczb.
+        /// </summary>
+        internal static string FILE_BATCH_ONE_CLICK_EXTENSION_NAME {
+            get {
+                return ResourceManager.GetString("FILE_BATCH_ONE_CLICK_EXTENSION_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One Click Zip Batch File|*.oczb.
+        /// </summary>
+        internal static string FILE_BATCH_ONE_CLICK_FILTER_NAME {
+            get {
+                return ResourceManager.GetString("FILE_BATCH_ONE_CLICK_FILTER_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to oczd.
+        /// </summary>
+        internal static string FILE_DESIGNER_EXTENSION_NAME {
+            get {
+                return ResourceManager.GetString("FILE_DESIGNER_EXTENSION_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One Click Zip Designer|*.oczd.
+        /// </summary>
+        internal static string FILE_DESIGNER_FILTER_NAME {
+            get {
+                return ResourceManager.GetString("FILE_DESIGNER_FILTER_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap folder_Plus_16px {

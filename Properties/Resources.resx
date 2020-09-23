@@ -142,4 +142,20 @@
   <data name="PlusMinus_24px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icons\PlusMinus 24px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="FILE_BATCH_ONE_CLICK_EXTENSION_NAME" xml:space="preserve">
+    <value>oczb</value>
+    <comment>Use for saving and opening zip file designer</comment>
+  </data>
+  <data name="FILE_BATCH_ONE_CLICK_FILTER_NAME" xml:space="preserve">
+    <value>One Click Zip Batch File|*.oczb</value>
+    <comment>Use for saving and opening zip file designer</comment>
+  </data>
+  <data name="FILE_DESIGNER_EXTENSION_NAME" xml:space="preserve">
+    <value>oczd</value>
+    <comment>Use for saving and opening zip file designer</comment>
+  </data>
+  <data name="FILE_DESIGNER_FILTER_NAME" xml:space="preserve">
+    <value>One Click Zip Designer|*.oczd</value>
+    <comment>Use for saving and opening zip file designer</comment>
+  </data>
 </root>

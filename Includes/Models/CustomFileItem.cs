@@ -1,16 +1,25 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ExpTreeLib;
+using OneClickZip.Includes.Classes;
 
 namespace OneClickZip.Includes.Models
 {
+    [Serializable]
     public class CustomFileItem : IDisposable, IComparable
     {
-        private CShItem cshItem;
+        //private CShItem cshItem;
+
+        private string keyName = String.Empty;
+        private int iconIndexNormal = -1;
+        private int iconIndexOpen = -1;
+        private Object tag;
+        private String filePathFull;
         private bool isCustomFolder;
         private bool isFolder;
         private String customFileName;
@@ -35,8 +44,63 @@ namespace OneClickZip.Includes.Models
         {
             commonInitialization();
             this.customFileName = fileName;
-            this.cshItem = cshItem;
+            //this.cshItem = cshItem;
+
+            this.KeyName = cshItem.Name;
+            this.Tag = cshItem.Tag;
+           
+            this.lastWriteTime = cshItem.LastWriteTime;
+            this.creationTime = cshItem.CreationTime;
+            this.typeName = cshItem.TypeName;
+            this.fileLength = cshItem.Length;
+            this.filePathFull = cshItem.Path;
+            //this.IconIndexOpen = DefaultIcons.SYSTEM_ICONS.GetIconIndex(cshItem.Path);
+            //this.IconIndexNormal = this.IconIndexOpen;
+            SetIconsIndex(cshItem.Path);
         }
+
+        public CustomFileItem(String fileName, FileInfo fileInfo)
+        {
+            commonInitialization();
+            this.customFileName = fileName;
+            this.KeyName = fileInfo.Name;
+            this.lastWriteTime = fileInfo.LastWriteTime;
+            this.creationTime = fileInfo.CreationTime;
+            this.typeName = fileInfo.GetType().ToString();
+            this.fileLength = fileInfo.Length;
+            this.filePathFull = fileInfo.FullName;
+            //this.IconIndexOpen = DefaultIcons.SYSTEM_ICONS.GetIconIndex(fileInfo.FullName);
+            //this.IconIndexNormal = this.IconIndexOpen;
+            SetIconsIndex(fileInfo.FullName);
+        }
+
+        public CustomFileItem(String fileName, DirectoryInfo directoryInfor)
+        {
+            commonInitialization();
+            this.customFileName = fileName;
+            this.KeyName = directoryInfor.Name;
+            this.lastWriteTime = directoryInfor.LastWriteTime;
+            this.creationTime = directoryInfor.CreationTime;
+            this.typeName = directoryInfor.GetType().ToString();
+            this.fileLength = 0;
+            this.filePathFull = directoryInfor.FullName;
+            SetIconsIndex(directoryInfor.FullName);
+        }
+
+        private void SetIconsIndex(String fullPath)
+        {
+            if (IsFullPathIsDirectory(fullPath))
+            {
+                this.IconIndexOpen = DefaultIcons.SYSTEM_ICONS.GetIconIndexForDirectories();
+                this.IconIndexNormal = this.IconIndexOpen;
+            }
+            else
+            {
+                this.IconIndexOpen = DefaultIcons.SYSTEM_ICONS.GetIconIndex(fullPath);
+                this.IconIndexNormal = this.IconIndexOpen;
+            }
+        }
+
 
         private void commonInitialization()
         {
@@ -48,11 +112,13 @@ namespace OneClickZip.Includes.Models
             this.fileLength = 0;
         }
 
-        public String GetCustomFileName()
+        public String GetCustomFileName
         {
-            if (customFileName != null) return customFileName;
-            if (cshItem != null) return cshItem.DisplayName;
-            throw new Exception("couldnt locate file item name");
+            get
+            {
+                if (customFileName != null) return customFileName;
+                return KeyName;
+            }
         }
 
         public String SetCustomFileName
@@ -62,15 +128,15 @@ namespace OneClickZip.Includes.Models
             }
         }
 
-
-        public CShItem CshItem { get => cshItem; }
+        //public CShItem CshItem { get => cshItem; }
         
         public ArrayList GetShellInfoDirectories()
         {
             ArrayList result = new ArrayList();
-            foreach (CShItem obj in this.cshItem.GetDirectories())
+            DirectoryInfo dInfo = new DirectoryInfo(this.filePathFull);
+            foreach (DirectoryInfo obj in dInfo.GetDirectories())
             {
-                result.Add(new CustomFileItem(obj.DisplayName, obj)
+                result.Add(new CustomFileItem(obj.Name, obj)
                 {
                     isFolder = true
                 });
@@ -81,9 +147,11 @@ namespace OneClickZip.Includes.Models
         public ArrayList GetShellInfoFiles()
         {
             ArrayList result = new ArrayList();
-            foreach (CShItem obj in this.cshItem.GetFiles())
+            DirectoryInfo dInfo = new DirectoryInfo(this.filePathFull);
+
+            foreach (FileInfo obj in dInfo.GetFiles())
             {
-                result.Add(new CustomFileItem(obj.DisplayName, obj)
+                result.Add(new CustomFileItem(obj.Name, obj)
                 {
                     isFolder = false
                 });
@@ -94,9 +162,8 @@ namespace OneClickZip.Includes.Models
         public int CompareTo(Object obj)
         {
             if (obj == null) return 1;
-
             CustomFileItem cft = (CustomFileItem)obj;
-            return this.customFileName.CompareTo(cft.GetCustomFileName());
+            return this.customFileName.CompareTo(cft.GetCustomFileName);
         }
 
         public void Dispose()
@@ -119,11 +186,7 @@ namespace OneClickZip.Includes.Models
         {
             get 
             {
-                if (isCustomFolder)
-                {
-                    return lastWriteTime;
-                }
-                return this.cshItem.LastWriteTime;
+                return lastWriteTime;
             }
         }
 
@@ -131,22 +194,14 @@ namespace OneClickZip.Includes.Models
         {
             get
             {
-                if (isCustomFolder)
-                {
-                    return creationTime;
-                }
-                return this.cshItem.CreationTime;
+                return creationTime;
             }
         }
         public string TypeName
         {
             get
             {
-                if (isCustomFolder)
-                {
-                    return typeName;
-                }
-                return this.cshItem.TypeName;
+                return typeName;
             }
         }
 
@@ -154,14 +209,37 @@ namespace OneClickZip.Includes.Models
         {
             get
             {
-                if (isCustomFolder)
-                {
-                    return fileLength;
-                }
-                return this.cshItem.Length;
+                return fileLength;
             }
         }
-        
 
+        public string KeyName { get => keyName; set => keyName = value; }
+        public int IconIndexNormal { get => iconIndexNormal; set => iconIndexNormal = value; }
+        public int IconIndexOpen { get => iconIndexOpen; set => iconIndexOpen = value; }
+        public object Tag { get => tag; set => tag = value; }
+        public long DirectoriesCount { 
+            get 
+            {
+                DirectoryInfo dInfo = new DirectoryInfo(this.filePathFull);
+                return (IsFullPathIsDirectory(this.filePathFull) ? dInfo.GetDirectories().Length : 0);
+            }
+         }
+        public long FilesCount {
+            get
+            {
+                DirectoryInfo dInfo = new DirectoryInfo(this.filePathFull);
+                return (IsFullPathIsDirectory(this.filePathFull) ? dInfo.GetFiles().Length : 0);
+            }
+        }
+        public string FilePathFull { get => filePathFull; }
+        private bool IsFullPathIsDirectory(String fullPath)
+        {
+            DirectoryInfo dInfo = new DirectoryInfo(this.filePathFull);
+            if ((dInfo.Attributes & FileAttributes.Directory) == FileAttributes.Directory)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

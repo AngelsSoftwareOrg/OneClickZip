@@ -8,5 +8,7 @@ namespace OneClickZip.Includes.Resources
 {
     partial class ResourceFilter
     {
+
+
     }
 }

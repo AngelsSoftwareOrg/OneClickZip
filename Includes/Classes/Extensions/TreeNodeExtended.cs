@@ -51,7 +51,7 @@ namespace OneClickZip.Includes.Classes.Extensions
         public void RemoveItem(CustomFileItem customFileItem)
         {
             this.masterListFilesDir.Remove(customFileItem);
-            this.RemoveSubNode(customFileItem.GetCustomFileName());
+            this.RemoveSubNode(customFileItem.GetCustomFileName);
         }
 
         public void RemoveItemByNodeName(String nodeName)
@@ -59,7 +59,7 @@ namespace OneClickZip.Includes.Classes.Extensions
             List<CustomFileItem> listForRemoval = new List<CustomFileItem>();
             foreach (CustomFileItem customeFileName in this.masterListFilesDir)
             {
-                if (customeFileName.GetCustomFileName() == nodeName)
+                if (customeFileName.GetCustomFileName == nodeName)
                 {
                     listForRemoval.Add(customeFileName);
                 }
@@ -75,7 +75,7 @@ namespace OneClickZip.Includes.Classes.Extensions
         {
             foreach (CustomFileItem customeFileName in this.masterListFilesDir)
             {
-                if (customeFileName.GetCustomFileName() == oldName)
+                if (customeFileName.GetCustomFileName == oldName)
                 {
                     customeFileName.SetCustomFileName = newDisplayText;
                 }

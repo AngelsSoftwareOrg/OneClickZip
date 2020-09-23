@@ -9,7 +9,7 @@ namespace OneClickZip.Includes.Classes.Extensions
     {
         private CustomFileItem customFileItem;
         
-        public ListViewItemExtended(CustomFileItem customFileItem) : base(customFileItem.GetCustomFileName())
+        public ListViewItemExtended(CustomFileItem customFileItem) : base(customFileItem.GetCustomFileName)
         {
             this.customFileItem = customFileItem;
         }

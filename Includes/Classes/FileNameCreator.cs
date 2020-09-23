@@ -10,6 +10,7 @@ using OneClickZip.Includes.Resources;
 
 namespace OneClickZip.Includes.Classes
 {
+    [Serializable]
     public class FileNameCreator
     {
         private String fileFormulaName;
@@ -28,8 +29,6 @@ namespace OneClickZip.Includes.Classes
             this.FileFormulaName = fileFormulaName;
         }
 
-        public string FileFormulaName { get => fileFormulaName; set => fileFormulaName = value; }
-
         public String GetDerivedFormula()
         {
             String result = this.FileFormulaName;
@@ -43,7 +42,6 @@ namespace OneClickZip.Includes.Classes
             return result;
         }
 
-
         public List<ResourcePropertiesModel> GetResourcePropertiesList(bool includeHeader = false)
         {
             List<ResourcePropertiesModel> resource = new List<ResourcePropertiesModel>();
@@ -52,9 +50,10 @@ namespace OneClickZip.Includes.Classes
             {
                 resource.AddRange(iec.GetResourcePropertiesList(includeHeader));
             }
-
             return resource;
         }
+
+        public string FileFormulaName { get => fileFormulaName; set => fileFormulaName = value; }
 
     }
 }

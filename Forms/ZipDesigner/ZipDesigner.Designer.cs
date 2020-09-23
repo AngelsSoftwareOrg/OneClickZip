@@ -188,6 +188,7 @@
             this.btnSaveZipDesign.TabIndex = 3;
             this.btnSaveZipDesign.Text = "Save Zip File Design";
             this.btnSaveZipDesign.UseVisualStyleBackColor = true;
+            this.btnSaveZipDesign.Click += new System.EventHandler(this.btnSaveZipDesign_Click);
             // 
             // panel10
             // 
@@ -583,6 +584,7 @@
             this.treeViewZipDesigner.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeViewZipDesigner_AfterLabelEdit);
             this.treeViewZipDesigner.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.TreeViewZipDesigner_BeforeSelectHandler);
             this.treeViewZipDesigner.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeViewZipDesigner_AfterSelectHandler);
+            this.treeViewZipDesigner.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeViewZipDesigner_KeyDown);
             // 
             // ctxMenuZipFileTree
             // 
@@ -815,12 +817,14 @@
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(143, 26);
             this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
             this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(143, 26);
             this.saveAsToolStripMenuItem.Text = "Save As";
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 

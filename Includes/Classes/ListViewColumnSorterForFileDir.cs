@@ -1,5 +1,6 @@
 ﻿using ExpTreeLib;
 using OneClickZip.Includes.Classes.Extensions;
+using OneClickZip.Includes.Models;
 using System.Collections;
 using System.Windows.Forms;
 
@@ -55,8 +56,8 @@ public class ListViewColumnSorterForFileDir : IComparer
 
         // Compare the two items
 
-        CShItem cashItemX = listviewX.CustomFileItem.CshItem;
-        CShItem cashItemY = (CShItem) listviewY.CustomFileItem.CshItem;
+        CustomFileItem cashItemX = listviewX.CustomFileItem;
+        CustomFileItem cashItemY = (CustomFileItem) listviewY.CustomFileItem;
 
 
         //TODO
