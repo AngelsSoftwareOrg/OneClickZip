@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace OneClickZip.Includes.Models
 {
+    [Serializable]
     class DateCreatorModel : CreatorModel, ICreatorExecutor
     {
         private List<ResourcePropertiesModel> dateGenerator = ResourcesUtil.GetDateFormulaProperties();
@@ -23,7 +24,6 @@ namespace OneClickZip.Includes.Models
                 { "Standard", "generateFormattedDate" }
             };
         }
-
 
         public List<ResourcePropertiesModel> GetResourcePropertiesList(bool includeHeader)
         {

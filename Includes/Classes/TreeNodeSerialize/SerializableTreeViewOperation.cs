@@ -17,16 +17,17 @@ namespace OneClickZip.Includes.Classes.TreeNodeSerialize
         /// <summary>
         /// This function prepares an StreeNode Similar to the treeView
         /// </summary>
-        public static SerializableTreeNode fnPrepareToWrite(TreeView treeView)
+        public static SerializableTreeNode fnPrepareToWrite(TreeNodeExtended treeNodeExtended)
         {
             try
             {
-                TreeNodeExtended treeNode = new TreeNodeExtended();
-                foreach (TreeNodeExtended tr in treeView.Nodes)
+                TreeNodeExtended treeNodeDestination = (TreeNodeExtended) treeNodeExtended.Clone();
+                treeNodeDestination.Nodes.Clear();
+                foreach (TreeNodeExtended treeNodeItr in treeNodeExtended.Nodes)
                 {
-                    treeNode.Nodes.Add((TreeNodeExtended)tr.Clone());
+                    treeNodeDestination.Nodes.Add((TreeNodeExtended)treeNodeItr.Clone());
                 }
-                SerializableTreeNode FinalStr = fnPrepareTreeNode(treeNode);
+                SerializableTreeNode FinalStr = fnPrepareTreeNode(treeNodeDestination);
                 return FinalStr;
             }
             catch (Exception ex)
@@ -114,6 +115,10 @@ namespace OneClickZip.Includes.Classes.TreeNodeSerialize
             destination.ImageIndex = source.ImageIndex;
             destination.Text = source.Text;
             destination.SelectedImageIndex = source.SelectedImageIndex;
+            destination.MasterListFilesDir.AddRange(source.MasterListFilesDir.ToArray());
+            destination.IsStructuredNode = source.IsStructuredNode;
+            destination.IsCustomFolder = source.IsCustomFolder;
+            //destination.IsRootNode = source.IsRootNode; //no need
         }
 
         private static void SerializeTreeNode(TreeNodeExtended source, SerializableTreeNode destination)
@@ -123,6 +128,11 @@ namespace OneClickZip.Includes.Classes.TreeNodeSerialize
             destination.ImageIndex = source.ImageIndex;
             destination.Text = source.Text.ToString();
             destination.SelectedImageIndex = source.SelectedImageIndex;
+            destination.MasterListFilesDir.AddRange(source.MasterListFilesDir.ToArray());
+            destination.IsStructuredNode = source.IsStructuredNode;
+            destination.IsCustomFolder = source.IsCustomFolder;
+            destination.IsRootNode = source.IsRootNode;
+
             if (source.Tag != null)
                 destination.Tag = source.Tag.ToString();
             else

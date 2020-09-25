@@ -106,7 +106,6 @@ namespace OneClickZip
 
 #endregion
 
-
 #region ZIP Designer Controls and related functions
 
         private void ZipDesignerHandlersAndActivation()
@@ -121,6 +120,11 @@ namespace OneClickZip
         }
 
         private void TreeViewZipDesigner_AfterSelectHandler(object sender, TreeViewEventArgs e)
+        {
+            RefreshListViewAfterNodeSelection();
+        }
+
+        private void RefreshListViewAfterNodeSelection()
         {
             IsSelectedNodeStructured();
             TreeNodeExtended selectedNode = (TreeNodeExtended)treeViewZipDesigner.SelectedNode;
@@ -195,12 +199,21 @@ namespace OneClickZip
 
         private void btnRemoveSelectedZipFiles_Click(object sender, EventArgs e)
         {
-            TreeNodeExtended treeNodeExtended = (TreeNodeExtended) treeViewZipDesigner.SelectedNode;
-            foreach(ListViewItemExtended listViewItem in listViewZipDesignFiles.SelectedItems)
+            RemoveZipFileListViewItem();
+        }
+
+        private void RemoveZipFileListViewItem()
+        {
+            TreeNodeExtended treeNodeExtended = (TreeNodeExtended)treeViewZipDesigner.SelectedNode;
+            listViewZipDesignFiles.BeginUpdate();
+            treeViewZipDesigner.BeginUpdate();
+            foreach (ListViewItemExtended listViewItem in listViewZipDesignFiles.SelectedItems)
             {
                 treeNodeExtended.RemoveItem(listViewItem.CustomFileItem);
+                listViewItem.Remove();
             }
-            ListViewInterpretor.RefreshListViewItemsForZipFileDesigner(listViewZipDesignFiles, treeNodeExtended);
+            listViewZipDesignFiles.EndUpdate();
+            treeViewZipDesigner.EndUpdate();
         }
 
         private bool IsSelectedNodeStructured()
@@ -232,8 +245,7 @@ namespace OneClickZip
                 {
                     /* Cancel the label edit action, inform the user, and place the node in edit mode again. */
                     e.CancelEdit = true;
-                    MessageBox.Show("Invalid tree node label.\n" + "The invalid characters are: '@','.', ',', '!'",
-                        "Node Label Edit", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    ShowValidationBox("Invalid tree node label.\n" + "The invalid characters are: '@','.', ',', '!'");
                     e.Node.BeginEdit();
                 }
             }
@@ -241,9 +253,44 @@ namespace OneClickZip
             {
                 /* Cancel the label edit action, inform the user, and place the node in edit mode again. */
                 e.CancelEdit = true;
-                MessageBox.Show("Invalid tree node label.\nThe label cannot be blank", 
-                    "Node Label Edit", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowValidationBox("Invalid tree node label.\nThe label cannot be blank");
                 e.Node.BeginEdit();
+            }
+        }
+
+        private void listViewZipDesignFiles_AfterLabelEdit(object sender, LabelEditEventArgs e)
+        {
+            if (e.Label == null) return;
+
+            if (e.Label.Length > 0)
+            {
+                ListView listView = (ListView)sender;
+                ListViewItemExtended listViewItmEx = (ListViewItemExtended)listView.SelectedItems[0];
+
+                //because this folder is also the tree node
+                if (TreeNodeInterpreter.IsValidNodeName(e.Label))
+                {
+                    foreach(TreeNodeExtended tnex in treeViewZipDesigner.SelectedNode.Nodes)
+                    {
+                        if(tnex.Text == listViewItmEx.Text)
+                        {
+                            TreeNodeInterpreter.RenameNode(tnex, e.Label);
+                            tnex.Text = e.Label;
+                        }
+                    }
+                }
+                else
+                {
+                    /* Cancel the label edit action, inform the user, and place the node in edit mode again. */
+                    e.CancelEdit = true;
+                    ShowValidationBox("Invalid label.\n" + "The invalid characters are: '@','.', ',', '!'");
+                }
+            }
+            else
+            {
+                /* Cancel the label edit action, inform the user, and place the node in edit mode again. */
+                e.CancelEdit = true;
+                ShowValidationBox("Invalid label.\nThe label cannot be blank");
             }
         }
 
@@ -252,12 +299,37 @@ namespace OneClickZip
             if (e.KeyCode == Keys.F2)
             {
                 editTreeViewNodeLabel();
+            }else if(e.KeyCode == Keys.Delete)
+            {
+                TreeNodeInterpreter.RemoveSelectedNode(treeViewZipDesigner, listViewZipDesignFiles);
             }
         }
-#endregion
+
+        private void listViewZipDesignFiles_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F2)
+            {
+                editListViewZipFileLabel();
+            }
+            else if (e.KeyCode == Keys.Delete)
+            {
+                RemoveZipFileListViewItem();
+            }
+        }
+
+        private void editListViewZipFileLabel()
+        {
+            if (listViewZipDesignFiles.SelectedItems == null) return;
+            if (listViewZipDesignFiles.SelectedItems.Count<=0) return;
+            ListViewItemExtended listViewItmEx = (ListViewItemExtended) listViewZipDesignFiles.SelectedItems[0];
+            listViewZipDesignFiles.LabelEdit = true;
+            listViewItmEx.BeginEdit();
+        }
 
 
-#region List View Sorter
+        #endregion
+
+        #region List View Sorter
         private void listViewSearchDirExp_ColumnClickHandler(object sender, ColumnClickEventArgs e)
         {
             listviewSorter(sender, e);
@@ -340,12 +412,30 @@ namespace OneClickZip
 
         private void btnRecalculateEstimations_Click(object sender, EventArgs e)
         {
-            ZipFileStatisticsModel statistic = TreeNodeInterpreter.GetZipFileStatisticsModel(treeViewZipDesigner);
-            txtEstimatedAddedFiles.Text = statistic.EstimatedFilesCount.ToString();
-            txtEstimatedAddedFolders.Text = statistic.EstimatedFoldersCount.ToString();
-            txtEstimatedZipFileSize.Text = ConverterUtils.humanReadableFileSize(statistic.EstimatedFileSizeCount).ToString();
+            CalculateZipStructireStatistics();
         }
 
+        private void CalculateZipStructireStatistics()
+        {
+            ClearStatisticForms();
+            ZipFileStatisticsModel statistic = TreeNodeInterpreter.GetZipFileStatisticsModel(treeViewZipDesigner);
+            PutStatisticFormValues(statistic.EstimatedFilesCount.ToString(),
+                statistic.EstimatedFoldersCount.ToString(), statistic.EstimatedFileSizeCount);
+        }
+
+        private void ClearStatisticForms()
+        {
+            txtEstimatedAddedFiles.Text = "0";
+            txtEstimatedAddedFolders.Text = "0";
+            txtEstimatedZipFileSize.Text = "0";
+        }
+
+        private void PutStatisticFormValues(String fileCount, String foldersCount, long allFilesSize)
+        {
+            txtEstimatedAddedFiles.Text = fileCount;
+            txtEstimatedAddedFolders.Text = foldersCount;
+            txtEstimatedZipFileSize.Text = ConverterUtils.humanReadableFileSize(allFilesSize, 2).ToString();
+        }
 
         private void btnSaveZipDesign_Click(object sender, EventArgs e)
         {
@@ -354,37 +444,43 @@ namespace OneClickZip
 
         private bool IsProjectDataCompleted()
         {
-            String message;
-
             if(fileNameCreator == null)
             {
-                message = "Please fill up a new Zip File Name.";
+                ShowValidationBox("Please fill up a new Zip File Name.");
             }
             else if (fileNameCreator.FileFormulaName == null)
             {
-                message = "Please fill up a new Zip File Name.";
+                ShowValidationBox("Please fill up a new Zip File Name.");
             }
             else if (fileNameCreator.FileFormulaName.Trim().Length<=0)
             {
-                message = "Please fill up a new Zip File Name.";
+                ShowValidationBox("Please fill up a new Zip File Name.");
             }
             else if (((TreeNodeExtended) treeViewZipDesigner.Nodes[0]).MasterListFilesDir.Count <= 0)
             {
-                message = "Please add at least a file or folder on the zip designer";
+                ShowValidationBox("Please add at least a file or folder on the zip designer");
             }
             else
             {
                 return true;
             }
-
-            MessageBox.Show(message, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-
             return false;
+        }
+
+        private void ShowInfoBox(String yourMessage)
+        {
+            MessageBox.Show(yourMessage, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+    
+        private void ShowValidationBox(String yourMessage)
+        {
+            MessageBox.Show(yourMessage, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
 #endregion
 
-        #region Main Menu Strip
+#region Main Menu Strip
+
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -403,8 +499,6 @@ namespace OneClickZip
         private void SaveProjectAsNew()
         {
             if (!IsProjectDataCompleted()) return;
-            ZipFileModel zipFileModel = new ZipFileModel(treeViewZipDesigner, fileNameCreator);
-
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = ResourcesUtil.GetFileDesignerFilterName();
             saveFileDialog.Title = "Save a File Designer project";
@@ -415,19 +509,13 @@ namespace OneClickZip
             {
                 if (saveFileDialog.CheckPathExists)
                 {
-                    //FileSerialization.SaveObjectToFile(Serialization.BinarySerialization, saveFileDialog.FileName, zipFileModel);
+                    ZipFileModel zipFileModel = new ZipFileModel(TreeNodeInterpreter.GetRootNode(treeViewZipDesigner), fileNameCreator);
+                    zipFileModel.SetTreeViewZipFileStructureForFileWriting(TreeNodeInterpreter.GetRootNode(treeViewZipDesigner));
+                    zipFileModel.FilePath = saveFileDialog.FileName;
+                    FileSerialization.SaveObjectToFile(Serialization.BinarySerialization, saveFileDialog.FileName, zipFileModel);
 
-                    //FileSerialization.SaveObjectToFile(Serialization.BinarySerialization, saveFileDialog.FileName, 
-                    //    ( ((CustomFileItem) ((TreeNodeExtended) treeViewZipDesigner.Nodes[0]).MasterListFilesDir[0])).CshItem);
-
-
-
-
-
-
-                    //txtZipFileLocation.Text = saveFileDialog.FileName;
-                    //zipFileModel.FilePath = saveFileDialog.FileName;
-                    //this.zipFileModel = zipFileModel;
+                    txtZipFileLocation.Text = saveFileDialog.FileName;                    
+                    this.zipFileModel = zipFileModel;
                 }
             }
         }
@@ -449,17 +537,57 @@ namespace OneClickZip
                 SaveProjectAsNew();
                 return;
             }
-
             if (IsProjectDataCompleted())
             {
-                zipFileModel.TreeViewZipFileStructure = treeViewZipDesigner;
+                zipFileModel.SetTreeViewZipFileStructureForFileWriting(TreeNodeInterpreter.GetRootNode(treeViewZipDesigner));
                 zipFileModel.FileNameCreator = fileNameCreator;
                 FileSerialization.SaveObjectToFile(Serialization.BinarySerialization, zipFileModel.FilePath, zipFileModel);
+                ShowInfoBox("Successfully save at " + zipFileModel.FilePath);
             }
         }
+
+        private void openProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = ResourcesUtil.GetFileDesignerFilterName();
+            openFileDialog.Title = "Open a Zip Designer project";
+            openFileDialog.ShowDialog();
+
+            ZipFileModel zipFileModel = FileSerialization.LoadObjectToFile<ZipFileModel>(Serialization.BinarySerialization, openFileDialog.FileName);
+            TreeNodeExtended treeNodeExtended = zipFileModel.GetTreeViewZipFileStructure();
+            TreeNodeExtended rootNode = TreeNodeInterpreter.GetRootNode(treeViewZipDesigner);
+
+            listViewZipDesignFiles.BeginUpdate();
+            treeViewZipDesigner.BeginUpdate();
+            rootNode.ClearAndDisposeNodes();
+            listViewZipDesignFiles.Items.Clear();
+            ClearStatisticForms();
+            TreeNodeInterpreter.SetTreeNodeFromOpeningAFile(treeNodeExtended, rootNode);
+            treeViewZipDesigner.SelectedNode = rootNode;
+
+            txtZipFileLocation.Text = openFileDialog.FileName;
+            txtFileName.Text = zipFileModel.FileNameCreator.FileFormulaName;
+            this.zipFileModel = zipFileModel;
+            this.fileNameCreator = zipFileModel.FileNameCreator;
+            RefreshListViewAfterNodeSelection();
+            CalculateZipStructireStatistics();
+            listViewZipDesignFiles.EndUpdate();
+            treeViewZipDesigner.EndUpdate();
+        }
+
+        private void newProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TreeNodeInterpreter.GetRootNode(treeViewZipDesigner).ClearAndDisposeNodes();
+            listViewZipDesignFiles.Items.Clear();
+            txtZipFileLocation.Text = "";
+            txtFileName.Text = "";
+            zipFileModel = null;
+            ClearStatisticForms();
+        }
+
 #endregion
 
-        #region Context Strip for Zip File Tree View
+#region Context Strip for Zip File Tree View
 
         private void expandToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -490,8 +618,8 @@ namespace OneClickZip
             TreeNodeExtended selectedNode = (TreeNodeExtended)treeViewZipDesigner.SelectedNode;
             if (selectedNode.IsRootNode)
             {
-                MessageBox.Show("No tree node selected or selected node is a root node.\n" +
-                                  "Editing of root nodes is not allowed.", "Invalid selection");
+                ShowInfoBox("No tree node selected or selected node is a root node.\n" +
+                                  "Editing of root nodes is not allowed.");
             }
             else
             {
@@ -503,13 +631,15 @@ namespace OneClickZip
             }
         }
 
+        private void removeSelectedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TreeNodeInterpreter.RemoveSelectedNode(treeViewZipDesigner, listViewZipDesignFiles);
+        }
 
 
 
+#endregion
 
-
-
-        #endregion
 
     }
 

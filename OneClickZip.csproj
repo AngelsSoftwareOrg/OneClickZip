@@ -86,7 +86,6 @@
       <DependentUpon>FileNameCreatorFrm.cs</DependentUpon>
     </Compile>
     <Compile Include="Includes\Classes\DefaultIcons.cs" />
-    <Compile Include="Includes\Classes\Extensions\TreeNodeSerializable.cs" />
     <Compile Include="Includes\Classes\FileNameCreator.cs" />
     <Compile Include="Includes\Classes\ListViewColumnSorterForFileDir.cs" />
     <Compile Include="Includes\Classes\ListViewColumnSorter.cs" />
@@ -98,7 +97,9 @@
     <Compile Include="Forms\Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="Includes\Classes\SystemFilesDirInfo.cs" />
     <Compile Include="Includes\Classes\SystemIconsImageList.cs" />
+    <Compile Include="Includes\Classes\SystemShellDeclaration.cs" />
     <Compile Include="Includes\Classes\TreeNodeInterpreter.cs" />
     <Compile Include="Includes\Classes\FileSerialization.cs" />
     <Compile Include="Includes\Classes\TreeNodeSerialize\SerializableTreeNode.cs" />

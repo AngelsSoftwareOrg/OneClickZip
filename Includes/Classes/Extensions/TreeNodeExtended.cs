@@ -10,12 +10,13 @@ using System.Windows.Forms;
 
 namespace OneClickZip.Includes.Classes.Extensions
 {
-    public class TreeNodeExtended : TreeNode
+    public class TreeNodeExtended : TreeNode, ICloneable
     {
         private readonly ArrayList masterListFilesDir = new ArrayList();
         private bool isStructuredNode;
         private bool isCustomFolder;
         private bool isRootNode;
+        private static String ROOT_NODE_NAME = "ROOT";
 
         public TreeNodeExtended() : base(){
             CommonInitializers();
@@ -27,8 +28,8 @@ namespace OneClickZip.Includes.Classes.Extensions
             this.isRootNode = isRootNode;
             if (this.isRootNode)
             {
-                this.Text = "ROOT";
-                this.Name = "ROOT";
+                this.Text = ROOT_NODE_NAME;
+                this.Name = ROOT_NODE_NAME;
             }
         }
 
@@ -43,7 +44,12 @@ namespace OneClickZip.Includes.Classes.Extensions
             this.masterListFilesDir.Add(customFileItem);
         }
 
-        public void ClearItem()
+        public void ClearAndDisposeNodes()
+        {
+            this.Nodes.Clear();
+            ClearItems();
+        }
+        public void ClearItems()
         {
             this.masterListFilesDir.Clear();
         }
@@ -81,8 +87,7 @@ namespace OneClickZip.Includes.Classes.Extensions
                 }
             }
         }
-
-
+        
         private void RemoveSubNode(String nodeName)
         {
             List<TreeNode> listNodesForRemoval = new List<TreeNode>();
@@ -102,6 +107,30 @@ namespace OneClickZip.Includes.Classes.Extensions
         
         public bool IsCustomFolder { get => isCustomFolder; set => isCustomFolder = value; }
         
-        public bool IsRootNode { get => isRootNode; }
+        public bool IsRootNode { 
+            get
+            {
+                if(isRootNode) return true;
+                if (this.Name == ROOT_NODE_NAME && this.Text == ROOT_NODE_NAME) return true;
+                return false;
+            }
+        }
+    
+        override
+        public object Clone()
+        {
+            TreeNodeExtended tnx = (TreeNodeExtended) base.Clone();
+            tnx.MasterListFilesDir.AddRange(this.MasterListFilesDir);
+            tnx.IsStructuredNode = this.IsStructuredNode;
+            tnx.IsCustomFolder = this.IsCustomFolder;
+            return tnx;
+        }
+    
+        public void SourceInExtendedDetails(TreeNodeExtended source)
+        {
+            this.MasterListFilesDir.AddRange(source.masterListFilesDir);
+            this.IsStructuredNode = source.isStructuredNode;
+            this.IsCustomFolder = source.isCustomFolder;
+        }
     }
 }

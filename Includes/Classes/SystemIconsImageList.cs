@@ -3,10 +3,12 @@ using System.Runtime.InteropServices;
 using System.IO;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace OneClickZip.Includes.Classes
 {
-	public class SystemIconsImageList : IDisposable
+	public class SystemIconsImageList : SystemShellDeclaration, IDisposable
 	{
 		private static String ICON_NAME_FOR_DIRECTORIES = "5EEB255733234c4dBECF9A128E896A1E";
 		private static String ICON_NAME_FOR_FILES_WITHOUT_EXTENSION = "F9EB930C78D2477c80A51945D505E9C4";
@@ -111,53 +113,10 @@ namespace OneClickZip.Includes.Classes
 		}
 		#endregion
 
-		#region Win32 declarations
-		private const uint SHGFI_ICON = 0x100;
-		private const uint SHGFI_LARGEICON = 0x0;
-		private const uint SHGFI_SMALLICON = 0x1;
-
-		[StructLayout(LayoutKind.Sequential)]
-		public struct SHFILEINFO
-		{
-			public IntPtr hIcon;
-			public IntPtr iIcon;
-			public uint dwAttributes;
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-			public string szDisplayName;
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 80)]
-			public string szTypeName;
-		};
-
-		[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-		public struct SHSTOCKICONINFO
-		{
-			public uint cbSize;
-			public IntPtr hIcon;
-			public int iSysIconIndex;
-			public int iIcon;
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-			public string szPath;
-		}
-
-		[DllImport("shell32.dll")]
-		public static extern IntPtr SHGetFileInfo(string pszPath, uint dwFileAttributes, ref SHFILEINFO psfi, uint cbSizeFileInfo, uint uFlags);
-
-		[DllImport("shell32.dll")]
-		public static extern int SHGetStockIconInfo(uint siid, uint uFlags, ref SHSTOCKICONINFO psii);
-
-		[DllImport("user32.dll")]
-		public static extern bool DestroyIcon(IntPtr handle);
-
-		private const uint SHSIID_FOLDER = 0x3;
-		private const uint SHGSI_ICON = 0x100;
-		private const uint SHGSI_LARGEICON = 0x0;
-		private const uint SHGSI_SMALLICON = 0x1;
-
-		#endregion
-
 		#region Fields
 		private ImageList _smallImageList = new ImageList();
 		private ImageList _largeImageList = new ImageList();
+
 		private bool _disposed = false;
 		#endregion
 
@@ -275,10 +234,10 @@ namespace OneClickZip.Includes.Classes
 				SHGetFileInfo(FileName, 0, ref shinfo, (uint)Marshal.SizeOf(shinfo), SHGFI_ICON | SHGFI_LARGEICON);
 				Icon largeIcon = Icon.FromHandle(shinfo.hIcon);
 				_largeImageList.Images.Add(ext, largeIcon);
-
 				return _smallImageList.Images.Count - 1;
 			}
 		}
+		
 		public int GetIconIndexForDirectories()
 		{
 			if (!_smallImageList.Images.ContainsKey(ICON_NAME_FOR_DIRECTORIES))

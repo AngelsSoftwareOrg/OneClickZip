@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace OneClickZip.Includes.Models
 {
+    [Serializable]
     class RandomCharsGeneratorModel : CreatorModel, ICreatorExecutor
     {
         private List<ResourcePropertiesModel> randomCharsGenerator = ResourcesUtil.GetRandomCharsFormulaProperties();

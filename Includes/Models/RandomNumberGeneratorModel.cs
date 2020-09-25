@@ -10,6 +10,7 @@ using System.Windows.Forms.VisualStyles;
 
 namespace OneClickZip.Includes.Models
 {
+    [Serializable]
     class RandomNumberGeneratorModel : CreatorModel, ICreatorExecutor
     {
         private List<ResourcePropertiesModel> randomNumberGenerator = ResourcesUtil.GetRandomNumberFormulaProperties();

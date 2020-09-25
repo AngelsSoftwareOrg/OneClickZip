@@ -234,11 +234,16 @@ namespace OneClickZip.Includes.Classes
 
             TreeNodeExtended parentNode = (TreeNodeExtended)targetTreeView.SelectedNode.Parent;
             TreeNodeExtended selectedNode = (TreeNodeExtended)targetTreeView.SelectedNode;
+            TreeNodeExtended nextSelectedNode = parentNode;
+            if (selectedNode.PrevNode != null) nextSelectedNode = (TreeNodeExtended) selectedNode.PrevNode;
+            if (selectedNode.NextNode != null) nextSelectedNode = (TreeNodeExtended)selectedNode.NextNode;
+
             parentNode.RemoveItemByNodeName(selectedNode.Text);
+            selectedNode.ClearAndDisposeNodes();
             selectedNode.Remove();
-            targetTreeView.SelectedNode = parentNode;
+            targetTreeView.SelectedNode = nextSelectedNode;
             SelectSelectedNodeBgColor(targetTreeView);
-            ListViewInterpretor.RefreshListViewItemsForZipFileDesigner(targetListView, parentNode);
+            ListViewInterpretor.RefreshListViewItemsForZipFileDesigner(targetListView, nextSelectedNode);
         }
 
         public static void RefreshToShowTreeViewIcons(TreeView targetTreeView)
@@ -288,6 +293,25 @@ namespace OneClickZip.Includes.Classes
             parentNode.UpdateCustomFileItemDisplayText(selectedNode.Text, newName);
         }
     
+        public static TreeNodeExtended GetRootNode(TreeView treeView)
+        {
+            return (TreeNodeExtended)treeView.Nodes[0];
+        }
+
+        public static void SetTreeNodeFromOpeningAFile(TreeNodeExtended source, TreeNodeExtended destination)
+        {
+            //must keep the ROOT node by having this function, so that seeking the root node was only
+            //confined within this class.
+            //any other class dont know whos's the root node is...
+
+            destination.SourceInExtendedDetails(source);
+            foreach (TreeNodeExtended trx in source.Nodes)
+            {
+                destination.Nodes.Add(trx);
+            }
+        }
+
+
     }
 
 

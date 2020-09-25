@@ -9,6 +9,7 @@ using OneClickZip.Includes.Resources;
 
 namespace OneClickZip.Includes.Models
 {
+    [Serializable]
     partial class CreatorModel
     {
         private static String FORMULA_PATTERN_REGEX_START = "\\$";
@@ -106,8 +107,10 @@ namespace OneClickZip.Includes.Models
             int charPerTab = 8;
             int extraAdjustment = 8;
 
+#pragma warning disable CS0219 // Variable is assigned but its value is never used
             int repeat = 0;
             int repeatLongest = 0;
+#pragma warning restore CS0219 // Variable is assigned but its value is never used
 
             int inputTabCount = 0;
             int longestTabCount = 0;

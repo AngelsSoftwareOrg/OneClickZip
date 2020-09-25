@@ -13,37 +13,39 @@ namespace OneClickZip.Includes.Models
     [Serializable]
     class ZipFileModel
     {
-        private TreeNodeSerializable treeViewZipFileStructure;
+        private SerializableTreeNode treeViewZipFileStructure;
         private FileNameCreator fileNameCreator;
         private String filePath;
 
         public ZipFileModel()
         {
         }
+        
         public ZipFileModel(TreeView treeViewZipFileStructure)
         {
-            this.treeViewZipFileStructure = new TreeNodeSerializable(treeViewZipFileStructure);
+            this.treeViewZipFileStructure = new SerializableTreeNode();
         }
 
-        public ZipFileModel(TreeView treeViewZipFileStructure, FileNameCreator fileNameCreator)
+        public ZipFileModel(TreeNodeExtended treeNodeExtended, FileNameCreator fileNameCreator)
         {
-            this.treeViewZipFileStructure = new TreeNodeSerializable(treeViewZipFileStructure);
             this.fileNameCreator = fileNameCreator;
+            this.treeViewZipFileStructure = new SerializableTreeNode();
+            SetTreeViewZipFileStructureForFileWriting(treeNodeExtended);
         }
 
         public string ZipFileName { get => fileNameCreator.FileFormulaName; }
 
-        public TreeView TreeViewZipFileStructure {
-            get 
-            {
-                return null;
-                //return SerializableTreeViewOperation.fnPrepareToRead(treeViewZipFileStructure.SerializedTreeNodeStructure);
-            }
-            set {
-                //treeViewZipFileStructure.SerializedTreeNodeStructure = new TreeNodeSerializable(value);
-            }
+        public TreeNodeExtended GetTreeViewZipFileStructure() {
+            return SerializableTreeViewOperation.fnPrepareToRead(treeViewZipFileStructure);
         }
+
+        public void SetTreeViewZipFileStructureForFileWriting(TreeNodeExtended treeNodeExtended)
+        {
+            treeViewZipFileStructure = SerializableTreeViewOperation.fnPrepareToWrite(treeNodeExtended);
+        }
+
         public FileNameCreator FileNameCreator { get => fileNameCreator; set => fileNameCreator = value; }
+        
         public string FilePath { get => filePath; set => filePath = value; }
     }
 }
