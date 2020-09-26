@@ -153,7 +153,7 @@ namespace OneClickZip.Forms.Options
             return true;
         }
 
-        public FileNameCreator GetFileCreatorName()
+        public FileNameCreator GetFileCreatorNameModel()
         {
             return filenameCreator;
         }

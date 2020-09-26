@@ -24,8 +24,7 @@ namespace OneClickZip
     {
         private readonly ListViewColumnSorter lvwColumnSorter = new ListViewColumnSorter();
         private readonly ListViewColumnSorterForFileDir lvwColumnSorterFileDir = new ListViewColumnSorterForFileDir();
-        private ZipFileModel zipFileModel;
-        private FileNameCreator fileNameCreator;
+        //private FileNameCreator fileNameCreator;
         private bool isTreeViewCollapseToggle = true;
         public ZipDesigner()
         {
@@ -37,7 +36,7 @@ namespace OneClickZip
         }
 
 #region Setter Getter
-        ZipFileModel ZipFileModel { get => zipFileModel; set => zipFileModel = value; }
+
 #endregion
 
 #region EXP Dir related functions
@@ -326,10 +325,9 @@ namespace OneClickZip
             listViewItmEx.BeginEdit();
         }
 
+#endregion
 
-        #endregion
-
-        #region List View Sorter
+#region List View Sorter
         private void listViewSearchDirExp_ColumnClickHandler(object sender, ColumnClickEventArgs e)
         {
             listviewSorter(sender, e);
@@ -385,7 +383,9 @@ namespace OneClickZip
         {
             FileNameCreatorFrm fileNameCreatorFrm = new FileNameCreatorFrm(txtFileName.Text);
             fileNameCreatorFrm.ShowDialog();
-            fileNameCreator = fileNameCreatorFrm.GetFileCreatorName();
+
+            FileNameCreator fileNameCreator = fileNameCreatorFrm.GetFileCreatorNameModel();
+            ProjectSession.UpdateFileCreatorNameModel(fileNameCreator);
             txtFileName.Text = fileNameCreator.FileFormulaName;
         }
 
@@ -444,15 +444,15 @@ namespace OneClickZip
 
         private bool IsProjectDataCompleted()
         {
-            if(fileNameCreator == null)
+            if(ProjectSession.FileNameCreatorModel == null)
             {
                 ShowValidationBox("Please fill up a new Zip File Name.");
             }
-            else if (fileNameCreator.FileFormulaName == null)
+            else if (ProjectSession.FileNameCreatorModel.FileFormulaName == null)
             {
                 ShowValidationBox("Please fill up a new Zip File Name.");
             }
-            else if (fileNameCreator.FileFormulaName.Trim().Length<=0)
+            else if (ProjectSession.FileNameCreatorModel.FileFormulaName.Trim().Length<=0)
             {
                 ShowValidationBox("Please fill up a new Zip File Name.");
             }
@@ -509,40 +509,29 @@ namespace OneClickZip
             {
                 if (saveFileDialog.CheckPathExists)
                 {
-                    ZipFileModel zipFileModel = new ZipFileModel(TreeNodeInterpreter.GetRootNode(treeViewZipDesigner), fileNameCreator);
+                    ZipFileModel zipFileModel = new ZipFileModel(TreeNodeInterpreter.GetRootNode(treeViewZipDesigner), ProjectSession.FileNameCreatorModel);
                     zipFileModel.SetTreeViewZipFileStructureForFileWriting(TreeNodeInterpreter.GetRootNode(treeViewZipDesigner));
                     zipFileModel.FilePath = saveFileDialog.FileName;
-                    FileSerialization.SaveObjectToFile(Serialization.BinarySerialization, saveFileDialog.FileName, zipFileModel);
-
+                    ProjectSession.ZipFileModel = zipFileModel;
+                    ProjectSession.SaveProject(saveFileDialog.FileName);
                     txtZipFileLocation.Text = saveFileDialog.FileName;                    
-                    this.zipFileModel = zipFileModel;
                 }
             }
         }
 
         private void SaveProjectAsCurrent()
         {
-            if (zipFileModel == null)
+             if (!ProjectSession.IsSessionWasACurrentlyLoadedProject())
             {
                 SaveProjectAsNew();
                 return;
             }
-            else if (zipFileModel.FilePath == null)
-            {
-                SaveProjectAsNew();
-                return;
-            }
-            else if (zipFileModel.FilePath.Length <= 0)
-            {
-                SaveProjectAsNew();
-                return;
-            }
+
             if (IsProjectDataCompleted())
             {
-                zipFileModel.SetTreeViewZipFileStructureForFileWriting(TreeNodeInterpreter.GetRootNode(treeViewZipDesigner));
-                zipFileModel.FileNameCreator = fileNameCreator;
-                FileSerialization.SaveObjectToFile(Serialization.BinarySerialization, zipFileModel.FilePath, zipFileModel);
-                ShowInfoBox("Successfully save at " + zipFileModel.FilePath);
+                ProjectSession.UpdateZipDesignerModelStructure(TreeNodeInterpreter.GetRootNode(treeViewZipDesigner));
+                ProjectSession.SaveCurrentLoadedProject();
+                ShowInfoBox("Successfully save at " + ProjectSession.ZipFileModel.FilePath);
             }
         }
 
@@ -553,9 +542,9 @@ namespace OneClickZip
             openFileDialog.Title = "Open a Zip Designer project";
             openFileDialog.ShowDialog();
 
-            ZipFileModel zipFileModel = FileSerialization.LoadObjectToFile<ZipFileModel>(Serialization.BinarySerialization, openFileDialog.FileName);
-            TreeNodeExtended treeNodeExtended = zipFileModel.GetTreeViewZipFileStructure();
+            TreeNodeExtended treeNodeExtended = ProjectSession.GetTreeNodeZipDesignOnProjectFile(openFileDialog.FileName);
             TreeNodeExtended rootNode = TreeNodeInterpreter.GetRootNode(treeViewZipDesigner);
+            ZipFileModel zipFileModel = ProjectSession.ZipFileModel;
 
             listViewZipDesignFiles.BeginUpdate();
             treeViewZipDesigner.BeginUpdate();
@@ -567,8 +556,6 @@ namespace OneClickZip
 
             txtZipFileLocation.Text = openFileDialog.FileName;
             txtFileName.Text = zipFileModel.FileNameCreator.FileFormulaName;
-            this.zipFileModel = zipFileModel;
-            this.fileNameCreator = zipFileModel.FileNameCreator;
             RefreshListViewAfterNodeSelection();
             CalculateZipStructireStatistics();
             listViewZipDesignFiles.EndUpdate();
@@ -581,7 +568,7 @@ namespace OneClickZip
             listViewZipDesignFiles.Items.Clear();
             txtZipFileLocation.Text = "";
             txtFileName.Text = "";
-            zipFileModel = null;
+            ProjectSession.ClearProjectSession();
             ClearStatisticForms();
         }
 
@@ -642,6 +629,5 @@ namespace OneClickZip
 
 
     }
-
 
 }

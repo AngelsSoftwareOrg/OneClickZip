@@ -11,7 +11,7 @@ using OneClickZip.Includes.Classes.TreeNodeSerialize;
 namespace OneClickZip.Includes.Models
 {
     [Serializable]
-    class ZipFileModel
+    public class ZipFileModel
     {
         private SerializableTreeNode treeViewZipFileStructure;
         private FileNameCreator fileNameCreator;

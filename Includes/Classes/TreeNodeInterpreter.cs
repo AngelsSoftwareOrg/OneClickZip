@@ -14,7 +14,7 @@ namespace OneClickZip.Includes.Classes
 {
     class TreeNodeInterpreter
     {
-        private static readonly char[] INVALID_NODE_NAME_CHARS = new char[] { '@', '.', ',', '!' };
+        private static readonly char[] INVALID_NODE_NAME_CHARS = new char[] { '@', ',', '!' }; //ORIGINAL{ '@', '.', ',', '!' };
 
         //
         // true = the node to add are already existing on the current selected tree node

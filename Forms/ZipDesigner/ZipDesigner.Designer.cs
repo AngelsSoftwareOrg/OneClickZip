@@ -351,12 +351,12 @@
             // btnCreateFileName
             // 
             this.btnCreateFileName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCreateFileName.Location = new System.Drawing.Point(155, 66);
+            this.btnCreateFileName.Location = new System.Drawing.Point(131, 66);
             this.btnCreateFileName.Margin = new System.Windows.Forms.Padding(4);
             this.btnCreateFileName.Name = "btnCreateFileName";
-            this.btnCreateFileName.Size = new System.Drawing.Size(184, 28);
+            this.btnCreateFileName.Size = new System.Drawing.Size(208, 28);
             this.btnCreateFileName.TabIndex = 4;
-            this.btnCreateFileName.Text = "Design your Zip File Name";
+            this.btnCreateFileName.Text = "Design your Zip Name";
             this.btnCreateFileName.UseVisualStyleBackColor = true;
             this.btnCreateFileName.Click += new System.EventHandler(this.btnCreateFileName_Click);
             // 

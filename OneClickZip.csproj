@@ -97,6 +97,7 @@
     <Compile Include="Forms\Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="Includes\Classes\ProjectSession.cs" />
     <Compile Include="Includes\Classes\SystemFilesDirInfo.cs" />
     <Compile Include="Includes\Classes\SystemIconsImageList.cs" />
     <Compile Include="Includes\Classes\SystemShellDeclaration.cs" />
