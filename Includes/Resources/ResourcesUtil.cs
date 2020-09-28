@@ -1,6 +1,8 @@
-﻿using System;
+﻿using OneClickZip.Includes.Models;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -28,6 +30,11 @@ namespace OneClickZip.Includes.Resources
         private static readonly String FILE_DESIGNER_EXTENSION_NAME = "FILE_DESIGNER_EXTENSION_NAME";
         private static readonly String FILE_BATCH_ONE_CLICK_EXTENSION_NAME = "FILE_BATCH_ONE_CLICK_EXTENSION_NAME";
 
+        private static readonly String APPLICATION_ID = "APPLICATION_ID";
+        private static readonly String FILE_BATCH_ONE_CLICK_EXTENSION_NAME_DESCRIPTION = "FILE_BATCH_ONE_CLICK_EXTENSION_NAME_DESCRIPTION";
+        private static readonly String FILE_DESIGNER_EXTENSION_NAME_DESCRIPTION = "FILE_DESIGNER_EXTENSION_NAME_DESCRIPTION";
+        private static readonly String ICON_FOR_PROJECT_DESIGNER_FILE = "ICON_FOR_PROJECT_DESIGNER_FILE";
+        private static readonly String ICON_FOR_PROJECT_BATCH_FILE = "ICON_FOR_PROJECT_BATCH_FILE";
 
         static ResourcesUtil()
         {
@@ -104,11 +111,66 @@ namespace OneClickZip.Includes.Resources
         {
             return getSetting(FILE_DESIGNER_EXTENSION_NAME);
         }
+        public static String GetFileDesignerExtensionDescription()
+        {
+            return getSetting(FILE_DESIGNER_EXTENSION_NAME_DESCRIPTION);
+        }
+        public static String GetFileBatchExtensionNameDescription()
+        {
+            return getSetting(FILE_BATCH_ONE_CLICK_EXTENSION_NAME_DESCRIPTION);
+        }
         public static String GetFileBatchExtensionName()
         {
             return getSetting(FILE_BATCH_ONE_CLICK_EXTENSION_NAME);
         }
-
+        public static String GetApplicationId()
+        {
+            return getSetting(APPLICATION_ID);
+        }
+        public static String GetProjectDesignerIconName()
+        {
+            return getSetting(ICON_FOR_PROJECT_DESIGNER_FILE);
+        }
+        public static String GetProjectBatchFileIconName()
+        {
+            return getSetting(ICON_FOR_PROJECT_BATCH_FILE);
+        }
+        public static FileAssociationModel GetFileAssociationProjectDesignerModel(String includeFilePath)
+        {
+            return new FileAssociationModel()
+            {
+                Extension = GetFileDesignerExtensionName(),
+                ProgId = GetApplicationId(),
+                FileTypeDescription = GetFileDesignerExtensionDescription(),
+                ExecutableFilePath = includeFilePath,
+                DefaultIconFilePath = GetIconPathForProjectDesigner()
+            };
+        }
+        public static FileAssociationModel GetFileAssociationBatchFileModel(String includeFilePath)
+        {
+            return new FileAssociationModel()
+            {
+                Extension = GetFileBatchExtensionName(),
+                ProgId = GetApplicationId() + "_Batch",
+                FileTypeDescription = GetFileBatchExtensionNameDescription(),
+                ExecutableFilePath = includeFilePath,
+                DefaultIconFilePath = GetIconPathForProjectBatchFile()
+            };
+        }
+        public static String GetMainProjectExecutionFolderPath()
+        {
+            String filePath = Process.GetCurrentProcess().MainModule.FileName;
+            FileInfo fileInfo = new FileInfo(filePath);
+            return fileInfo.DirectoryName;
+        }
+        public static String GetIconPathForProjectDesigner()
+        {
+            return GetMainProjectExecutionFolderPath() + "\\" + GetProjectDesignerIconName();
+        }
+        public static String GetIconPathForProjectBatchFile()
+        {
+            return GetMainProjectExecutionFolderPath() + "\\" + GetProjectBatchFileIconName();
+        }
         public void Dispose()
         {
             RESOURCE_MANAGER = null;

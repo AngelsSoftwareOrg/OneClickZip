@@ -61,6 +61,15 @@ namespace OneClickZip.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to One_Click_Zip_Designer.
+        /// </summary>
+        internal static string APPLICATION_ID {
+            get {
+                return ResourceManager.GetString("APPLICATION_ID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap clear_24px {
@@ -91,11 +100,20 @@ namespace OneClickZip.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to oczb.
+        ///   Looks up a localized string similar to .oczb.
         /// </summary>
         internal static string FILE_BATCH_ONE_CLICK_EXTENSION_NAME {
             get {
                 return ResourceManager.GetString("FILE_BATCH_ONE_CLICK_EXTENSION_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One Click Zip Batch File Executor.
+        /// </summary>
+        internal static string FILE_BATCH_ONE_CLICK_EXTENSION_NAME_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("FILE_BATCH_ONE_CLICK_EXTENSION_NAME_DESCRIPTION", resourceCulture);
             }
         }
         
@@ -109,11 +127,20 @@ namespace OneClickZip.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to oczd.
+        ///   Looks up a localized string similar to .oczd.
         /// </summary>
         internal static string FILE_DESIGNER_EXTENSION_NAME {
             get {
                 return ResourceManager.GetString("FILE_DESIGNER_EXTENSION_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One Click Zip Project Designer.
+        /// </summary>
+        internal static string FILE_DESIGNER_EXTENSION_NAME_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("FILE_DESIGNER_EXTENSION_NAME_DESCRIPTION", resourceCulture);
             }
         }
         
@@ -163,6 +190,104 @@ namespace OneClickZip.Properties {
             get {
                 object obj = ResourceManager.GetObject("folder_Plus_512px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logo-icon-batch-64px.ico.
+        /// </summary>
+        internal static string ICON_FOR_PROJECT_BATCH_FILE {
+            get {
+                return ResourceManager.GetString("ICON_FOR_PROJECT_BATCH_FILE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logo-icon-64px.ico.
+        /// </summary>
+        internal static string ICON_FOR_PROJECT_DESIGNER_FILE {
+            get {
+                return ResourceManager.GetString("ICON_FOR_PROJECT_DESIGNER_FILE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Logo_icon_128px {
+            get {
+                object obj = ResourceManager.GetObject("Logo_icon_128px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Logo_icon_16px {
+            get {
+                object obj = ResourceManager.GetObject("Logo_icon_16px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Logo_icon_20px {
+            get {
+                object obj = ResourceManager.GetObject("Logo_icon_20px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Logo_icon_256px {
+            get {
+                object obj = ResourceManager.GetObject("Logo_icon_256px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Logo_icon_32px {
+            get {
+                object obj = ResourceManager.GetObject("Logo_icon_32px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Logo_icon_512px {
+            get {
+                object obj = ResourceManager.GetObject("Logo_icon_512px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Logo_icon_64px {
+            get {
+                object obj = ResourceManager.GetObject("Logo_icon_64px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon Logo_icon_64px1 {
+            get {
+                object obj = ResourceManager.GetObject("Logo_icon_64px1", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         

@@ -12,9 +12,17 @@ namespace OneClickZip.Includes.Classes
 {
     public class ProjectSession
     {
-        private static ZipFileModel zipFileModelCurrentlyWorkingTo = new ZipFileModel();
+        private ZipFileModel zipFileModelCurrentlyWorkingTo = new ZipFileModel();
+        private static ProjectSession projectSession;
+        private static ApplicationArgumentModel applicationArgumentModel;
 
-        public static ZipFileModel ZipFileModel
+        public static ProjectSession Instance()
+        {
+            if (projectSession == null) projectSession = new ProjectSession();
+            return projectSession;
+        }
+
+        public ZipFileModel ZipFileModel
         {
             get
             {
@@ -26,53 +34,54 @@ namespace OneClickZip.Includes.Classes
             }
         }
 
-        public static ZipFileModel OpenProjectSession(String fileFullPath)
+        public ZipFileModel OpenProjectSession(String fileFullPath)
         {
             ZipFileModel = FileSerialization.LoadObjectToFile<ZipFileModel>(Serialization.BinarySerialization, fileFullPath);
             return ZipFileModel;
         }
 
-        public static TreeNodeExtended GetTreeNodeZipDesignOnProjectFile(String fileFullPath)
+        public TreeNodeExtended GetTreeNodeZipDesignOnProjectFile(String fileFullPath)
         {
-            ZipFileModel zipFileModel = ProjectSession.OpenProjectSession(fileFullPath);
+            ZipFileModel zipFileModel = OpenProjectSession(fileFullPath);
             TreeNodeExtended treeNodeExtended = zipFileModel.GetTreeViewZipFileStructure();
             return treeNodeExtended;
         }
 
-        public static void SaveProject(String fullFilePath)
+        public void SaveProject(String fullFilePath)
         {
             FileSerialization.SaveObjectToFile(Serialization.BinarySerialization, fullFilePath, ZipFileModel);
         }
 
-        public static void SaveCurrentLoadedProject()
+        public void SaveCurrentLoadedProject()
         {
             FileSerialization.SaveObjectToFile(Serialization.BinarySerialization, ZipFileModel.FilePath, ZipFileModel);
         }
 
-        public static void UpdateZipDesignerModelStructure(TreeNodeExtended rootNode)
+        public void UpdateZipDesignerModelStructure(TreeNodeExtended rootNode)
         {
             ZipFileModel.SetTreeViewZipFileStructureForFileWriting(rootNode);
         }
     
-        public static bool IsSessionWasACurrentlyLoadedProject()
+        public bool IsSessionWasACurrentlyLoadedProject()
         {
-            if (ProjectSession.ZipFileModel == null) return false;
+            if (ZipFileModel == null) return false;
             if (ZipFileModel.FilePath == null) return false;
-            if (ProjectSession.ZipFileModel.FilePath.Length <= 0) return false;
+            if (ZipFileModel.FilePath.Length <= 0) return false;
             return true;
         }
     
-        public static void ClearProjectSession()
+        public void ClearProjectSession()
         {
             ZipFileModel = new ZipFileModel();
         }
     
-        public static void UpdateFileCreatorNameModel(FileNameCreator fileNameCreator)
+        public void UpdateFileCreatorNameModel(FileNameCreator fileNameCreator)
         {
             ZipFileModel.FileNameCreator = fileNameCreator;
         }
 
-        public static FileNameCreator FileNameCreatorModel => ZipFileModel.FileNameCreator;
+        public FileNameCreator FileNameCreatorModel => ZipFileModel.FileNameCreator;
 
+        public ApplicationArgumentModel ApplicationArgumentModel { get => applicationArgumentModel; set => applicationArgumentModel = value; }
     }
 }

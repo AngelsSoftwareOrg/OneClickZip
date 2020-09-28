@@ -54,6 +54,9 @@
     <StartupObject>
     </StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Logo-icon-64px.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ExpTreeLib, Version=3.0.2.1143, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\ExpTreeLib.3.2.0\lib\ExpTreeLib.dll</HintPath>
@@ -79,6 +82,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\Options\OneClickProcessor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Options\OneClickProcessor.Designer.cs">
+      <DependentUpon>OneClickProcessor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Options\FileAssociation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Options\FileAssociation.Designer.cs">
+      <DependentUpon>FileAssociation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Options\FileNameCreatorFrm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,6 +101,7 @@
       <DependentUpon>FileNameCreatorFrm.cs</DependentUpon>
     </Compile>
     <Compile Include="Includes\Classes\DefaultIcons.cs" />
+    <Compile Include="Includes\Classes\FileAssociation.cs" />
     <Compile Include="Includes\Classes\FileNameCreator.cs" />
     <Compile Include="Includes\Classes\ListViewColumnSorterForFileDir.cs" />
     <Compile Include="Includes\Classes\ListViewColumnSorter.cs" />
@@ -106,8 +122,10 @@
     <Compile Include="Includes\Classes\TreeNodeSerialize\SerializableTreeNode.cs" />
     <Compile Include="Includes\Classes\TreeNodeSerialize\SerializableTreeViewOperation.cs" />
     <Compile Include="Includes\Interface\ICreatorExecutor.cs" />
+    <Compile Include="Includes\Models\ApplicationArgumentModel.cs" />
     <Compile Include="Includes\Models\CreatorModel.cs" />
     <Compile Include="Includes\Models\CustomFileItem.cs" />
+    <Compile Include="Includes\Models\FileAssociationModel.cs" />
     <Compile Include="Includes\Models\ListViewInterpretorViewingParamModel.cs" />
     <Compile Include="Includes\Models\RandomCharsGeneratorModel.cs" />
     <Compile Include="Includes\Models\RandomNumberGeneratorModel.cs" />
@@ -129,6 +147,12 @@
     </Compile>
     <EmbeddedResource Include="Forms\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Options\OneClickProcessor.resx">
+      <DependentUpon>OneClickProcessor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Options\FileAssociation.resx">
+      <DependentUpon>FileAssociation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Options\FileNameCreatorFrm.resx">
       <DependentUpon>FileNameCreatorFrm.cs</DependentUpon>
@@ -172,13 +196,21 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Supporting Files\Logo-icon-64px.ico" />
+    <None Include="Resources\Supporting Files\Logo-icon-64px.png" />
+    <None Include="Resources\Supporting Files\Logo-icon-32px.png" />
+    <None Include="Resources\Supporting Files\Logo-icon-20px.png" />
+    <None Include="Resources\Supporting Files\Logo-icon-16px.png" />
+    <None Include="Resources\Supporting Files\Logo-icon-512px.png" />
+    <None Include="Resources\Supporting Files\Logo-icon-256px.png" />
+    <None Include="Resources\Supporting Files\Logo-icon-128px.png" />
     <None Include="Resources\Icons\PlusMinus 24px.png" />
     <None Include="Resources\Icons\delete 24px.png" />
     <None Include="Resources\Icons\clear 24px.png" />
     <None Include="Resources\Icons\folder Plus 24px.png" />
     <None Include="Resources\Icons\folder Plus 16px.png" />
     <None Include="Resources\Icons\folder Plus 32px.png" />
-    <None Include="Resources\Icons\folder Plus 32px.jpg" />
+    <Content Include="Logo-icon-64px.ico" />
     <Content Include="Resources\Icons\folder Plus 512px.png" />
   </ItemGroup>
   <ItemGroup />

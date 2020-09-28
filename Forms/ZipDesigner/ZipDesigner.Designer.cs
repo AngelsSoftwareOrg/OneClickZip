@@ -29,12 +29,14 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZipDesigner));
             this.splitContainerFormMain = new System.Windows.Forms.SplitContainer();
             this.panel11 = new System.Windows.Forms.Panel();
             this.btnRunZip = new System.Windows.Forms.Button();
             this.btnGenerateBatchFile = new System.Windows.Forms.Button();
             this.btnSaveZipDesign = new System.Windows.Forms.Button();
             this.panel10 = new System.Windows.Forms.Panel();
+            this.label9 = new System.Windows.Forms.Label();
             this.btnRecalculateEstimations = new System.Windows.Forms.Button();
             this.lnkCopSaveLocation = new System.Windows.Forms.LinkLabel();
             this.txtEstimatedZipFileSize = new System.Windows.Forms.TextBox();
@@ -99,6 +101,11 @@
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.actionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemGenerateOneClickZip = new System.Windows.Forms.ToolStripMenuItem();
+            this.fileAssociationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.txtTargetLocation = new System.Windows.Forms.TextBox();
+            this.lnlSetTargetLocation = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerFormMain)).BeginInit();
             this.splitContainerFormMain.Panel1.SuspendLayout();
             this.splitContainerFormMain.Panel2.SuspendLayout();
@@ -196,6 +203,9 @@
             // panel10
             // 
             this.panel10.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel10.Controls.Add(this.lnlSetTargetLocation);
+            this.panel10.Controls.Add(this.txtTargetLocation);
+            this.panel10.Controls.Add(this.label9);
             this.panel10.Controls.Add(this.btnRecalculateEstimations);
             this.panel10.Controls.Add(this.lnkCopSaveLocation);
             this.panel10.Controls.Add(this.txtEstimatedZipFileSize);
@@ -213,10 +223,19 @@
             this.panel10.Size = new System.Drawing.Size(349, 473);
             this.panel10.TabIndex = 3;
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(3, 86);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(158, 17);
+            this.label9.TabIndex = 17;
+            this.label9.Text = "Target Zip File Location";
+            // 
             // btnRecalculateEstimations
             // 
             this.btnRecalculateEstimations.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRecalculateEstimations.Location = new System.Drawing.Point(155, 226);
+            this.btnRecalculateEstimations.Location = new System.Drawing.Point(155, 285);
             this.btnRecalculateEstimations.Name = "btnRecalculateEstimations";
             this.btnRecalculateEstimations.Size = new System.Drawing.Size(184, 31);
             this.btnRecalculateEstimations.TabIndex = 16;
@@ -226,6 +245,7 @@
             // 
             // lnkCopSaveLocation
             // 
+            this.lnkCopSaveLocation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lnkCopSaveLocation.AutoSize = true;
             this.lnkCopSaveLocation.Location = new System.Drawing.Point(241, 33);
             this.lnkCopSaveLocation.Name = "lnkCopSaveLocation";
@@ -241,7 +261,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtEstimatedZipFileSize.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.RecentlyUsedList;
             this.txtEstimatedZipFileSize.BackColor = System.Drawing.SystemColors.Control;
-            this.txtEstimatedZipFileSize.Location = new System.Drawing.Point(4, 197);
+            this.txtEstimatedZipFileSize.Location = new System.Drawing.Point(4, 256);
             this.txtEstimatedZipFileSize.Margin = new System.Windows.Forms.Padding(4);
             this.txtEstimatedZipFileSize.Name = "txtEstimatedZipFileSize";
             this.txtEstimatedZipFileSize.ReadOnly = true;
@@ -255,7 +275,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtEstimatedAddedFiles.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.RecentlyUsedList;
             this.txtEstimatedAddedFiles.BackColor = System.Drawing.SystemColors.Control;
-            this.txtEstimatedAddedFiles.Location = new System.Drawing.Point(4, 147);
+            this.txtEstimatedAddedFiles.Location = new System.Drawing.Point(4, 206);
             this.txtEstimatedAddedFiles.Margin = new System.Windows.Forms.Padding(4);
             this.txtEstimatedAddedFiles.Name = "txtEstimatedAddedFiles";
             this.txtEstimatedAddedFiles.ReadOnly = true;
@@ -269,7 +289,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtEstimatedAddedFolders.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.RecentlyUsedList;
             this.txtEstimatedAddedFolders.BackColor = System.Drawing.SystemColors.Control;
-            this.txtEstimatedAddedFolders.Location = new System.Drawing.Point(4, 100);
+            this.txtEstimatedAddedFolders.Location = new System.Drawing.Point(4, 156);
             this.txtEstimatedAddedFolders.Margin = new System.Windows.Forms.Padding(4);
             this.txtEstimatedAddedFolders.Name = "txtEstimatedAddedFolders";
             this.txtEstimatedAddedFolders.ReadOnly = true;
@@ -280,7 +300,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(4, 173);
+            this.label11.Location = new System.Drawing.Point(4, 235);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(252, 17);
             this.label11.TabIndex = 10;
@@ -289,7 +309,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(4, 126);
+            this.label10.Location = new System.Drawing.Point(4, 188);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(156, 17);
             this.label10.TabIndex = 8;
@@ -298,7 +318,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(3, 80);
+            this.label8.Location = new System.Drawing.Point(3, 137);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(174, 17);
             this.label8.TabIndex = 6;
@@ -307,7 +327,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(4, 33);
+            this.label7.Location = new System.Drawing.Point(4, 35);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(148, 17);
             this.label7.TabIndex = 5;
@@ -400,7 +420,7 @@
             // 
             this.splitContainerExplorers.Panel2.Controls.Add(this.splitContainerZipDesigner);
             this.splitContainerExplorers.Size = new System.Drawing.Size(798, 586);
-            this.splitContainerExplorers.SplitterDistance = 238;
+            this.splitContainerExplorers.SplitterDistance = 237;
             this.splitContainerExplorers.TabIndex = 0;
             // 
             // splitContainerSearchDirExp
@@ -419,7 +439,7 @@
             // 
             this.splitContainerSearchDirExp.Panel2.Controls.Add(this.panel8);
             this.splitContainerSearchDirExp.Panel2.Controls.Add(this.panel7);
-            this.splitContainerSearchDirExp.Size = new System.Drawing.Size(794, 234);
+            this.splitContainerSearchDirExp.Size = new System.Drawing.Size(794, 233);
             this.splitContainerSearchDirExp.SplitterDistance = 198;
             this.splitContainerSearchDirExp.TabIndex = 0;
             // 
@@ -430,7 +450,7 @@
             this.panel6.Location = new System.Drawing.Point(0, 36);
             this.panel6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(198, 198);
+            this.panel6.Size = new System.Drawing.Size(198, 197);
             this.panel6.TabIndex = 3;
             // 
             // expTreeSearchDir
@@ -442,7 +462,7 @@
             this.expTreeSearchDir.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.expTreeSearchDir.Name = "expTreeSearchDir";
             this.expTreeSearchDir.ShowRootLines = false;
-            this.expTreeSearchDir.Size = new System.Drawing.Size(198, 198);
+            this.expTreeSearchDir.Size = new System.Drawing.Size(198, 197);
             this.expTreeSearchDir.StartUpDirectory = ExpTreeLib.ExpTree.StartDir.Desktop;
             this.expTreeSearchDir.TabIndex = 2;
             this.expTreeSearchDir.StartUpDirectoryChanged += new ExpTreeLib.ExpTree.StartUpDirectoryChangedEventHandler(this.ExpTreeSearchDir_StartUpDirectoryChanged);
@@ -474,7 +494,7 @@
             this.panel8.Location = new System.Drawing.Point(0, 36);
             this.panel8.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(592, 198);
+            this.panel8.Size = new System.Drawing.Size(592, 197);
             this.panel8.TabIndex = 2;
             // 
             // listViewSearchDirExp
@@ -491,7 +511,7 @@
             this.listViewSearchDirExp.Location = new System.Drawing.Point(0, 0);
             this.listViewSearchDirExp.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listViewSearchDirExp.Name = "listViewSearchDirExp";
-            this.listViewSearchDirExp.Size = new System.Drawing.Size(592, 198);
+            this.listViewSearchDirExp.Size = new System.Drawing.Size(592, 197);
             this.listViewSearchDirExp.TabIndex = 1;
             this.listViewSearchDirExp.UseCompatibleStateImageBehavior = false;
             this.listViewSearchDirExp.View = System.Windows.Forms.View.Details;
@@ -560,7 +580,7 @@
             // 
             this.splitContainerZipDesigner.Panel2.Controls.Add(this.panel3);
             this.splitContainerZipDesigner.Panel2.Controls.Add(this.panel4);
-            this.splitContainerZipDesigner.Size = new System.Drawing.Size(794, 340);
+            this.splitContainerZipDesigner.Size = new System.Drawing.Size(794, 341);
             this.splitContainerZipDesigner.SplitterDistance = 198;
             this.splitContainerZipDesigner.TabIndex = 0;
             // 
@@ -571,7 +591,7 @@
             this.panel2.Location = new System.Drawing.Point(0, 71);
             this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(198, 269);
+            this.panel2.Size = new System.Drawing.Size(198, 270);
             this.panel2.TabIndex = 1;
             // 
             // treeViewZipDesigner
@@ -581,7 +601,7 @@
             this.treeViewZipDesigner.Location = new System.Drawing.Point(0, 0);
             this.treeViewZipDesigner.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.treeViewZipDesigner.Name = "treeViewZipDesigner";
-            this.treeViewZipDesigner.Size = new System.Drawing.Size(198, 269);
+            this.treeViewZipDesigner.Size = new System.Drawing.Size(198, 270);
             this.treeViewZipDesigner.TabIndex = 0;
             this.treeViewZipDesigner.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeViewZipDesigner_AfterLabelEdit);
             this.treeViewZipDesigner.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.TreeViewZipDesigner_BeforeSelectHandler);
@@ -709,7 +729,7 @@
             this.panel3.Location = new System.Drawing.Point(0, 71);
             this.panel3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(592, 269);
+            this.panel3.Size = new System.Drawing.Size(592, 270);
             this.panel3.TabIndex = 2;
             // 
             // listViewZipDesignFiles
@@ -726,7 +746,7 @@
             this.listViewZipDesignFiles.Location = new System.Drawing.Point(0, 0);
             this.listViewZipDesignFiles.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listViewZipDesignFiles.Name = "listViewZipDesignFiles";
-            this.listViewZipDesignFiles.Size = new System.Drawing.Size(592, 269);
+            this.listViewZipDesignFiles.Size = new System.Drawing.Size(592, 270);
             this.listViewZipDesignFiles.TabIndex = 1;
             this.listViewZipDesignFiles.UseCompatibleStateImageBehavior = false;
             this.listViewZipDesignFiles.View = System.Windows.Forms.View.Details;
@@ -807,7 +827,8 @@
             this.menuZipDesigner.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuZipDesigner.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.actionsToolStripMenuItem});
+            this.actionsToolStripMenuItem,
+            this.aboutToolStripMenuItem});
             this.menuZipDesigner.Location = new System.Drawing.Point(0, 0);
             this.menuZipDesigner.Name = "menuZipDesigner";
             this.menuZipDesigner.Size = new System.Drawing.Size(1151, 28);
@@ -863,9 +884,56 @@
             // 
             // actionsToolStripMenuItem
             // 
+            this.actionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemGenerateOneClickZip,
+            this.fileAssociationToolStripMenuItem});
             this.actionsToolStripMenuItem.Name = "actionsToolStripMenuItem";
             this.actionsToolStripMenuItem.Size = new System.Drawing.Size(72, 24);
             this.actionsToolStripMenuItem.Text = "Actions";
+            // 
+            // toolStripMenuItemGenerateOneClickZip
+            // 
+            this.toolStripMenuItemGenerateOneClickZip.Name = "toolStripMenuItemGenerateOneClickZip";
+            this.toolStripMenuItemGenerateOneClickZip.Size = new System.Drawing.Size(244, 26);
+            this.toolStripMenuItemGenerateOneClickZip.Text = "Generate One Click Zip";
+            // 
+            // fileAssociationToolStripMenuItem
+            // 
+            this.fileAssociationToolStripMenuItem.Name = "fileAssociationToolStripMenuItem";
+            this.fileAssociationToolStripMenuItem.Size = new System.Drawing.Size(244, 26);
+            this.fileAssociationToolStripMenuItem.Text = "File Association";
+            this.fileAssociationToolStripMenuItem.Click += new System.EventHandler(this.fileAssociationToolStripMenuItem_Click);
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(64, 24);
+            this.aboutToolStripMenuItem.Text = "About";
+            // 
+            // txtTargetLocation
+            // 
+            this.txtTargetLocation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTargetLocation.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.RecentlyUsedList;
+            this.txtTargetLocation.BackColor = System.Drawing.SystemColors.Control;
+            this.txtTargetLocation.Location = new System.Drawing.Point(4, 105);
+            this.txtTargetLocation.Margin = new System.Windows.Forms.Padding(4);
+            this.txtTargetLocation.Name = "txtTargetLocation";
+            this.txtTargetLocation.ReadOnly = true;
+            this.txtTargetLocation.Size = new System.Drawing.Size(335, 22);
+            this.txtTargetLocation.TabIndex = 18;
+            // 
+            // lnlSetTargetLocation
+            // 
+            this.lnlSetTargetLocation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnlSetTargetLocation.AutoSize = true;
+            this.lnlSetTargetLocation.Location = new System.Drawing.Point(206, 84);
+            this.lnlSetTargetLocation.Name = "lnlSetTargetLocation";
+            this.lnlSetTargetLocation.Size = new System.Drawing.Size(133, 17);
+            this.lnlSetTargetLocation.TabIndex = 19;
+            this.lnlSetTargetLocation.TabStop = true;
+            this.lnlSetTargetLocation.Text = "Set Target Location";
+            this.lnlSetTargetLocation.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnlSetTargetLocation_LinkClicked);
             // 
             // ZipDesigner
             // 
@@ -874,10 +942,12 @@
             this.ClientSize = new System.Drawing.Size(1151, 614);
             this.Controls.Add(this.splitContainerFormMain);
             this.Controls.Add(this.menuZipDesigner);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuZipDesigner;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "ZipDesigner";
             this.Text = "Zip File Designer";
+            this.Load += new System.EventHandler(this.ZipDesigner_Load);
             this.splitContainerFormMain.Panel1.ResumeLayout(false);
             this.splitContainerFormMain.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerFormMain)).EndInit();
@@ -991,5 +1061,11 @@
         private System.Windows.Forms.ToolStripMenuItem openProjectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newProjectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeSelectedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemGenerateOneClickZip;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fileAssociationToolStripMenuItem;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox txtTargetLocation;
+        private System.Windows.Forms.LinkLabel lnlSetTargetLocation;
     }
 }

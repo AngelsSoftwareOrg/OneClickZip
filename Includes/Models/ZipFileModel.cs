@@ -16,6 +16,7 @@ namespace OneClickZip.Includes.Models
         private SerializableTreeNode treeViewZipFileStructure;
         private FileNameCreator fileNameCreator;
         private String filePath;
+        private String targetFilePath;
 
         public ZipFileModel()
         {
@@ -47,5 +48,7 @@ namespace OneClickZip.Includes.Models
         public FileNameCreator FileNameCreator { get => fileNameCreator; set => fileNameCreator = value; }
         
         public string FilePath { get => filePath; set => filePath = value; }
+        
+        public string TargetFilePath { get => targetFilePath; set => targetFilePath = value; }
     }
 }

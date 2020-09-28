@@ -143,7 +143,7 @@
     <value>..\Resources\Icons\PlusMinus 24px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="FILE_BATCH_ONE_CLICK_EXTENSION_NAME" xml:space="preserve">
-    <value>oczb</value>
+    <value>.oczb</value>
     <comment>Use for saving and opening zip file designer</comment>
   </data>
   <data name="FILE_BATCH_ONE_CLICK_FILTER_NAME" xml:space="preserve">
@@ -151,11 +151,51 @@
     <comment>Use for saving and opening zip file designer</comment>
   </data>
   <data name="FILE_DESIGNER_EXTENSION_NAME" xml:space="preserve">
-    <value>oczd</value>
+    <value>.oczd</value>
     <comment>Use for saving and opening zip file designer</comment>
   </data>
   <data name="FILE_DESIGNER_FILTER_NAME" xml:space="preserve">
     <value>One Click Zip Designer|*.oczd</value>
     <comment>Use for saving and opening zip file designer</comment>
+  </data>
+  <data name="Logo_icon_128px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Supporting Files\Logo-icon-128px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Logo_icon_16px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Supporting Files\Logo-icon-16px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Logo_icon_20px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Supporting Files\Logo-icon-20px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Logo_icon_256px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Supporting Files\Logo-icon-256px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Logo_icon_32px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Supporting Files\Logo-icon-32px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Logo_icon_512px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Supporting Files\Logo-icon-512px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Logo_icon_64px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Supporting Files\Logo-icon-64px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Logo_icon_64px1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Supporting Files\Logo-icon-64px.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="APPLICATION_ID" xml:space="preserve">
+    <value>One_Click_Zip_Designer</value>
+    <comment>Mainly use for registering app in the registry</comment>
+  </data>
+  <data name="FILE_BATCH_ONE_CLICK_EXTENSION_NAME_DESCRIPTION" xml:space="preserve">
+    <value>One Click Zip Batch File Executor</value>
+  </data>
+  <data name="FILE_DESIGNER_EXTENSION_NAME_DESCRIPTION" xml:space="preserve">
+    <value>One Click Zip Project Designer</value>
+  </data>
+  <data name="ICON_FOR_PROJECT_BATCH_FILE" xml:space="preserve">
+    <value>Logo-icon-batch-64px.ico</value>
+  </data>
+  <data name="ICON_FOR_PROJECT_DESIGNER_FILE" xml:space="preserve">
+    <value>Logo-icon-64px.ico</value>
   </data>
 </root>
