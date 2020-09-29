@@ -1,8 +1,15 @@
 {
   "ExpandedNodes": [
     "",
-    "\\classes"
+    "\\classes",
+    "\\Forms",
+    "\\Forms\\ZipDesigner",
+    "\\Includes",
+    "\\Includes\\Classes",
+    "\\Includes\\Resources",
+    "\\Resources",
+    "\\Resources\\Supporting Files"
   ],
-  "SelectedNode": "\\ListViewInterpretor.cs",
+  "SelectedNode": "\\Forms\\ZipDesigner\\ZipDesigner.cs",
   "PreviewInSolutionExplorer": false
 }

@@ -537,14 +537,14 @@ namespace OneClickZip
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SaveProjectAsNew();
+            SaveProjectAsNew(ResourcesUtil.GetFileDesignerFilterName());
         }
 
-        private void SaveProjectAsNew()
+        private void SaveProjectAsNew(String filterName)
         {
             if (!IsProjectDataCompleted()) return;
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = ResourcesUtil.GetFileDesignerFilterName();
+            saveFileDialog.Filter = filterName;
             saveFileDialog.Title = "Save a File Designer project";
             saveFileDialog.ShowDialog();
 
@@ -568,7 +568,7 @@ namespace OneClickZip
         {
             if (!PROJECT_SESSION.IsSessionWasACurrentlyLoadedProject())
             {
-                SaveProjectAsNew();
+                SaveProjectAsNew(ResourcesUtil.GetFileDesignerFilterName());
                 return;
             }
 
@@ -586,8 +586,13 @@ namespace OneClickZip
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = ResourcesUtil.GetFileDesignerFilterName();
             openFileDialog.Title = "Open a Zip Designer project";
-            openFileDialog.ShowDialog();
-            OpenProjectDesignerFile(openFileDialog.FileName);
+            DialogResult dialogResult = openFileDialog.ShowDialog();
+            if(dialogResult == DialogResult.OK)
+            {
+                if (openFileDialog.FileName == null) return;
+                if (openFileDialog.FileName == "") return;
+                OpenProjectDesignerFile(openFileDialog.FileName);
+            }
         }
 
         private void OpenProjectDesignerFile(String filePath)
@@ -624,9 +629,16 @@ namespace OneClickZip
             ClearStatisticForms();
         }
 
+        private void toolStripMenuItemGenerateOneClickZip_Click(object sender, EventArgs e)
+        {
+            SaveProjectAsNew(ResourcesUtil.GetFileBatchFilterName());
+        }
+
+
+
 #endregion
 
-#region Context Strip for Zip File Tree View
+        #region Context Strip for Zip File Tree View
 
         private void expandToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -680,11 +692,12 @@ namespace OneClickZip
 
 
 
+
+
+
         #endregion
 
 
-    
-    
     }
 
 }

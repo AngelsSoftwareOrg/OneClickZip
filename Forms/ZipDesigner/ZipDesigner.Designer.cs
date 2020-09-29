@@ -36,15 +36,18 @@
             this.btnGenerateBatchFile = new System.Windows.Forms.Button();
             this.btnSaveZipDesign = new System.Windows.Forms.Button();
             this.panel10 = new System.Windows.Forms.Panel();
-            this.label9 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnRecalculateEstimations = new System.Windows.Forms.Button();
-            this.lnkCopSaveLocation = new System.Windows.Forms.LinkLabel();
             this.txtEstimatedZipFileSize = new System.Windows.Forms.TextBox();
             this.txtEstimatedAddedFiles = new System.Windows.Forms.TextBox();
             this.txtEstimatedAddedFolders = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.lnlSetTargetLocation = new System.Windows.Forms.LinkLabel();
+            this.txtTargetLocation = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.lnkCopSaveLocation = new System.Windows.Forms.LinkLabel();
             this.label7 = new System.Windows.Forms.Label();
             this.txtZipFileLocation = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -104,14 +107,13 @@
             this.toolStripMenuItemGenerateOneClickZip = new System.Windows.Forms.ToolStripMenuItem();
             this.fileAssociationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.txtTargetLocation = new System.Windows.Forms.TextBox();
-            this.lnlSetTargetLocation = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerFormMain)).BeginInit();
             this.splitContainerFormMain.Panel1.SuspendLayout();
             this.splitContainerFormMain.Panel2.SuspendLayout();
             this.splitContainerFormMain.SuspendLayout();
             this.panel11.SuspendLayout();
             this.panel10.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.panel9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerExplorers)).BeginInit();
             this.splitContainerExplorers.Panel1.SuspendLayout();
@@ -203,17 +205,11 @@
             // panel10
             // 
             this.panel10.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel10.Controls.Add(this.groupBox1);
             this.panel10.Controls.Add(this.lnlSetTargetLocation);
             this.panel10.Controls.Add(this.txtTargetLocation);
             this.panel10.Controls.Add(this.label9);
-            this.panel10.Controls.Add(this.btnRecalculateEstimations);
             this.panel10.Controls.Add(this.lnkCopSaveLocation);
-            this.panel10.Controls.Add(this.txtEstimatedZipFileSize);
-            this.panel10.Controls.Add(this.txtEstimatedAddedFiles);
-            this.panel10.Controls.Add(this.txtEstimatedAddedFolders);
-            this.panel10.Controls.Add(this.label11);
-            this.panel10.Controls.Add(this.label10);
-            this.panel10.Controls.Add(this.label8);
             this.panel10.Controls.Add(this.label7);
             this.panel10.Controls.Add(this.txtZipFileLocation);
             this.panel10.Controls.Add(this.label6);
@@ -223,6 +219,132 @@
             this.panel10.Size = new System.Drawing.Size(349, 473);
             this.panel10.TabIndex = 3;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.btnRecalculateEstimations);
+            this.groupBox1.Controls.Add(this.txtEstimatedZipFileSize);
+            this.groupBox1.Controls.Add(this.txtEstimatedAddedFiles);
+            this.groupBox1.Controls.Add(this.txtEstimatedAddedFolders);
+            this.groupBox1.Controls.Add(this.label11);
+            this.groupBox1.Controls.Add(this.label10);
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Location = new System.Drawing.Point(4, 139);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(335, 185);
+            this.groupBox1.TabIndex = 20;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Estimated uncompress added file size";
+            // 
+            // btnRecalculateEstimations
+            // 
+            this.btnRecalculateEstimations.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRecalculateEstimations.Location = new System.Drawing.Point(151, 148);
+            this.btnRecalculateEstimations.Name = "btnRecalculateEstimations";
+            this.btnRecalculateEstimations.Size = new System.Drawing.Size(177, 31);
+            this.btnRecalculateEstimations.TabIndex = 27;
+            this.btnRecalculateEstimations.Text = "Estimated Size";
+            this.btnRecalculateEstimations.UseVisualStyleBackColor = true;
+            this.btnRecalculateEstimations.Click += new System.EventHandler(this.btnRecalculateEstimations_Click);
+            // 
+            // txtEstimatedZipFileSize
+            // 
+            this.txtEstimatedZipFileSize.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtEstimatedZipFileSize.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.RecentlyUsedList;
+            this.txtEstimatedZipFileSize.BackColor = System.Drawing.SystemColors.Control;
+            this.txtEstimatedZipFileSize.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtEstimatedZipFileSize.Location = new System.Drawing.Point(10, 128);
+            this.txtEstimatedZipFileSize.Margin = new System.Windows.Forms.Padding(4);
+            this.txtEstimatedZipFileSize.Name = "txtEstimatedZipFileSize";
+            this.txtEstimatedZipFileSize.ReadOnly = true;
+            this.txtEstimatedZipFileSize.Size = new System.Drawing.Size(318, 15);
+            this.txtEstimatedZipFileSize.TabIndex = 26;
+            this.txtEstimatedZipFileSize.Text = "0";
+            // 
+            // txtEstimatedAddedFiles
+            // 
+            this.txtEstimatedAddedFiles.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtEstimatedAddedFiles.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.RecentlyUsedList;
+            this.txtEstimatedAddedFiles.BackColor = System.Drawing.SystemColors.Control;
+            this.txtEstimatedAddedFiles.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtEstimatedAddedFiles.Location = new System.Drawing.Point(10, 84);
+            this.txtEstimatedAddedFiles.Margin = new System.Windows.Forms.Padding(4);
+            this.txtEstimatedAddedFiles.Name = "txtEstimatedAddedFiles";
+            this.txtEstimatedAddedFiles.ReadOnly = true;
+            this.txtEstimatedAddedFiles.Size = new System.Drawing.Size(318, 15);
+            this.txtEstimatedAddedFiles.TabIndex = 25;
+            this.txtEstimatedAddedFiles.Text = "0";
+            // 
+            // txtEstimatedAddedFolders
+            // 
+            this.txtEstimatedAddedFolders.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtEstimatedAddedFolders.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.RecentlyUsedList;
+            this.txtEstimatedAddedFolders.BackColor = System.Drawing.SystemColors.Control;
+            this.txtEstimatedAddedFolders.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtEstimatedAddedFolders.Location = new System.Drawing.Point(10, 41);
+            this.txtEstimatedAddedFolders.Margin = new System.Windows.Forms.Padding(4);
+            this.txtEstimatedAddedFolders.Name = "txtEstimatedAddedFolders";
+            this.txtEstimatedAddedFolders.ReadOnly = true;
+            this.txtEstimatedAddedFolders.Size = new System.Drawing.Size(319, 15);
+            this.txtEstimatedAddedFolders.TabIndex = 24;
+            this.txtEstimatedAddedFolders.Text = "0";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(7, 107);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(272, 17);
+            this.label11.TabIndex = 23;
+            this.label11.Text = "Estimated Uncompressed added file size: ";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(7, 63);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(156, 17);
+            this.label10.TabIndex = 22;
+            this.label10.Text = "Estimated Added Files: ";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 22);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(174, 17);
+            this.label8.TabIndex = 21;
+            this.label8.Text = "Estimated Added Folders: ";
+            // 
+            // lnlSetTargetLocation
+            // 
+            this.lnlSetTargetLocation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnlSetTargetLocation.AutoSize = true;
+            this.lnlSetTargetLocation.Location = new System.Drawing.Point(206, 84);
+            this.lnlSetTargetLocation.Name = "lnlSetTargetLocation";
+            this.lnlSetTargetLocation.Size = new System.Drawing.Size(133, 17);
+            this.lnlSetTargetLocation.TabIndex = 19;
+            this.lnlSetTargetLocation.TabStop = true;
+            this.lnlSetTargetLocation.Text = "Set Target Location";
+            this.lnlSetTargetLocation.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnlSetTargetLocation_LinkClicked);
+            // 
+            // txtTargetLocation
+            // 
+            this.txtTargetLocation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTargetLocation.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.RecentlyUsedList;
+            this.txtTargetLocation.BackColor = System.Drawing.SystemColors.Control;
+            this.txtTargetLocation.Location = new System.Drawing.Point(4, 105);
+            this.txtTargetLocation.Margin = new System.Windows.Forms.Padding(4);
+            this.txtTargetLocation.Name = "txtTargetLocation";
+            this.txtTargetLocation.ReadOnly = true;
+            this.txtTargetLocation.Size = new System.Drawing.Size(335, 22);
+            this.txtTargetLocation.TabIndex = 18;
+            // 
             // label9
             // 
             this.label9.AutoSize = true;
@@ -231,17 +353,6 @@
             this.label9.Size = new System.Drawing.Size(158, 17);
             this.label9.TabIndex = 17;
             this.label9.Text = "Target Zip File Location";
-            // 
-            // btnRecalculateEstimations
-            // 
-            this.btnRecalculateEstimations.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRecalculateEstimations.Location = new System.Drawing.Point(155, 285);
-            this.btnRecalculateEstimations.Name = "btnRecalculateEstimations";
-            this.btnRecalculateEstimations.Size = new System.Drawing.Size(184, 31);
-            this.btnRecalculateEstimations.TabIndex = 16;
-            this.btnRecalculateEstimations.Text = "Recalculate Estimations";
-            this.btnRecalculateEstimations.UseVisualStyleBackColor = true;
-            this.btnRecalculateEstimations.Click += new System.EventHandler(this.btnRecalculateEstimations_Click);
             // 
             // lnkCopSaveLocation
             // 
@@ -254,75 +365,6 @@
             this.lnkCopSaveLocation.TabStop = true;
             this.lnkCopSaveLocation.Text = "Copy Location";
             this.lnkCopSaveLocation.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkCopSaveLocation_LinkClicked);
-            // 
-            // txtEstimatedZipFileSize
-            // 
-            this.txtEstimatedZipFileSize.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtEstimatedZipFileSize.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.RecentlyUsedList;
-            this.txtEstimatedZipFileSize.BackColor = System.Drawing.SystemColors.Control;
-            this.txtEstimatedZipFileSize.Location = new System.Drawing.Point(4, 256);
-            this.txtEstimatedZipFileSize.Margin = new System.Windows.Forms.Padding(4);
-            this.txtEstimatedZipFileSize.Name = "txtEstimatedZipFileSize";
-            this.txtEstimatedZipFileSize.ReadOnly = true;
-            this.txtEstimatedZipFileSize.Size = new System.Drawing.Size(335, 22);
-            this.txtEstimatedZipFileSize.TabIndex = 14;
-            this.txtEstimatedZipFileSize.Text = "0";
-            // 
-            // txtEstimatedAddedFiles
-            // 
-            this.txtEstimatedAddedFiles.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtEstimatedAddedFiles.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.RecentlyUsedList;
-            this.txtEstimatedAddedFiles.BackColor = System.Drawing.SystemColors.Control;
-            this.txtEstimatedAddedFiles.Location = new System.Drawing.Point(4, 206);
-            this.txtEstimatedAddedFiles.Margin = new System.Windows.Forms.Padding(4);
-            this.txtEstimatedAddedFiles.Name = "txtEstimatedAddedFiles";
-            this.txtEstimatedAddedFiles.ReadOnly = true;
-            this.txtEstimatedAddedFiles.Size = new System.Drawing.Size(335, 22);
-            this.txtEstimatedAddedFiles.TabIndex = 13;
-            this.txtEstimatedAddedFiles.Text = "0";
-            // 
-            // txtEstimatedAddedFolders
-            // 
-            this.txtEstimatedAddedFolders.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtEstimatedAddedFolders.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.RecentlyUsedList;
-            this.txtEstimatedAddedFolders.BackColor = System.Drawing.SystemColors.Control;
-            this.txtEstimatedAddedFolders.Location = new System.Drawing.Point(4, 156);
-            this.txtEstimatedAddedFolders.Margin = new System.Windows.Forms.Padding(4);
-            this.txtEstimatedAddedFolders.Name = "txtEstimatedAddedFolders";
-            this.txtEstimatedAddedFolders.ReadOnly = true;
-            this.txtEstimatedAddedFolders.Size = new System.Drawing.Size(335, 22);
-            this.txtEstimatedAddedFolders.TabIndex = 12;
-            this.txtEstimatedAddedFolders.Text = "0";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(4, 235);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(252, 17);
-            this.label11.TabIndex = 10;
-            this.label11.Text = "Estimated Uncompressed Zip file size: ";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(4, 188);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(156, 17);
-            this.label10.TabIndex = 8;
-            this.label10.Text = "Estimated Added Files: ";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(3, 137);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(174, 17);
-            this.label8.TabIndex = 6;
-            this.label8.Text = "Estimated Added Folders: ";
             // 
             // label7
             // 
@@ -896,6 +938,7 @@
             this.toolStripMenuItemGenerateOneClickZip.Name = "toolStripMenuItemGenerateOneClickZip";
             this.toolStripMenuItemGenerateOneClickZip.Size = new System.Drawing.Size(244, 26);
             this.toolStripMenuItemGenerateOneClickZip.Text = "Generate One Click Zip";
+            this.toolStripMenuItemGenerateOneClickZip.Click += new System.EventHandler(this.toolStripMenuItemGenerateOneClickZip_Click);
             // 
             // fileAssociationToolStripMenuItem
             // 
@@ -909,31 +952,6 @@
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(64, 24);
             this.aboutToolStripMenuItem.Text = "About";
-            // 
-            // txtTargetLocation
-            // 
-            this.txtTargetLocation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtTargetLocation.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.RecentlyUsedList;
-            this.txtTargetLocation.BackColor = System.Drawing.SystemColors.Control;
-            this.txtTargetLocation.Location = new System.Drawing.Point(4, 105);
-            this.txtTargetLocation.Margin = new System.Windows.Forms.Padding(4);
-            this.txtTargetLocation.Name = "txtTargetLocation";
-            this.txtTargetLocation.ReadOnly = true;
-            this.txtTargetLocation.Size = new System.Drawing.Size(335, 22);
-            this.txtTargetLocation.TabIndex = 18;
-            // 
-            // lnlSetTargetLocation
-            // 
-            this.lnlSetTargetLocation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lnlSetTargetLocation.AutoSize = true;
-            this.lnlSetTargetLocation.Location = new System.Drawing.Point(206, 84);
-            this.lnlSetTargetLocation.Name = "lnlSetTargetLocation";
-            this.lnlSetTargetLocation.Size = new System.Drawing.Size(133, 17);
-            this.lnlSetTargetLocation.TabIndex = 19;
-            this.lnlSetTargetLocation.TabStop = true;
-            this.lnlSetTargetLocation.Text = "Set Target Location";
-            this.lnlSetTargetLocation.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnlSetTargetLocation_LinkClicked);
             // 
             // ZipDesigner
             // 
@@ -955,6 +973,8 @@
             this.panel11.ResumeLayout(false);
             this.panel10.ResumeLayout(false);
             this.panel10.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.panel9.ResumeLayout(false);
             this.panel9.PerformLayout();
             this.splitContainerExplorers.Panel1.ResumeLayout(false);
@@ -1036,16 +1056,9 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtZipFileLocation;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox txtEstimatedAddedFolders;
-        private System.Windows.Forms.TextBox txtEstimatedZipFileSize;
-        private System.Windows.Forms.TextBox txtEstimatedAddedFiles;
         private System.Windows.Forms.LinkLabel lnkCopSaveLocation;
         private System.Windows.Forms.Button btnExpColAll;
         private System.Windows.Forms.Button btnRemoveSelectedZipFiles;
-        private System.Windows.Forms.Button btnRecalculateEstimations;
         private System.Windows.Forms.Button btnRunZip;
         private System.Windows.Forms.MenuStrip menuZipDesigner;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
@@ -1067,5 +1080,13 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtTargetLocation;
         private System.Windows.Forms.LinkLabel lnlSetTargetLocation;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button btnRecalculateEstimations;
+        private System.Windows.Forms.TextBox txtEstimatedZipFileSize;
+        private System.Windows.Forms.TextBox txtEstimatedAddedFiles;
+        private System.Windows.Forms.TextBox txtEstimatedAddedFolders;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label8;
     }
 }

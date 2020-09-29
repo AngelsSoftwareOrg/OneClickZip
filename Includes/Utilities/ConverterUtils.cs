@@ -35,6 +35,36 @@ namespace OneClickZip.Includes.Utilities
                 adjustedSize,
                 SIZE_SUFFIXES[mag]);
         }
+
+
+        // 0.63 ms
+        public static string ConvertToHourMinuteSeconds(long secs)
+        {
+            long hours = secs / 3600;
+            long mins = (secs % 3600) / 60;
+            secs = secs % 60;
+            return string.Format("{0:D2}:{1:D2}:{2:D2}", hours, mins, secs);
+        }
+
+        // 0.64 ms
+        public static string ConvertToHourMinuteSecondsUsingModulo(long secs)
+        {
+            long s = secs % 60;
+            secs /= 60;
+            long mins = secs % 60;
+            long hours = secs / 60;
+            return string.Format("{0:D2}:{1:D2}:{2:D2}", hours, mins, s);
+        }
+
+        // 0.70 ms
+        public static string ConvertToHourMinuteSecondsUsingTimeSpan(long secs)
+        {
+            TimeSpan t = TimeSpan.FromSeconds(secs);
+            return string.Format("{0:D2}:{1:D2}:{2:D2}",
+                (int)t.TotalHours,
+                t.Minutes,
+                t.Seconds);
+        }
     }
 
 

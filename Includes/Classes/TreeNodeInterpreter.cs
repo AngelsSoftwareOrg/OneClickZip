@@ -259,7 +259,7 @@ namespace OneClickZip.Includes.Classes
             return statistic;
         }
         
-        private static void TraverseTreeViewForStatistic(TreeNodeExtended currentNode, ZipFileStatisticsModel statistic)
+        public static void TraverseTreeViewForStatistic(TreeNodeExtended currentNode, ZipFileStatisticsModel statistic)
         {
             foreach (CustomFileItem customFileItem in currentNode.MasterListFilesDir)
             {

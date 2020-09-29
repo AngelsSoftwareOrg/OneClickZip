@@ -20,9 +20,9 @@ namespace OneClickZip
 
             //DEBUG
             Console.WriteLine("~~~~~~~ Program ~~~~~~~");
-            //args = new string []{
-            //    "E:\\zuTempOneClickZip\\7 - batch file.oczb"
-            //};
+            args = new string[]{
+               "E:\\zuTempOneClickZip\\8 - Test Batch File.oczb"
+            };
 
             Console.WriteLine(args);
             Console.WriteLine();

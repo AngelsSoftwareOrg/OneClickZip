@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,10 +20,6 @@ namespace OneClickZip.Includes.Models
         private String targetFilePath;
 
         public ZipFileModel()
-        {
-        }
-        
-        public ZipFileModel(TreeView treeViewZipFileStructure)
         {
             this.treeViewZipFileStructure = new SerializableTreeNode();
         }
@@ -49,6 +46,25 @@ namespace OneClickZip.Includes.Models
         
         public string FilePath { get => filePath; set => filePath = value; }
         
-        public string TargetFilePath { get => targetFilePath; set => targetFilePath = value; }
+        public string TargetFilePath { 
+            get 
+            {
+                if (targetFilePath == null) return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                if (targetFilePath == "") return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                if(!Directory.Exists(targetFilePath)) return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                return targetFilePath;
+            }
+            set => targetFilePath = value; 
+        }
+
+        public String GetFullPathFileAndNameOfNewZipArchive
+        {
+            get
+            {
+                String targetPath = TargetFilePath.Trim();
+                if(!TargetFilePath.EndsWith(@"\")) targetPath += @"\";
+                return String.Format(@"{0}{1}.zip", targetPath, fileNameCreator.GetDerivedFormula());
+            }
+        }
     }
 }

@@ -26,7 +26,6 @@ namespace OneClickZip.Includes.Classes
             HKCU
         };
 
-
         public static void EnsureAssociationsSet()
         {
             var filePath = Process.GetCurrentProcess().MainModule.FileName;

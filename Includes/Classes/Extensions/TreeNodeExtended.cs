@@ -132,5 +132,13 @@ namespace OneClickZip.Includes.Classes.Extensions
             this.IsStructuredNode = source.isStructuredNode;
             this.IsCustomFolder = source.isCustomFolder;
         }
+
+        public bool IsAFolderGenerally
+        {
+            get
+            {
+                return (IsStructuredNode || IsCustomFolder);
+            }
+        }
     }
 }
