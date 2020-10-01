@@ -1,4 +1,6 @@
 ﻿using ExpTreeLib;
+using OneClickZip.Includes.Classes.TreeNodeSerialize;
+using OneClickZip.Includes.Interface;
 using OneClickZip.Includes.Models;
 using System;
 using System.Collections;
@@ -10,9 +12,9 @@ using System.Windows.Forms;
 
 namespace OneClickZip.Includes.Classes.Extensions
 {
-    public class TreeNodeExtended : TreeNode, ICloneable
+    public class TreeNodeExtended : TreeNode, ICloneable, IZipFileTreeNode
     {
-        private readonly ArrayList masterListFilesDir = new ArrayList();
+        private ArrayList masterListFilesDir = new ArrayList();
         private bool isStructuredNode;
         private bool isCustomFolder;
         private bool isRootNode;
@@ -49,6 +51,7 @@ namespace OneClickZip.Includes.Classes.Extensions
             this.Nodes.Clear();
             ClearItems();
         }
+        
         public void ClearItems()
         {
             this.masterListFilesDir.Clear();
@@ -101,7 +104,7 @@ namespace OneClickZip.Includes.Classes.Extensions
             }
         }
 
-        public ArrayList MasterListFilesDir => this.masterListFilesDir;
+        public ArrayList MasterListFilesDir { get => this.masterListFilesDir; set => this.masterListFilesDir = value; }
 
         public bool IsStructuredNode { get => isStructuredNode; set => isStructuredNode = value; }
         
@@ -113,6 +116,10 @@ namespace OneClickZip.Includes.Classes.Extensions
                 if(isRootNode) return true;
                 if (this.Name == ROOT_NODE_NAME && this.Text == ROOT_NODE_NAME) return true;
                 return false;
+            }
+            set
+            {
+                this.IsRootNode = value;
             }
         }
     
@@ -138,6 +145,31 @@ namespace OneClickZip.Includes.Classes.Extensions
             get
             {
                 return (IsStructuredNode || IsCustomFolder);
+            }
+        }
+
+        public new object Tag 
+        { 
+            get
+            {
+                return base.Tag;
+            }
+            set
+            {
+                base.Tag = value;
+            }
+        }
+
+        List<SerializableTreeNode> IZipFileTreeNode.Nodes 
+        {
+            get
+            {
+                SerializableTreeNode serial = SerializableTreeViewOperation.fnPrepareToWrite((TreeNodeExtended) this);
+                return serial.Nodes.ToList<SerializableTreeNode>();
+            }
+            set
+            {
+                throw new ArgumentException("Not applicable. Make control of TreeNodeExtended.Nodes instead.");
             }
         }
     }

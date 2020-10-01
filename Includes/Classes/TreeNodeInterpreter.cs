@@ -255,27 +255,8 @@ namespace OneClickZip.Includes.Classes
         {
             ZipFileStatisticsModel statistic = new ZipFileStatisticsModel();
             if (targetTreeview.Nodes.Count <= 0) return statistic;
-            TraverseTreeViewForStatistic((TreeNodeExtended) targetTreeview.Nodes[0], statistic);
+            statistic.SetStatistic((TreeNodeExtended)targetTreeview.Nodes[0]);
             return statistic;
-        }
-        
-        public static void TraverseTreeViewForStatistic(TreeNodeExtended currentNode, ZipFileStatisticsModel statistic)
-        {
-            foreach (CustomFileItem customFileItem in currentNode.MasterListFilesDir)
-            {
-                if (!customFileItem.IsFolder) {
-                    statistic.IncrementEstimatedFilesCount();
-                    statistic.IncrementEstimatedFileSizeCount(customFileItem.FileLength);
-                }
-            }
-            foreach (TreeNodeExtended node in currentNode.Nodes)
-            {
-                if (node.IsStructuredNode)
-                {
-                    statistic.IncrementEstimatedFoldersCount();
-                    TraverseTreeViewForStatistic(node, statistic);
-                }
-            }
         }
 
         public static bool IsValidNodeName(String nodeName)
@@ -310,12 +291,5 @@ namespace OneClickZip.Includes.Classes
                 destination.Nodes.Add(trx);
             }
         }
-
-
     }
-
-
-
-
-
 }

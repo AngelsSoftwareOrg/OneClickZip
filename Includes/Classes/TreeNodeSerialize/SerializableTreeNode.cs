@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
+using OneClickZip.Includes.Interface;
 
 namespace OneClickZip.Includes.Classes.TreeNodeSerialize
 {
@@ -13,13 +14,13 @@ namespace OneClickZip.Includes.Classes.TreeNodeSerialize
     /* RESPONSIBLE FOR ANY SUCH LOSS/DAMAGE.*/
     #endregion
     [Serializable]
-    public class SerializableTreeNode
+    public class SerializableTreeNode : IZipFileTreeNode
     {
         #region USER DEFINED VARIABLES
         private string name=String.Empty;
         private int imageIndex =-1;
         private int selectedImageIndex = -1;
-        private string tag =String.Empty;
+        private object tag =null;
         private string text = String.Empty;
         private string toolTipText = String.Empty;
 
@@ -47,7 +48,7 @@ namespace OneClickZip.Includes.Classes.TreeNodeSerialize
             get { return selectedImageIndex; }
             set { selectedImageIndex = value; }
         }
-        public string Tag
+        public object Tag
         {
             get { return tag; }
             set { tag=value; }
@@ -67,16 +68,25 @@ namespace OneClickZip.Includes.Classes.TreeNodeSerialize
             get { return nodes; }
             set { nodes=value; }
         }
-
         public ArrayList MasterListFilesDir { get => masterListFilesDir; set => masterListFilesDir = value; }
         public bool IsStructuredNode { get => isStructuredNode; set => isStructuredNode = value; }
         public bool IsCustomFolder { get => isCustomFolder; set => isCustomFolder = value; }
         public bool IsRootNode { get => isRootNode; set => isRootNode = value; }
         #endregion
-
         public SerializableTreeNode()
 		{
 		}
-        
+        public bool IsAFolderGenerally
+        {
+            get
+            {
+                return (IsStructuredNode || IsCustomFolder);
+            }
+        }
+        List<SerializableTreeNode> IZipFileTreeNode.Nodes 
+        { 
+            get => this.nodes; 
+            set => this.nodes = value; 
+        }
     }
 }

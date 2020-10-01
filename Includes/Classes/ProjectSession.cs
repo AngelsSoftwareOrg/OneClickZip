@@ -1,4 +1,5 @@
 ﻿using OneClickZip.Includes.Classes.Extensions;
+using OneClickZip.Includes.Classes.TreeNodeSerialize;
 using OneClickZip.Includes.Models;
 using System;
 using System.Collections.Generic;
@@ -43,8 +44,12 @@ namespace OneClickZip.Includes.Classes
         public TreeNodeExtended GetTreeNodeZipDesignOnProjectFile(String fileFullPath)
         {
             ZipFileModel zipFileModel = OpenProjectSession(fileFullPath);
-            TreeNodeExtended treeNodeExtended = zipFileModel.GetTreeViewZipFileStructure();
-            return treeNodeExtended;
+            return zipFileModel.GetTreeViewZipFileStructure();
+        }
+        public SerializableTreeNode GetSerializableTreeNodeOnProjectFile(String fileFullPath)
+        {
+            ZipFileModel zipFileModel = OpenProjectSession(fileFullPath);
+            return zipFileModel.GetTreeViewZipFileSerializedStructure;
         }
 
         public void SaveProject(String fullFilePath)

@@ -13,6 +13,7 @@ using OneClickZip.Includes.Classes;
 using OneClickZip.Includes.Classes.Extensions;
 using OneClickZip.Includes.Classes.TreeNodeSerialize;
 using OneClickZip.Includes.Models;
+using OneClickZip.Includes.Models.Events;
 using OneClickZip.Includes.Utilities;
 
 namespace OneClickZip.Forms.Options
@@ -24,6 +25,7 @@ namespace OneClickZip.Forms.Options
         private ZipFileModel zipModel;
         private ZipFileStatisticsModel zipFileStatisticsModel;
         private long elapseTime = 0;
+        private ZipArchiving zipArchiving = new ZipArchiving();
 
         public OneClickProcessor()
         {
@@ -43,90 +45,65 @@ namespace OneClickZip.Forms.Options
             timerElapseTime.Enabled = true;
             timerElapseTime.Start();
             elapseTime = 0;
+            this.Show();
+            zipArchiving.ProcessingStatus += ZipArchiving_ProcessingStatus;
+            zipArchiving.ProgressStatus += ZipArchiving_ProgressStatus;
+            zipArchiving.FinishedArchiving += ZipArchiving_FinishedArchiving;
             OpenProjectFileForZipping();
+        }
+
+        private void ZipArchiving_FinishedArchiving(object sender, ZipArchivingEventArgs e)
+        {
+            txtBoxCurrentAction.Text = "Finished....";
+        }
+
+        private void ZipArchiving_ProgressStatus(object sender, ZipArchivingEventArgs e)
+        {
+            this.progressBarStatus.Value = e.ProgressStatusPercentage;
+
+            //DEBUG
+            Console.WriteLine("ZipArchiving_ProgressStatus: " + e.ProgressStatusPercentage);
+
+
+            DisplayProcessedFile(e);
+        }
+
+        private void ZipArchiving_ProcessingStatus(object sender, ZipArchivingEventArgs e)
+        {
+            DisplayProcessedFile(e);
+        }
+
+        private void DisplayProcessedFile(ZipArchivingEventArgs e)
+        {
+            if (e.ProcessingStage == ZipProcessingStages.ADDING_FILE)
+            {
+                txtBoxCurrentAction.Text = "Adding File " + e.FileFullPath;
+            }
+            else if (e.ProcessingStage == ZipProcessingStages.ADDING_FOLDER)
+            {
+                txtBoxCurrentAction.Text = "Creating Folder " + e.FileName;
+            }
         }
 
         private void OpenProjectFileForZipping()
         {
-            TreeNodeExtended treeNodeExtended = projectSession.GetTreeNodeZipDesignOnProjectFile(applicationArgumentModel.FilePath);
-            zipModel = projectSession.ZipFileModel;
-            GetStatistic(treeNodeExtended);
+            SerializableTreeNode serializedTreeNode = projectSession.GetSerializableTreeNodeOnProjectFile(applicationArgumentModel.FilePath);
+            this.zipModel = projectSession.ZipFileModel;
 
             //DEBUG
             Console.WriteLine(zipModel.GetFullPathFileAndNameOfNewZipArchive);
 
-            //CrawlTreeStructure(treeNodeExtended, null, null);
-            //if (true) return;
+            zipArchiving.NewArchiveName = zipModel.GetFullPathFileAndNameOfNewZipArchive;
+            zipArchiving.SerializableTreeNode = serializedTreeNode;
+            zipArchiving.ZipFileModelSource = zipModel;
+            GetStatistic(zipArchiving.GetStatistic());
+            zipArchiving.StartArchieving();
 
-            using (FileStream zipToCreate = new FileStream(zipModel.GetFullPathFileAndNameOfNewZipArchive, FileMode.Create))
-            {
-                using (ZipArchive archiveFile = new ZipArchive(zipToCreate, ZipArchiveMode.Update))
-                {
-                    CrawlTreeStructure(treeNodeExtended, archiveFile, null);
-                }
-            }
         }
 
-        private void AddFileIntoZipArchive(ZipArchive archiveFile, String fullPathOfaFile, String zipFileFolderName)
+        private void GetStatistic(ZipFileStatisticsModel statObj)
         {
-            FileInfo fileInfo = new FileInfo(fullPathOfaFile);
-            ZipArchiveEntry zipArchiveEntry = archiveFile.CreateEntry(zipFileFolderName + fileInfo.Name, CompressionLevel.Optimal);
-            using (var zipStream = zipArchiveEntry.Open())
-            {
-                using (Stream source = File.OpenRead(fullPathOfaFile))
-                {
-                    byte[] buffer = new byte[2048];
-                    int bytesRead;
-                    while ((bytesRead = source.Read(buffer, 0, buffer.Length)) > 0)
-                    {
-                        zipStream.Write(buffer, 0, bytesRead);
-                    }
-                }
-            }
-        }
-
-        private void CrawlTreeStructure(TreeNodeExtended treeNodeExtended, ZipArchive archiveFile, String zipFileFolderName)
-        {
-            if (zipFileFolderName == null) zipFileFolderName = "";
-            foreach (CustomFileItem customFile in treeNodeExtended.MasterListFilesDir)
-            {
-                if (!customFile.IsFolder && !customFile.IsCustomFolder)
-                {
-                    AddFileIntoZipArchive(archiveFile, customFile.FilePathFull, zipFileFolderName);
-                    
-                    //debug
-                    Console.WriteLine("[" + treeNodeExtended.Text + "] -> " + customFile.GetCustomFileName);
-                }
-            }
-
-            //create the directory even if its empty
-            if (treeNodeExtended.MasterListFilesDir.Count <= 0)
-            {
-                archiveFile.CreateEntry(zipFileFolderName);
-            }
-
-            foreach (TreeNodeExtended treeNodeEx in treeNodeExtended.Nodes)
-            {
-                if(treeNodeEx.IsAFolderGenerally)
-                {
-                    String newPath = "";
-                    if (zipFileFolderName == null)
-                    {
-                        newPath = treeNodeEx.Text + @"/";
-                    }
-                    else
-                    {
-                        newPath = zipFileFolderName + treeNodeEx.Text + @"/";
-                    }
-                    CrawlTreeStructure(treeNodeEx, archiveFile, newPath);
-                }
-            }
-        }
-
-        private void GetStatistic(TreeNodeExtended treeNodeExtended)
-        {
-            zipFileStatisticsModel = new ZipFileStatisticsModel();
-            TreeNodeInterpreter.TraverseTreeViewForStatistic((TreeNodeExtended)treeNodeExtended, zipFileStatisticsModel);
+            zipFileStatisticsModel = statObj;
             lblTotalFilesCount.Text = zipFileStatisticsModel.EstimatedFilesCount.ToString();
             lblTotalFoldersCount.Text = zipFileStatisticsModel.EstimatedFoldersCount.ToString();
             lblEstimatedSize.Text = ConverterUtils.humanReadableFileSize(zipFileStatisticsModel.EstimatedFileSizeCount, 2);

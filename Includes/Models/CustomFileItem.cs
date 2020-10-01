@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ExpTreeLib;
 using OneClickZip.Includes.Classes;
+using OneClickZip.Includes.Utilities;
 
 namespace OneClickZip.Includes.Models
 {
@@ -81,7 +82,7 @@ namespace OneClickZip.Includes.Models
 
         private void SetIconsIndex(String fullPath)
         {
-            if (IsFullPathIsDirectory(fullPath))
+            if (FileSystemUtilities.IsFullPathIsDirectory(fullPath))
             {
                 this.IconIndexOpen = DefaultIcons.SYSTEM_ICONS.GetIconIndexForDirectories();
                 this.IconIndexNormal = this.IconIndexOpen;
@@ -122,7 +123,7 @@ namespace OneClickZip.Includes.Models
         public ArrayList GetShellInfoDirectories()
         {
             ArrayList result = new ArrayList();
-            DirectoryInfo[] dInfo = this.GetDirectories(this.filePathFull);
+            DirectoryInfo[] dInfo = FileSystemUtilities.GetDirectories(this.filePathFull);
             if (dInfo == null) return result;
 
             foreach (DirectoryInfo obj in dInfo)
@@ -222,11 +223,11 @@ namespace OneClickZip.Includes.Models
         public long DirectoriesCount { 
             get 
             {
-                if (IsFullPathIsDirectory(this.filePathFull))
+                if (FileSystemUtilities.IsFullPathIsDirectory(this.filePathFull))
                 {
-                    DirectoryInfo[] dinfo = this.GetDirectories(this.filePathFull);
+                    DirectoryInfo[] dinfo = FileSystemUtilities.GetDirectories(this.filePathFull);
                     if (dinfo == null) return 0;
-                    return this.GetDirectories(this.filePathFull).Length;
+                    return FileSystemUtilities.GetDirectories(this.filePathFull).Length;
                 }
                 return 0;
             }
@@ -236,36 +237,11 @@ namespace OneClickZip.Includes.Models
             get
             {
                 DirectoryInfo dInfo = new DirectoryInfo(this.filePathFull);
-                return (IsFullPathIsDirectory(this.filePathFull) ? dInfo.GetFiles().Length : 0);
+                return (FileSystemUtilities.IsFullPathIsDirectory(this.filePathFull) ? dInfo.GetFiles().Length : 0);
             }
         }
        
         public string FilePathFull { get => filePathFull; }
-       
-        private bool IsFullPathIsDirectory(String fullPath)
-        {
-            DirectoryInfo dInfo = new DirectoryInfo(fullPath);
-            if ((dInfo.Attributes & FileAttributes.Directory) == FileAttributes.Directory)
-            {
-                return true;
-            }
-            return false;
-        }
-    
-        private DirectoryInfo[] GetDirectories(String pathName)
-        {
-            DirectoryInfo[] result = null;
-            DirectoryInfo dInfo = new DirectoryInfo(pathName);
-            if ((File.GetAttributes(this.filePathFull) & FileAttributes.ReparsePoint) != FileAttributes.ReparsePoint)
-            {
-                try
-                {
-                    result = dInfo.GetDirectories();
-                }
-                catch (UnauthorizedAccessException) { }
-            }
-            return result;
-        }
-    
+
     }
 }

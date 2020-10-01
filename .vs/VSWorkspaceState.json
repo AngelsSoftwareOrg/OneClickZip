@@ -1,11 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\classes",
     "\\Forms",
     "\\Forms\\ZipDesigner",
     "\\Includes",
     "\\Includes\\Classes",
+    "\\Includes\\Models",
+    "\\Includes\\Models\\Events",
     "\\Includes\\Resources",
     "\\Resources",
     "\\Resources\\Supporting Files"

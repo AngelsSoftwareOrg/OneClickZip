@@ -140,7 +140,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(8, 67);
+            this.label7.Location = new System.Drawing.Point(9, 69);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(208, 17);
             this.label7.TabIndex = 5;
@@ -149,7 +149,7 @@
             // lblEstimatedSize
             // 
             this.lblEstimatedSize.AutoSize = true;
-            this.lblEstimatedSize.Location = new System.Drawing.Point(217, 67);
+            this.lblEstimatedSize.Location = new System.Drawing.Point(217, 69);
             this.lblEstimatedSize.Name = "lblEstimatedSize";
             this.lblEstimatedSize.Size = new System.Drawing.Size(52, 17);
             this.lblEstimatedSize.TabIndex = 4;
@@ -158,7 +158,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 47);
+            this.label5.Location = new System.Drawing.Point(7, 47);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(140, 17);
             this.label5.TabIndex = 3;
@@ -176,7 +176,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 25);
+            this.label3.Location = new System.Drawing.Point(7, 25);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(122, 17);
             this.label3.TabIndex = 1;
@@ -185,7 +185,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(462, 67);
+            this.label15.Location = new System.Drawing.Point(462, 69);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(102, 17);
             this.label15.TabIndex = 0;
@@ -194,7 +194,7 @@
             // lblElapsedTime
             // 
             this.lblElapsedTime.AutoSize = true;
-            this.lblElapsedTime.Location = new System.Drawing.Point(585, 67);
+            this.lblElapsedTime.Location = new System.Drawing.Point(585, 69);
             this.lblElapsedTime.Name = "lblElapsedTime";
             this.lblElapsedTime.Size = new System.Drawing.Size(64, 17);
             this.lblElapsedTime.TabIndex = 0;
@@ -267,11 +267,11 @@
             this.txtBoxCurrentAction.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxCurrentAction.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtBoxCurrentAction.Location = new System.Drawing.Point(9, 21);
+            this.txtBoxCurrentAction.Location = new System.Drawing.Point(12, 21);
             this.txtBoxCurrentAction.Multiline = true;
             this.txtBoxCurrentAction.Name = "txtBoxCurrentAction";
             this.txtBoxCurrentAction.ReadOnly = true;
-            this.txtBoxCurrentAction.Size = new System.Drawing.Size(943, 45);
+            this.txtBoxCurrentAction.Size = new System.Drawing.Size(937, 45);
             this.txtBoxCurrentAction.TabIndex = 2;
             // 
             // progressBarStatus

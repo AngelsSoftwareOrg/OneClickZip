@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using OneClickZip.Includes.Classes;
 using OneClickZip.Includes.Classes.Extensions;
 using OneClickZip.Includes.Classes.TreeNodeSerialize;
+using OneClickZip.Includes.Utilities;
 
 namespace OneClickZip.Includes.Models
 {
@@ -35,6 +36,13 @@ namespace OneClickZip.Includes.Models
 
         public TreeNodeExtended GetTreeViewZipFileStructure() {
             return SerializableTreeViewOperation.fnPrepareToRead(treeViewZipFileStructure);
+        }
+        public SerializableTreeNode GetTreeViewZipFileSerializedStructure
+        {
+            get
+            {
+                return this.treeViewZipFileStructure;
+            }
         }
 
         public void SetTreeViewZipFileStructureForFileWriting(TreeNodeExtended treeNodeExtended)
@@ -64,6 +72,25 @@ namespace OneClickZip.Includes.Models
                 String targetPath = TargetFilePath.Trim();
                 if(!TargetFilePath.EndsWith(@"\")) targetPath += @"\";
                 return String.Format(@"{0}{1}.zip", targetPath, fileNameCreator.GetDerivedFormula());
+            }
+        }
+
+        public String GetFileName
+        {
+            get
+            {
+                if (filePath == null) return "";
+                if (filePath == "") return "";
+                if (FileSystemUtilities.IsFullPathIsDirectory(filePath))
+                {
+                    DirectoryInfo dInfo = new DirectoryInfo(filePath);
+                    return dInfo.Name;
+                }
+                else
+                {
+                    FileInfo fileInfo = new FileInfo(filePath);
+                    return fileInfo.Name;
+                }
             }
         }
     }

@@ -122,10 +122,14 @@
     <Compile Include="Includes\Classes\FileSerialization.cs" />
     <Compile Include="Includes\Classes\TreeNodeSerialize\SerializableTreeNode.cs" />
     <Compile Include="Includes\Classes\TreeNodeSerialize\SerializableTreeViewOperation.cs" />
+    <Compile Include="Includes\Classes\ZipArchiving.cs" />
     <Compile Include="Includes\Interface\ICreatorExecutor.cs" />
+    <Compile Include="Includes\Interface\IZipFileTreeNode.cs" />
     <Compile Include="Includes\Models\ApplicationArgumentModel.cs" />
     <Compile Include="Includes\Models\CreatorModel.cs" />
     <Compile Include="Includes\Models\CustomFileItem.cs" />
+    <Compile Include="Includes\Models\Events\ZipArchivingEventArgs.cs" />
+    <Compile Include="Includes\Models\Events\ZipProcessingStages.cs" />
     <Compile Include="Includes\Models\FileAssociationModel.cs" />
     <Compile Include="Includes\Models\ListViewInterpretorViewingParamModel.cs" />
     <Compile Include="Includes\Models\RandomCharsGeneratorModel.cs" />
@@ -138,6 +142,7 @@
     <Compile Include="Includes\Resources\ResourcePropertiesModel.cs" />
     <Compile Include="Includes\Resources\ResourcesUtil.cs" />
     <Compile Include="Includes\Utilities\ConverterUtils.cs" />
+    <Compile Include="Includes\Utilities\FileSystemUtilities.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Forms\ZipDesigner\ZipDesigner.cs">

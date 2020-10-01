@@ -36,19 +36,17 @@ namespace OneClickZip.Includes.Utilities
                 SIZE_SUFFIXES[mag]);
         }
 
-
-        // 0.63 ms
+        
         public static string ConvertToHourMinuteSeconds(long secs)
-        {
+        {// 0.63 ms
             long hours = secs / 3600;
             long mins = (secs % 3600) / 60;
             secs = secs % 60;
             return string.Format("{0:D2}:{1:D2}:{2:D2}", hours, mins, secs);
         }
-
-        // 0.64 ms
+        
         public static string ConvertToHourMinuteSecondsUsingModulo(long secs)
-        {
+        {// 0.64 ms
             long s = secs % 60;
             secs /= 60;
             long mins = secs % 60;
@@ -56,15 +54,23 @@ namespace OneClickZip.Includes.Utilities
             return string.Format("{0:D2}:{1:D2}:{2:D2}", hours, mins, s);
         }
 
-        // 0.70 ms
         public static string ConvertToHourMinuteSecondsUsingTimeSpan(long secs)
-        {
+        {// 0.70 ms
             TimeSpan t = TimeSpan.FromSeconds(secs);
             return string.Format("{0:D2}:{1:D2}:{2:D2}",
                 (int)t.TotalHours,
                 t.Minutes,
                 t.Seconds);
         }
+    
+        public static int GetPercentageFloored(long progress, long total)
+        {
+            decimal result = ((decimal) progress / (decimal)total) * 100;
+            result = Math.Floor(result);
+            return int.Parse(result.ToString());
+        }
+    
+    
     }
 
 

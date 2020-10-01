@@ -235,7 +235,7 @@
             this.groupBox1.Size = new System.Drawing.Size(335, 185);
             this.groupBox1.TabIndex = 20;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Estimated uncompress added file size";
+            this.groupBox1.Text = "Estimated added file size (uncompress )";
             // 
             // btnRecalculateEstimations
             // 
