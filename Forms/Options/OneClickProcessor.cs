@@ -14,6 +14,7 @@ using OneClickZip.Includes.Classes.Extensions;
 using OneClickZip.Includes.Classes.TreeNodeSerialize;
 using OneClickZip.Includes.Models;
 using OneClickZip.Includes.Models.Events;
+using OneClickZip.Includes.Resources;
 using OneClickZip.Includes.Utilities;
 
 namespace OneClickZip.Forms.Options
@@ -42,28 +43,49 @@ namespace OneClickZip.Forms.Options
             lblTotalFilesCount.Text = "0";
             lblTotalFoldersCount.Text = "0";
             lblEstimatedSize.Text = "0";
+            listViewLogs.DoubleBuffering(true);
+            listViewLogs.Items.Clear();
             timerElapseTime.Enabled = true;
             timerElapseTime.Start();
+            linkSaveLogs.Enabled = false;
             elapseTime = 0;
             this.Show();
             zipArchiving.ProcessingStatus += ZipArchiving_ProcessingStatus;
             zipArchiving.ProgressStatus += ZipArchiving_ProgressStatus;
             zipArchiving.FinishedArchiving += ZipArchiving_FinishedArchiving;
+            zipArchiving.StopProcess += ZipArchiving_StopProcess;
             OpenProjectFileForZipping();
+        }
+
+        private void ZipArchiving_StopProcess(object sender, ZipArchivingEventArgs e)
+        {
+            timerElapseTime.Stop();
+            progressBarStatus.Value = progressBarStatus.Maximum;
+            txtBoxCurrentAction.Text = "Zip Archiving Stopped...";
+            AddLogItems("Archiving Ended", "Successfully stop further zip archiving");
+            AddLogItems("Zip Location", @"Partial zip file has been save into....");
+            AddLogItems("Zip Location", e.ZipFileToCreateFullPath);
+            linkSaveLogs.Enabled = true;
         }
 
         private void ZipArchiving_FinishedArchiving(object sender, ZipArchivingEventArgs e)
         {
-            txtBoxCurrentAction.Text = "Finished....";
+            timerElapseTime.Stop();
+            txtBoxCurrentAction.Text = "Finished Zip Archiving...";
+            AddLogItems("Wrapping up", txtBoxCurrentAction.Text);
+            AddLogItems("Zip Location", @"Zip file has been save into....");
+            AddLogItems("Zip Location", e.ZipFileToCreateFullPath);
+            linkSaveLogs.Enabled = true;
         }
 
         private void ZipArchiving_ProgressStatus(object sender, ZipArchivingEventArgs e)
         {
-            this.progressBarStatus.Value = e.ProgressStatusPercentage;
-
+            if(this.progressBarStatus.Value != e.ProgressStatusPercentage)
+            {
+                this.progressBarStatus.Value = e.ProgressStatusPercentage;
+            }
             //DEBUG
             Console.WriteLine("ZipArchiving_ProgressStatus: " + e.ProgressStatusPercentage);
-
 
             DisplayProcessedFile(e);
         }
@@ -75,13 +97,22 @@ namespace OneClickZip.Forms.Options
 
         private void DisplayProcessedFile(ZipArchivingEventArgs e)
         {
+            Application.DoEvents();
             if (e.ProcessingStage == ZipProcessingStages.ADDING_FILE)
             {
-                txtBoxCurrentAction.Text = "Adding File " + e.FileFullPath;
+                txtBoxCurrentAction.Text = "Adding File => " + e.ZipFileToCreateFullPath;
+                AddLogItems("Adding File", e.ZipFileToCreateFullPath);
+                lblFilesAdded.Text = String.Format("{0}% > {1}",
+                    ConverterUtils.GetPercentageFloored(e.FilesProcessedCount, zipFileStatisticsModel.EstimatedFilesCount),
+                    zipFileStatisticsModel.EstimatedFilesCount);
             }
             else if (e.ProcessingStage == ZipProcessingStages.ADDING_FOLDER)
             {
-                txtBoxCurrentAction.Text = "Creating Folder " + e.FileName;
+                txtBoxCurrentAction.Text = "Creating Folder => " + e.FileName;
+                AddLogItems("Adding Folder", e.FileName);
+                lblFoldersCreated.Text = String.Format("{0}% > {1}",
+                    ConverterUtils.GetPercentageFloored(e.FolderProcessedCount, zipFileStatisticsModel.EstimatedFoldersCount),
+                    zipFileStatisticsModel.EstimatedFoldersCount);
             }
         }
 
@@ -98,9 +129,8 @@ namespace OneClickZip.Forms.Options
             zipArchiving.ZipFileModelSource = zipModel;
             GetStatistic(zipArchiving.GetStatistic());
             zipArchiving.StartArchieving();
-
         }
-
+        
         private void GetStatistic(ZipFileStatisticsModel statObj)
         {
             zipFileStatisticsModel = statObj;
@@ -108,21 +138,75 @@ namespace OneClickZip.Forms.Options
             lblTotalFoldersCount.Text = zipFileStatisticsModel.EstimatedFoldersCount.ToString();
             lblEstimatedSize.Text = ConverterUtils.humanReadableFileSize(zipFileStatisticsModel.EstimatedFileSizeCount, 2);
         }
-
+        
         private void timerElapseTime_Tick(object sender, EventArgs e)
         {
             elapseTime++;
             lblElapsedTime.Text = ConverterUtils.ConvertToHourMinuteSeconds(elapseTime);
         }
-
+        
         private void btnExit_Click(object sender, EventArgs e)
         {
+            if (zipArchiving.IsProcessingForceToStop && !zipArchiving.StopProcessingSuccessful)
+            {
+                DialogResult dr = MessageBox.Show(
+                    "Are you sure you want to immediately exit the zip archiving?",
+                    "Zip Archive Exit",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                if (dr == DialogResult.No) return;
+            }
+
             this.Close();
         }
-
+        
         private void btnStop_Click(object sender, EventArgs e)
         {
-            timerElapseTime.Stop();
+            zipArchiving.StopArchieving();
+            btnStop.Enabled = false;
+        }
+        
+        private void AddLogItems(String actionLabel="", String logMessage="")
+        {
+            listViewLogs.Items.Add(new ListViewItem(new String[]{
+                DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss tt"),
+                actionLabel,
+                logMessage
+            }));
+
+            listViewLogs.EnsureVisible(listViewLogs.Items.Count-1);
+        }
+        
+        private void copySelectedLogToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            StringBuilder results = new StringBuilder();
+            foreach (ListViewItem lvtm in listViewLogs.SelectedItems)
+            {
+                results.AppendLine(lvtm.SubItems[2].Text);
+            }
+            if (listViewLogs.SelectedItems.Count <= 0) return;
+            Clipboard.SetText(results.ToString());
+        }
+
+        private void linkSaveLogs_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = ResourcesUtil.GetFileLogFilterName();
+            saveFileDialog.Title = "Save a log file";
+            DialogResult dr = saveFileDialog.ShowDialog();
+
+            if(dr == DialogResult.OK)
+            {
+                using (StreamWriter file = new StreamWriter(saveFileDialog.FileName))
+                {
+                    foreach(ListViewItem lvItem in listViewLogs.Items)
+                    {
+                        file.WriteLine(lvItem.SubItems[0].Text + "\t" +
+                                        lvItem.SubItems[1].Text + "\t" +
+                                        lvItem.SubItems[2].Text + "\t");
+                    }
+                }
+                MessageBox.Show("Log file has been successfully save...", "File saving...");
+            }
         }
     }
 }

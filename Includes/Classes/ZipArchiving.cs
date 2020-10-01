@@ -22,6 +22,7 @@ namespace OneClickZip.Includes.Classes
         public event EventHandler<ZipArchivingEventArgs> ProcessingStatus;
         public event EventHandler<ZipArchivingEventArgs> ProgressStatus;
         public event EventHandler<ZipArchivingEventArgs> FinishedArchiving;
+        public event EventHandler<ZipArchivingEventArgs> StopProcess;
 
         private ZipArchivingEventArgs processingStatusEventArgs;
 
@@ -29,10 +30,15 @@ namespace OneClickZip.Includes.Classes
         private ZipFileModel zipFileModel;
         private SerializableTreeNode serializableTreeNode;
         private ZipFileStatisticsModel zipFileStatisticsModel;
+        private bool stopProcessing;
+        private bool stopProcessingSuccessfull;
+
 
         public ZipArchiving() 
         {
             PrepareEventsVariablesArgs();
+            StopProcessing = false;
+            StopProcessingSuccessful = false;
         }
 
         public ZipArchiving(String newArchiveName, ZipFileModel zipFileModel, SerializableTreeNode serializableTreeNode)
@@ -47,7 +53,6 @@ namespace OneClickZip.Includes.Classes
         private void PrepareEventsVariablesArgs()
         {
             processingStatusEventArgs = new ZipArchivingEventArgs();
-            //progressStatusEventArgs = new ZipArchivingEventArgs();
         }
         public String NewArchiveName
         {
@@ -75,6 +80,7 @@ namespace OneClickZip.Includes.Classes
         }
         public void StopArchieving()
         {
+            StopProcessing = true;
             Application.DoEvents();
         }
         public void StartArchieving()
@@ -84,13 +90,11 @@ namespace OneClickZip.Includes.Classes
             ValidateAndFillupDynamicZipTreeDetails();
             StartCrawling();
         }
-
         private void ValidateAndFillupDynamicZipTreeDetails()
         {
 
             UpdateStatusAndRaiseEventProcessingStatus(ZipProcessingStages.INITIALIZATION);
         }
-
         private void StartCrawling()
         {
             using (FileStream zipToCreate = new FileStream(NewArchiveName, FileMode.Create))
@@ -99,11 +103,17 @@ namespace OneClickZip.Includes.Classes
                 {
                     UpdateStatusAndRaiseEventProcessingStatus(ZipProcessingStages.ZIP_CREATION);
                     CrawlTreeStructure(serializableTreeNode, archiveFile, null);
-                    FinishedArchivingRaiseEvent();
+                    if (StopProcessing && stopProcessingSuccessfull)
+                    {
+                        StopProcessingRaiseEvent();
+                    }
+                    else
+                    {
+                        FinishedArchivingRaiseEvent();
+                    }
                 }
             }
         }
-
         private void AddFileIntoZipArchive(ZipArchive archiveFile, String fullPathOfaFile, String zipFileFolderName)
         {
             FileInfo fileInfo = new FileInfo(fullPathOfaFile);
@@ -122,9 +132,9 @@ namespace OneClickZip.Includes.Classes
                 }
             }
         }
-
         private void CrawlTreeStructure(SerializableTreeNode serializableTreeNode, ZipArchive archiveFile, String zipFileFolderName)
         {
+            if (IsStopProcessing()) return;
             if (zipFileFolderName == null) zipFileFolderName = "";
             foreach (CustomFileItem customFile in serializableTreeNode.MasterListFilesDir)
             {
@@ -132,22 +142,24 @@ namespace OneClickZip.Includes.Classes
                 {
                     IncrementFilesProcessedCountArgs();
                     UpdateStatusAndRaiseEventProgressStatus(ZipProcessingStages.ADDING_FILE, customFile);
-                    AddFileIntoZipArchive(archiveFile, customFile.FilePathFull, zipFileFolderName);
+                    
+                    //AddFileIntoZipArchive(archiveFile, customFile.FilePathFull, zipFileFolderName);
 
                     //DEBUG
                     Console.WriteLine(zipFileFolderName + "\\[" + serializableTreeNode.Text + "] -> " + customFile.GetCustomFileName);
-                    
                     //END DEBUG
                 }
                 else
                 {
                     IncrementFolderProcessedCountArgs();
-                    UpdateStatusAndRaiseEventProgressStatus(ZipProcessingStages.ADDING_FOLDER, customFile);
+                    //debug
+                    Console.WriteLine(processingStatusEventArgs.FolderProcessedCount + ": " + customFile.GetCustomFileName);
+                    UpdateStatusAndRaiseEventProgressStatus(ZipProcessingStages.ADDING_FOLDER, customFile, zipFileFolderName);
                 }
                 Application.DoEvents();
-
+                if (IsStopProcessing()) return;
                 //DEBUG
-                Thread.Sleep(500);
+                //Thread.Sleep(5000);
             }
 
             //DEBUG
@@ -157,9 +169,10 @@ namespace OneClickZip.Includes.Classes
             //create the directory even if its empty
             if (serializableTreeNode.MasterListFilesDir.Count <= 0)
             {
-                //IncrementFolderProcessedCountArgs();
-                UpdateStatusAndRaiseEventProgressStatus(ZipProcessingStages.ADDING_FOLDER);
-                processingStatusEventArgs.FileName = zipFileFolderName;
+                //debug
+                Console.WriteLine("2: " + zipFileFolderName);
+
+                UpdateStatusAndRaiseEventProgressStatus(ZipProcessingStages.ADDING_FOLDER, null, zipFileFolderName);
                 archiveFile.CreateEntry(zipFileFolderName);
                 Application.DoEvents();
             }
@@ -177,11 +190,11 @@ namespace OneClickZip.Includes.Classes
                     {
                         newPath = zipFileFolderName + treeNodeEx.Text + @"/";
                     }
+                    if (IsStopProcessing()) return;
                     CrawlTreeStructure(treeNodeEx, archiveFile, newPath);
                 }
             }
         }
-
         public ZipFileStatisticsModel GetStatistic()
         {
             if (zipFileStatisticsModel == null) ComputeStatistic();
@@ -193,25 +206,24 @@ namespace OneClickZip.Includes.Classes
             zipFileStatisticsModel = new ZipFileStatisticsModel();
             zipFileStatisticsModel.SetStatistic(SerializableTreeNode);
         }
-        private ZipArchivingEventArgs GetProcessingStatusEventArgs(ZipProcessingStages setStage, CustomFileItem customFile = null) 
+        private ZipArchivingEventArgs GetProcessingStatusEventArgs(ZipProcessingStages setStage, CustomFileItem customFile = null, String folderName = "") 
         {
             processingStatusEventArgs.CustomFileItem = customFile;
             processingStatusEventArgs.ProcessingStage = setStage;
 
             if (customFile == null)
             {
-                processingStatusEventArgs.FileFullPath = this.zipFileModel.FilePath;
-                processingStatusEventArgs.FileName = zipFileModel.GetFileName;
+                processingStatusEventArgs.ZipFileToCreateFullPath = this.zipFileModel.FilePath;
+                processingStatusEventArgs.FileName = (folderName == "") ? zipFileModel.GetFileName : folderName; 
                 processingStatusEventArgs.IsFolder = FileSystemUtilities.IsFullPathIsDirectory(this.zipFileModel.FilePath);
             }
             else
             {
-                processingStatusEventArgs.FileFullPath = customFile.FilePathFull;
-                processingStatusEventArgs.FileName = customFile.GetCustomFileName;
+                processingStatusEventArgs.ZipFileToCreateFullPath = customFile.FilePathFull;
+                processingStatusEventArgs.FileName = (folderName=="") ? customFile.GetCustomFileName : folderName;
                 processingStatusEventArgs.IsFolder = customFile.IsFolder;
             }
 
-            
             ProgressStatusPercentageArgs();
             return processingStatusEventArgs;
         }
@@ -234,7 +246,7 @@ namespace OneClickZip.Includes.Classes
             long processed = processingStatusEventArgs.FilesProcessedCount + processingStatusEventArgs.FolderProcessedCount;
 
             //DEBUG
-            Console.WriteLine("ProgressStatusPercentageArgs: " + processed + ", " + zipFileStatisticsModel.TotalFilesAndFolders);
+            //Console.WriteLine("ProgressStatusPercentageArgs: " + processed + ", " + zipFileStatisticsModel.TotalFilesAndFolders);
 
             processingStatusEventArgs.ProgressStatusPercentage = 
                 ConverterUtils.GetPercentageFloored(processed, zipFileStatisticsModel.TotalFilesAndFolders);
@@ -244,16 +256,38 @@ namespace OneClickZip.Includes.Classes
             GetProcessingStatusEventArgs(setStage, customFile);
             ProcessingStatus.Invoke(this, processingStatusEventArgs);
         }
-        private void UpdateStatusAndRaiseEventProgressStatus(ZipProcessingStages setStage, CustomFileItem customFile = null)
+        private void UpdateStatusAndRaiseEventProgressStatus(ZipProcessingStages setStage, CustomFileItem customFile = null, String folderName="")
         {
-            GetProcessingStatusEventArgs(setStage, customFile);
+            GetProcessingStatusEventArgs(setStage, customFile, folderName);
             ProgressStatus.Invoke(this, processingStatusEventArgs);
         }
-
         private void FinishedArchivingRaiseEvent()
         {
-            GetProcessingStatusEventArgs(ZipProcessingStages.FINISH_SUCCESSFULL);
+            GetProcessingStatusEventArgs(ZipProcessingStages.FINISH_SUCCESSFUL);
             FinishedArchiving.Invoke(this, processingStatusEventArgs);
+        }
+        private void StopProcessingRaiseEvent()
+        {
+            GetProcessingStatusEventArgs(ZipProcessingStages.STOP_PROCESSING);
+            StopProcess.Invoke(this, processingStatusEventArgs);
+        }
+        private bool StopProcessing { get => stopProcessing; set => stopProcessing = value; }
+        public bool IsProcessingForceToStop
+        {
+            get
+            {
+                return StopProcessing;
+            }
+        }
+        public bool StopProcessingSuccessful { get => stopProcessingSuccessfull; set => stopProcessingSuccessfull = value; }
+        private bool IsStopProcessing()
+        {
+            if (StopProcessing)
+            {
+                StopProcessingSuccessful = true;
+                return true;
+            }
+            return false;
         }
     }
 }

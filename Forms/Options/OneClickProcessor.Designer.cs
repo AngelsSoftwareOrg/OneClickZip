@@ -53,11 +53,20 @@
             this.txtBoxCurrentAction = new System.Windows.Forms.TextBox();
             this.progressBarStatus = new System.Windows.Forms.ProgressBar();
             this.timerElapseTime = new System.Windows.Forms.Timer(this.components);
+            this.listViewLogs = new System.Windows.Forms.ListView();
+            this.columnTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnLogs = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.conMenuLogs = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.copySelectedLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.columnAction = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.linkSaveLogs = new System.Windows.Forms.LinkLabel();
             this.panelStatistic.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.panelLogs.SuspendLayout();
             this.panelButtons.SuspendLayout();
             this.panelProgress.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.conMenuLogs.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelStatistic
@@ -203,6 +212,7 @@
             // panelLogs
             // 
             this.panelLogs.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.panelLogs.Controls.Add(this.listViewLogs);
             this.panelLogs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelLogs.Location = new System.Drawing.Point(0, 205);
             this.panelLogs.Name = "panelLogs";
@@ -211,6 +221,7 @@
             // 
             // panelButtons
             // 
+            this.panelButtons.Controls.Add(this.linkSaveLogs);
             this.panelButtons.Controls.Add(this.btnStop);
             this.panelButtons.Controls.Add(this.btnExit);
             this.panelButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -266,7 +277,7 @@
             // 
             this.txtBoxCurrentAction.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBoxCurrentAction.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtBoxCurrentAction.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBoxCurrentAction.Location = new System.Drawing.Point(12, 21);
             this.txtBoxCurrentAction.Multiline = true;
             this.txtBoxCurrentAction.Name = "txtBoxCurrentAction";
@@ -289,6 +300,66 @@
             this.timerElapseTime.Interval = 1000;
             this.timerElapseTime.Tick += new System.EventHandler(this.timerElapseTime_Tick);
             // 
+            // listViewLogs
+            // 
+            this.listViewLogs.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnTime,
+            this.columnAction,
+            this.columnLogs});
+            this.listViewLogs.ContextMenuStrip = this.conMenuLogs;
+            this.listViewLogs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listViewLogs.FullRowSelect = true;
+            this.listViewLogs.GridLines = true;
+            this.listViewLogs.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.listViewLogs.HideSelection = false;
+            this.listViewLogs.Location = new System.Drawing.Point(0, 0);
+            this.listViewLogs.Name = "listViewLogs";
+            this.listViewLogs.Size = new System.Drawing.Size(955, 256);
+            this.listViewLogs.TabIndex = 0;
+            this.listViewLogs.UseCompatibleStateImageBehavior = false;
+            this.listViewLogs.View = System.Windows.Forms.View.Details;
+            // 
+            // columnTime
+            // 
+            this.columnTime.Text = "Date Time";
+            this.columnTime.Width = 130;
+            // 
+            // columnLogs
+            // 
+            this.columnLogs.Text = "Logs";
+            this.columnLogs.Width = 1343;
+            // 
+            // conMenuLogs
+            // 
+            this.conMenuLogs.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.conMenuLogs.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copySelectedLogToolStripMenuItem});
+            this.conMenuLogs.Name = "conMenuLogs";
+            this.conMenuLogs.Size = new System.Drawing.Size(203, 28);
+            // 
+            // copySelectedLogToolStripMenuItem
+            // 
+            this.copySelectedLogToolStripMenuItem.Name = "copySelectedLogToolStripMenuItem";
+            this.copySelectedLogToolStripMenuItem.Size = new System.Drawing.Size(202, 24);
+            this.copySelectedLogToolStripMenuItem.Text = "Copy Selected Log";
+            this.copySelectedLogToolStripMenuItem.Click += new System.EventHandler(this.copySelectedLogToolStripMenuItem_Click);
+            // 
+            // columnAction
+            // 
+            this.columnAction.Text = "Action Taken";
+            this.columnAction.Width = 100;
+            // 
+            // linkSaveLogs
+            // 
+            this.linkSaveLogs.AutoSize = true;
+            this.linkSaveLogs.Location = new System.Drawing.Point(3, 3);
+            this.linkSaveLogs.Name = "linkSaveLogs";
+            this.linkSaveLogs.Size = new System.Drawing.Size(75, 17);
+            this.linkSaveLogs.TabIndex = 2;
+            this.linkSaveLogs.TabStop = true;
+            this.linkSaveLogs.Text = "Save Logs";
+            this.linkSaveLogs.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkSaveLogs_LinkClicked);
+            // 
             // OneClickProcessor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -305,10 +376,13 @@
             this.panelStatistic.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.panelLogs.ResumeLayout(false);
             this.panelButtons.ResumeLayout(false);
+            this.panelButtons.PerformLayout();
             this.panelProgress.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.conMenuLogs.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -338,5 +412,12 @@
         private System.Windows.Forms.ProgressBar progressBarStatus;
         private System.Windows.Forms.TextBox txtBoxCurrentAction;
         private System.Windows.Forms.Timer timerElapseTime;
+        private System.Windows.Forms.ListView listViewLogs;
+        private System.Windows.Forms.ColumnHeader columnTime;
+        private System.Windows.Forms.ColumnHeader columnLogs;
+        private System.Windows.Forms.ContextMenuStrip conMenuLogs;
+        private System.Windows.Forms.ToolStripMenuItem copySelectedLogToolStripMenuItem;
+        private System.Windows.Forms.ColumnHeader columnAction;
+        private System.Windows.Forms.LinkLabel linkSaveLogs;
     }
 }

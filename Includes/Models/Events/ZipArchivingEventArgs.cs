@@ -12,7 +12,7 @@ namespace OneClickZip.Includes.Models.Events
         {
             ProcessingStage = ZipProcessingStages.INITIALIZATION;
             ProgressStatusPercentage = 0;
-            FileFullPath = null;
+            ZipFileToCreateFullPath = null;
             FileName = null;
             IsFolder = false;
             CustomFileItem = null;
@@ -21,7 +21,7 @@ namespace OneClickZip.Includes.Models.Events
         }
         public ZipProcessingStages ProcessingStage { get; set; }
         public int ProgressStatusPercentage { get; set; }
-        public String FileFullPath { get; set; }
+        public String ZipFileToCreateFullPath { get; set; }
         public String FileName { get; set; }
         public bool IsFolder { get; set; }
         public CustomFileItem CustomFileItem { get; set; }

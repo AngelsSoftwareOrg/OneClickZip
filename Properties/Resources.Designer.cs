@@ -154,6 +154,33 @@ namespace OneClickZip.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .log.
+        /// </summary>
+        internal static string FILE_LOG_EXTENSION_NAME {
+            get {
+                return ResourceManager.GetString("FILE_LOG_EXTENSION_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log File.
+        /// </summary>
+        internal static string FILE_LOG_EXTENSION_NAME_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("FILE_LOG_EXTENSION_NAME_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log File|*.log.
+        /// </summary>
+        internal static string FILE_LOG_FILTER_NAME {
+            get {
+                return ResourceManager.GetString("FILE_LOG_FILTER_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap folder_Plus_16px {

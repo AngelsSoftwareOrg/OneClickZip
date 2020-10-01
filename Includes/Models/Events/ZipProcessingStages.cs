@@ -13,6 +13,7 @@ namespace OneClickZip.Includes.Models.Events
         ADDING_FILE,
         ADDING_FOLDER,
         POST_PROCESSING,
-        FINISH_SUCCESSFULL
+        FINISH_SUCCESSFUL,
+        STOP_PROCESSING
     };
 }

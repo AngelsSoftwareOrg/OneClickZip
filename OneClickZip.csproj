@@ -102,6 +102,7 @@
       <DependentUpon>FileNameCreatorFrm.cs</DependentUpon>
     </Compile>
     <Compile Include="Includes\Classes\DefaultIcons.cs" />
+    <Compile Include="Includes\Classes\Extensions\ControlExtensions.cs" />
     <Compile Include="Includes\Classes\FileAssociation.cs" />
     <Compile Include="Includes\Classes\FileNameCreator.cs" />
     <Compile Include="Includes\Classes\ListViewColumnSorterForFileDir.cs" />

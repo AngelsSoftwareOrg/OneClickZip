@@ -431,10 +431,10 @@ namespace OneClickZip
 
         private void btnRecalculateEstimations_Click(object sender, EventArgs e)
         {
-            CalculateZipStructireStatistics();
+            CalculateZipStructureStatistics();
         }
 
-        private void CalculateZipStructireStatistics()
+        private void CalculateZipStructureStatistics()
         {
             ClearStatisticForms();
             ZipFileStatisticsModel statistic = TreeNodeInterpreter.GetZipFileStatisticsModel(treeViewZipDesigner);
@@ -613,7 +613,7 @@ namespace OneClickZip
             txtTargetLocation.Text = zipFileModel.TargetFilePath;
             txtFileName.Text = zipFileModel.FileNameCreator.FileFormulaName;
             RefreshListViewAfterNodeSelection();
-            CalculateZipStructireStatistics();
+            CalculateZipStructureStatistics();
             listViewZipDesignFiles.EndUpdate();
             treeViewZipDesigner.EndUpdate();
         }
@@ -638,7 +638,7 @@ namespace OneClickZip
 
 #endregion
 
-        #region Context Strip for Zip File Tree View
+#region Context Strip for Zip File Tree View
 
         private void expandToolStripMenuItem_Click(object sender, EventArgs e)
         {

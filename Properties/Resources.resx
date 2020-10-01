@@ -198,4 +198,13 @@
   <data name="ICON_FOR_PROJECT_DESIGNER_FILE" xml:space="preserve">
     <value>Logo-icon-64px.ico</value>
   </data>
+  <data name="FILE_LOG_EXTENSION_NAME" xml:space="preserve">
+    <value>.log</value>
+  </data>
+  <data name="FILE_LOG_EXTENSION_NAME_DESCRIPTION" xml:space="preserve">
+    <value>Log File</value>
+  </data>
+  <data name="FILE_LOG_FILTER_NAME" xml:space="preserve">
+    <value>Log File|*.log</value>
+  </data>
 </root>

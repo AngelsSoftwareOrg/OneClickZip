@@ -29,6 +29,9 @@ namespace OneClickZip.Includes.Resources
         private static readonly String FILE_BATCH_ONE_CLICK_FILTER_NAME = "FILE_BATCH_ONE_CLICK_FILTER_NAME";
         private static readonly String FILE_DESIGNER_EXTENSION_NAME = "FILE_DESIGNER_EXTENSION_NAME";
         private static readonly String FILE_BATCH_ONE_CLICK_EXTENSION_NAME = "FILE_BATCH_ONE_CLICK_EXTENSION_NAME";
+        private static readonly String FILE_LOG_FILTER_NAME = "FILE_LOG_FILTER_NAME";
+        private static readonly String FILE_LOG_EXTENSION_NAME = "FILE_LOG_EXTENSION_NAME";
+        private static readonly String FILE_LOG_EXTENSION_NAME_DESCRIPTION = "FILE_LOG_EXTENSION_NAME_DESCRIPTION";
 
         private static readonly String APPLICATION_ID = "APPLICATION_ID";
         private static readonly String FILE_BATCH_ONE_CLICK_EXTENSION_NAME_DESCRIPTION = "FILE_BATCH_ONE_CLICK_EXTENSION_NAME_DESCRIPTION";
@@ -122,6 +125,18 @@ namespace OneClickZip.Includes.Resources
         public static String GetFileBatchExtensionName()
         {
             return getSetting(FILE_BATCH_ONE_CLICK_EXTENSION_NAME);
+        }
+        public static String GetFileLogFilterName()
+        {
+            return getSetting(FILE_LOG_FILTER_NAME);
+        }
+        public static String GetFileLogExtensionName()
+        {
+            return getSetting(FILE_LOG_EXTENSION_NAME);
+        }
+        public static String GetFileLogExtensionNameDescription()
+        {
+            return getSetting(FILE_LOG_EXTENSION_NAME_DESCRIPTION);
         }
         public static String GetApplicationId()
         {
