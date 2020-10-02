@@ -18,7 +18,7 @@ namespace OneClickZip.Includes.Models
         private SerializableTreeNode treeViewZipFileStructure;
         private FileNameCreator fileNameCreator;
         private String filePath;
-        private String targetFilePath;
+        private String targetDropFileLocationPath;
 
         public ZipFileModel()
         {
@@ -54,23 +54,23 @@ namespace OneClickZip.Includes.Models
         
         public string FilePath { get => filePath; set => filePath = value; }
         
-        public string TargetFilePath { 
+        public string TargetDropFileLocationPath { 
             get 
             {
-                if (targetFilePath == null) return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                if (targetFilePath == "") return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                if(!Directory.Exists(targetFilePath)) return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                return targetFilePath;
+                if (targetDropFileLocationPath == null) return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                if (targetDropFileLocationPath == "") return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                if(!Directory.Exists(targetDropFileLocationPath)) return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                return targetDropFileLocationPath;
             }
-            set => targetFilePath = value; 
+            set => targetDropFileLocationPath = value; 
         }
 
         public String GetFullPathFileAndNameOfNewZipArchive
         {
             get
             {
-                String targetPath = TargetFilePath.Trim();
-                if(!TargetFilePath.EndsWith(@"\")) targetPath += @"\";
+                String targetPath = TargetDropFileLocationPath.Trim();
+                if(!TargetDropFileLocationPath.EndsWith(@"\")) targetPath += @"\";
                 return String.Format(@"{0}{1}.zip", targetPath, fileNameCreator.GetDerivedFormula());
             }
         }

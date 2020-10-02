@@ -180,6 +180,7 @@
             this.btnRunZip.TabIndex = 5;
             this.btnRunZip.Text = "Run Zip";
             this.btnRunZip.UseVisualStyleBackColor = true;
+            this.btnRunZip.Click += new System.EventHandler(this.btnRunZip_Click);
             // 
             // btnGenerateBatchFile
             // 
@@ -190,6 +191,7 @@
             this.btnGenerateBatchFile.TabIndex = 4;
             this.btnGenerateBatchFile.Text = "Generate One Click Batch File";
             this.btnGenerateBatchFile.UseVisualStyleBackColor = true;
+            this.btnGenerateBatchFile.Click += new System.EventHandler(this.btnGenerateBatchFile_Click);
             // 
             // btnSaveZipDesign
             // 

@@ -45,7 +45,14 @@
             this.label15 = new System.Windows.Forms.Label();
             this.lblElapsedTime = new System.Windows.Forms.Label();
             this.panelLogs = new System.Windows.Forms.Panel();
+            this.listViewLogs = new System.Windows.Forms.ListView();
+            this.columnTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnAction = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnLogs = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.conMenuLogs = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.copySelectedLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelButtons = new System.Windows.Forms.Panel();
+            this.linkSaveLogs = new System.Windows.Forms.LinkLabel();
             this.btnStop = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
             this.panelProgress = new System.Windows.Forms.Panel();
@@ -53,20 +60,13 @@
             this.txtBoxCurrentAction = new System.Windows.Forms.TextBox();
             this.progressBarStatus = new System.Windows.Forms.ProgressBar();
             this.timerElapseTime = new System.Windows.Forms.Timer(this.components);
-            this.listViewLogs = new System.Windows.Forms.ListView();
-            this.columnTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnLogs = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.conMenuLogs = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.copySelectedLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.columnAction = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.linkSaveLogs = new System.Windows.Forms.LinkLabel();
             this.panelStatistic.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panelLogs.SuspendLayout();
+            this.conMenuLogs.SuspendLayout();
             this.panelButtons.SuspendLayout();
             this.panelProgress.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.conMenuLogs.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelStatistic
@@ -219,6 +219,55 @@
             this.panelLogs.Size = new System.Drawing.Size(955, 256);
             this.panelLogs.TabIndex = 1;
             // 
+            // listViewLogs
+            // 
+            this.listViewLogs.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnTime,
+            this.columnAction,
+            this.columnLogs});
+            this.listViewLogs.ContextMenuStrip = this.conMenuLogs;
+            this.listViewLogs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listViewLogs.FullRowSelect = true;
+            this.listViewLogs.GridLines = true;
+            this.listViewLogs.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.listViewLogs.HideSelection = false;
+            this.listViewLogs.Location = new System.Drawing.Point(0, 0);
+            this.listViewLogs.Name = "listViewLogs";
+            this.listViewLogs.Size = new System.Drawing.Size(955, 256);
+            this.listViewLogs.TabIndex = 0;
+            this.listViewLogs.UseCompatibleStateImageBehavior = false;
+            this.listViewLogs.View = System.Windows.Forms.View.Details;
+            // 
+            // columnTime
+            // 
+            this.columnTime.Text = "Date Time";
+            this.columnTime.Width = 130;
+            // 
+            // columnAction
+            // 
+            this.columnAction.Text = "Action Taken";
+            this.columnAction.Width = 100;
+            // 
+            // columnLogs
+            // 
+            this.columnLogs.Text = "Logs";
+            this.columnLogs.Width = 1343;
+            // 
+            // conMenuLogs
+            // 
+            this.conMenuLogs.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.conMenuLogs.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copySelectedLogToolStripMenuItem});
+            this.conMenuLogs.Name = "conMenuLogs";
+            this.conMenuLogs.Size = new System.Drawing.Size(203, 28);
+            // 
+            // copySelectedLogToolStripMenuItem
+            // 
+            this.copySelectedLogToolStripMenuItem.Name = "copySelectedLogToolStripMenuItem";
+            this.copySelectedLogToolStripMenuItem.Size = new System.Drawing.Size(202, 24);
+            this.copySelectedLogToolStripMenuItem.Text = "Copy Selected Log";
+            this.copySelectedLogToolStripMenuItem.Click += new System.EventHandler(this.copySelectedLogToolStripMenuItem_Click);
+            // 
             // panelButtons
             // 
             this.panelButtons.Controls.Add(this.linkSaveLogs);
@@ -229,6 +278,17 @@
             this.panelButtons.Name = "panelButtons";
             this.panelButtons.Size = new System.Drawing.Size(955, 78);
             this.panelButtons.TabIndex = 2;
+            // 
+            // linkSaveLogs
+            // 
+            this.linkSaveLogs.AutoSize = true;
+            this.linkSaveLogs.Location = new System.Drawing.Point(3, 3);
+            this.linkSaveLogs.Name = "linkSaveLogs";
+            this.linkSaveLogs.Size = new System.Drawing.Size(75, 17);
+            this.linkSaveLogs.TabIndex = 2;
+            this.linkSaveLogs.TabStop = true;
+            this.linkSaveLogs.Text = "Save Logs";
+            this.linkSaveLogs.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkSaveLogs_LinkClicked);
             // 
             // btnStop
             // 
@@ -300,66 +360,6 @@
             this.timerElapseTime.Interval = 1000;
             this.timerElapseTime.Tick += new System.EventHandler(this.timerElapseTime_Tick);
             // 
-            // listViewLogs
-            // 
-            this.listViewLogs.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnTime,
-            this.columnAction,
-            this.columnLogs});
-            this.listViewLogs.ContextMenuStrip = this.conMenuLogs;
-            this.listViewLogs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listViewLogs.FullRowSelect = true;
-            this.listViewLogs.GridLines = true;
-            this.listViewLogs.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.listViewLogs.HideSelection = false;
-            this.listViewLogs.Location = new System.Drawing.Point(0, 0);
-            this.listViewLogs.Name = "listViewLogs";
-            this.listViewLogs.Size = new System.Drawing.Size(955, 256);
-            this.listViewLogs.TabIndex = 0;
-            this.listViewLogs.UseCompatibleStateImageBehavior = false;
-            this.listViewLogs.View = System.Windows.Forms.View.Details;
-            // 
-            // columnTime
-            // 
-            this.columnTime.Text = "Date Time";
-            this.columnTime.Width = 130;
-            // 
-            // columnLogs
-            // 
-            this.columnLogs.Text = "Logs";
-            this.columnLogs.Width = 1343;
-            // 
-            // conMenuLogs
-            // 
-            this.conMenuLogs.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.conMenuLogs.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.copySelectedLogToolStripMenuItem});
-            this.conMenuLogs.Name = "conMenuLogs";
-            this.conMenuLogs.Size = new System.Drawing.Size(203, 28);
-            // 
-            // copySelectedLogToolStripMenuItem
-            // 
-            this.copySelectedLogToolStripMenuItem.Name = "copySelectedLogToolStripMenuItem";
-            this.copySelectedLogToolStripMenuItem.Size = new System.Drawing.Size(202, 24);
-            this.copySelectedLogToolStripMenuItem.Text = "Copy Selected Log";
-            this.copySelectedLogToolStripMenuItem.Click += new System.EventHandler(this.copySelectedLogToolStripMenuItem_Click);
-            // 
-            // columnAction
-            // 
-            this.columnAction.Text = "Action Taken";
-            this.columnAction.Width = 100;
-            // 
-            // linkSaveLogs
-            // 
-            this.linkSaveLogs.AutoSize = true;
-            this.linkSaveLogs.Location = new System.Drawing.Point(3, 3);
-            this.linkSaveLogs.Name = "linkSaveLogs";
-            this.linkSaveLogs.Size = new System.Drawing.Size(75, 17);
-            this.linkSaveLogs.TabIndex = 2;
-            this.linkSaveLogs.TabStop = true;
-            this.linkSaveLogs.Text = "Save Logs";
-            this.linkSaveLogs.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkSaveLogs_LinkClicked);
-            // 
             // OneClickProcessor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -372,17 +372,18 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "OneClickProcessor";
             this.Text = "One Click Zip Creator";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OneClickProcessor_FormClosed);
             this.Load += new System.EventHandler(this.OneClickProcessor_Load);
             this.panelStatistic.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.panelLogs.ResumeLayout(false);
+            this.conMenuLogs.ResumeLayout(false);
             this.panelButtons.ResumeLayout(false);
             this.panelButtons.PerformLayout();
             this.panelProgress.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.conMenuLogs.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

@@ -63,5 +63,14 @@ namespace OneClickZip.Includes.Models
 
         public String GetAllArgs => this.allArguments.ToString();
 
+        public bool IsFileOpenCase
+        {
+            get
+            {
+                if (FilePath == null) return false;
+                if (FilePath == "") return false;
+                return true;
+            }
+        }
     }
 }

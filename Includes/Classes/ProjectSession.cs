@@ -46,10 +46,16 @@ namespace OneClickZip.Includes.Classes
             ZipFileModel zipFileModel = OpenProjectSession(fileFullPath);
             return zipFileModel.GetTreeViewZipFileStructure();
         }
-        public SerializableTreeNode GetSerializableTreeNodeOnProjectFile(String fileFullPath)
+        
+        public SerializableTreeNode GetSerializableTreeNodeBaseOnProjectFile(String fileFullPath)
         {
             ZipFileModel zipFileModel = OpenProjectSession(fileFullPath);
             return zipFileModel.GetTreeViewZipFileSerializedStructure;
+        }
+        
+        public SerializableTreeNode GetSerializableTreeNodeBaseOnZipModel()
+        {
+            return ZipFileModel.GetTreeViewZipFileSerializedStructure;
         }
 
         public void SaveProject(String fullFilePath)
@@ -78,6 +84,7 @@ namespace OneClickZip.Includes.Classes
         public void ClearProjectSession()
         {
             ZipFileModel = new ZipFileModel();
+            ApplicationArgumentModel = new ApplicationArgumentModel(new string[] { });
         }
     
         public void UpdateFileCreatorNameModel(FileNameCreator fileNameCreator)

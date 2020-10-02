@@ -556,7 +556,7 @@ namespace OneClickZip
                     ZipFileModel zipFileModel = new ZipFileModel(TreeNodeInterpreter.GetRootNode(treeViewZipDesigner), PROJECT_SESSION.FileNameCreatorModel);
                     zipFileModel.SetTreeViewZipFileStructureForFileWriting(TreeNodeInterpreter.GetRootNode(treeViewZipDesigner));
                     zipFileModel.FilePath = saveFileDialog.FileName;
-                    zipFileModel.TargetFilePath = txtTargetLocation.Text;
+                    zipFileModel.TargetDropFileLocationPath = txtTargetLocation.Text;
                     PROJECT_SESSION.ZipFileModel = zipFileModel;
                     PROJECT_SESSION.SaveProject(saveFileDialog.FileName);
                     txtZipFileLocation.Text = saveFileDialog.FileName;                    
@@ -574,8 +574,7 @@ namespace OneClickZip
 
             if (IsProjectDataCompleted())
             {
-                PROJECT_SESSION.ZipFileModel.TargetFilePath = txtTargetLocation.Text;
-                PROJECT_SESSION.UpdateZipDesignerModelStructure(TreeNodeInterpreter.GetRootNode(treeViewZipDesigner));
+                SetUpToDateProjectSessionReferences();
                 PROJECT_SESSION.SaveCurrentLoadedProject();
                 ShowInfoBox("Successfully save at " + PROJECT_SESSION.ZipFileModel.FilePath);
             }
@@ -610,12 +609,13 @@ namespace OneClickZip
             treeViewZipDesigner.SelectedNode = rootNode;
 
             txtZipFileLocation.Text = filePath;
-            txtTargetLocation.Text = zipFileModel.TargetFilePath;
+            txtTargetLocation.Text = zipFileModel.TargetDropFileLocationPath;
             txtFileName.Text = zipFileModel.FileNameCreator.FileFormulaName;
             RefreshListViewAfterNodeSelection();
             CalculateZipStructureStatistics();
             listViewZipDesignFiles.EndUpdate();
             treeViewZipDesigner.EndUpdate();
+            PROJECT_SESSION.ApplicationArgumentModel = new ApplicationArgumentModel(new string[] { });
         }
 
         private void newProjectToolStripMenuItem_Click(object sender, EventArgs e)
@@ -631,9 +631,38 @@ namespace OneClickZip
 
         private void toolStripMenuItemGenerateOneClickZip_Click(object sender, EventArgs e)
         {
-            SaveProjectAsNew(ResourcesUtil.GetFileBatchFilterName());
+            GenerateBatchFile();
         }
 
+        private void btnGenerateBatchFile_Click(object sender, EventArgs e)
+        {
+            GenerateBatchFile();
+        }
+
+        private void GenerateBatchFile()
+        {
+            SaveProjectAsNew(ResourcesUtil.GetFileBatchFilterName());
+        }
+        
+        private void btnRunZip_Click(object sender, EventArgs e)
+        {
+            StartArchiving();
+        }
+
+        private void StartArchiving()
+        {
+            if (!IsProjectDataCompleted()) return;
+            SetUpToDateProjectSessionReferences();
+            OneClickProcessor oneClickForm = new OneClickProcessor();
+            oneClickForm.ShowDialog();
+            oneClickForm.Dispose();
+        }
+
+        private void SetUpToDateProjectSessionReferences()
+        {
+            PROJECT_SESSION.ZipFileModel.TargetDropFileLocationPath = txtTargetLocation.Text;
+            PROJECT_SESSION.UpdateZipDesignerModelStructure(TreeNodeInterpreter.GetRootNode(treeViewZipDesigner));
+        }
 
 
 #endregion
@@ -686,6 +715,8 @@ namespace OneClickZip
         {
             TreeNodeInterpreter.RemoveSelectedNode(treeViewZipDesigner, listViewZipDesignFiles);
         }
+
+
 
 
 

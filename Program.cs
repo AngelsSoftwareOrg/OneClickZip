@@ -20,9 +20,7 @@ namespace OneClickZip
 
             //DEBUG
             Console.WriteLine("~~~~~~~ Program ~~~~~~~");
-            args = new string[]{
-               "E:\\zuTempOneClickZip\\8 - Test Batch File.oczb"
-            };
+            args = new string[]{ "E:\\zuTempOneClickZip\\Document Folder - All - 5.oczd" };
 
             Console.WriteLine(args);
             Console.WriteLine();
@@ -32,6 +30,9 @@ namespace OneClickZip
             ProjectSession.Instance().ApplicationArgumentModel = applicationArgumentModel; ;
 
             //Application.Run(new Main());
+
+            //MessageBox.Show(applicationArgumentModel.GetAllArgs);
+
 
             if (applicationArgumentModel.IsOpenProjectBatchFile)
             {
