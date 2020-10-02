@@ -1,4 +1,5 @@
-﻿using OneClickZip.Forms.Options;
+﻿using OneClickZip.Forms.Help;
+using OneClickZip.Forms.Options;
 using OneClickZip.Includes.Classes;
 using OneClickZip.Includes.Models;
 using System;
@@ -42,7 +43,7 @@ namespace OneClickZip
             {
                 Application.Run(new ZipDesigner());
             }
-
+            //Application.Run(new About()); 
             //Application.Run(new FileAssociationFrm());
         }
     }

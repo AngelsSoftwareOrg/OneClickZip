@@ -100,7 +100,7 @@ namespace OneClickZip.Includes.Models
             this.isFolder = false;
             this.lastWriteTime = DateTime.Now;
             this.creationTime = DateTime.Now;
-            this.typeName = "Folder";
+            this.typeName = "File Folder";
             this.fileLength = 0;
         }
 

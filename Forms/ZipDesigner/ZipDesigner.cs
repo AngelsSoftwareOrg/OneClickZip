@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ExpTreeLib;
+using OneClickZip.Forms.Help;
 using OneClickZip.Forms.Options;
 using OneClickZip.Includes.Classes;
 using OneClickZip.Includes.Classes.Extensions;
@@ -27,6 +28,7 @@ namespace OneClickZip
         private ProjectSession PROJECT_SESSION = ProjectSession.Instance();
         private ApplicationArgumentModel APPLICATION_ARGUMENT_MODEL = null;
         private bool isTreeViewCollapseToggle = true;
+        private About about = new About();
         public ZipDesigner()
         {
             InitializeComponent();
@@ -191,6 +193,9 @@ namespace OneClickZip
 
         private void btnZipFileAddFolder_Click(object sender, EventArgs e)
         {
+            TreeNodeExtended selNode = (TreeNodeExtended) treeViewZipDesigner.SelectedNode;
+            if (!selNode.IsAFolderGenerally) return;
+
             TreeNodeExtended newTreeNode = TreeNodeInterpreter.AddNewCustomFolderNode(treeViewZipDesigner);
             treeViewZipDesigner.SelectedNode = newTreeNode;
             editTreeViewNodeLabel();
@@ -664,6 +669,17 @@ namespace OneClickZip
             PROJECT_SESSION.UpdateZipDesignerModelStructure(TreeNodeInterpreter.GetRootNode(treeViewZipDesigner));
         }
 
+        private void aboutToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            about.ShowDialog();
+        }
+
+
+
+
+
+
+
 
 #endregion
 
@@ -726,7 +742,8 @@ namespace OneClickZip
 
 
 
-        #endregion
+
+#endregion
 
 
     }

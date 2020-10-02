@@ -17,3 +17,4 @@ D:\Development\WorkSpace00002\OneClickZip\obj\Debug\OneClickZip.csproj.CopyCompl
 D:\Development\WorkSpace00002\OneClickZip\obj\Debug\OneClickZip.exe
 D:\Development\WorkSpace00002\OneClickZip\obj\Debug\OneClickZip.pdb
 D:\Development\WorkSpace00002\OneClickZip\obj\Debug\OneClickZip.csprojAssemblyReference.cache
+D:\Development\WorkSpace00002\OneClickZip\obj\Debug\OneClickZip.Forms.Help.About.resources

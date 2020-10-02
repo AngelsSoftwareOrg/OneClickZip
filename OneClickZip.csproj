@@ -83,6 +83,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\Help\About.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Help\About.Designer.cs">
+      <DependentUpon>About.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Options\OneClickProcessor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -152,6 +158,9 @@
     <Compile Include="Forms\ZipDesigner\ZipDesigner.Designer.cs">
       <DependentUpon>ZipDesigner.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Forms\Help\About.resx">
+      <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>

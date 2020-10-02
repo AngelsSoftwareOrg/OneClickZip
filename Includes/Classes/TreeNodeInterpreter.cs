@@ -65,7 +65,6 @@ namespace OneClickZip.Includes.Classes
         public static TreeNodeExtended AddNewCustomFolderNode(TreeView treeView)
         {
             TreeNodeExtended selectedNode = (TreeNodeExtended)treeView.SelectedNode;
-
             CustomFileItem customFileItem = new CustomFileItem(ValidateAndGenerateUniqueName(selectedNode, "New folder"))
             {
                 IsCustomFolder = true,
