@@ -1,6 +1,7 @@
 ﻿using ExpTreeLib;
 using OneClickZip.Includes.Classes.Extensions;
 using OneClickZip.Includes.Models;
+using OneClickZip.Includes.Models.Types;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -56,7 +57,7 @@ namespace OneClickZip.Includes.Classes
             TreeNodeExtended treeNode = new TreeNodeExtended();
             treeNode.Name = customeFileItem.KeyName; //key of this node
             treeNode.Text = customeFileItem.GetCustomFileName;
-            treeNode.IsStructuredNode = false;
+            treeNode.IsFolderIsFileViewNode = true;
             AddTagObject(treeNode, customeFileItem);
             SetTreeNodeIcon(treeNode, customeFileItem);
             targetTreeNode.Nodes.Add(treeNode);
@@ -67,7 +68,7 @@ namespace OneClickZip.Includes.Classes
             TreeNodeExtended selectedNode = (TreeNodeExtended)treeView.SelectedNode;
             CustomFileItem customFileItem = new CustomFileItem(ValidateAndGenerateUniqueName(selectedNode, "New folder"))
             {
-                IsCustomFolder = true,
+                FolderType = FolderType.TreeView,
             };
 
             TreeNodeExtended treeNode = new TreeNodeExtended();
@@ -76,7 +77,7 @@ namespace OneClickZip.Includes.Classes
             treeNode.ImageIndex = DefaultIcons.SYSTEM_ICONS.GetIconIndexForDirectories();
             treeNode.SelectedImageIndex = treeNode.ImageIndex;
             treeNode.StateImageIndex = treeNode.ImageIndex;
-            treeNode.IsCustomFolder = true;
+            treeNode.IsFolderIsTreeViewNode = true;
             AddTagObject(selectedNode, customFileItem);
             selectedNode.Nodes.Add(treeNode);
             return treeNode;

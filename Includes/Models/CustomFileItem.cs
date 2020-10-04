@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ExpTreeLib;
 using OneClickZip.Includes.Classes;
+using OneClickZip.Includes.Models.Types;
 using OneClickZip.Includes.Utilities;
 
 namespace OneClickZip.Includes.Models
@@ -19,7 +20,7 @@ namespace OneClickZip.Includes.Models
         private int iconIndexOpen = -1;
         private Object tag;
         private String filePathFull;
-        private bool isCustomFolder;
+        private FolderType folderType;
         private bool isFolder;
         private String customFileName;
         private DateTime lastWriteTime;
@@ -96,7 +97,7 @@ namespace OneClickZip.Includes.Models
 
         private void commonInitialization()
         {
-            this.isCustomFolder = false;
+            this.FolderType = FolderType.TreeView;
             this.isFolder = false;
             this.lastWriteTime = DateTime.Now;
             this.creationTime = DateTime.Now;
@@ -168,16 +169,24 @@ namespace OneClickZip.Includes.Models
             this.Dispose();
         }
 
-        public bool IsCustomFolder
+        public bool IsFolderIsFileViewNode
         {
-            get => isCustomFolder;
-            set
+            get
             {
-                isCustomFolder = value;
-                isFolder = true;
+                return (FolderType == FolderType.File);
             }
         }
-        
+
+        public FolderType FolderType
+        {
+            get => folderType;
+            set
+            {
+                folderType = value;
+                this.isFolder = true;
+            }
+        }
+
         public bool IsFolder { get => isFolder;}
 
         public DateTime LastWriteTime

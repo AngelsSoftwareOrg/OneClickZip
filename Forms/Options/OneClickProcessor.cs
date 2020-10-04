@@ -82,6 +82,10 @@ namespace OneClickZip.Forms.Options
             AddLogItems("Project File", e.ZipFileToCreateFullPath);
             AddLogItems("Zip Archive Location", @"Zip file has been save into....");
             AddLogItems("Zip Archive Location", zipArchiving.NewArchiveName);
+
+            //FileInfo theActualArchive = new FileInfo(zipArchiving.NewArchiveName);
+            //AddLogItems("Zip File Size", ConverterUtils.HumanReadableFileSize(theActualArchive.Length, 2));
+
             linkSaveLogs.Enabled = true;
             btnStop.Enabled = false;
             listViewLogs.EndUpdate();
@@ -153,7 +157,7 @@ namespace OneClickZip.Forms.Options
             zipFileStatisticsModel = statObj;
             lblTotalFilesCount.Text = zipFileStatisticsModel.EstimatedFilesCount.ToString();
             lblTotalFoldersCount.Text = zipFileStatisticsModel.EstimatedFoldersCount.ToString();
-            lblEstimatedSize.Text = ConverterUtils.humanReadableFileSize(zipFileStatisticsModel.EstimatedFileSizeCount, 2);
+            lblEstimatedSize.Text = ConverterUtils.HumanReadableFileSize(zipFileStatisticsModel.EstimatedFileSizeCount, 2);
         }
         
         private void timerElapseTime_Tick(object sender, EventArgs e)

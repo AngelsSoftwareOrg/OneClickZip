@@ -21,7 +21,7 @@ namespace OneClickZip
 
             //DEBUG
             Console.WriteLine("~~~~~~~ Program ~~~~~~~");
-            args = new string[]{ "E:\\zuTempOneClickZip\\Document Folder - All - 5.oczd" };
+            //args = new string[]{ "E:\\zuTempOneClickZip\\Document Folder - All - 5.oczd" };
 
             Console.WriteLine(args);
             Console.WriteLine();

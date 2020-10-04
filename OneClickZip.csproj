@@ -143,6 +143,7 @@
     <Compile Include="Includes\Models\RandomNumberGeneratorModel.cs" />
     <Compile Include="Includes\Models\DateCreatorModel.cs" />
     <Compile Include="Includes\Classes\Extensions\TreeNodeExtended.cs" />
+    <Compile Include="Includes\Models\Types\FolderType.cs" />
     <Compile Include="Includes\Models\ZipFileModel.cs" />
     <Compile Include="Includes\Models\ZipFileStatisticsModel.cs" />
     <Compile Include="Includes\Resources\ResourceFilter.cs" />
@@ -158,6 +159,7 @@
     <Compile Include="Forms\ZipDesigner\ZipDesigner.Designer.cs">
       <DependentUpon>ZipDesigner.cs</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
     <EmbeddedResource Include="Forms\Help\About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
@@ -212,6 +214,11 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Icons\folder_rule_24px.png" />
+    <None Include="Resources\Icons\folder_rule_64px.png" />
+    <None Include="Resources\Icons\folder_rule_32px.png" />
+    <None Include="Resources\Icons\folder_rule_16px.png" />
+    <None Include="Resources\Icons\folder_rule_raw.png" />
     <None Include="Resources\Supporting Files\Logo-icon-64px.ico" />
     <None Include="Resources\Supporting Files\Logo-icon-64px.png" />
     <None Include="Resources\Supporting Files\Logo-icon-32px.png" />

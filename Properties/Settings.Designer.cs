@@ -61,7 +61,7 @@ namespace OneClickZip.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("One Click Zip 2020 (c)")]
+        [global::System.Configuration.DefaultSettingValueAttribute("One Click Zip 2020")]
         public string about_title {
             get {
                 return ((string)(this["about_title"]));

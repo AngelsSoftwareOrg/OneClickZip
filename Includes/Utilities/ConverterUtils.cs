@@ -10,7 +10,7 @@ namespace OneClickZip.Includes.Utilities
     {
         private static readonly string[] SIZE_SUFFIXES =
                        { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
-        public static string humanReadableFileSize(Int64 value, int decimalPlaces = 1)
+        public static string HumanReadableFileSize(Int64 value, int decimalPlaces = 1)
         {
             if (decimalPlaces < 0) { throw new ArgumentOutOfRangeException("decimalPlaces"); }
             if (value < 0) { return "-" + SIZE_SUFFIXES[-value]; }
@@ -36,7 +36,6 @@ namespace OneClickZip.Includes.Utilities
                 SIZE_SUFFIXES[mag]);
         }
 
-        
         public static string ConvertToHourMinuteSeconds(long secs)
         {// 0.63 ms
             long hours = secs / 3600;
@@ -69,9 +68,6 @@ namespace OneClickZip.Includes.Utilities
             result = Math.Floor(result);
             return int.Parse(result.ToString());
         }
-    
-    
     }
-
 
 }

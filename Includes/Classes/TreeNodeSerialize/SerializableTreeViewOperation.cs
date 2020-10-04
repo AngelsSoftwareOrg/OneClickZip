@@ -116,8 +116,7 @@ namespace OneClickZip.Includes.Classes.TreeNodeSerialize
             destination.Text = source.Text;
             destination.SelectedImageIndex = source.SelectedImageIndex;
             destination.MasterListFilesDir.AddRange(source.MasterListFilesDir.ToArray());
-            destination.IsStructuredNode = source.IsStructuredNode;
-            destination.IsCustomFolder = source.IsCustomFolder;
+            destination.FolderType = source.FolderType;
             //destination.IsRootNode = source.IsRootNode; //no need
         }
 
@@ -129,8 +128,7 @@ namespace OneClickZip.Includes.Classes.TreeNodeSerialize
             destination.Text = source.Text.ToString();
             destination.SelectedImageIndex = source.SelectedImageIndex;
             destination.MasterListFilesDir.AddRange(source.MasterListFilesDir.ToArray());
-            destination.IsStructuredNode = source.IsStructuredNode;
-            destination.IsCustomFolder = source.IsCustomFolder;
+            destination.FolderType = source.FolderType;
             destination.IsRootNode = source.IsRootNode;
 
             if (source.Tag != null)

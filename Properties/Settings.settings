@@ -15,7 +15,7 @@
       <Value Profile="(Default)">r1</Value>
     </Setting>
     <Setting Name="about_title" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">One Click Zip 2020 (c)</Value>
+      <Value Profile="(Default)">One Click Zip 2020</Value>
     </Setting>
     <Setting Name="about_author" Type="System.String" Scope="Application">
       <Value Profile="(Default)">by: Ryan Seth Roldan</Value>

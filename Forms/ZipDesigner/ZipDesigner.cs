@@ -242,7 +242,7 @@ namespace OneClickZip
         private bool IsSelectedNodeStructured()
         {
             TreeNodeExtended selectedNode = (TreeNodeExtended)treeViewZipDesigner.SelectedNode;
-            if (selectedNode.IsStructuredNode)
+            if (selectedNode.IsFolderIsTreeViewNode)
             {
                 listViewZipDesignFiles.BackColor = Color.Empty;
             }
@@ -250,7 +250,7 @@ namespace OneClickZip
             {
                 listViewZipDesignFiles.BackColor = Color.LightGray;
             }
-            return selectedNode.IsStructuredNode;
+            return selectedNode.IsFolderIsTreeViewNode;
         }
 
         private void treeViewZipDesigner_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
@@ -458,7 +458,7 @@ namespace OneClickZip
         {
             txtEstimatedAddedFiles.Text = fileCount;
             txtEstimatedAddedFolders.Text = foldersCount;
-            txtEstimatedZipFileSize.Text = ConverterUtils.humanReadableFileSize(allFilesSize, 2).ToString();
+            txtEstimatedZipFileSize.Text = ConverterUtils.HumanReadableFileSize(allFilesSize, 2).ToString();
         }
 
         private void btnSaveZipDesign_Click(object sender, EventArgs e)

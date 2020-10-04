@@ -140,7 +140,7 @@ namespace OneClickZip.Includes.Classes
 
             foreach (CustomFileItem customFile in serializableTreeNode.MasterListFilesDir)
             {
-                if (!customFile.IsFolder && !customFile.IsCustomFolder)
+                if (!customFile.IsFolder && !customFile.IsFolderIsFileViewNode)
                 {
                     IncrementFilesProcessedCountArgs();
                     UpdateStatusAndRaiseEventProgressStatus(ZipProcessingStages.ADDING_FILE, customFile);

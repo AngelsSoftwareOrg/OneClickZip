@@ -88,7 +88,7 @@ namespace OneClickZip.Includes.Classes
                             lvItem = new ListViewItemExtended(fileObj);
                         }
 
-                        if (fileObj.IsCustomFolder)
+                        if (fileObj.IsFolderIsFileViewNode)
                         {
                             lvItem.ImageIndex = DefaultIcons.SYSTEM_ICONS.GetIconIndexForDirectories();
                         }
@@ -116,7 +116,7 @@ namespace OneClickZip.Includes.Classes
             return new string[] {
                 fileObj.GetCustomFileName, //file name
                 fileObj.LastWriteTime.ToString(), //date modified
-                (fileObj.IsFolder) ? "" : ConverterUtils.humanReadableFileSize(fileObj.FileLength, 2), //file size
+                (fileObj.IsFolder) ? "" : ConverterUtils.HumanReadableFileSize(fileObj.FileLength, 2), //file size
                 fileObj.CreationTime.ToString(), // created date time
                 fileObj.TypeName //file type
             };

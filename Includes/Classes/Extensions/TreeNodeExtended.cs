@@ -2,6 +2,7 @@
 using OneClickZip.Includes.Classes.TreeNodeSerialize;
 using OneClickZip.Includes.Interface;
 using OneClickZip.Includes.Models;
+using OneClickZip.Includes.Models.Types;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,8 +16,7 @@ namespace OneClickZip.Includes.Classes.Extensions
     public class TreeNodeExtended : TreeNode, ICloneable, IZipFileTreeNode
     {
         private ArrayList masterListFilesDir = new ArrayList();
-        private bool isStructuredNode;
-        private bool isCustomFolder;
+        private FolderType folderType;
         private bool isRootNode;
         private static String ROOT_NODE_NAME = "ROOT";
 
@@ -37,8 +37,7 @@ namespace OneClickZip.Includes.Classes.Extensions
 
         private void CommonInitializers()
         {
-            isStructuredNode = true;
-            isCustomFolder = false;
+            folderType = FolderType.TreeView;
         }
 
         public void AddItem(CustomFileItem customFileItem)
@@ -106,10 +105,43 @@ namespace OneClickZip.Includes.Classes.Extensions
 
         public ArrayList MasterListFilesDir { get => this.masterListFilesDir; set => this.masterListFilesDir = value; }
 
-        public bool IsStructuredNode { get => isStructuredNode; set => isStructuredNode = value; }
-        
-        public bool IsCustomFolder { get => isCustomFolder; set => isCustomFolder = value; }
-        
+        public bool IsFolderIsTreeViewNode { 
+            get 
+            {
+                return (FolderType == FolderType.TreeView);
+            } 
+            set 
+            {
+                if (value)
+                {
+                    FolderType = FolderType.TreeView;
+                }
+                else
+                {
+                    FolderType = FolderType.File;
+                }
+            }
+        }
+
+        public bool IsFolderIsFileViewNode
+        {
+            get
+            {
+                return (FolderType == FolderType.File);
+            }
+            set
+            {
+                if (value)
+                {
+                    FolderType = FolderType.File;
+                }
+                else
+                {
+                    FolderType = FolderType.TreeView;
+                }
+            }
+        }
+
         public bool IsRootNode { 
             get
             {
@@ -128,23 +160,25 @@ namespace OneClickZip.Includes.Classes.Extensions
         {
             TreeNodeExtended tnx = (TreeNodeExtended) base.Clone();
             tnx.MasterListFilesDir.AddRange(this.MasterListFilesDir);
-            tnx.IsStructuredNode = this.IsStructuredNode;
-            tnx.IsCustomFolder = this.IsCustomFolder;
+            //tnx.IsStructuredNode = this.IsStructuredNode;
+            //tnx.IsCustomFolder = this.IsCustomFolder;
+            tnx.FolderType = this.FolderType;
             return tnx;
         }
     
         public void SourceInExtendedDetails(TreeNodeExtended source)
         {
             this.MasterListFilesDir.AddRange(source.masterListFilesDir);
-            this.IsStructuredNode = source.isStructuredNode;
-            this.IsCustomFolder = source.isCustomFolder;
+            //this.IsStructuredNode = source.isFolderShownAsTreeView;
+            //this.IsCustomFolder = source.isCustomFolder;
+            this.FolderType = source.FolderType;
         }
 
         public bool IsAFolderGenerally
         {
             get
             {
-                return (IsStructuredNode || IsCustomFolder);
+                return !(this.FolderType==FolderType.File);
             }
         }
 
@@ -170,6 +204,15 @@ namespace OneClickZip.Includes.Classes.Extensions
             set
             {
                 throw new ArgumentException("Not applicable. Make control of TreeNodeExtended.Nodes instead.");
+            }
+        }
+
+        public FolderType FolderType
+        {
+            get => folderType;
+            set
+            {
+                folderType = value;
             }
         }
     }

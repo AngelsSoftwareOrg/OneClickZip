@@ -37,6 +37,7 @@ namespace OneClickZip.Includes.Models
         public TreeNodeExtended GetTreeViewZipFileStructure() {
             return SerializableTreeViewOperation.fnPrepareToRead(treeViewZipFileStructure);
         }
+        
         public SerializableTreeNode GetTreeViewZipFileSerializedStructure
         {
             get

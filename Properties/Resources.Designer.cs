@@ -221,6 +221,56 @@ namespace OneClickZip.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap folder_rule_16px {
+            get {
+                object obj = ResourceManager.GetObject("folder_rule_16px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap folder_rule_24px {
+            get {
+                object obj = ResourceManager.GetObject("folder_rule_24px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap folder_rule_32px {
+            get {
+                object obj = ResourceManager.GetObject("folder_rule_32px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap folder_rule_64px {
+            get {
+                object obj = ResourceManager.GetObject("folder_rule_64px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap folder_rule_raw {
+            get {
+                object obj = ResourceManager.GetObject("folder_rule_raw", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Logo-icon-batch-64px.ico.
         /// </summary>
         internal static string ICON_FOR_PROJECT_BATCH_FILE {

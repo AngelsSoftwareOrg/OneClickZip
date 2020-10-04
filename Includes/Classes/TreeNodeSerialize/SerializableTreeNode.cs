@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using OneClickZip.Includes.Interface;
+using OneClickZip.Includes.Models.Types;
 
 namespace OneClickZip.Includes.Classes.TreeNodeSerialize
 {
@@ -25,8 +26,7 @@ namespace OneClickZip.Includes.Classes.TreeNodeSerialize
         private string toolTipText = String.Empty;
 
         private ArrayList masterListFilesDir = new ArrayList();
-        private bool isStructuredNode;
-        private bool isCustomFolder;
+        private FolderType folderType;
         private bool isRootNode;
 
         List<SerializableTreeNode> nodes=new List<SerializableTreeNode>();
@@ -69,24 +69,79 @@ namespace OneClickZip.Includes.Classes.TreeNodeSerialize
             set { nodes=value; }
         }
         public ArrayList MasterListFilesDir { get => masterListFilesDir; set => masterListFilesDir = value; }
-        public bool IsStructuredNode { get => isStructuredNode; set => isStructuredNode = value; }
-        public bool IsCustomFolder { get => isCustomFolder; set => isCustomFolder = value; }
+
+        public bool IsFolderIsTreeViewNode
+        {
+            get
+            {
+                return (FolderType == FolderType.TreeView);
+
+            }
+            set
+            {
+                if (value)
+                {
+                    FolderType = FolderType.TreeView;
+                }
+                else
+                {
+                    FolderType = FolderType.File;
+                }
+            }
+        }
+
+        public bool IsFolderIsFileViewNode
+        {
+            get
+            {
+                return (FolderType == FolderType.File);
+
+            }
+            set
+            {
+                if (value)
+                {
+                    FolderType = FolderType.File;
+                }
+                else
+                {
+                    FolderType = FolderType.TreeView;
+                }
+            }
+        }
+
         public bool IsRootNode { get => isRootNode; set => isRootNode = value; }
-        #endregion
+
+        public FolderType FolderType
+        {
+            get => folderType;
+            set
+            {
+                folderType = value;
+            }
+        }
+
+#endregion
+
+
         public SerializableTreeNode()
-		{
-		}
+        {
+        }
+
         public bool IsAFolderGenerally
         {
             get
             {
-                return (IsStructuredNode || IsCustomFolder);
+                return !(this.FolderType == FolderType.File);
             }
         }
+
         List<SerializableTreeNode> IZipFileTreeNode.Nodes 
         { 
             get => this.nodes; 
             set => this.nodes = value; 
         }
+
+        
     }
 }

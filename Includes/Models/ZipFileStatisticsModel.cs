@@ -70,7 +70,7 @@ namespace OneClickZip.Includes.Models
             }
             foreach (IZipFileTreeNode node in currentNode.Nodes)
             {
-                if (node.IsStructuredNode)
+                if (node.IsFolderIsTreeViewNode)
                 {
                     statistic.IncrementEstimatedFoldersCount();
                     TraverseTreeViewForStatistic(node, statistic);

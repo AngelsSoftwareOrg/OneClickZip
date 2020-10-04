@@ -80,6 +80,7 @@
             this.collapseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.btnExpColAll = new System.Windows.Forms.Button();
             this.btnRemoveSelectedNode = new System.Windows.Forms.Button();
             this.btnZipClear = new System.Windows.Forms.Button();
@@ -702,6 +703,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.btnExpColAll);
             this.panel1.Controls.Add(this.btnRemoveSelectedNode);
             this.panel1.Controls.Add(this.btnZipClear);
@@ -714,10 +716,20 @@
             this.panel1.Size = new System.Drawing.Size(198, 71);
             this.panel1.TabIndex = 0;
             // 
+            // button1
+            // 
+            this.button1.Image = global::OneClickZip.Properties.Resources.folder_rule_24px;
+            this.button1.Location = new System.Drawing.Point(39, 34);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(28, 28);
+            this.button1.TabIndex = 5;
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // btnExpColAll
             // 
             this.btnExpColAll.Image = global::OneClickZip.Properties.Resources.PlusMinus_24px;
-            this.btnExpColAll.Location = new System.Drawing.Point(115, 34);
+            this.btnExpColAll.Location = new System.Drawing.Point(132, 34);
             this.btnExpColAll.Margin = new System.Windows.Forms.Padding(4);
             this.btnExpColAll.Name = "btnExpColAll";
             this.btnExpColAll.Size = new System.Drawing.Size(32, 28);
@@ -728,10 +740,10 @@
             // btnRemoveSelectedNode
             // 
             this.btnRemoveSelectedNode.Image = global::OneClickZip.Properties.Resources.delete_24px;
-            this.btnRemoveSelectedNode.Location = new System.Drawing.Point(76, 33);
+            this.btnRemoveSelectedNode.Location = new System.Drawing.Point(99, 34);
             this.btnRemoveSelectedNode.Margin = new System.Windows.Forms.Padding(4);
             this.btnRemoveSelectedNode.Name = "btnRemoveSelectedNode";
-            this.btnRemoveSelectedNode.Size = new System.Drawing.Size(31, 28);
+            this.btnRemoveSelectedNode.Size = new System.Drawing.Size(31, 27);
             this.btnRemoveSelectedNode.TabIndex = 3;
             this.btnRemoveSelectedNode.UseVisualStyleBackColor = true;
             this.btnRemoveSelectedNode.Click += new System.EventHandler(this.BtnRemoveSelectedNode_Click);
@@ -739,7 +751,7 @@
             // btnZipClear
             // 
             this.btnZipClear.Image = global::OneClickZip.Properties.Resources.clear_24px;
-            this.btnZipClear.Location = new System.Drawing.Point(43, 33);
+            this.btnZipClear.Location = new System.Drawing.Point(69, 34);
             this.btnZipClear.Margin = new System.Windows.Forms.Padding(4);
             this.btnZipClear.Name = "btnZipClear";
             this.btnZipClear.Size = new System.Drawing.Size(28, 28);
@@ -750,10 +762,10 @@
             // btnZipFileAddFolder
             // 
             this.btnZipFileAddFolder.Image = global::OneClickZip.Properties.Resources.folder_Plus_24px;
-            this.btnZipFileAddFolder.Location = new System.Drawing.Point(7, 32);
+            this.btnZipFileAddFolder.Location = new System.Drawing.Point(7, 34);
             this.btnZipFileAddFolder.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnZipFileAddFolder.Name = "btnZipFileAddFolder";
-            this.btnZipFileAddFolder.Size = new System.Drawing.Size(29, 30);
+            this.btnZipFileAddFolder.Size = new System.Drawing.Size(29, 28);
             this.btnZipFileAddFolder.TabIndex = 1;
             this.btnZipFileAddFolder.UseVisualStyleBackColor = true;
             this.btnZipFileAddFolder.Click += new System.EventHandler(this.btnZipFileAddFolder_Click);
@@ -961,7 +973,7 @@
             // aboutToolStripMenuItem1
             // 
             this.aboutToolStripMenuItem1.Name = "aboutToolStripMenuItem1";
-            this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
+            this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(133, 26);
             this.aboutToolStripMenuItem1.Text = "About";
             this.aboutToolStripMenuItem1.Click += new System.EventHandler(this.aboutToolStripMenuItem1_Click);
             // 
@@ -1101,5 +1113,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem1;
+        private System.Windows.Forms.Button button1;
     }
 }
