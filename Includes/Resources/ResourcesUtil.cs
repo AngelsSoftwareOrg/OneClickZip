@@ -16,8 +16,9 @@ namespace OneClickZip.Includes.Resources
     {
         private static ResourceManager RESOURCE_MANAGER;
         private static readonly String RESOURCE_NAME = "OneClickZip.Properties.Resources";
-        private static readonly String RESOURCE_PROPERTY_FILE_NAME = "CREATOR_DETAILS"; //CREATOR_DETAILS.properties
-
+        private static readonly String RESOURCE_PROPERTY_FILE_NAME_CREATOR_DETAILS = "CREATOR_DETAILS"; //CREATOR_DETAILS.properties
+        private static readonly String RESOURCE_PROPERTY_FILE_NAME_FOLDER_FILTER_EXCLUDE = "FOLDER_FILTER_EXCLUDE";
+        
         private static readonly String RESOURCE_PROPERTY_NAME_DATE = "DATE_FORMULA_FUNCTION_";
         private static readonly String RESOURCE_PROPERTY_NAME_RANDOM_GEN = "RANDOM_NUMBER_GENERATOR_";
         private static readonly String RESOURCE_PROPERTY_NAME_RANDOM_CHARS = "RANDOM_CHAR_GENERATOR_";
@@ -71,7 +72,7 @@ namespace OneClickZip.Includes.Resources
 
         private static List<ResourcePropertiesModel> GetFormulaConfigProperties(String configPropertyName)
         {
-            List<String> propertyList = GetResourcePropertiesModel().FindAll(
+            List<String> propertyList = GetResourceCreatorDetailsPropertiesModel().FindAll(
                                             delegate (String configValue)
                                             {
                                                 return (configValue.StartsWith(configPropertyName));
@@ -96,12 +97,16 @@ namespace OneClickZip.Includes.Resources
             return rpmResults;
         }
 
-        private static List<String> GetResourcePropertiesModel()
+        private static List<String> GetResourceCreatorDetailsPropertiesModel()
         {
-            String fileObject = Encoding.UTF8.GetString((Byte[])RESOURCE_MANAGER.GetObject(RESOURCE_PROPERTY_FILE_NAME));
+            String fileObject = Encoding.UTF8.GetString((Byte[])RESOURCE_MANAGER.GetObject(RESOURCE_PROPERTY_FILE_NAME_CREATOR_DETAILS));
             return fileObject.Split(Char.Parse("\n")).ToList<string>();
         }
-
+        public static List<String> GetResourceFolderFilterExcludeModel()
+        {
+            String fileObject = Encoding.UTF8.GetString((Byte[])RESOURCE_MANAGER.GetObject(RESOURCE_PROPERTY_FILE_NAME_FOLDER_FILTER_EXCLUDE));
+            return fileObject.Split(Char.Parse("\n")).ToList<string>();
+        }
         public static String GetFileDesignerFilterName()
         {
             return getSetting(FILE_DESIGNER_FILTER_NAME);

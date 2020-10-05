@@ -1,0 +1,6 @@
+\System Volume Information\
+\$Recycle.Bin\
+\RECYCLER\
+\RECYCLED\
+*\desktop.ini
+*\thumbs.db

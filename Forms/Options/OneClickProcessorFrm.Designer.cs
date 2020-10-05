@@ -1,6 +1,6 @@
 ﻿namespace OneClickZip.Forms.Options
 {
-    partial class OneClickProcessor
+    partial class OneClickProcessorFrm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OneClickProcessor));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OneClickProcessorFrm));
             this.panelStatistic = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblFoldersCreated = new System.Windows.Forms.Label();

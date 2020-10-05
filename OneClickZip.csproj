@@ -72,6 +72,7 @@
     <Reference Include="System.Runtime, Version=4.1.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Runtime.4.3.1\lib\net462\System.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -89,17 +90,23 @@
     <Compile Include="Forms\Help\About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Options\OneClickProcessor.cs">
+    <Compile Include="Forms\Options\FilterRuleFrm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Options\OneClickProcessor.Designer.cs">
-      <DependentUpon>OneClickProcessor.cs</DependentUpon>
+    <Compile Include="Forms\Options\FilterRuleFrm.Designer.cs">
+      <DependentUpon>FilterRuleFrm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Options\FileAssociation.cs">
+    <Compile Include="Forms\Options\OneClickProcessorFrm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Options\FileAssociation.Designer.cs">
-      <DependentUpon>FileAssociation.cs</DependentUpon>
+    <Compile Include="Forms\Options\OneClickProcessorFrm.Designer.cs">
+      <DependentUpon>OneClickProcessorFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Options\FileAssociationFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Options\FileAssociationFrm.Designer.cs">
+      <DependentUpon>FileAssociationFrm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Options\FileNameCreatorFrm.cs">
       <SubType>Form</SubType>
@@ -111,6 +118,7 @@
     <Compile Include="Includes\Classes\Extensions\ControlExtensions.cs" />
     <Compile Include="Includes\Classes\FileAssociation.cs" />
     <Compile Include="Includes\Classes\FileNameCreator.cs" />
+    <Compile Include="Includes\Classes\FolderFilterRule.cs" />
     <Compile Include="Includes\Classes\ListViewColumnSorterForFileDir.cs" />
     <Compile Include="Includes\Classes\ListViewColumnSorter.cs" />
     <Compile Include="Includes\Classes\ListViewInterpretor.cs" />
@@ -146,18 +154,20 @@
     <Compile Include="Includes\Models\Types\FolderType.cs" />
     <Compile Include="Includes\Models\ZipFileModel.cs" />
     <Compile Include="Includes\Models\ZipFileStatisticsModel.cs" />
+    <Compile Include="Includes\Resources\ApplicationSettings.cs" />
     <Compile Include="Includes\Resources\ResourceFilter.cs" />
     <Compile Include="Includes\Resources\ResourcePropertiesModel.cs" />
     <Compile Include="Includes\Resources\ResourcesUtil.cs" />
+    <Compile Include="Includes\Utilities\ClassReflectionUtilities.cs" />
     <Compile Include="Includes\Utilities\ConverterUtils.cs" />
     <Compile Include="Includes\Utilities\FileSystemUtilities.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Forms\ZipDesigner\ZipDesigner.cs">
+    <Compile Include="Forms\ZipDesigner\ZipDesignerFrm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ZipDesigner\ZipDesigner.Designer.cs">
-      <DependentUpon>ZipDesigner.cs</DependentUpon>
+    <Compile Include="Forms\ZipDesigner\ZipDesignerFrm.Designer.cs">
+      <DependentUpon>ZipDesignerFrm.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
     <EmbeddedResource Include="Forms\Help\About.resx">
@@ -166,11 +176,14 @@
     <EmbeddedResource Include="Forms\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Options\OneClickProcessor.resx">
-      <DependentUpon>OneClickProcessor.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Options\FilterRuleFrm.resx">
+      <DependentUpon>FilterRuleFrm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Options\FileAssociation.resx">
-      <DependentUpon>FileAssociation.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Options\OneClickProcessorFrm.resx">
+      <DependentUpon>OneClickProcessorFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Options\FileAssociationFrm.resx">
+      <DependentUpon>FileAssociationFrm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Options\FileNameCreatorFrm.resx">
       <DependentUpon>FileNameCreatorFrm.cs</DependentUpon>
@@ -180,8 +193,8 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ZipDesigner\ZipDesigner.resx">
-      <DependentUpon>ZipDesigner.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ZipDesigner\ZipDesignerFrm.resx">
+      <DependentUpon>ZipDesignerFrm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -234,6 +247,7 @@
     <None Include="Resources\Icons\folder Plus 16px.png" />
     <None Include="Resources\Icons\folder Plus 32px.png" />
     <Content Include="Logo-icon-64px.ico" />
+    <None Include="Resources\FOLDER_FILTER_EXCLUDE.txt" />
     <Content Include="Resources\Icons\folder Plus 512px.png" />
   </ItemGroup>
   <ItemGroup />

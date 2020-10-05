@@ -37,12 +37,13 @@ namespace OneClickZip
 
             if (applicationArgumentModel.IsOpenProjectBatchFile)
             {
-                Application.Run(new OneClickProcessor());
+                //Application.Run(new OneClickProcessorFrm());
             }
             else
             {
-                Application.Run(new ZipDesigner());
+                //Application.Run(new ZipDesigner());
             }
+            Application.Run(new FilterRuleFrm());
             //Application.Run(new About()); 
             //Application.Run(new FileAssociationFrm());
         }

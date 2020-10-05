@@ -103,5 +103,18 @@ namespace OneClickZip.Properties {
                 return ((string)(this["about_website_link"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LAST_OPENED_DIRECTORY {
+            get {
+                return ((string)(this["LAST_OPENED_DIRECTORY"]));
+            }
+            set
+            {
+                this["LAST_OPENED_DIRECTORY"] = (string)value;
+            }
+        }
     }
 }

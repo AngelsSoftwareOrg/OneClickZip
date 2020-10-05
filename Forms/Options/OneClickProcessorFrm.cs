@@ -19,7 +19,7 @@ using OneClickZip.Includes.Utilities;
 
 namespace OneClickZip.Forms.Options
 {
-    public partial class OneClickProcessor : Form
+    public partial class OneClickProcessorFrm : Form
     {
         private ProjectSession projectSession;
         private ApplicationArgumentModel applicationArgumentModel;
@@ -28,7 +28,7 @@ namespace OneClickZip.Forms.Options
         private long elapseTime = 0;
         private ZipArchiving zipArchiving = new ZipArchiving();
 
-        public OneClickProcessor()
+        public OneClickProcessorFrm()
         {
             InitializeComponent();
             projectSession = ProjectSession.Instance();

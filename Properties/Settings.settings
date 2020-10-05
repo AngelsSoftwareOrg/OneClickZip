@@ -29,5 +29,8 @@
     <Setting Name="about_website_link" Type="System.String" Scope="Application">
       <Value Profile="(Default)">https://github.com/AngelsCheeseBurgerOrg/OneClickZip</Value>
     </Setting>
+    <Setting Name="LAST_OPENED_DIRECTORY" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

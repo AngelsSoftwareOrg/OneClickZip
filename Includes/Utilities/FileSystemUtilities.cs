@@ -32,5 +32,10 @@ namespace OneClickZip.Includes.Utilities
             }
             return result;
         }
+
+        public static String GetDefaultDirectory()
+        {
+            return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        }
     }
 }

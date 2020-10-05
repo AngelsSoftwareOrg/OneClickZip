@@ -58,9 +58,9 @@ namespace OneClickZip.Includes.Models
         public string TargetDropFileLocationPath { 
             get 
             {
-                if (targetDropFileLocationPath == null) return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                if (targetDropFileLocationPath == "") return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                if(!Directory.Exists(targetDropFileLocationPath)) return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                if (targetDropFileLocationPath == null) return FileSystemUtilities.GetDefaultDirectory();
+                if (targetDropFileLocationPath == "") return FileSystemUtilities.GetDefaultDirectory();
+                if(!Directory.Exists(targetDropFileLocationPath)) return FileSystemUtilities.GetDefaultDirectory();
                 return targetDropFileLocationPath;
             }
             set => targetDropFileLocationPath = value; 

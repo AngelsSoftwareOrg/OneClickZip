@@ -518,12 +518,13 @@ namespace OneClickZip
         private void lnlSetTargetLocation_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             FolderBrowserDialog browseFolder = new FolderBrowserDialog();
+            browseFolder.SelectedPath = ApplicationSettings.GetLastOpenedDirectory();
             browseFolder.ShowNewFolderButton = true;
             browseFolder.ShowDialog();
 
-            if (browseFolder.SelectedPath == null) return;
-            if (browseFolder.SelectedPath == "") return;
+            if (String.IsNullOrWhiteSpace(browseFolder.SelectedPath)) return;
             txtTargetLocation.Text = browseFolder.SelectedPath;
+            ApplicationSettings.SaveLastOpenedDirectory(browseFolder.SelectedPath);
         }
 
 #endregion
@@ -658,7 +659,7 @@ namespace OneClickZip
         {
             if (!IsProjectDataCompleted()) return;
             SetUpToDateProjectSessionReferences();
-            OneClickProcessor oneClickForm = new OneClickProcessor();
+            OneClickProcessorFrm oneClickForm = new OneClickProcessorFrm();
             oneClickForm.ShowDialog();
             oneClickForm.Dispose();
         }

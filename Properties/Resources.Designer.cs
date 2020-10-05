@@ -181,6 +181,16 @@ namespace OneClickZip.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] FOLDER_FILTER_EXCLUDE {
+            get {
+                object obj = ResourceManager.GetObject("FOLDER_FILTER_EXCLUDE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap folder_Plus_16px {
