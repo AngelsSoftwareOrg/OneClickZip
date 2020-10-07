@@ -10,7 +10,7 @@ using OneClickZip.Includes.Utilities;
 namespace OneClickZip.Includes.Classes
 {
     [Serializable]
-    public class FolderFilterRule
+    public class FolderFilterRule: ICloneable
     {
         public enum TimeSpanOption
         {
@@ -48,10 +48,32 @@ namespace OneClickZip.Includes.Classes
             MaximumFileSize = 0;
             HasTimeSpan = false;
             TimeSpanOptionValue = TimeSpanOption.NONE;
+            TargetFolderPath = String.Empty;
             IncludeFilterRules = new List<string>();
             ExcludeFilterRules = new List<string>();
             IncludeFilterRules.Add("*");
             ExcludeFilterRules.AddRange(ResourcesUtil.GetResourceFolderFilterExcludeModel());
+
+            //DEBUGGING
+            //IncludeFilterRules.Clear();
+            //IncludeFilterRules.Add(@"Add-in Express\");
+            //IncludeFilterRules.Add(@"\Add-in Express\");
+            //IncludeFilterRules.Add(@"\Add-in Express");
+            //IncludeFilterRules.Add("Adobe");
+            //IncludeFilterRules.Add(@"\Animotica\Projects\Media\*");
+            //IncludeFilterRules.Add(@"*.docx");
+            //IncludeFilterRules.Add(@"\*\*.txt");
+            //IncludeFilterRules.Add(@"*.json");
+            //IncludeFilterRules.Add(@"\*");
+            //IncludeFilterRules.Add(@"\Adobe\?udition\");
+            //IncludeFilterRules.Add(@"\Adobe\**");
+            ExcludeFilterRules.Add(@"\Adobe\**");
+            HasMinimumFileSize = true;
+            HasMaximumFileSize = true;
+            MinimumFileSize = 15360;
+            MaximumFileSize = 819200;
+            TimeSpanOptionValue = TimeSpanOption.THIS_YEAR;
+
         }
 
         public long MinimumFileSize { get => minimumFileSize; set => minimumFileSize = value; }
@@ -63,8 +85,7 @@ namespace OneClickZip.Includes.Classes
         {
             get
             {
-                if (targetFolderPath == null) return FileSystemUtilities.GetDefaultDirectory();
-                if (targetFolderPath.Trim() == "") return FileSystemUtilities.GetDefaultDirectory();
+                if (String.IsNullOrWhiteSpace(targetFolderPath)) return FileSystemUtilities.GetDefaultDirectory();
                 return targetFolderPath;
             }
             set
@@ -108,17 +129,23 @@ namespace OneClickZip.Includes.Classes
             if (IncludeFilterRules.Count <= 0) return "";
             return IncludeFilterRules.Aggregate((x, y) => x + Environment.NewLine + y);
         }
-    
         public void ConsumeAggregatedIncludedList(String aggregatedList)
         {
             IncludeFilterRules.Clear();
             IncludeFilterRules.AddRange(aggregatedList.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries));
         }
-
         public void ConsumeAggregatedExcludedList(String aggregatedList)
         {
             ExcludeFilterRules.Clear();
             ExcludeFilterRules.AddRange(aggregatedList.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries));
+        }
+        public object Clone()
+        {
+            FolderFilterRule clone = (FolderFilterRule) base.MemberwiseClone();
+            clone.IncludeFilterRules = new List<string>(this.IncludeFilterRules);
+            clone.ExcludeFilterRules = new List<string>(this.ExcludeFilterRules);
+            clone.TargetFolderPath = String.Copy(this.TargetFolderPath);
+            return clone;
         }
     }
 }

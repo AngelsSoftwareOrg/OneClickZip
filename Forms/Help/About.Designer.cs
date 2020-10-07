@@ -47,7 +47,7 @@
             this.pictureBox1.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.InitialImage")));
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(480, 347);
+            this.pictureBox1.Size = new System.Drawing.Size(480, 378);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -127,7 +127,7 @@
             this.txtBoxWebSiteLink.Multiline = true;
             this.txtBoxWebSiteLink.Name = "txtBoxWebSiteLink";
             this.txtBoxWebSiteLink.ReadOnly = true;
-            this.txtBoxWebSiteLink.Size = new System.Drawing.Size(384, 58);
+            this.txtBoxWebSiteLink.Size = new System.Drawing.Size(384, 78);
             this.txtBoxWebSiteLink.TabIndex = 5;
             this.txtBoxWebSiteLink.Text = "https://github.com/AngelsCheeseBurgerOrg/OneClickZip";
             this.txtBoxWebSiteLink.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -139,11 +139,11 @@
             this.txtBoxVersion.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.txtBoxVersion.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtBoxVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBoxVersion.Location = new System.Drawing.Point(485, 287);
+            this.txtBoxVersion.Location = new System.Drawing.Point(485, 305);
             this.txtBoxVersion.Multiline = true;
             this.txtBoxVersion.Name = "txtBoxVersion";
             this.txtBoxVersion.ReadOnly = true;
-            this.txtBoxVersion.Size = new System.Drawing.Size(384, 48);
+            this.txtBoxVersion.Size = new System.Drawing.Size(384, 61);
             this.txtBoxVersion.TabIndex = 6;
             this.txtBoxVersion.Text = "version 1.0.0.0 r1";
             this.txtBoxVersion.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -152,7 +152,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(881, 347);
+            this.ClientSize = new System.Drawing.Size(881, 378);
             this.Controls.Add(this.txtBoxVersion);
             this.Controls.Add(this.txtBoxWebSiteLink);
             this.Controls.Add(this.txtBoxWebsiteTitle);

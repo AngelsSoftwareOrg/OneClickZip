@@ -30,6 +30,14 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FilterRuleFrm));
             this.tabPagePreview = new System.Windows.Forms.TabPage();
+            this.panelListViewLog = new System.Windows.Forms.Panel();
+            this.listViewLogs = new System.Windows.Forms.ListView();
+            this.colHeadSeq = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colHeadAppliedRule = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colHeadActionTaken = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colHeadEvalPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.panelProcessLabel = new System.Windows.Forms.Panel();
+            this.txtBoxProcessLog = new System.Windows.Forms.TextBox();
             this.tabPageFilterRule = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -38,7 +46,7 @@
             this.groupBoxExclude = new System.Windows.Forms.GroupBox();
             this.txtBoxExclude = new System.Windows.Forms.TextBox();
             this.groupBoxHelp = new System.Windows.Forms.GroupBox();
-            this.textHelp = new System.Windows.Forms.TextBox();
+            this.txtBoxHelp = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.numericUpDownMaxFileSize = new System.Windows.Forms.NumericUpDown();
             this.lblFileMaxSizeReadable = new System.Windows.Forms.Label();
@@ -56,9 +64,15 @@
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.panelTab = new System.Windows.Forms.Panel();
             this.panelButtons = new System.Windows.Forms.Panel();
+            this.btnSaveLog = new System.Windows.Forms.Button();
+            this.btnStopPreview = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancelExit = new System.Windows.Forms.Button();
             this.btnSaveAndExit = new System.Windows.Forms.Button();
+            this.btnStartPreview = new System.Windows.Forms.Button();
+            this.tabPagePreview.SuspendLayout();
+            this.panelListViewLog.SuspendLayout();
+            this.panelProcessLabel.SuspendLayout();
             this.tabPageFilterRule.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -82,6 +96,8 @@
             // 
             // tabPagePreview
             // 
+            this.tabPagePreview.Controls.Add(this.panelListViewLog);
+            this.tabPagePreview.Controls.Add(this.panelProcessLabel);
             this.tabPagePreview.Location = new System.Drawing.Point(4, 29);
             this.tabPagePreview.Name = "tabPagePreview";
             this.tabPagePreview.Padding = new System.Windows.Forms.Padding(3);
@@ -89,6 +105,75 @@
             this.tabPagePreview.TabIndex = 1;
             this.tabPagePreview.Text = "Preview & Simulation";
             this.tabPagePreview.UseVisualStyleBackColor = true;
+            this.tabPagePreview.Enter += new System.EventHandler(this.tabPagePreview_Enter);
+            // 
+            // panelListViewLog
+            // 
+            this.panelListViewLog.Controls.Add(this.listViewLogs);
+            this.panelListViewLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelListViewLog.Location = new System.Drawing.Point(3, 64);
+            this.panelListViewLog.Name = "panelListViewLog";
+            this.panelListViewLog.Size = new System.Drawing.Size(1150, 467);
+            this.panelListViewLog.TabIndex = 1;
+            // 
+            // listViewLogs
+            // 
+            this.listViewLogs.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colHeadSeq,
+            this.colHeadAppliedRule,
+            this.colHeadActionTaken,
+            this.colHeadEvalPath});
+            this.listViewLogs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listViewLogs.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listViewLogs.FullRowSelect = true;
+            this.listViewLogs.GridLines = true;
+            this.listViewLogs.HideSelection = false;
+            this.listViewLogs.Location = new System.Drawing.Point(0, 0);
+            this.listViewLogs.Name = "listViewLogs";
+            this.listViewLogs.Size = new System.Drawing.Size(1150, 467);
+            this.listViewLogs.TabIndex = 0;
+            this.listViewLogs.UseCompatibleStateImageBehavior = false;
+            this.listViewLogs.View = System.Windows.Forms.View.Details;
+            // 
+            // colHeadSeq
+            // 
+            this.colHeadSeq.Text = "Sequence";
+            this.colHeadSeq.Width = 80;
+            // 
+            // colHeadAppliedRule
+            // 
+            this.colHeadAppliedRule.Text = "Hit Filter / Rule";
+            this.colHeadAppliedRule.Width = 200;
+            // 
+            // colHeadActionTaken
+            // 
+            this.colHeadActionTaken.Text = "Action Taken";
+            this.colHeadActionTaken.Width = 120;
+            // 
+            // colHeadEvalPath
+            // 
+            this.colHeadEvalPath.Text = "Evaluated Path / File";
+            this.colHeadEvalPath.Width = 700;
+            // 
+            // panelProcessLabel
+            // 
+            this.panelProcessLabel.Controls.Add(this.txtBoxProcessLog);
+            this.panelProcessLabel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelProcessLabel.Location = new System.Drawing.Point(3, 3);
+            this.panelProcessLabel.Name = "panelProcessLabel";
+            this.panelProcessLabel.Size = new System.Drawing.Size(1150, 61);
+            this.panelProcessLabel.TabIndex = 0;
+            // 
+            // txtBoxProcessLog
+            // 
+            this.txtBoxProcessLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtBoxProcessLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBoxProcessLog.Location = new System.Drawing.Point(0, 0);
+            this.txtBoxProcessLog.Multiline = true;
+            this.txtBoxProcessLog.Name = "txtBoxProcessLog";
+            this.txtBoxProcessLog.ReadOnly = true;
+            this.txtBoxProcessLog.Size = new System.Drawing.Size(1150, 61);
+            this.txtBoxProcessLog.TabIndex = 0;
             // 
             // tabPageFilterRule
             // 
@@ -101,6 +186,7 @@
             this.tabPageFilterRule.TabIndex = 0;
             this.tabPageFilterRule.Text = "Filter Rule";
             this.tabPageFilterRule.UseVisualStyleBackColor = true;
+            this.tabPageFilterRule.Enter += new System.EventHandler(this.tabPageFilterRule_Enter);
             // 
             // splitContainer1
             // 
@@ -180,7 +266,7 @@
             // 
             // groupBoxHelp
             // 
-            this.groupBoxHelp.Controls.Add(this.textHelp);
+            this.groupBoxHelp.Controls.Add(this.txtBoxHelp);
             this.groupBoxHelp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxHelp.Location = new System.Drawing.Point(0, 0);
             this.groupBoxHelp.Name = "groupBoxHelp";
@@ -189,16 +275,18 @@
             this.groupBoxHelp.TabStop = false;
             this.groupBoxHelp.Text = "Filter Help";
             // 
-            // textHelp
+            // txtBoxHelp
             // 
-            this.textHelp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textHelp.Location = new System.Drawing.Point(3, 23);
-            this.textHelp.Multiline = true;
-            this.textHelp.Name = "textHelp";
-            this.textHelp.ReadOnly = true;
-            this.textHelp.Size = new System.Drawing.Size(540, 366);
-            this.textHelp.TabIndex = 1;
+            this.txtBoxHelp.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtBoxHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBoxHelp.Location = new System.Drawing.Point(3, 23);
+            this.txtBoxHelp.Multiline = true;
+            this.txtBoxHelp.Name = "txtBoxHelp";
+            this.txtBoxHelp.ReadOnly = true;
+            this.txtBoxHelp.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtBoxHelp.Size = new System.Drawing.Size(540, 366);
+            this.txtBoxHelp.TabIndex = 1;
+            this.txtBoxHelp.WordWrap = false;
             // 
             // groupBox1
             // 
@@ -390,6 +478,7 @@
             this.tabControlMain.SelectedIndex = 0;
             this.tabControlMain.Size = new System.Drawing.Size(1164, 567);
             this.tabControlMain.TabIndex = 0;
+            this.tabControlMain.Click += new System.EventHandler(this.tabControlMain_Click);
             // 
             // panelTab
             // 
@@ -402,19 +491,50 @@
             // 
             // panelButtons
             // 
+            this.panelButtons.Controls.Add(this.btnSaveLog);
+            this.panelButtons.Controls.Add(this.btnStopPreview);
             this.panelButtons.Controls.Add(this.btnSave);
             this.panelButtons.Controls.Add(this.btnCancelExit);
             this.panelButtons.Controls.Add(this.btnSaveAndExit);
+            this.panelButtons.Controls.Add(this.btnStartPreview);
             this.panelButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelButtons.Location = new System.Drawing.Point(0, 567);
             this.panelButtons.Name = "panelButtons";
             this.panelButtons.Size = new System.Drawing.Size(1164, 65);
             this.panelButtons.TabIndex = 2;
             // 
+            // btnSaveLog
+            // 
+            this.btnSaveLog.Image = global::OneClickZip.Properties.Resources.Save_icon_24px;
+            this.btnSaveLog.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSaveLog.Location = new System.Drawing.Point(180, 4);
+            this.btnSaveLog.Name = "btnSaveLog";
+            this.btnSaveLog.Size = new System.Drawing.Size(127, 56);
+            this.btnSaveLog.TabIndex = 4;
+            this.btnSaveLog.Text = "Save Logs";
+            this.btnSaveLog.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSaveLog.UseVisualStyleBackColor = true;
+            this.btnSaveLog.Visible = false;
+            this.btnSaveLog.Click += new System.EventHandler(this.btnSaveLog_Click);
+            // 
+            // btnStopPreview
+            // 
+            this.btnStopPreview.Image = global::OneClickZip.Properties.Resources.Button_Stop_icon_24px;
+            this.btnStopPreview.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnStopPreview.Location = new System.Drawing.Point(7, 4);
+            this.btnStopPreview.Name = "btnStopPreview";
+            this.btnStopPreview.Size = new System.Drawing.Size(167, 56);
+            this.btnStopPreview.TabIndex = 3;
+            this.btnStopPreview.Text = "Stop Preview / Simulation";
+            this.btnStopPreview.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnStopPreview.UseVisualStyleBackColor = true;
+            this.btnStopPreview.Visible = false;
+            this.btnStopPreview.Click += new System.EventHandler(this.btnStopPreview_Click);
+            // 
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Location = new System.Drawing.Point(680, 4);
+            this.btnSave.Location = new System.Drawing.Point(679, 4);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(161, 56);
             this.btnSave.TabIndex = 2;
@@ -444,6 +564,20 @@
             this.btnSaveAndExit.UseVisualStyleBackColor = true;
             this.btnSaveAndExit.Click += new System.EventHandler(this.btnSaveAndExit_Click);
             // 
+            // btnStartPreview
+            // 
+            this.btnStartPreview.Image = global::OneClickZip.Properties.Resources.Button_Play_icon_24px;
+            this.btnStartPreview.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnStartPreview.Location = new System.Drawing.Point(7, 4);
+            this.btnStartPreview.Name = "btnStartPreview";
+            this.btnStartPreview.Size = new System.Drawing.Size(167, 56);
+            this.btnStartPreview.TabIndex = 5;
+            this.btnStartPreview.Text = "Start Preview / Simulation";
+            this.btnStartPreview.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnStartPreview.UseVisualStyleBackColor = true;
+            this.btnStartPreview.Visible = false;
+            this.btnStartPreview.Click += new System.EventHandler(this.btnStartPreview_Click);
+            // 
             // FilterRuleFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -454,7 +588,13 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FilterRuleFrm";
             this.Text = "Files and Folders Filter Rule";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FilterRuleFrm_FormClosed);
             this.Load += new System.EventHandler(this.FilterRuleFrm_Load);
+            this.Shown += new System.EventHandler(this.FilterRuleFrm_Shown);
+            this.tabPagePreview.ResumeLayout(false);
+            this.panelListViewLog.ResumeLayout(false);
+            this.panelProcessLabel.ResumeLayout(false);
+            this.panelProcessLabel.PerformLayout();
             this.tabPageFilterRule.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -513,6 +653,17 @@
         private System.Windows.Forms.GroupBox groupBoxHelp;
         private System.Windows.Forms.TextBox txtBoxExclude;
         private System.Windows.Forms.TextBox txtBoxInclude;
-        private System.Windows.Forms.TextBox textHelp;
+        private System.Windows.Forms.TextBox txtBoxHelp;
+        private System.Windows.Forms.Panel panelListViewLog;
+        private System.Windows.Forms.Panel panelProcessLabel;
+        private System.Windows.Forms.TextBox txtBoxProcessLog;
+        private System.Windows.Forms.Button btnStopPreview;
+        private System.Windows.Forms.ListView listViewLogs;
+        private System.Windows.Forms.ColumnHeader colHeadSeq;
+        private System.Windows.Forms.ColumnHeader colHeadAppliedRule;
+        private System.Windows.Forms.ColumnHeader colHeadActionTaken;
+        private System.Windows.Forms.ColumnHeader colHeadEvalPath;
+        private System.Windows.Forms.Button btnSaveLog;
+        private System.Windows.Forms.Button btnStartPreview;
     }
 }

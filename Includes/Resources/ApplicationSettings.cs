@@ -10,9 +10,6 @@ namespace OneClickZip.Includes.Resources
 {
     public class ApplicationSettings
     {
-
-
-
         public static String GetLastOpenedDirectory()
         {
             String dir = Properties.Settings.Default.LAST_OPENED_DIRECTORY;

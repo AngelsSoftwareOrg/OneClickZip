@@ -43,7 +43,7 @@ namespace OneClickZip
             {
                 //Application.Run(new ZipDesigner());
             }
-            Application.Run(new FilterRuleFrm());
+            Application.Run(new FilterRuleFrm(null));
             //Application.Run(new About()); 
             //Application.Run(new FileAssociationFrm());
         }

@@ -160,8 +160,6 @@ namespace OneClickZip.Includes.Classes.Extensions
         {
             TreeNodeExtended tnx = (TreeNodeExtended) base.Clone();
             tnx.MasterListFilesDir.AddRange(this.MasterListFilesDir);
-            //tnx.IsStructuredNode = this.IsStructuredNode;
-            //tnx.IsCustomFolder = this.IsCustomFolder;
             tnx.FolderType = this.FolderType;
             return tnx;
         }

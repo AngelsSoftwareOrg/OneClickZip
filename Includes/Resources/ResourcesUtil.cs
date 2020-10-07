@@ -18,7 +18,8 @@ namespace OneClickZip.Includes.Resources
         private static readonly String RESOURCE_NAME = "OneClickZip.Properties.Resources";
         private static readonly String RESOURCE_PROPERTY_FILE_NAME_CREATOR_DETAILS = "CREATOR_DETAILS"; //CREATOR_DETAILS.properties
         private static readonly String RESOURCE_PROPERTY_FILE_NAME_FOLDER_FILTER_EXCLUDE = "FOLDER_FILTER_EXCLUDE";
-        
+        private static readonly String RESOURCE_PROPERTY_FILE_NAME_FOLDER_FILTER_HELP = "FOLDER_FILTER_HELP";
+
         private static readonly String RESOURCE_PROPERTY_NAME_DATE = "DATE_FORMULA_FUNCTION_";
         private static readonly String RESOURCE_PROPERTY_NAME_RANDOM_GEN = "RANDOM_NUMBER_GENERATOR_";
         private static readonly String RESOURCE_PROPERTY_NAME_RANDOM_CHARS = "RANDOM_CHAR_GENERATOR_";
@@ -40,6 +41,8 @@ namespace OneClickZip.Includes.Resources
         private static readonly String ICON_FOR_PROJECT_DESIGNER_FILE = "ICON_FOR_PROJECT_DESIGNER_FILE";
         private static readonly String ICON_FOR_PROJECT_BATCH_FILE = "ICON_FOR_PROJECT_BATCH_FILE";
 
+        private static readonly String SERIALIZED_TREE_NODE_GENERATION_PREVIEW_LIMIT = "SERIALIZED_TREE_NODE_GENERATION_PREVIEW_LIMIT";
+
         static ResourcesUtil()
         {
             RESOURCE_MANAGER = new ResourceManager(RESOURCE_NAME, typeof(ResourcesUtil).Assembly);
@@ -48,28 +51,24 @@ namespace OneClickZip.Includes.Resources
         {
             return RESOURCE_MANAGER.GetString(settingName);
         }
-
         public static List<ResourcePropertiesModel> GetDateFormulaProperties()
         {
             if (getDateFormulaProperties.Count <= 0) 
                 getDateFormulaProperties = GetFormulaConfigProperties(RESOURCE_PROPERTY_NAME_DATE);
             return getDateFormulaProperties.ToList<ResourcePropertiesModel>();
         }
-
         public static List<ResourcePropertiesModel> GetRandomNumberFormulaProperties()
         {
             if (getRandomNumberFormulaProperties.Count <= 0)
                 getRandomNumberFormulaProperties = GetFormulaConfigProperties(RESOURCE_PROPERTY_NAME_RANDOM_GEN);
             return getRandomNumberFormulaProperties.ToList<ResourcePropertiesModel>();
         }
-
         public static List<ResourcePropertiesModel> GetRandomCharsFormulaProperties()
         {
             if (getRandomCharsFormulaProperties.Count <= 0)
                 getRandomCharsFormulaProperties = GetFormulaConfigProperties(RESOURCE_PROPERTY_NAME_RANDOM_CHARS);
             return getRandomCharsFormulaProperties.ToList<ResourcePropertiesModel>();
         }
-
         private static List<ResourcePropertiesModel> GetFormulaConfigProperties(String configPropertyName)
         {
             List<String> propertyList = GetResourceCreatorDetailsPropertiesModel().FindAll(
@@ -79,7 +78,6 @@ namespace OneClickZip.Includes.Resources
                                             }).ToList<String>();
             return ConvertToResourcePropertiesModelList(propertyList);
         }
-
         private static List<ResourcePropertiesModel> ConvertToResourcePropertiesModelList(List<String> propertyList)
         {
             List<ResourcePropertiesModel> rpmResults = new List<ResourcePropertiesModel>();
@@ -96,7 +94,6 @@ namespace OneClickZip.Includes.Resources
             }
             return rpmResults;
         }
-
         private static List<String> GetResourceCreatorDetailsPropertiesModel()
         {
             String fileObject = Encoding.UTF8.GetString((Byte[])RESOURCE_MANAGER.GetObject(RESOURCE_PROPERTY_FILE_NAME_CREATOR_DETAILS));
@@ -105,6 +102,11 @@ namespace OneClickZip.Includes.Resources
         public static List<String> GetResourceFolderFilterExcludeModel()
         {
             String fileObject = Encoding.UTF8.GetString((Byte[])RESOURCE_MANAGER.GetObject(RESOURCE_PROPERTY_FILE_NAME_FOLDER_FILTER_EXCLUDE));
+            return fileObject.Split(Char.Parse("\n")).ToList<string>();
+        }
+        public static List<String> GetResourceFolderFilterHelpModel()
+        {
+            String fileObject = Encoding.UTF8.GetString((Byte[])RESOURCE_MANAGER.GetObject(RESOURCE_PROPERTY_FILE_NAME_FOLDER_FILTER_HELP));
             return fileObject.Split(Char.Parse("\n")).ToList<string>();
         }
         public static String GetFileDesignerFilterName()
@@ -190,6 +192,10 @@ namespace OneClickZip.Includes.Resources
         public static String GetIconPathForProjectBatchFile()
         {
             return GetMainProjectExecutionFolderPath() + "\\" + GetProjectBatchFileIconName();
+        }
+        public static String GetSerializedTreeNodeGenerationPreviewLimit()
+        {
+            return getSetting(SERIALIZED_TREE_NODE_GENERATION_PREVIEW_LIMIT);
         }
         public void Dispose()
         {

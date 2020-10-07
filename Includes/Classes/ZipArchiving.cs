@@ -33,7 +33,6 @@ namespace OneClickZip.Includes.Classes
         private bool stopProcessing;
         private bool stopProcessingSuccessfull;
 
-
         public ZipArchiving() 
         {
             PrepareEventsVariablesArgs();
@@ -49,7 +48,6 @@ namespace OneClickZip.Includes.Classes
             PrepareEventsVariablesArgs();
             ComputeStatistic();
         }
-        
         private void PrepareEventsVariablesArgs()
         {
             processingStatusEventArgs = new ZipArchivingEventArgs();

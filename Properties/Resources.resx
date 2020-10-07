@@ -225,4 +225,77 @@
   <data name="FOLDER_FILTER_EXCLUDE" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\FOLDER_FILTER_EXCLUDE.txt;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="Button_Play_icon_128px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Supporting Files\Button-Play-icon-128px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Button_Play_icon_16px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Supporting Files\Button-Play-icon-16px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Button_Play_icon_24px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Supporting Files\Button-Play-icon-24px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Button_Play_icon_32px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Supporting Files\Button-Play-icon-32px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Button_Play_icon_48px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Supporting Files\Button-Play-icon-48px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Button_Play_icon_64px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Supporting Files\Button-Play-icon-64px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Button_Play_icon_72px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Supporting Files\Button-Play-icon-72px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Button_Play_icon_96px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Supporting Files\Button-Play-icon-96px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Button_Stop_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Supporting Files\Button-Stop-icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Button_Stop_icon_16px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Supporting Files\Button-Stop-icon-16px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Button_Stop_icon_24px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Supporting Files\Button-Stop-icon-24px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Button_Stop_icon_32px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Supporting Files\Button-Stop-icon-32px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Button_Stop_icon_48px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Supporting Files\Button-Stop-icon-48px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Button_Stop_icon_64px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Supporting Files\Button-Stop-icon-64px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Button_Stop_icon_72px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Supporting Files\Button-Stop-icon-72px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Button_Stop_icon_96px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Supporting Files\Button-Stop-icon-96px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Save_icon_16px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Supporting Files\Save-icon-16px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Save_icon_24px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Supporting Files\Save-icon-24px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Save_icon_256px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Supporting Files\Save-icon-256px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Save_icon_32px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Supporting Files\Save-icon-32px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Save_icon_48px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Supporting Files\Save-icon-48px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Save_icon_64px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Supporting Files\Save-icon-64px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FOLDER_FILTER_HELP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\folder_filter_help.txt;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SERIALIZED_TREE_NODE_GENERATION_PREVIEW_LIMIT" xml:space="preserve">
+    <value>25000</value>
+    <comment>Use to limit the result to display on the listview so that it will not having a large burden on the memory</comment>
+  </data>
 </root>
