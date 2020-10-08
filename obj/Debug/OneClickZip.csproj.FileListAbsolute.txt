@@ -22,3 +22,14 @@ D:\Development\WorkSpace00002\OneClickZip\obj\Debug\OneClickZip.Forms.Options.On
 D:\Development\WorkSpace00002\OneClickZip\bin\Debug\System.IO.FileSystem.dll
 D:\Development\WorkSpace00002\OneClickZip\bin\Debug\System.IO.FileSystem.Primitives.dll
 D:\Development\WorkSpace00002\OneClickZip\bin\Debug\Glob.dll
+D:\Development\WorkSpace00002\OneClickZip\bin\Debug\Microsoft.Build.dll
+D:\Development\WorkSpace00002\OneClickZip\bin\Debug\Microsoft.Build.Framework.dll
+D:\Development\WorkSpace00002\OneClickZip\bin\Debug\System.Collections.Immutable.dll
+D:\Development\WorkSpace00002\OneClickZip\bin\Debug\System.IO.Compression.dll
+D:\Development\WorkSpace00002\OneClickZip\bin\Debug\System.Linq.dll
+D:\Development\WorkSpace00002\OneClickZip\bin\Debug\System.Runtime.InteropServices.dll
+D:\Development\WorkSpace00002\OneClickZip\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\Development\WorkSpace00002\OneClickZip\bin\Debug\System.Threading.Thread.dll
+D:\Development\WorkSpace00002\OneClickZip\bin\Debug\Microsoft.Build.xml
+D:\Development\WorkSpace00002\OneClickZip\bin\Debug\Microsoft.Build.Framework.xml
+D:\Development\WorkSpace00002\OneClickZip\bin\Debug\System.Collections.Immutable.xml

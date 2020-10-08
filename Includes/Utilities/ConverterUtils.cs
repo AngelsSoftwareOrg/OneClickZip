@@ -62,7 +62,7 @@ namespace OneClickZip.Includes.Utilities
                 t.Seconds);
         }
     
-        public static int GetPercentageFloored(long progress, long total)
+        public static int GetPercentageFloored(long progress=0, long total=0)
         {
             decimal result = ((decimal) progress / (decimal)total) * 100;
             result = Math.Floor(result);

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using OneClickZip.Includes.Interface;
+using OneClickZip.Includes.Models;
 using OneClickZip.Includes.Models.Types;
 
 namespace OneClickZip.Includes.Classes.TreeNodeSerialize
@@ -28,10 +29,11 @@ namespace OneClickZip.Includes.Classes.TreeNodeSerialize
         private ArrayList masterListFilesDir = new ArrayList();
         private FolderType folderType;
         private bool isRootNode;
+        private FolderFilterRule folderFilterRuleObj;
 
         List<SerializableTreeNode> nodes=new List<SerializableTreeNode>();
-
         #endregion
+
         #region PROPERTIES
         public string Name
         {
@@ -69,24 +71,19 @@ namespace OneClickZip.Includes.Classes.TreeNodeSerialize
             set { nodes=value; }
         }
         public ArrayList MasterListFilesDir { get => masterListFilesDir; set => masterListFilesDir = value; }
-
+        public void AddItem(CustomFileItem customFileItem)
+        {
+            MasterListFilesDir.Add(customFileItem);
+        }
         public bool IsFolderIsTreeViewNode
         {
             get
             {
                 return (FolderType == FolderType.TreeView);
-
             }
             set
             {
-                if (value)
-                {
-                    FolderType = FolderType.TreeView;
-                }
-                else
-                {
-                    FolderType = FolderType.File;
-                }
+                FolderType = (value) ? FolderType.TreeView : FolderType.File;
             }
         }
 
@@ -95,18 +92,22 @@ namespace OneClickZip.Includes.Classes.TreeNodeSerialize
             get
             {
                 return (FolderType == FolderType.File);
-
             }
             set
             {
-                if (value)
-                {
-                    FolderType = FolderType.File;
-                }
-                else
-                {
-                    FolderType = FolderType.TreeView;
-                }
+                FolderType = (value) ? FolderType.File : FolderType.TreeView;
+            }
+        }
+
+        public bool IsFolderIsFilterRule
+        {
+            get
+            {
+                return (FolderType == FolderType.FilterRule);
+            }
+            set
+            {
+                FolderType = (value) ? FolderType.FilterRule : FolderType.TreeView;
             }
         }
 
@@ -123,25 +124,26 @@ namespace OneClickZip.Includes.Classes.TreeNodeSerialize
 
 #endregion
 
-
         public SerializableTreeNode()
         {
         }
 
-        public bool IsAFolderGenerally
+        public bool IsGenerallyAFolderType
         {
             get
             {
                 return !(this.FolderType == FolderType.File);
             }
         }
-
         List<SerializableTreeNode> IZipFileTreeNode.Nodes 
         { 
             get => this.nodes; 
             set => this.nodes = value; 
         }
-
-        
+        public FolderFilterRule FolderFilterRuleObj 
+        { 
+            get => folderFilterRuleObj; 
+            set => folderFilterRuleObj = value; 
+        }
     }
 }

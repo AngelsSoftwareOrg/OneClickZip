@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OneClickZip.Includes.Classes;
 using OneClickZip.Includes.Classes.TreeNodeSerialize;
 using OneClickZip.Includes.Models.Types;
 
@@ -22,7 +23,8 @@ namespace OneClickZip.Includes.Interface
         bool IsFolderIsTreeViewNode { get; set; }
         bool IsFolderIsFileViewNode { get; set; }
         bool IsRootNode { get; set; }
-        bool IsAFolderGenerally { get; }
+        bool IsGenerallyAFolderType { get; }
         FolderType FolderType { get; set; }
+        FolderFilterRule FolderFilterRuleObj { get; set; }
     }
 }

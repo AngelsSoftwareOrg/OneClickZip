@@ -26,7 +26,7 @@ namespace OneClickZip.Forms.Options
         private bool isFormAlreadyLoaded = false;
         private readonly long PREVIEW_LIMIT = long.Parse(ResourcesUtil.GetSerializedTreeNodeGenerationPreviewLimit());
 
-        public FilterRuleFrm(FolderFilterRule originalFolderFilterRule)
+        public FilterRuleFrm(FolderFilterRule originalFolderFilterRule=null)
         {
             InitializeComponent();
 
@@ -42,19 +42,20 @@ namespace OneClickZip.Forms.Options
         private void btnCancelExit_Click(object sender, EventArgs e)
         {
             this.generateSerializableTreeNode.StopGenerationProcess();
-            this.Close();
             this.FolderFilterRule = this.originalFolderFilterRule;
+            this.Close();
         }
         private void btnSave_Click(object sender, EventArgs e)
         {
             SaveChanges();
+            MessageBox.Show("Filter rule has been save into memory", "Save Successful!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
         private void btnSaveAndExit_Click(object sender, EventArgs e)
         {
             SaveChanges();
+            this.Close();
         }
         #endregion
-
 
         #region Custom Functions
         private void SaveChanges()
@@ -187,6 +188,7 @@ namespace OneClickZip.Forms.Options
             comboBoxTimeSpanOption.Items.AddRange(FolderFilterRule.GetAllTimeSpanOptions());
             comboBoxTimeSpanOption.SelectedIndex = SetTimeSpanDefault();
             numericUpDownLastXXDays.Enabled = FolderFilterRule.TimeSpanOptionValue == FolderFilterRule.TimeSpanOption.LAST_XX_DAYS;
+            numericUpDownLastXXDays.Value = FolderFilterRule.LastNumberOfDaysValue;
             numericUpDownMinFileSize.Enabled = FolderFilterRule.HasMinimumFileSize;
             numericUpDownMaxFileSize.Enabled = FolderFilterRule.HasMaximumFileSize;
             numericUpDownMinFileSize.Value = FolderFilterRule.MinimumFileSize;
@@ -194,7 +196,6 @@ namespace OneClickZip.Forms.Options
             txtBoxInclude.Text = FolderFilterRule.GetAggregatedIncludedList();
             txtBoxExclude.Text = FolderFilterRule.GetAggregatedExcludedList();
             txtBoxHelp.Text = ResourcesUtil.GetResourceFolderFilterHelpModel().Aggregate((x, y) => x + Environment.NewLine + y);
-
 
             //Events
             generateSerializableTreeNode.FinishedGeneration += GenerateSerializableTreeNode_FinishedGeneration;
@@ -345,7 +346,6 @@ namespace OneClickZip.Forms.Options
             }
         }
         #endregion
-
 
         #region Getters and Setters
         public FolderFilterRule FolderFilterRule {

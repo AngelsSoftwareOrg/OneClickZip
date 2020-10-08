@@ -21,7 +21,7 @@ namespace OneClickZip
 
             //DEBUG
             Console.WriteLine("~~~~~~~ Program ~~~~~~~");
-            //args = new string[]{ "E:\\zuTempOneClickZip\\Document Folder - All - 5.oczd" };
+            //args = new string[]{ "E:\\zuTempOneClickZip\\2 - Test Filture Rule Save.oczd" };
 
             Console.WriteLine(args);
             Console.WriteLine();
@@ -34,16 +34,15 @@ namespace OneClickZip
 
             //MessageBox.Show(applicationArgumentModel.GetAllArgs);
 
-
             if (applicationArgumentModel.IsOpenProjectBatchFile)
             {
-                //Application.Run(new OneClickProcessorFrm());
+                Application.Run(new OneClickProcessorFrm());
             }
             else
             {
-                //Application.Run(new ZipDesigner());
+                Application.Run(new ZipDesigner());
             }
-            Application.Run(new FilterRuleFrm(null));
+            //Application.Run(new FilterRuleFrm());
             //Application.Run(new About()); 
             //Application.Run(new FileAssociationFrm());
         }

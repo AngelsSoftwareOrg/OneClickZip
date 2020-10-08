@@ -27,7 +27,7 @@ namespace OneClickZip.Forms.Options
         private ZipFileStatisticsModel zipFileStatisticsModel;
         private long elapseTime = 0;
         private ZipArchiving zipArchiving = new ZipArchiving();
-
+        private bool isWindowCanBeClose = false;
         public OneClickProcessorFrm()
         {
             InitializeComponent();
@@ -50,11 +50,13 @@ namespace OneClickZip.Forms.Options
             timerElapseTime.Start();
             linkSaveLogs.Enabled = false;
             elapseTime = 0;
+            isWindowCanBeClose = false;
             this.Show();
             zipArchiving.ProcessingStatus += ZipArchiving_ProcessingStatus;
             zipArchiving.ProgressStatus += ZipArchiving_ProgressStatus;
             zipArchiving.FinishedArchiving += ZipArchiving_FinishedArchiving;
             zipArchiving.StopProcess += ZipArchiving_StopProcess;
+            zipArchiving.SerializedTreeNodeGeneratedComplete += ZipArchiving_SerializedTreeNodeGeneratedComplete;
             OpenProjectFileForZipping();
         }
 
@@ -70,6 +72,7 @@ namespace OneClickZip.Forms.Options
             AddLogItems("Zip Archive Location", zipArchiving.NewArchiveName);
             linkSaveLogs.Enabled = true;
             btnStop.Enabled = false;
+            isWindowCanBeClose = true;
             listViewLogs.EndUpdate();
         }
 
@@ -82,12 +85,9 @@ namespace OneClickZip.Forms.Options
             AddLogItems("Project File", e.ZipFileToCreateFullPath);
             AddLogItems("Zip Archive Location", @"Zip file has been save into....");
             AddLogItems("Zip Archive Location", zipArchiving.NewArchiveName);
-
-            //FileInfo theActualArchive = new FileInfo(zipArchiving.NewArchiveName);
-            //AddLogItems("Zip File Size", ConverterUtils.HumanReadableFileSize(theActualArchive.Length, 2));
-
             linkSaveLogs.Enabled = true;
             btnStop.Enabled = false;
+            isWindowCanBeClose = true;
             listViewLogs.EndUpdate();
         }
 
@@ -97,12 +97,12 @@ namespace OneClickZip.Forms.Options
             {
                 this.progressBarStatus.Value = e.ProgressStatusPercentage;
             }
-            //DEBUG
-            //Console.WriteLine("ZipArchiving_ProgressStatus: " + e.ProgressStatusPercentage);
-
             DisplayProcessedFile(e);
         }
-
+        private void ZipArchiving_SerializedTreeNodeGeneratedComplete(object sender, ZipArchivingEventArgs e)
+        {
+            GetStatistic(zipArchiving.GetStatistic());
+        }
         private void ZipArchiving_ProcessingStatus(object sender, ZipArchivingEventArgs e)
         {
             DisplayProcessedFile(e);
@@ -111,21 +111,22 @@ namespace OneClickZip.Forms.Options
         private void DisplayProcessedFile(ZipArchivingEventArgs e)
         {
             Application.DoEvents();
-            if (e.ProcessingStage == ZipProcessingStages.ADDING_FILE)
-            {
-                txtBoxCurrentAction.Text = "Adding File => " + e.ZipFileToCreateFullPath;
-                AddLogItems("Adding File", e.ZipFileToCreateFullPath);
-                lblFilesAdded.Text = String.Format("{0}% > {1}",
-                    ConverterUtils.GetPercentageFloored(e.FilesProcessedCount, zipFileStatisticsModel.EstimatedFilesCount),
-                    zipFileStatisticsModel.EstimatedFilesCount);
-            }
-            else if (e.ProcessingStage == ZipProcessingStages.ADDING_FOLDER)
+            if (e.ProcessingStage == ZipProcessingStages.ADDING_FOLDER)
             {
                 txtBoxCurrentAction.Text = "Creating Folder => " + e.FileName;
                 AddLogItems("Adding Folder", e.FileName);
                 lblFoldersCreated.Text = String.Format("{0}% > {1}",
                     ConverterUtils.GetPercentageFloored(e.FolderProcessedCount, zipFileStatisticsModel.EstimatedFoldersCount),
                     zipFileStatisticsModel.EstimatedFoldersCount);
+            }
+            else if (e.ProcessingStage == ZipProcessingStages.ADDING_FILE || e.ProcessingStage == ZipProcessingStages.ADDING_FILE_FAILED)
+            {
+                String fail = (e.ProcessingStage == ZipProcessingStages.ADDING_FILE) ? "" : "Failed";
+                txtBoxCurrentAction.Text = String.Format("Adding File {0} => ", fail) + e.ZipFileToCreateFullPath;
+                AddLogItems(String.Format("Adding File {0}", fail), e.ZipFileToCreateFullPath);
+                lblFilesAdded.Text = String.Format("{0}% > {1}",
+                    ConverterUtils.GetPercentageFloored(e.FilesProcessedCount, zipFileStatisticsModel.EstimatedFilesCount),
+                    zipFileStatisticsModel.EstimatedFilesCount);
             }
         }
 
@@ -148,7 +149,7 @@ namespace OneClickZip.Forms.Options
             zipArchiving.NewArchiveName = newArchiveName;
             zipArchiving.SerializableTreeNode = serializedTreeNode;
             zipArchiving.ZipFileModelSource = zipModel;
-            GetStatistic(zipArchiving.GetStatistic());
+            zipArchiving.CompressionLevelArchiving = CompressionLevel.Optimal;
             zipArchiving.StartArchiving();
         }
         
@@ -168,7 +169,15 @@ namespace OneClickZip.Forms.Options
         
         private void btnExit_Click(object sender, EventArgs e)
         {
-            BeforeClosingForm();
+            if (isWindowCanBeClose)
+            {
+                BeforeClosingForm();
+                this.Close();
+            }
+            else
+            {
+                btnStop_Click(null, null);
+            }
         }
         
         private void btnStop_Click(object sender, EventArgs e)
@@ -237,7 +246,6 @@ namespace OneClickZip.Forms.Options
                 if (dr == DialogResult.No) return;
             }
             this.DialogResult = DialogResult.OK;
-            this.Close();
         }
 
     }

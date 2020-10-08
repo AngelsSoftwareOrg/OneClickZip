@@ -50,6 +50,7 @@ namespace OneClickZip.Includes.Models
             this.typeName = SystemFilesDirInfo.GetFileTypeDescription(cshItem.Path);
             this.fileLength = cshItem.Length;
             this.filePathFull = cshItem.Path;
+            this.isFolder = FileSystemUtilities.IsFullPathIsDirectory(cshItem.Path);
             SetIconsIndex(cshItem.Path);
         }
 
@@ -61,9 +62,9 @@ namespace OneClickZip.Includes.Models
             this.lastWriteTime = fileInfo.LastWriteTime;
             this.creationTime = fileInfo.CreationTime;
             this.typeName = SystemFilesDirInfo.GetFileTypeDescription(fileInfo.FullName);
-            //this.typeName = FileAssociation.GetExecFileAssociatedToExtension(fileInfo.Extension);
             this.fileLength = fileInfo.Length;
             this.filePathFull = fileInfo.FullName;
+            this.isFolder = false;
             SetIconsIndex(fileInfo.FullName);
         }
 
@@ -74,10 +75,10 @@ namespace OneClickZip.Includes.Models
             this.KeyName = directoryInfor.Name;
             this.lastWriteTime = directoryInfor.LastWriteTime;
             this.creationTime = directoryInfor.CreationTime;
-            //this.typeName = SystemFilesDirInfo.GetFileTypeDescription(directoryInfor.FullName);
             this.typeName = SystemFilesDirInfo.FOLDER_TYPE_DESCRIPTION;
             this.fileLength = 0;
             this.filePathFull = directoryInfor.FullName;
+            this.isFolder = true;
             SetIconsIndex(directoryInfor.FullName);
         }
 
@@ -177,13 +178,34 @@ namespace OneClickZip.Includes.Models
             }
         }
 
+        public bool IsFolderIsTreeViewNode
+        {
+            get
+            {
+                return (FolderType == FolderType.TreeView);
+            }
+        }
+        public bool IsFolderIsFilterRule
+        {
+            get
+            {
+                return (FolderType == FolderType.FilterRule);
+            }
+        }
+        public bool IsGenerallyAFolderType
+        {
+            get
+            {
+                return !(this.FolderType == FolderType.File);
+            }
+        }
         public FolderType FolderType
         {
             get => folderType;
             set
             {
                 folderType = value;
-                this.isFolder = true;
+                if (this.FolderType != FolderType.File) this.isFolder = true;
             }
         }
 

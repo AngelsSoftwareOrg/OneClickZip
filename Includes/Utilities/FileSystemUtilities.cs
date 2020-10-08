@@ -41,6 +41,7 @@ namespace OneClickZip.Includes.Utilities
         {
             DirectoryInfo[] result = null;
             DirectoryInfo dInfo = new DirectoryInfo(pathName);
+            if (!dInfo.Exists) return result;
             if ((File.GetAttributes(pathName) & FileAttributes.ReparsePoint) != FileAttributes.ReparsePoint)
             {
                 try
@@ -56,6 +57,7 @@ namespace OneClickZip.Includes.Utilities
         {
             DirectoryInfo dInfo = new DirectoryInfo(pathName);
             FileInfo[] result=null;
+            if (!dInfo.Exists) return result;
             try
             {
                 if(FileSystemUtilities.IsDirectoryAttribute(dInfo)) result = dInfo.GetFiles();

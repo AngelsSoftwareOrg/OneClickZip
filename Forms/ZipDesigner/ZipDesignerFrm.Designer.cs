@@ -80,7 +80,7 @@
             this.collapseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnAddFolderFilter = new System.Windows.Forms.Button();
             this.btnExpColAll = new System.Windows.Forms.Button();
             this.btnRemoveSelectedNode = new System.Windows.Forms.Button();
             this.btnZipClear = new System.Windows.Forms.Button();
@@ -109,6 +109,7 @@
             this.fileAssociationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.modifyFilterRuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerFormMain)).BeginInit();
             this.splitContainerFormMain.Panel1.SuspendLayout();
             this.splitContainerFormMain.Panel2.SuspendLayout();
@@ -259,11 +260,11 @@
             this.txtEstimatedZipFileSize.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.RecentlyUsedList;
             this.txtEstimatedZipFileSize.BackColor = System.Drawing.SystemColors.Control;
             this.txtEstimatedZipFileSize.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtEstimatedZipFileSize.Location = new System.Drawing.Point(10, 128);
+            this.txtEstimatedZipFileSize.Location = new System.Drawing.Point(16, 128);
             this.txtEstimatedZipFileSize.Margin = new System.Windows.Forms.Padding(4);
             this.txtEstimatedZipFileSize.Name = "txtEstimatedZipFileSize";
             this.txtEstimatedZipFileSize.ReadOnly = true;
-            this.txtEstimatedZipFileSize.Size = new System.Drawing.Size(318, 15);
+            this.txtEstimatedZipFileSize.Size = new System.Drawing.Size(312, 15);
             this.txtEstimatedZipFileSize.TabIndex = 26;
             this.txtEstimatedZipFileSize.Text = "0";
             // 
@@ -274,11 +275,11 @@
             this.txtEstimatedAddedFiles.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.RecentlyUsedList;
             this.txtEstimatedAddedFiles.BackColor = System.Drawing.SystemColors.Control;
             this.txtEstimatedAddedFiles.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtEstimatedAddedFiles.Location = new System.Drawing.Point(10, 84);
+            this.txtEstimatedAddedFiles.Location = new System.Drawing.Point(16, 84);
             this.txtEstimatedAddedFiles.Margin = new System.Windows.Forms.Padding(4);
             this.txtEstimatedAddedFiles.Name = "txtEstimatedAddedFiles";
             this.txtEstimatedAddedFiles.ReadOnly = true;
-            this.txtEstimatedAddedFiles.Size = new System.Drawing.Size(318, 15);
+            this.txtEstimatedAddedFiles.Size = new System.Drawing.Size(312, 15);
             this.txtEstimatedAddedFiles.TabIndex = 25;
             this.txtEstimatedAddedFiles.Text = "0";
             // 
@@ -289,18 +290,18 @@
             this.txtEstimatedAddedFolders.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.RecentlyUsedList;
             this.txtEstimatedAddedFolders.BackColor = System.Drawing.SystemColors.Control;
             this.txtEstimatedAddedFolders.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtEstimatedAddedFolders.Location = new System.Drawing.Point(10, 41);
+            this.txtEstimatedAddedFolders.Location = new System.Drawing.Point(16, 41);
             this.txtEstimatedAddedFolders.Margin = new System.Windows.Forms.Padding(4);
             this.txtEstimatedAddedFolders.Name = "txtEstimatedAddedFolders";
             this.txtEstimatedAddedFolders.ReadOnly = true;
-            this.txtEstimatedAddedFolders.Size = new System.Drawing.Size(319, 15);
+            this.txtEstimatedAddedFolders.Size = new System.Drawing.Size(312, 15);
             this.txtEstimatedAddedFolders.TabIndex = 24;
             this.txtEstimatedAddedFolders.Text = "0";
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(7, 107);
+            this.label11.Location = new System.Drawing.Point(12, 107);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(272, 17);
             this.label11.TabIndex = 23;
@@ -309,7 +310,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(7, 63);
+            this.label10.Location = new System.Drawing.Point(12, 63);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(156, 17);
             this.label10.TabIndex = 22;
@@ -318,7 +319,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 22);
+            this.label8.Location = new System.Drawing.Point(11, 22);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(174, 17);
             this.label8.TabIndex = 21;
@@ -662,48 +663,50 @@
             this.expandToolStripMenuItem,
             this.expandAllToolStripMenuItem,
             this.collapseToolStripMenuItem,
-            this.removeSelectedToolStripMenuItem});
+            this.removeSelectedToolStripMenuItem,
+            this.modifyFilterRuleToolStripMenuItem});
             this.ctxMenuZipFileTree.Name = "ctxMenuZipFileTree";
-            this.ctxMenuZipFileTree.Size = new System.Drawing.Size(194, 124);
+            this.ctxMenuZipFileTree.Size = new System.Drawing.Size(211, 176);
+            this.ctxMenuZipFileTree.Opening += new System.ComponentModel.CancelEventHandler(this.ctxMenuZipFileTree_Opening);
             // 
             // tsmTvdEditLabel
             // 
             this.tsmTvdEditLabel.Name = "tsmTvdEditLabel";
-            this.tsmTvdEditLabel.Size = new System.Drawing.Size(193, 24);
+            this.tsmTvdEditLabel.Size = new System.Drawing.Size(210, 24);
             this.tsmTvdEditLabel.Text = "Edit Label";
             this.tsmTvdEditLabel.Click += new System.EventHandler(this.tsmTvdEditLabel_Click);
             // 
             // expandToolStripMenuItem
             // 
             this.expandToolStripMenuItem.Name = "expandToolStripMenuItem";
-            this.expandToolStripMenuItem.Size = new System.Drawing.Size(193, 24);
+            this.expandToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
             this.expandToolStripMenuItem.Text = "+ Expand";
             this.expandToolStripMenuItem.Click += new System.EventHandler(this.expandToolStripMenuItem_Click);
             // 
             // expandAllToolStripMenuItem
             // 
             this.expandAllToolStripMenuItem.Name = "expandAllToolStripMenuItem";
-            this.expandAllToolStripMenuItem.Size = new System.Drawing.Size(193, 24);
+            this.expandAllToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
             this.expandAllToolStripMenuItem.Text = "++ Expand All";
             this.expandAllToolStripMenuItem.Click += new System.EventHandler(this.expandAllToolStripMenuItem_Click_1);
             // 
             // collapseToolStripMenuItem
             // 
             this.collapseToolStripMenuItem.Name = "collapseToolStripMenuItem";
-            this.collapseToolStripMenuItem.Size = new System.Drawing.Size(193, 24);
+            this.collapseToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
             this.collapseToolStripMenuItem.Text = "- Collapse";
             this.collapseToolStripMenuItem.Click += new System.EventHandler(this.collapseToolStripMenuItem_Click);
             // 
             // removeSelectedToolStripMenuItem
             // 
             this.removeSelectedToolStripMenuItem.Name = "removeSelectedToolStripMenuItem";
-            this.removeSelectedToolStripMenuItem.Size = new System.Drawing.Size(193, 24);
+            this.removeSelectedToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
             this.removeSelectedToolStripMenuItem.Text = "Remove Selected";
             this.removeSelectedToolStripMenuItem.Click += new System.EventHandler(this.removeSelectedToolStripMenuItem_Click);
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.btnAddFolderFilter);
             this.panel1.Controls.Add(this.btnExpColAll);
             this.panel1.Controls.Add(this.btnRemoveSelectedNode);
             this.panel1.Controls.Add(this.btnZipClear);
@@ -716,15 +719,16 @@
             this.panel1.Size = new System.Drawing.Size(198, 71);
             this.panel1.TabIndex = 0;
             // 
-            // button1
+            // btnAddFolderFilter
             // 
-            this.button1.Image = global::OneClickZip.Properties.Resources.folder_rule_24px;
-            this.button1.Location = new System.Drawing.Point(39, 34);
-            this.button1.Margin = new System.Windows.Forms.Padding(4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(28, 28);
-            this.button1.TabIndex = 5;
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnAddFolderFilter.Image = global::OneClickZip.Properties.Resources.folder_rule_24px;
+            this.btnAddFolderFilter.Location = new System.Drawing.Point(39, 34);
+            this.btnAddFolderFilter.Margin = new System.Windows.Forms.Padding(4);
+            this.btnAddFolderFilter.Name = "btnAddFolderFilter";
+            this.btnAddFolderFilter.Size = new System.Drawing.Size(28, 28);
+            this.btnAddFolderFilter.TabIndex = 5;
+            this.btnAddFolderFilter.UseVisualStyleBackColor = true;
+            this.btnAddFolderFilter.Click += new System.EventHandler(this.btnAddFolderFilter_Click);
             // 
             // btnExpColAll
             // 
@@ -977,6 +981,14 @@
             this.aboutToolStripMenuItem1.Text = "About";
             this.aboutToolStripMenuItem1.Click += new System.EventHandler(this.aboutToolStripMenuItem1_Click);
             // 
+            // modifyFilterRuleToolStripMenuItem
+            // 
+            this.modifyFilterRuleToolStripMenuItem.Name = "modifyFilterRuleToolStripMenuItem";
+            this.modifyFilterRuleToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
+            this.modifyFilterRuleToolStripMenuItem.Text = "Modify Filter Rule";
+            this.modifyFilterRuleToolStripMenuItem.Visible = false;
+            this.modifyFilterRuleToolStripMenuItem.Click += new System.EventHandler(this.modifyFilterRuleToolStripMenuItem_Click);
+            // 
             // ZipDesigner
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1113,6 +1125,7 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnAddFolderFilter;
+        private System.Windows.Forms.ToolStripMenuItem modifyFilterRuleToolStripMenuItem;
     }
 }

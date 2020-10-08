@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using OneClickZip.Includes.Classes.Extensions;
 using OneClickZip.Includes.Classes.TreeNodeSerialize;
 using OneClickZip.Includes.Models;
 using OneClickZip.Includes.Models.Events;
@@ -23,6 +16,7 @@ namespace OneClickZip.Includes.Classes
         public event EventHandler<ZipArchivingEventArgs> ProgressStatus;
         public event EventHandler<ZipArchivingEventArgs> FinishedArchiving;
         public event EventHandler<ZipArchivingEventArgs> StopProcess;
+        public event EventHandler<ZipArchivingEventArgs> SerializedTreeNodeGeneratedComplete;
 
         private ZipArchivingEventArgs processingStatusEventArgs;
 
@@ -32,6 +26,8 @@ namespace OneClickZip.Includes.Classes
         private ZipFileStatisticsModel zipFileStatisticsModel;
         private bool stopProcessing;
         private bool stopProcessingSuccessfull;
+        private GenerateSerializableTreeNode generateSerializableTreeNode;
+        private CompressionLevel compressionLevelArchiving = CompressionLevel.Optimal;
 
         public ZipArchiving() 
         {
@@ -46,11 +42,11 @@ namespace OneClickZip.Includes.Classes
             this.ZipFileModelSource = zipFileModel;
             this.SerializableTreeNode = serializableTreeNode;
             PrepareEventsVariablesArgs();
-            ComputeStatistic();
         }
         private void PrepareEventsVariablesArgs()
         {
             processingStatusEventArgs = new ZipArchivingEventArgs();
+            generateSerializableTreeNode = new GenerateSerializableTreeNode();
         }
         public String NewArchiveName
         {
@@ -90,8 +86,27 @@ namespace OneClickZip.Includes.Classes
         }
         private void ValidateAndFillupDynamicZipTreeDetails()
         {
-
             UpdateStatusAndRaiseEventProcessingStatus(ZipProcessingStages.INITIALIZATION);
+            CompleteFolderFilterRuleCrawler(serializableTreeNode);
+            SerializedTreeNodeCompletionStatus();
+            ComputeStatistic();
+        }
+        private void CompleteFolderFilterRuleCrawler(SerializableTreeNode serializableTreeNode)
+        {
+            foreach (SerializableTreeNode streeNodeEx in serializableTreeNode.Nodes)
+            {
+                if (streeNodeEx.IsFolderIsFilterRule)
+                {
+                    generateSerializableTreeNode.FolderFilterRuleObj = (FolderFilterRule)streeNodeEx.FolderFilterRuleObj.Clone();
+                    generateSerializableTreeNode.StartGeneration();
+                    SerializableTreeViewOperation.SerializeTreeNodeShallowCopy(
+                        generateSerializableTreeNode.SerializableTreeNodeObj, streeNodeEx);
+                }
+                else
+                {
+                    CompleteFolderFilterRuleCrawler(streeNodeEx);
+                }
+            }
         }
         private void StartCrawling()
         {
@@ -99,7 +114,6 @@ namespace OneClickZip.Includes.Classes
             {
                 using (ZipArchive archiveFile = new ZipArchive(zipToCreate, ZipArchiveMode.Update))
                 {
-
                     UpdateStatusAndRaiseEventProcessingStatus(ZipProcessingStages.ZIP_CREATION);
                     CrawlTreeStructure(serializableTreeNode, archiveFile, null);
                     if (StopProcessing && StopProcessingSuccessful)
@@ -113,10 +127,11 @@ namespace OneClickZip.Includes.Classes
                 }
             }
         }
-        private void AddFileIntoZipArchive(ZipArchive archiveFile, String fullPathOfaFile, String zipFileFolderName)
+        private bool AddFileIntoZipArchive(ZipArchive archiveFile, String fullPathOfaFile, String zipFileFolderName)
         {
             FileInfo fileInfo = new FileInfo(fullPathOfaFile);
-            ZipArchiveEntry zipArchiveEntry = archiveFile.CreateEntry(zipFileFolderName + fileInfo.Name, CompressionLevel.Optimal);
+            if (!fileInfo.Exists) return false;
+            ZipArchiveEntry zipArchiveEntry = archiveFile.CreateEntry(zipFileFolderName + fileInfo.Name, CompressionLevelArchiving);
             using (var zipStream = zipArchiveEntry.Open())
             {
                 using (Stream source = File.OpenRead(fullPathOfaFile))
@@ -130,6 +145,7 @@ namespace OneClickZip.Includes.Classes
                     }
                 }
             }
+            return true;
         }
         private void CrawlTreeStructure(SerializableTreeNode serializableTreeNode, ZipArchive archiveFile, String zipFileFolderName)
         {
@@ -141,9 +157,14 @@ namespace OneClickZip.Includes.Classes
                 if (!customFile.IsFolder && !customFile.IsFolderIsFileViewNode)
                 {
                     IncrementFilesProcessedCountArgs();
-                    UpdateStatusAndRaiseEventProgressStatus(ZipProcessingStages.ADDING_FILE, customFile);
-                    
-                    //AddFileIntoZipArchive(archiveFile, customFile.FilePathFull, zipFileFolderName);
+                    if(AddFileIntoZipArchive(archiveFile, customFile.FilePathFull, zipFileFolderName))
+                    {
+                        UpdateStatusAndRaiseEventProgressStatus(ZipProcessingStages.ADDING_FILE, customFile);
+                    }
+                    else
+                    {
+                        UpdateStatusAndRaiseEventProgressStatus(ZipProcessingStages.ADDING_FILE_FAILED, customFile);
+                    }
 
                     //DEBUG
                     Console.WriteLine(zipFileFolderName + "\\[" + serializableTreeNode.Text + "] -> " + customFile.GetCustomFileName);
@@ -151,11 +172,12 @@ namespace OneClickZip.Includes.Classes
                 }
                 else
                 {
-                    //debug
-                    Console.WriteLine(processingStatusEventArgs.FolderProcessedCount + ": " + customFile.GetCustomFileName);
-
                     IncrementFolderProcessedCountArgs();
                     String newFolderName = String.Format("{0}{1}/", zipFileFolderName, customFile.GetCustomFileName);
+
+                    //debug
+                    Console.WriteLine("New Folder Name : " + newFolderName);
+
                     archiveFile.CreateEntry(newFolderName);
                     UpdateStatusAndRaiseEventProgressStatus(ZipProcessingStages.ADDING_FOLDER, customFile, newFolderName);
                 }
@@ -165,13 +187,9 @@ namespace OneClickZip.Includes.Classes
                 //Thread.Sleep(5000);
             }
 
-            //DEBUG
-            //Thread.Sleep(500);
-            //END DEBUG
-
             foreach (SerializableTreeNode treeNodeEx in serializableTreeNode.Nodes)
             {
-                if (treeNodeEx.IsAFolderGenerally)
+                if (treeNodeEx.IsGenerallyAFolderType)
                 {
                     String newPath;
                     if (zipFileFolderName == null)
@@ -236,11 +254,8 @@ namespace OneClickZip.Includes.Classes
         private void ProgressStatusPercentageArgs()
         {
             long processed = processingStatusEventArgs.FilesProcessedCount + processingStatusEventArgs.FolderProcessedCount;
-
-            //DEBUG
-            //Console.WriteLine("ProgressStatusPercentageArgs: " + processed + ", " + zipFileStatisticsModel.TotalFilesAndFolders);
-
             processingStatusEventArgs.ProgressStatusPercentage = 
+                (zipFileStatisticsModel == null) ? 0 : 
                 ConverterUtils.GetPercentageFloored(processed, zipFileStatisticsModel.TotalFilesAndFolders);
         }
         private void UpdateStatusAndRaiseEventProcessingStatus(ZipProcessingStages setStage, CustomFileItem customFile = null)
@@ -252,6 +267,11 @@ namespace OneClickZip.Includes.Classes
         {
             GetProcessingStatusEventArgs(setStage, customFile, folderName);
             ProgressStatus.Invoke(this, processingStatusEventArgs);
+        }
+        private void SerializedTreeNodeCompletionStatus()
+        {
+            processingStatusEventArgs.ProcessingStage = ZipProcessingStages.GENERATE_SERIALIZED_TREE_NODE_BASE_FILTER_RULE;
+            SerializedTreeNodeGeneratedComplete.Invoke(this, processingStatusEventArgs);
         }
         private void FinishedArchivingRaiseEvent()
         {
@@ -272,6 +292,15 @@ namespace OneClickZip.Includes.Classes
             }
         }
         public bool StopProcessingSuccessful { get => stopProcessingSuccessfull; set => stopProcessingSuccessfull = value; }
+        public CompressionLevel CompressionLevelArchiving 
+        {
+            get 
+            {
+                return compressionLevelArchiving;
+            } set {
+                compressionLevelArchiving = value;
+            } 
+        }
         private bool IsStopProcessing()
         {
             if (StopProcessing)

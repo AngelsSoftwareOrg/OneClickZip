@@ -48,7 +48,7 @@ namespace OneClickZip.Includes.Classes.TreeNodeSerialize
         private void StartCrawling()
         {
             RaiseEventProcessingStatus(GeneratingSerializeTreeNodeProcessingStage.INITIALIZATION);
-            CrawlTreeStructure(GeneratedSerializableTreeNode, FolderFilterRuleObj.TargetFolderPath);
+            CrawlTreeStructure(SerializableTreeNodeObj, FolderFilterRuleObj.TargetFolderPath);
             if (StopGenerating && StopGeneratingSuccessful)
             {
                 RaiseEventStopGeneration();
@@ -72,12 +72,10 @@ namespace OneClickZip.Includes.Classes.TreeNodeSerialize
                     {
                         UpdateSequenceInfo("Added File", fileInfo.FullName, hitFilterRule);
                         RaiseEventRuleEnforcementStatus(GeneratingSerializeTreeNodeProcessingStage.ENFORCING_RULE_TO_FILE);
-                        serializableTreeNode.MasterListFilesDir.Add(new CustomFileItem(fileInfo.FullName, fileInfo));
+                        serializableTreeNode.AddItem(new CustomFileItem(fileInfo.Name, fileInfo));
                     }
                     Application.DoEvents();
                     if (IsStopGenerating()) return;
-                    //DEBUG
-                    //Thread.Sleep(100);
                 }
             }
 
@@ -99,19 +97,23 @@ namespace OneClickZip.Includes.Classes.TreeNodeSerialize
                             SelectedImageIndex = -1,
                             FolderType = FolderType.TreeView
                         };
-                        serializableTreeNode.MasterListFilesDir.Add(new CustomFileItem(dInfo.FullName, dInfo));
-                        serializableTreeNode.Nodes.Add(stree);
-                        UpdateSequenceInfo("Added Folder", dInfo.FullName, hitFilterRule);
-                        RaiseEventRuleEnforcementStatus(GeneratingSerializeTreeNodeProcessingStage.ENFORCING_RULE_TO_FOLDER);
+
+                        //recursive traversal
                         CrawlTreeStructure(stree, dInfo.FullName);
+
+                        bool includeFoldersWithSubFoldersOrFiles = (!FolderFilterRuleObj.IncludeEmptyFolder && stree.MasterListFilesDir.Count > 0);
+                        if (FolderFilterRuleObj.IncludeEmptyFolder || includeFoldersWithSubFoldersOrFiles)
+                        {
+                            serializableTreeNode.AddItem(new CustomFileItem(dInfo.Name, dInfo));
+                            UpdateSequenceInfo("Added Folder", dInfo.FullName, hitFilterRule);
+                            RaiseEventRuleEnforcementStatus(GeneratingSerializeTreeNodeProcessingStage.ENFORCING_RULE_TO_FOLDER);
+                            serializableTreeNode.Nodes.Add(stree);
+                        }
                     }
                     else
                     {
                         CrawlTreeStructure(serializableTreeNode, dInfo.FullName);
                     }
-                    //DEBUG
-                    //Thread.Sleep(500);
-                    //END DEBUG
                 }
             }
         }
@@ -153,16 +155,9 @@ namespace OneClickZip.Includes.Classes.TreeNodeSerialize
         }
         private bool IsFileLengthFilterRulePassed(FileSystemInfo sysInfo)
         {
-            if (!FolderFilterRuleObj.HasMinimumFileSize && !FolderFilterRuleObj.HasMaximumFileSize) return false;
+            if (!FolderFilterRuleObj.HasMinimumFileSize && !FolderFilterRuleObj.HasMaximumFileSize) return true;
             bool result = false;
             FileInfo filObj = (FileInfo)sysInfo;
-            
-            
-            //DEBUG
-            if (filObj.Name.Contains("hsbc 09-sep-2020"))
-            {
-                String x = String.Empty;
-            }
 
             if (FolderFilterRuleObj.HasMinimumFileSize)
             {
@@ -180,12 +175,6 @@ namespace OneClickZip.Includes.Classes.TreeNodeSerialize
 
             bool result = false;
             FileInfo fInfo = (FileInfo)sysInfo;
-
-            //DEBUG
-            if (fInfo.Name.Contains("hsbc 09-sep-2020"))
-            {
-                String x = String.Empty;
-            }
 
             switch (FolderFilterRuleObj.TimeSpanOptionValue)
             {
@@ -223,25 +212,25 @@ namespace OneClickZip.Includes.Classes.TreeNodeSerialize
         {
             processingStatusEventArgs.ProcessingStage = processingStage;
             UpdateSequenceInfo("Initialization", "Initializing path filter rule generation", "");
-            GenerationInitialization.Invoke(this, processingStatusEventArgs);
+            GenerationInitialization?.Invoke(this, processingStatusEventArgs);
         }
         private void RaiseEventRuleEnforcementStatus(GeneratingSerializeTreeNodeProcessingStage processingStage)
         {
             actualFilesProcessedCount++;
             processingStatusEventArgs.ProcessingStage = processingStage;
-            RuleEnforcementStatus.Invoke(this, processingStatusEventArgs);
+            RuleEnforcementStatus?.Invoke(this, processingStatusEventArgs);
         }
         private void RaiseEventFinishedGeneration()
         {
             processingStatusEventArgs.ProcessingStage = GeneratingSerializeTreeNodeProcessingStage.GENERATION_SUCCESSFUL;
             UpdateSequenceInfo("Finished", "Path file base on filter rules is successful", "");
-            FinishedGeneration.Invoke(this, processingStatusEventArgs);
+            FinishedGeneration?.Invoke(this, processingStatusEventArgs);
         }
         private void RaiseEventStopGeneration()
         {
             processingStatusEventArgs.ProcessingStage = GeneratingSerializeTreeNodeProcessingStage.STOP_GENERATION;
             UpdateSequenceInfo("Stopped", "Path file base on filter rules has been halted.", "");
-            StopGeneration.Invoke(this, processingStatusEventArgs);
+            StopGeneration?.Invoke(this, processingStatusEventArgs);
         }
         #endregion
         
@@ -252,7 +241,7 @@ namespace OneClickZip.Includes.Classes.TreeNodeSerialize
         public FolderFilterRule FolderFilterRuleObj { get => folderFilterRule; set => folderFilterRule = value; }
         private bool StopGenerating { get => stopGenerating; set => stopGenerating = value; }
         public bool StopGeneratingSuccessful { get => stopGeneratingSuccessful; set => stopGeneratingSuccessful = value; }
-        public SerializableTreeNode GeneratedSerializableTreeNode 
+        public SerializableTreeNode SerializableTreeNodeObj 
         {
             get
             {

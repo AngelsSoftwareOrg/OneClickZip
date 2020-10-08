@@ -117,6 +117,7 @@ namespace OneClickZip.Includes.Classes.TreeNodeSerialize
             destination.SelectedImageIndex = source.SelectedImageIndex;
             destination.MasterListFilesDir.AddRange(source.MasterListFilesDir.ToArray());
             destination.FolderType = source.FolderType;
+            destination.FolderFilterRuleObj = source.FolderFilterRuleObj;
             //destination.IsRootNode = source.IsRootNode; //no need
         }
 
@@ -130,12 +131,26 @@ namespace OneClickZip.Includes.Classes.TreeNodeSerialize
             destination.MasterListFilesDir.AddRange(source.MasterListFilesDir.ToArray());
             destination.FolderType = source.FolderType;
             destination.IsRootNode = source.IsRootNode;
-
-            if (source.Tag != null)
-                destination.Tag = source.Tag.ToString();
-            else
-                destination.Tag = null;
+            destination.FolderFilterRuleObj = source.FolderFilterRuleObj;
+            destination.Tag = (source.Tag == null) ? null : source.Tag.ToString();
         }
+
+        public static void SerializeTreeNodeShallowCopy(SerializableTreeNode source, SerializableTreeNode destination)
+        {
+            if (!String.IsNullOrEmpty(source.Name)) destination.Name = source.Name;
+            if (!String.IsNullOrEmpty(source.ToolTipText)) destination.ToolTipText = source.ToolTipText;
+            destination.ImageIndex = source.ImageIndex;
+            if(!String.IsNullOrEmpty(source.Text)) destination.Text = source.Text.ToString();
+            destination.SelectedImageIndex = source.SelectedImageIndex;
+            destination.MasterListFilesDir.AddRange(source.MasterListFilesDir.ToArray());
+            destination.FolderType = source.FolderType;
+            destination.IsRootNode = source.IsRootNode;
+            destination.FolderFilterRuleObj = source.FolderFilterRuleObj;
+            destination.Tag = (source.Tag == null) ? null : source.Tag.ToString();
+            destination.Nodes.AddRange(source.Nodes);
+        }
+
+
         #endregion
 
 
