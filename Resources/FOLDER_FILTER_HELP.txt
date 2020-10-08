@@ -1,0 +1,40 @@
+~~~~ Character Pattern ~~~~
+* 
+  matches any number of characters including none, excluding directory seperator
+?
+  matches a single character
+[abc]
+  matches one character in the brackets
+[!abc]
+  matches any character not in the brackets
+**
+  match zero or more directories
+{abc,123}
+  comma delimited set of literals, matched 'abc' or '123'
+
+
+~~~~ Filter Description ~~~~
+1. Single file C:\Source\file.txt
+[example=>] \file.txt
+
+2. Single folder C:\Source\SubFolder
+[example=>] \SubFolder\**
+
+3. All *.tmp files located in SubFolder 
+[example=>] \SubFolder\*.tmp
+
+4. Files and folders containing temp somewhere in their path 
+[example=>] *temp*
+
+5. All *.tmp files located in anywhere
+[example=>] *.tmp
+
+6. *.txt files located in subdirectories of base directories 
+[example=>] \**\*.txt
+
+
+
+
+
+
+

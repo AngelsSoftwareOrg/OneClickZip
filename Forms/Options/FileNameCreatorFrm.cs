@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -140,6 +141,11 @@ namespace OneClickZip.Forms.Options
                 MessageBox.Show("Please limit your zip file name within 256 characters", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
+            if (txtSimulatedFilename.Text.Trim().IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+            {
+                MessageBox.Show(@"Your simulated file name has an invalid characters as a file name like ':' and etc...", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
 
             MatchCollection matchValueCol = Regex.Matches(txtFileNameFormula.Text.Trim(), CreatorModel.FORMULA_PATTER_REGEX_COMPLETE);
             if (matchValueCol.Count <= 0)
@@ -153,7 +159,7 @@ namespace OneClickZip.Forms.Options
             return true;
         }
 
-        public FileNameCreator GetFileCreatorName()
+        public FileNameCreator GetFileCreatorNameModel()
         {
             return filenameCreator;
         }

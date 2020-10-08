@@ -1,6 +1,8 @@
-﻿using System;
+﻿using OneClickZip.Includes.Models;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -14,7 +16,9 @@ namespace OneClickZip.Includes.Resources
     {
         private static ResourceManager RESOURCE_MANAGER;
         private static readonly String RESOURCE_NAME = "OneClickZip.Properties.Resources";
-        private static readonly String RESOURCE_PROPERTY_FILE_NAME = "CREATOR_DETAILS"; //CREATOR_DETAILS.properties
+        private static readonly String RESOURCE_PROPERTY_FILE_NAME_CREATOR_DETAILS = "CREATOR_DETAILS"; //CREATOR_DETAILS.properties
+        private static readonly String RESOURCE_PROPERTY_FILE_NAME_FOLDER_FILTER_EXCLUDE = "FOLDER_FILTER_EXCLUDE";
+        private static readonly String RESOURCE_PROPERTY_FILE_NAME_FOLDER_FILTER_HELP = "FOLDER_FILTER_HELP";
 
         private static readonly String RESOURCE_PROPERTY_NAME_DATE = "DATE_FORMULA_FUNCTION_";
         private static readonly String RESOURCE_PROPERTY_NAME_RANDOM_GEN = "RANDOM_NUMBER_GENERATOR_";
@@ -27,7 +31,17 @@ namespace OneClickZip.Includes.Resources
         private static readonly String FILE_BATCH_ONE_CLICK_FILTER_NAME = "FILE_BATCH_ONE_CLICK_FILTER_NAME";
         private static readonly String FILE_DESIGNER_EXTENSION_NAME = "FILE_DESIGNER_EXTENSION_NAME";
         private static readonly String FILE_BATCH_ONE_CLICK_EXTENSION_NAME = "FILE_BATCH_ONE_CLICK_EXTENSION_NAME";
+        private static readonly String FILE_LOG_FILTER_NAME = "FILE_LOG_FILTER_NAME";
+        private static readonly String FILE_LOG_EXTENSION_NAME = "FILE_LOG_EXTENSION_NAME";
+        private static readonly String FILE_LOG_EXTENSION_NAME_DESCRIPTION = "FILE_LOG_EXTENSION_NAME_DESCRIPTION";
 
+        private static readonly String APPLICATION_ID = "APPLICATION_ID";
+        private static readonly String FILE_BATCH_ONE_CLICK_EXTENSION_NAME_DESCRIPTION = "FILE_BATCH_ONE_CLICK_EXTENSION_NAME_DESCRIPTION";
+        private static readonly String FILE_DESIGNER_EXTENSION_NAME_DESCRIPTION = "FILE_DESIGNER_EXTENSION_NAME_DESCRIPTION";
+        private static readonly String ICON_FOR_PROJECT_DESIGNER_FILE = "ICON_FOR_PROJECT_DESIGNER_FILE";
+        private static readonly String ICON_FOR_PROJECT_BATCH_FILE = "ICON_FOR_PROJECT_BATCH_FILE";
+
+        private static readonly String SERIALIZED_TREE_NODE_GENERATION_PREVIEW_LIMIT = "SERIALIZED_TREE_NODE_GENERATION_PREVIEW_LIMIT";
 
         static ResourcesUtil()
         {
@@ -37,38 +51,33 @@ namespace OneClickZip.Includes.Resources
         {
             return RESOURCE_MANAGER.GetString(settingName);
         }
-
         public static List<ResourcePropertiesModel> GetDateFormulaProperties()
         {
             if (getDateFormulaProperties.Count <= 0) 
                 getDateFormulaProperties = GetFormulaConfigProperties(RESOURCE_PROPERTY_NAME_DATE);
             return getDateFormulaProperties.ToList<ResourcePropertiesModel>();
         }
-
         public static List<ResourcePropertiesModel> GetRandomNumberFormulaProperties()
         {
             if (getRandomNumberFormulaProperties.Count <= 0)
                 getRandomNumberFormulaProperties = GetFormulaConfigProperties(RESOURCE_PROPERTY_NAME_RANDOM_GEN);
             return getRandomNumberFormulaProperties.ToList<ResourcePropertiesModel>();
         }
-
         public static List<ResourcePropertiesModel> GetRandomCharsFormulaProperties()
         {
             if (getRandomCharsFormulaProperties.Count <= 0)
                 getRandomCharsFormulaProperties = GetFormulaConfigProperties(RESOURCE_PROPERTY_NAME_RANDOM_CHARS);
             return getRandomCharsFormulaProperties.ToList<ResourcePropertiesModel>();
         }
-
         private static List<ResourcePropertiesModel> GetFormulaConfigProperties(String configPropertyName)
         {
-            List<String> propertyList = GetResourcePropertiesModel().FindAll(
+            List<String> propertyList = GetResourceCreatorDetailsPropertiesModel().FindAll(
                                             delegate (String configValue)
                                             {
                                                 return (configValue.StartsWith(configPropertyName));
                                             }).ToList<String>();
             return ConvertToResourcePropertiesModelList(propertyList);
         }
-
         private static List<ResourcePropertiesModel> ConvertToResourcePropertiesModelList(List<String> propertyList)
         {
             List<ResourcePropertiesModel> rpmResults = new List<ResourcePropertiesModel>();
@@ -85,13 +94,21 @@ namespace OneClickZip.Includes.Resources
             }
             return rpmResults;
         }
-
-        private static List<String> GetResourcePropertiesModel()
+        private static List<String> GetResourceCreatorDetailsPropertiesModel()
         {
-            String fileObject = Encoding.UTF8.GetString((Byte[])RESOURCE_MANAGER.GetObject(RESOURCE_PROPERTY_FILE_NAME));
+            String fileObject = Encoding.UTF8.GetString((Byte[])RESOURCE_MANAGER.GetObject(RESOURCE_PROPERTY_FILE_NAME_CREATOR_DETAILS));
             return fileObject.Split(Char.Parse("\n")).ToList<string>();
         }
-
+        public static List<String> GetResourceFolderFilterExcludeModel()
+        {
+            String fileObject = Encoding.UTF8.GetString((Byte[])RESOURCE_MANAGER.GetObject(RESOURCE_PROPERTY_FILE_NAME_FOLDER_FILTER_EXCLUDE));
+            return fileObject.Split(Char.Parse("\n")).ToList<string>();
+        }
+        public static List<String> GetResourceFolderFilterHelpModel()
+        {
+            String fileObject = Encoding.UTF8.GetString((Byte[])RESOURCE_MANAGER.GetObject(RESOURCE_PROPERTY_FILE_NAME_FOLDER_FILTER_HELP));
+            return fileObject.Split(Char.Parse("\n")).ToList<string>();
+        }
         public static String GetFileDesignerFilterName()
         {
             return getSetting(FILE_DESIGNER_FILTER_NAME);
@@ -104,11 +121,82 @@ namespace OneClickZip.Includes.Resources
         {
             return getSetting(FILE_DESIGNER_EXTENSION_NAME);
         }
+        public static String GetFileDesignerExtensionDescription()
+        {
+            return getSetting(FILE_DESIGNER_EXTENSION_NAME_DESCRIPTION);
+        }
+        public static String GetFileBatchExtensionNameDescription()
+        {
+            return getSetting(FILE_BATCH_ONE_CLICK_EXTENSION_NAME_DESCRIPTION);
+        }
         public static String GetFileBatchExtensionName()
         {
             return getSetting(FILE_BATCH_ONE_CLICK_EXTENSION_NAME);
         }
-
+        public static String GetFileLogFilterName()
+        {
+            return getSetting(FILE_LOG_FILTER_NAME);
+        }
+        public static String GetFileLogExtensionName()
+        {
+            return getSetting(FILE_LOG_EXTENSION_NAME);
+        }
+        public static String GetFileLogExtensionNameDescription()
+        {
+            return getSetting(FILE_LOG_EXTENSION_NAME_DESCRIPTION);
+        }
+        public static String GetApplicationId()
+        {
+            return getSetting(APPLICATION_ID);
+        }
+        public static String GetProjectDesignerIconName()
+        {
+            return getSetting(ICON_FOR_PROJECT_DESIGNER_FILE);
+        }
+        public static String GetProjectBatchFileIconName()
+        {
+            return getSetting(ICON_FOR_PROJECT_BATCH_FILE);
+        }
+        public static FileAssociationModel GetFileAssociationProjectDesignerModel(String includeFilePath)
+        {
+            return new FileAssociationModel()
+            {
+                Extension = GetFileDesignerExtensionName(),
+                ProgId = GetApplicationId(),
+                FileTypeDescription = GetFileDesignerExtensionDescription(),
+                ExecutableFilePath = includeFilePath,
+                DefaultIconFilePath = GetIconPathForProjectDesigner()
+            };
+        }
+        public static FileAssociationModel GetFileAssociationBatchFileModel(String includeFilePath)
+        {
+            return new FileAssociationModel()
+            {
+                Extension = GetFileBatchExtensionName(),
+                ProgId = GetApplicationId() + "_Batch",
+                FileTypeDescription = GetFileBatchExtensionNameDescription(),
+                ExecutableFilePath = includeFilePath,
+                DefaultIconFilePath = GetIconPathForProjectBatchFile()
+            };
+        }
+        public static String GetMainProjectExecutionFolderPath()
+        {
+            String filePath = Process.GetCurrentProcess().MainModule.FileName;
+            FileInfo fileInfo = new FileInfo(filePath);
+            return fileInfo.DirectoryName;
+        }
+        public static String GetIconPathForProjectDesigner()
+        {
+            return GetMainProjectExecutionFolderPath() + "\\" + GetProjectDesignerIconName();
+        }
+        public static String GetIconPathForProjectBatchFile()
+        {
+            return GetMainProjectExecutionFolderPath() + "\\" + GetProjectBatchFileIconName();
+        }
+        public static String GetSerializedTreeNodeGenerationPreviewLimit()
+        {
+            return getSetting(SERIALIZED_TREE_NODE_GENERATION_PREVIEW_LIMIT);
+        }
         public void Dispose()
         {
             RESOURCE_MANAGER = null;

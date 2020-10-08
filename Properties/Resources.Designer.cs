@@ -61,6 +61,175 @@ namespace OneClickZip.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to One_Click_Zip_Designer.
+        /// </summary>
+        internal static string APPLICATION_ID {
+            get {
+                return ResourceManager.GetString("APPLICATION_ID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Button_Play_icon_128px {
+            get {
+                object obj = ResourceManager.GetObject("Button_Play_icon_128px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Button_Play_icon_16px {
+            get {
+                object obj = ResourceManager.GetObject("Button_Play_icon_16px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Button_Play_icon_24px {
+            get {
+                object obj = ResourceManager.GetObject("Button_Play_icon_24px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Button_Play_icon_32px {
+            get {
+                object obj = ResourceManager.GetObject("Button_Play_icon_32px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Button_Play_icon_48px {
+            get {
+                object obj = ResourceManager.GetObject("Button_Play_icon_48px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Button_Play_icon_64px {
+            get {
+                object obj = ResourceManager.GetObject("Button_Play_icon_64px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Button_Play_icon_72px {
+            get {
+                object obj = ResourceManager.GetObject("Button_Play_icon_72px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Button_Play_icon_96px {
+            get {
+                object obj = ResourceManager.GetObject("Button_Play_icon_96px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Button_Stop_icon {
+            get {
+                object obj = ResourceManager.GetObject("Button_Stop_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Button_Stop_icon_16px {
+            get {
+                object obj = ResourceManager.GetObject("Button_Stop_icon_16px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Button_Stop_icon_24px {
+            get {
+                object obj = ResourceManager.GetObject("Button_Stop_icon_24px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Button_Stop_icon_32px {
+            get {
+                object obj = ResourceManager.GetObject("Button_Stop_icon_32px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Button_Stop_icon_48px {
+            get {
+                object obj = ResourceManager.GetObject("Button_Stop_icon_48px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Button_Stop_icon_64px {
+            get {
+                object obj = ResourceManager.GetObject("Button_Stop_icon_64px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Button_Stop_icon_72px {
+            get {
+                object obj = ResourceManager.GetObject("Button_Stop_icon_72px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Button_Stop_icon_96px {
+            get {
+                object obj = ResourceManager.GetObject("Button_Stop_icon_96px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap clear_24px {
@@ -91,11 +260,20 @@ namespace OneClickZip.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to oczb.
+        ///   Looks up a localized string similar to .oczb.
         /// </summary>
         internal static string FILE_BATCH_ONE_CLICK_EXTENSION_NAME {
             get {
                 return ResourceManager.GetString("FILE_BATCH_ONE_CLICK_EXTENSION_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One Click Zip Batch File Executor.
+        /// </summary>
+        internal static string FILE_BATCH_ONE_CLICK_EXTENSION_NAME_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("FILE_BATCH_ONE_CLICK_EXTENSION_NAME_DESCRIPTION", resourceCulture);
             }
         }
         
@@ -109,11 +287,20 @@ namespace OneClickZip.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to oczd.
+        ///   Looks up a localized string similar to .oczd.
         /// </summary>
         internal static string FILE_DESIGNER_EXTENSION_NAME {
             get {
                 return ResourceManager.GetString("FILE_DESIGNER_EXTENSION_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One Click Zip Project Designer.
+        /// </summary>
+        internal static string FILE_DESIGNER_EXTENSION_NAME_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("FILE_DESIGNER_EXTENSION_NAME_DESCRIPTION", resourceCulture);
             }
         }
         
@@ -123,6 +310,53 @@ namespace OneClickZip.Properties {
         internal static string FILE_DESIGNER_FILTER_NAME {
             get {
                 return ResourceManager.GetString("FILE_DESIGNER_FILTER_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .log.
+        /// </summary>
+        internal static string FILE_LOG_EXTENSION_NAME {
+            get {
+                return ResourceManager.GetString("FILE_LOG_EXTENSION_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log File.
+        /// </summary>
+        internal static string FILE_LOG_EXTENSION_NAME_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("FILE_LOG_EXTENSION_NAME_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log File|*.log.
+        /// </summary>
+        internal static string FILE_LOG_FILTER_NAME {
+            get {
+                return ResourceManager.GetString("FILE_LOG_FILTER_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] FOLDER_FILTER_EXCLUDE {
+            get {
+                object obj = ResourceManager.GetObject("FOLDER_FILTER_EXCLUDE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] FOLDER_FILTER_HELP {
+            get {
+                object obj = ResourceManager.GetObject("FOLDER_FILTER_HELP", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -169,10 +403,227 @@ namespace OneClickZip.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap folder_rule_16px {
+            get {
+                object obj = ResourceManager.GetObject("folder_rule_16px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap folder_rule_24px {
+            get {
+                object obj = ResourceManager.GetObject("folder_rule_24px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap folder_rule_32px {
+            get {
+                object obj = ResourceManager.GetObject("folder_rule_32px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap folder_rule_64px {
+            get {
+                object obj = ResourceManager.GetObject("folder_rule_64px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap folder_rule_raw {
+            get {
+                object obj = ResourceManager.GetObject("folder_rule_raw", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logo-icon-batch-64px.ico.
+        /// </summary>
+        internal static string ICON_FOR_PROJECT_BATCH_FILE {
+            get {
+                return ResourceManager.GetString("ICON_FOR_PROJECT_BATCH_FILE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logo-icon-64px.ico.
+        /// </summary>
+        internal static string ICON_FOR_PROJECT_DESIGNER_FILE {
+            get {
+                return ResourceManager.GetString("ICON_FOR_PROJECT_DESIGNER_FILE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Logo_icon_128px {
+            get {
+                object obj = ResourceManager.GetObject("Logo_icon_128px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Logo_icon_16px {
+            get {
+                object obj = ResourceManager.GetObject("Logo_icon_16px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Logo_icon_20px {
+            get {
+                object obj = ResourceManager.GetObject("Logo_icon_20px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Logo_icon_256px {
+            get {
+                object obj = ResourceManager.GetObject("Logo_icon_256px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Logo_icon_32px {
+            get {
+                object obj = ResourceManager.GetObject("Logo_icon_32px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Logo_icon_512px {
+            get {
+                object obj = ResourceManager.GetObject("Logo_icon_512px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Logo_icon_64px {
+            get {
+                object obj = ResourceManager.GetObject("Logo_icon_64px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon Logo_icon_64px1 {
+            get {
+                object obj = ResourceManager.GetObject("Logo_icon_64px1", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap PlusMinus_24px {
             get {
                 object obj = ResourceManager.GetObject("PlusMinus_24px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Save_icon_16px {
+            get {
+                object obj = ResourceManager.GetObject("Save_icon_16px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Save_icon_24px {
+            get {
+                object obj = ResourceManager.GetObject("Save_icon_24px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Save_icon_256px {
+            get {
+                object obj = ResourceManager.GetObject("Save_icon_256px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Save_icon_32px {
+            get {
+                object obj = ResourceManager.GetObject("Save_icon_32px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Save_icon_48px {
+            get {
+                object obj = ResourceManager.GetObject("Save_icon_48px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Save_icon_64px {
+            get {
+                object obj = ResourceManager.GetObject("Save_icon_64px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 25000.
+        /// </summary>
+        internal static string SERIALIZED_TREE_NODE_GENERATION_PREVIEW_LIMIT {
+            get {
+                return ResourceManager.GetString("SERIALIZED_TREE_NODE_GENERATION_PREVIEW_LIMIT", resourceCulture);
             }
         }
     }

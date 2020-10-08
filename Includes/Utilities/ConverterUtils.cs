@@ -10,7 +10,7 @@ namespace OneClickZip.Includes.Utilities
     {
         private static readonly string[] SIZE_SUFFIXES =
                        { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
-        public static string humanReadableFileSize(Int64 value, int decimalPlaces = 1)
+        public static string HumanReadableFileSize(Int64 value, int decimalPlaces = 1)
         {
             if (decimalPlaces < 0) { throw new ArgumentOutOfRangeException("decimalPlaces"); }
             if (value < 0) { return "-" + SIZE_SUFFIXES[-value]; }
@@ -35,7 +35,39 @@ namespace OneClickZip.Includes.Utilities
                 adjustedSize,
                 SIZE_SUFFIXES[mag]);
         }
-    }
 
+        public static string ConvertToHourMinuteSeconds(long secs)
+        {// 0.63 ms
+            long hours = secs / 3600;
+            long mins = (secs % 3600) / 60;
+            secs = secs % 60;
+            return string.Format("{0:D2}:{1:D2}:{2:D2}", hours, mins, secs);
+        }
+        
+        public static string ConvertToHourMinuteSecondsUsingModulo(long secs)
+        {// 0.64 ms
+            long s = secs % 60;
+            secs /= 60;
+            long mins = secs % 60;
+            long hours = secs / 60;
+            return string.Format("{0:D2}:{1:D2}:{2:D2}", hours, mins, s);
+        }
+
+        public static string ConvertToHourMinuteSecondsUsingTimeSpan(long secs)
+        {// 0.70 ms
+            TimeSpan t = TimeSpan.FromSeconds(secs);
+            return string.Format("{0:D2}:{1:D2}:{2:D2}",
+                (int)t.TotalHours,
+                t.Minutes,
+                t.Seconds);
+        }
+    
+        public static int GetPercentageFloored(long progress=0, long total=0)
+        {
+            decimal result = ((decimal) progress / (decimal)total) * 100;
+            result = Math.Floor(result);
+            return int.Parse(result.ToString());
+        }
+    }
 
 }

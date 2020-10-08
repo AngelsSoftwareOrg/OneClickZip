@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace OneClickZip.Includes.Resources
 {
+    [Serializable]
     public class ResourcePropertiesModel
     {
         private String uniquePropertyId;

@@ -39,7 +39,7 @@ namespace OneClickZip.Includes.Classes
             {
                 result = iec.Generate(result);
             }
-            return result;
+            return result.Trim();
         }
 
         public List<ResourcePropertiesModel> GetResourcePropertiesList(bool includeHeader = false)
