@@ -52,29 +52,6 @@ namespace OneClickZip.Includes.Classes
             ExcludeFilterRules = new List<string>();
             IncludeFilterRules.Add("*");
             ExcludeFilterRules.AddRange(ResourcesUtil.GetResourceFolderFilterExcludeModel());
-
-            //DEBUGGING
-            IncludeFilterRules.Clear();
-            //IncludeFilterRules.Add(@"Add-in Express\");
-            //IncludeFilterRules.Add(@"\Add-in Express\");
-            //IncludeFilterRules.Add(@"\Add-in Express");
-            //IncludeFilterRules.Add("Adobe");
-            //IncludeFilterRules.Add(@"\Animotica\Projects\Media\*");
-            //IncludeFilterRules.Add(@"*.docx");
-            //IncludeFilterRules.Add(@"\*\*.txt");
-            //IncludeFilterRules.Add(@"*.json");
-            //IncludeFilterRules.Add(@"\*");
-            IncludeFilterRules.Add(@"\Adobe\?udition\");
-            //IncludeFilterRules.Add(@"\Adobe\**");
-            IncludeFilterRules.Add(@"\Clarence\**");
-            //ExcludeFilterRules.Add(@"\Adobe\**");
-            //HasMinimumFileSize = true;
-            //HasMaximumFileSize = true;
-            //MinimumFileSize = 15360;
-            //MaximumFileSize = 819200;
-            //TimeSpanOptionValue = TimeSpanOption.THIS_YEAR;
-            TargetFolderPath = @"C:\Users\ponyok\Documents\Calibre Library";
-
         }
 
         public long MinimumFileSize { get => minimumFileSize; set => minimumFileSize = value; }

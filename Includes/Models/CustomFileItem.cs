@@ -36,14 +36,14 @@ namespace OneClickZip.Includes.Models
         public CustomFileItem(String fileName)
         {
             commonInitialization();
-            this.customFileName = fileName;
+            this.customFileName = fileName.Trim();
         }
 
         public CustomFileItem(String fileName, CShItem cshItem)
         {
             commonInitialization();
-            this.customFileName = fileName;
-            this.KeyName = cshItem.Name;
+            this.customFileName = fileName.Trim();
+            this.KeyName = cshItem.Name.Trim();
             this.Tag = cshItem.Tag;
             this.lastWriteTime = cshItem.LastWriteTime;
             this.creationTime = cshItem.CreationTime;
@@ -51,34 +51,37 @@ namespace OneClickZip.Includes.Models
             this.fileLength = cshItem.Length;
             this.filePathFull = cshItem.Path;
             this.isFolder = FileSystemUtilities.IsFullPathIsDirectory(cshItem.Path);
+            this.FolderType = (this.isFolder) ? FolderType.TreeView : FolderType.File;
             SetIconsIndex(cshItem.Path);
         }
 
         public CustomFileItem(String fileName, FileInfo fileInfo)
         {
             commonInitialization();
-            this.customFileName = fileName;
-            this.KeyName = fileInfo.Name;
+            this.customFileName = fileName.Trim();
+            this.KeyName = fileInfo.Name.Trim();
             this.lastWriteTime = fileInfo.LastWriteTime;
             this.creationTime = fileInfo.CreationTime;
             this.typeName = SystemFilesDirInfo.GetFileTypeDescription(fileInfo.FullName);
             this.fileLength = fileInfo.Length;
             this.filePathFull = fileInfo.FullName;
             this.isFolder = false;
+            this.FolderType = FolderType.File;
             SetIconsIndex(fileInfo.FullName);
         }
 
         public CustomFileItem(String fileName, DirectoryInfo directoryInfor)
         {
             commonInitialization();
-            this.customFileName = fileName;
-            this.KeyName = directoryInfor.Name;
+            this.customFileName = fileName.Trim();
+            this.KeyName = directoryInfor.Name.Trim();
             this.lastWriteTime = directoryInfor.LastWriteTime;
             this.creationTime = directoryInfor.CreationTime;
             this.typeName = SystemFilesDirInfo.FOLDER_TYPE_DESCRIPTION;
             this.fileLength = 0;
             this.filePathFull = directoryInfor.FullName;
             this.isFolder = true;
+            this.FolderType = FolderType.TreeView;
             SetIconsIndex(directoryInfor.FullName);
         }
 
@@ -118,7 +121,7 @@ namespace OneClickZip.Includes.Models
         public String SetCustomFileName
         {
             set{
-                this.customFileName = value;
+                this.customFileName = (value == null) ? null : value.Trim();
             }
         }
 

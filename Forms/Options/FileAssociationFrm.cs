@@ -21,8 +21,8 @@ namespace OneClickZip.Forms.Options
         {
             InitializeComponent();
             fileAssoc = new FileAssociationModel[]{
-                    ResourcesUtil.GetFileAssociationProjectDesignerModel(""),
-                    ResourcesUtil.GetFileAssociationBatchFileModel(""),
+                    ResourcesUtil.GetFileAssociationProjectDesignerModel(),
+                    ResourcesUtil.GetFileAssociationBatchFileModel(),
                 };
         }
 
@@ -51,8 +51,8 @@ namespace OneClickZip.Forms.Options
         {
             if (FileAssociation.IsApplicationProgramAlreadyAssociatedWith())
             {
-                DialogResult dr1 = MessageBox.Show("The application program was already associated with! " +
-                    "Do you want to replace/refresh the file association again?", "File Association", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                DialogResult dr1 = MessageBox.Show("The application program extenseions were already associated with! " +
+                    "Do you want to replace or refresh the file association again?", "File Association", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                 if (dr1 == DialogResult.No) return;
             }
 

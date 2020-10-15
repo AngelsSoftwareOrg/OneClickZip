@@ -12,6 +12,7 @@ namespace OneClickZip.Includes.Classes
 	{
 		private static String ICON_NAME_FOR_DIRECTORIES = "5EEB255733234c4dBECF9A128E896A1E";
 		private static String ICON_NAME_FOR_FILES_WITHOUT_EXTENSION = "F9EB930C78D2477c80A51945D505E9C4";
+		private static String ICON_NAME_FOR_TREEVIEW_FILTER_RULE = "C5A03DB41825C4AE34A1ECBD6F99F8EB16D2E29EFILTERRULEFOLDER";
 
 		#region Stock Icons
 		public enum SHSTOCKICONID : uint
@@ -245,6 +246,16 @@ namespace OneClickZip.Includes.Classes
 				_smallImageList.Images.Add(ICON_NAME_FOR_DIRECTORIES, GetStockIcon(SHSIID_FOLDER, SHGSI_SMALLICON));
 			}
 			return _smallImageList.Images.IndexOfKey(ICON_NAME_FOR_DIRECTORIES);
+		}
+
+		public int GetIconIndexForFolderFilterRule()
+		{
+			if (!_smallImageList.Images.ContainsKey(ICON_NAME_FOR_TREEVIEW_FILTER_RULE))
+			{
+				_smallImageList.Images.Add(ICON_NAME_FOR_TREEVIEW_FILTER_RULE, 
+					GetStockIcon((uint)SHSTOCKICONID.SIID_AUTOLIST, SHGSI_SMALLICON));
+			}
+			return _smallImageList.Images.IndexOfKey(ICON_NAME_FOR_TREEVIEW_FILTER_RULE);
 		}
 
 		public Icon GetStockIcon(uint type, uint size)

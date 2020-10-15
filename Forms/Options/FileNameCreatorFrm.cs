@@ -65,9 +65,6 @@ namespace OneClickZip.Forms.Options
 
         private void FileNameCreatorFrm_Load(object sender, EventArgs e)
         {
-            //DEBUG
-            //txtFileNameFormula.Text = "Sample File Name - $RC{SHA1} - $RC{SHA256} - $RC{SHA512} - $DT{dddd} - $DT{hh} - $DT{ffffff} - $DT{fffffff} - $DT{yyyy}/$DT{MM}/$DT{dd} - $DT{HH}:$DT{mm}:$DT{ss} - $RN{3} - $RN{34,999}";
-            //DEBUG END
         }
 
         private void ListViewInstruction_ItemSelectionChange(object sender, ListViewItemSelectionChangedEventArgs e)
@@ -86,11 +83,13 @@ namespace OneClickZip.Forms.Options
 
         private void BtnCopyVar_Click(object sender, EventArgs e)
         {
+            if (txtSelectedVariable.Text.Length <= 0) return;
             Clipboard.SetText(txtSelectedVariable.Text);
         }
 
         private void BtnInsertVar_Click(object sender, EventArgs e)
         {
+            if (txtSelectedVariable.Text.Length <= 0) return;
             txtFileNameFormula.Text = txtFileNameFormula.Text + " " + txtSelectedVariable.Text;
         }
 
@@ -162,6 +161,19 @@ namespace OneClickZip.Forms.Options
         public FileNameCreator GetFileCreatorNameModel()
         {
             return filenameCreator;
+        }
+
+        private void toolStripMenuItemCopy_Click(object sender, EventArgs e)
+        {
+            if (listViewInstruction.SelectedItems.Count <= 0) return;
+            String formula = listViewInstruction.SelectedItems[0].SubItems[0].Text.Trim();
+            Clipboard.SetText(formula);
+        }
+
+        private void toolStripMenuItemInsert_Click(object sender, EventArgs e)
+        {
+            String formula = listViewInstruction.SelectedItems[0].SubItems[0].Text.Trim();
+            txtFileNameFormula.Text = txtFileNameFormula.Text + " " + formula;
         }
     }
 }

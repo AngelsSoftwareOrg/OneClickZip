@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OneClickProcessorFrm));
+            this.btnStop = new System.Windows.Forms.Button();
             this.panelStatistic = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblFoldersCreated = new System.Windows.Forms.Label();
@@ -53,7 +54,6 @@
             this.copySelectedLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelButtons = new System.Windows.Forms.Panel();
             this.linkSaveLogs = new System.Windows.Forms.LinkLabel();
-            this.btnStop = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
             this.panelProgress = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -68,6 +68,20 @@
             this.panelProgress.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // btnStop
+            // 
+            this.btnStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnStop.Image = global::OneClickZip.Properties.Resources.stop_32;
+            this.btnStop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnStop.Location = new System.Drawing.Point(741, 6);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(103, 69);
+            this.btnStop.TabIndex = 1;
+            this.btnStop.Text = "Stop";
+            this.btnStop.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
             // panelStatistic
             // 
@@ -290,25 +304,17 @@
             this.linkSaveLogs.Text = "Save Logs";
             this.linkSaveLogs.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkSaveLogs_LinkClicked);
             // 
-            // btnStop
-            // 
-            this.btnStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnStop.Location = new System.Drawing.Point(588, 13);
-            this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(175, 50);
-            this.btnStop.TabIndex = 1;
-            this.btnStop.Text = "Stop";
-            this.btnStop.UseVisualStyleBackColor = true;
-            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
-            // 
             // btnExit
             // 
             this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExit.Location = new System.Drawing.Point(769, 13);
+            this.btnExit.Image = global::OneClickZip.Properties.Resources.Exit_32;
+            this.btnExit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnExit.Location = new System.Drawing.Point(859, 6);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(175, 50);
+            this.btnExit.Size = new System.Drawing.Size(90, 69);
             this.btnExit.TabIndex = 0;
             this.btnExit.Text = "Exit";
+            this.btnExit.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
@@ -360,7 +366,7 @@
             this.timerElapseTime.Interval = 1000;
             this.timerElapseTime.Tick += new System.EventHandler(this.timerElapseTime_Tick);
             // 
-            // OneClickProcessor
+            // OneClickProcessorFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -370,7 +376,7 @@
             this.Controls.Add(this.panelStatistic);
             this.Controls.Add(this.panelButtons);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "OneClickProcessor";
+            this.Name = "OneClickProcessorFrm";
             this.Text = "One Click Zip Creator";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OneClickProcessor_FormClosed);
             this.Load += new System.EventHandler(this.OneClickProcessor_Load);
@@ -407,7 +413,6 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label lblElapsedTime;
         private System.Windows.Forms.Button btnExit;
-        private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Panel panelProgress;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ProgressBar progressBarStatus;
@@ -420,5 +425,6 @@
         private System.Windows.Forms.ToolStripMenuItem copySelectedLogToolStripMenuItem;
         private System.Windows.Forms.ColumnHeader columnAction;
         private System.Windows.Forms.LinkLabel linkSaveLogs;
+        private System.Windows.Forms.Button btnStop;
     }
 }

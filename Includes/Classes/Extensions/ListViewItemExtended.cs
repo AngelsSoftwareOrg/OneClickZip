@@ -12,13 +12,35 @@ namespace OneClickZip.Includes.Classes.Extensions
         public ListViewItemExtended(CustomFileItem customFileItem) : base(customFileItem.GetCustomFileName)
         {
             this.customFileItem = customFileItem;
+            SetDefaultIcon();
         }
         public ListViewItemExtended(CustomFileItem customFileItem, string[] items) : base(items)
         {
             this.customFileItem = customFileItem;
+            SetDefaultIcon();
         }
 
         public CustomFileItem CustomFileItem { get => customFileItem; }
+
+        private void SetDefaultIcon()
+        {
+            switch (CustomFileItem.FolderType)
+            {
+                case Models.Types.FolderType.File:
+                    this.ImageIndex = DefaultIcons.SYSTEM_ICONS.GetIconIndex(CustomFileItem.FilePathFull);
+                    break;
+                case Models.Types.FolderType.TreeView:
+                    this.ImageIndex = DefaultIcons.SYSTEM_ICONS.GetIconIndexForDirectories();
+                    break;
+                case Models.Types.FolderType.FilterRule:
+                    this.ImageIndex = DefaultIcons.SYSTEM_ICONS.GetIconIndexForFolderFilterRule();
+                    this.ForeColor = System.Drawing.Color.Blue;
+                    break;
+                default:
+                    this.ImageIndex = DefaultIcons.SYSTEM_ICONS.GetIconIndexForDirectories();
+                    break;
+            }
+        }
     }
 
 }

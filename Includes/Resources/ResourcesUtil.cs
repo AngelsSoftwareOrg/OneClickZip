@@ -157,7 +157,7 @@ namespace OneClickZip.Includes.Resources
         {
             return getSetting(ICON_FOR_PROJECT_BATCH_FILE);
         }
-        public static FileAssociationModel GetFileAssociationProjectDesignerModel(String includeFilePath)
+        public static FileAssociationModel GetFileAssociationProjectDesignerModel(String includeFilePath="")
         {
             return new FileAssociationModel()
             {
@@ -168,7 +168,7 @@ namespace OneClickZip.Includes.Resources
                 DefaultIconFilePath = GetIconPathForProjectDesigner()
             };
         }
-        public static FileAssociationModel GetFileAssociationBatchFileModel(String includeFilePath)
+        public static FileAssociationModel GetFileAssociationBatchFileModel(String includeFilePath="")
         {
             return new FileAssociationModel()
             {
