@@ -75,11 +75,14 @@ namespace OneClickZip.Includes.Classes.Extensions
         }
         public void UpdateCustomFileItemDisplayText(String oldName, String newDisplayText)
         {
+            oldName = oldName.Trim();
+            newDisplayText = newDisplayText.Trim();
             foreach (CustomFileItem customeFileName in this.masterListFilesDir)
             {
                 if (customeFileName.GetCustomFileName == oldName)
                 {
                     customeFileName.SetCustomFileName = newDisplayText;
+                    break;
                 }
             }
         }
@@ -104,6 +107,7 @@ namespace OneClickZip.Includes.Classes.Extensions
             set 
             {
                 FolderType = (value) ? FolderType.TreeView : FolderType.File;
+                FolderTypeUpdateRoutine();
             }
         }
         public bool IsFolderIsFileViewNode
@@ -115,6 +119,7 @@ namespace OneClickZip.Includes.Classes.Extensions
             set
             {
                 FolderType = (value) ? FolderType.File : FolderType.TreeView;
+                FolderTypeUpdateRoutine();
             }
         }
         public bool IsFolderIsFilterRule
@@ -128,7 +133,7 @@ namespace OneClickZip.Includes.Classes.Extensions
                 if (value)
                 {
                     FolderType = FolderType.FilterRule;
-                    SetFilterRuleFolderFontColor();
+                    FolderTypeUpdateRoutine();
                 }
                 else
                 {
@@ -139,8 +144,33 @@ namespace OneClickZip.Includes.Classes.Extensions
         private void SetFilterRuleFolderFontColor()
         {
             if (FolderType != FolderType.FilterRule) return;
-            //this.BackColor = Color.Blue;
             this.ForeColor = Color.Blue;
+        }
+        private void SetIconImage()
+        {
+            switch (FolderType)
+            {
+                case FolderType.FilterRule:
+                    this.ImageIndex = DefaultIcons.SYSTEM_ICONS.GetIconIndexForFolderFilterRule();
+                    break;
+                case FolderType.TreeView:
+                    this.ImageIndex = DefaultIcons.SYSTEM_ICONS.GetIconIndexForDirectories();
+                    break;
+                default:
+                    break;
+            }
+            this.SelectedImageIndex = this.ImageIndex;
+        }
+        public void SetTreeNodeIcon(CustomFileItem customFileItem)
+        {
+            if (this.FolderType != FolderType.File) return;
+            this.ImageIndex = customFileItem.IconIndexNormal;
+            this.SelectedImageIndex = customFileItem.IconIndexNormal;
+        }
+        private void FolderTypeUpdateRoutine()
+        {
+            SetFilterRuleFolderFontColor();
+            SetIconImage();
         }
         public bool IsRootNode { 
             get
@@ -212,9 +242,23 @@ namespace OneClickZip.Includes.Classes.Extensions
             set
             {
                 folderType = value;
-                SetFilterRuleFolderFontColor();
+                FolderTypeUpdateRoutine();
             }
         }
         public FolderFilterRule FolderFilterRuleObj { get => folderFilterRuleObj; set => folderFilterRuleObj = value; }
+
+        public TreeNodeExtended GetChildNodeByLabel(String nodeLabel)
+        {
+            foreach (TreeNodeExtended childNode in this.Nodes)
+            {
+                //we search for text instead of key, because the one we rename was text, not the key
+                if (childNode.Text.Equals(nodeLabel, StringComparison.OrdinalIgnoreCase))
+                {
+                    return childNode;
+                }
+            }
+            return null;
+        }
     }
+
 }

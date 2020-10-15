@@ -154,7 +154,7 @@ namespace OneClickZip.Includes.Classes
 
             foreach (CustomFileItem customFile in serializableTreeNode.MasterListFilesDir)
             {
-                if (!customFile.IsFolder && !customFile.IsFolderIsFileViewNode)
+                if (customFile.IsFolderIsFileViewNode)
                 {
                     IncrementFilesProcessedCountArgs();
                     if(AddFileIntoZipArchive(archiveFile, customFile.FilePathFull, zipFileFolderName))
@@ -165,26 +165,16 @@ namespace OneClickZip.Includes.Classes
                     {
                         UpdateStatusAndRaiseEventProgressStatus(ZipProcessingStages.ADDING_FILE_FAILED, customFile);
                     }
-
-                    //DEBUG
-                    Console.WriteLine(zipFileFolderName + "\\[" + serializableTreeNode.Text + "] -> " + customFile.GetCustomFileName);
-                    //END DEBUG
                 }
                 else
                 {
                     IncrementFolderProcessedCountArgs();
                     String newFolderName = String.Format("{0}{1}/", zipFileFolderName, customFile.GetCustomFileName);
-
-                    //debug
-                    Console.WriteLine("New Folder Name : " + newFolderName);
-
                     archiveFile.CreateEntry(newFolderName);
                     UpdateStatusAndRaiseEventProgressStatus(ZipProcessingStages.ADDING_FOLDER, customFile, newFolderName);
                 }
                 Application.DoEvents();
                 if (IsStopProcessing()) return;
-                //DEBUG
-                //Thread.Sleep(5000);
             }
 
             foreach (SerializableTreeNode treeNodeEx in serializableTreeNode.Nodes)

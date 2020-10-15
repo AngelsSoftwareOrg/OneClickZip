@@ -34,8 +34,8 @@
             this.columnHeaderExt = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderFileTypeDesc = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel2 = new System.Windows.Forms.Panel();
-            this.btnAssociateNow = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
+            this.btnAssociateNow = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -46,7 +46,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(760, 176);
+            this.panel1.Size = new System.Drawing.Size(760, 219);
             this.panel1.TabIndex = 0;
             // 
             // listViewFileAssc
@@ -60,7 +60,7 @@
             this.listViewFileAssc.HideSelection = false;
             this.listViewFileAssc.Location = new System.Drawing.Point(0, 0);
             this.listViewFileAssc.Name = "listViewFileAssc";
-            this.listViewFileAssc.Size = new System.Drawing.Size(760, 176);
+            this.listViewFileAssc.Size = new System.Drawing.Size(760, 219);
             this.listViewFileAssc.TabIndex = 0;
             this.listViewFileAssc.UseCompatibleStateImageBehavior = false;
             this.listViewFileAssc.View = System.Windows.Forms.View.Details;
@@ -68,7 +68,7 @@
             // columnHeaderExt
             // 
             this.columnHeaderExt.Text = "Extension Name";
-            this.columnHeaderExt.Width = 120;
+            this.columnHeaderExt.Width = 138;
             // 
             // columnHeaderFileTypeDesc
             // 
@@ -80,26 +80,18 @@
             this.panel2.Controls.Add(this.btnExit);
             this.panel2.Controls.Add(this.btnAssociateNow);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 176);
+            this.panel2.Location = new System.Drawing.Point(0, 219);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(760, 109);
+            this.panel2.Size = new System.Drawing.Size(760, 66);
             this.panel2.TabIndex = 1;
-            // 
-            // btnAssociateNow
-            // 
-            this.btnAssociateNow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAssociateNow.Location = new System.Drawing.Point(317, 28);
-            this.btnAssociateNow.Name = "btnAssociateNow";
-            this.btnAssociateNow.Size = new System.Drawing.Size(225, 56);
-            this.btnAssociateNow.TabIndex = 0;
-            this.btnAssociateNow.Text = "Associate these now on the system";
-            this.btnAssociateNow.UseVisualStyleBackColor = true;
-            this.btnAssociateNow.Click += new System.EventHandler(this.btnAssociateNow_Click);
             // 
             // btnExit
             // 
             this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExit.Location = new System.Drawing.Point(548, 28);
+            this.btnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnExit.Image = global::OneClickZip.Properties.Resources.Exit_48;
+            this.btnExit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnExit.Location = new System.Drawing.Point(557, 6);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(200, 56);
             this.btnExit.TabIndex = 1;
@@ -107,10 +99,25 @@
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
+            // btnAssociateNow
+            // 
+            this.btnAssociateNow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAssociateNow.Image = global::OneClickZip.Properties.Resources.Download_Progress_48;
+            this.btnAssociateNow.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAssociateNow.Location = new System.Drawing.Point(181, 6);
+            this.btnAssociateNow.Name = "btnAssociateNow";
+            this.btnAssociateNow.Size = new System.Drawing.Size(370, 56);
+            this.btnAssociateNow.TabIndex = 0;
+            this.btnAssociateNow.Text = "Associate these extensions now on the system";
+            this.btnAssociateNow.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnAssociateNow.UseVisualStyleBackColor = true;
+            this.btnAssociateNow.Click += new System.EventHandler(this.btnAssociateNow_Click);
+            // 
             // FileAssociationFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(760, 285);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);

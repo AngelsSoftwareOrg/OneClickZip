@@ -21,7 +21,7 @@ namespace OneClickZip
 
             //DEBUG
             Console.WriteLine("~~~~~~~ Program ~~~~~~~");
-            //args = new string[]{ "E:\\zuTempOneClickZip\\2 - Test Filture Rule Save.oczd" };
+            //args = new string[]{ "E:\\zuTempOneClickZip\\9 - Test Regular.oczb" };
 
             Console.WriteLine(args);
             Console.WriteLine();
@@ -29,10 +29,6 @@ namespace OneClickZip
 
             ApplicationArgumentModel applicationArgumentModel = new ApplicationArgumentModel(args);
             ProjectSession.Instance().ApplicationArgumentModel = applicationArgumentModel; ;
-
-            //Application.Run(new Main());
-
-            //MessageBox.Show(applicationArgumentModel.GetAllArgs);
 
             if (applicationArgumentModel.IsOpenProjectBatchFile)
             {

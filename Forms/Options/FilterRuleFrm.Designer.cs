@@ -534,7 +534,9 @@
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Location = new System.Drawing.Point(679, 4);
+            this.btnSave.Image = global::OneClickZip.Properties.Resources.save_v1_32;
+            this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSave.Location = new System.Drawing.Point(654, 4);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(161, 56);
             this.btnSave.TabIndex = 2;
@@ -545,6 +547,9 @@
             // btnCancelExit
             // 
             this.btnCancelExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancelExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancelExit.Image = global::OneClickZip.Properties.Resources.Exit_32;
+            this.btnCancelExit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCancelExit.Location = new System.Drawing.Point(1013, 4);
             this.btnCancelExit.Name = "btnCancelExit";
             this.btnCancelExit.Size = new System.Drawing.Size(147, 56);
@@ -556,9 +561,11 @@
             // btnSaveAndExit
             // 
             this.btnSaveAndExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSaveAndExit.Location = new System.Drawing.Point(846, 4);
+            this.btnSaveAndExit.Image = global::OneClickZip.Properties.Resources.save_and_exit_32;
+            this.btnSaveAndExit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSaveAndExit.Location = new System.Drawing.Point(821, 4);
             this.btnSaveAndExit.Name = "btnSaveAndExit";
-            this.btnSaveAndExit.Size = new System.Drawing.Size(161, 56);
+            this.btnSaveAndExit.Size = new System.Drawing.Size(186, 56);
             this.btnSaveAndExit.TabIndex = 0;
             this.btnSaveAndExit.Text = "Save and Exit";
             this.btnSaveAndExit.UseVisualStyleBackColor = true;
@@ -582,6 +589,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnCancelExit;
             this.ClientSize = new System.Drawing.Size(1164, 632);
             this.Controls.Add(this.panelTab);
             this.Controls.Add(this.panelButtons);

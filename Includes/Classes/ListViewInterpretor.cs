@@ -87,15 +87,6 @@ namespace OneClickZip.Includes.Classes
                         {
                             lvItem = new ListViewItemExtended(fileObj);
                         }
-
-                        if (fileObj.IsFolderIsFileViewNode || fileObj.IsFolder)
-                        {
-                            lvItem.ImageIndex = DefaultIcons.SYSTEM_ICONS.GetIconIndexForDirectories();
-                        }
-                        else
-                        {
-                            lvItem.ImageIndex = DefaultIcons.SYSTEM_ICONS.GetIconIndex(fileObj.FilePathFull);
-                        }
                         targetListView.Items.Add(lvItem);
                     }
                 }
