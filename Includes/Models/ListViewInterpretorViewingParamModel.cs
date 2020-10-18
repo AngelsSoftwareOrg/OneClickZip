@@ -12,7 +12,7 @@ namespace OneClickZip.Includes.Models
     public class ListViewInterpretorViewingParamModel
     {
         private TreeNodeExtended selectedTreeNodeExtended;
-        private ListView targetListView;
+        private ListviewExtended targetListView;
         private CustomFileItem customFileItem;
         private ArrayList dirList;
         private ArrayList fileList;
@@ -27,7 +27,7 @@ namespace OneClickZip.Includes.Models
         }
 
         public TreeNodeExtended SelectedTreeNodeExtended { get => selectedTreeNodeExtended; set => selectedTreeNodeExtended = value; }
-        public ListView TargetListView { get => targetListView; set => targetListView = value; }
+        public ListviewExtended TargetListView { get => targetListView; set => targetListView = value; }
         public ArrayList DirList { get => dirList; set => dirList = value; }
         public ArrayList FileList { get => fileList; set => fileList = value; }
         public bool IsEnlistAllDirAndFiles { get => isEnlistAllDirAndFiles; set => isEnlistAllDirAndFiles = value; }

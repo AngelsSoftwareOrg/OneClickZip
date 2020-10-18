@@ -8,7 +8,9 @@ namespace OneClickZip.Includes.Classes.Extensions
     public class ListViewItemExtended : ListViewItem
     {
         private CustomFileItem customFileItem;
-        
+        private TreeNodeExtended referenceTreeNode;
+
+
         public ListViewItemExtended(CustomFileItem customFileItem) : base(customFileItem.GetCustomFileName)
         {
             this.customFileItem = customFileItem;
@@ -19,9 +21,8 @@ namespace OneClickZip.Includes.Classes.Extensions
             this.customFileItem = customFileItem;
             SetDefaultIcon();
         }
-
         public CustomFileItem CustomFileItem { get => customFileItem; }
-
+        public TreeNodeExtended ReferenceTreeNode { get => referenceTreeNode; set => referenceTreeNode = value; }
         private void SetDefaultIcon()
         {
             switch (CustomFileItem.FolderType)

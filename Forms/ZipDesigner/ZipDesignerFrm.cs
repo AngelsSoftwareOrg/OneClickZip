@@ -19,6 +19,7 @@ using OneClickZip.Includes.Resources;
 using OneClickZip.Includes.Utilities;
 using OneClickZip.Includes.Models.Types;
 using static OneClickZip.Includes.Classes.FileSerialization;
+using OneClickZip.Includes.Classes.Sorters;
 
 namespace OneClickZip
 {
@@ -26,10 +27,11 @@ namespace OneClickZip
     {
         private readonly ListViewColumnSorter lvwColumnSorter = new ListViewColumnSorter();
         private readonly ListViewColumnSorterForFileDir lvwColumnSorterFileDir = new ListViewColumnSorterForFileDir();
+        private readonly TreeNodeSorters treeNodeSorters = new TreeNodeSorters();
         private ProjectSession PROJECT_SESSION = ProjectSession.Instance();
         private ApplicationArgumentModel APPLICATION_ARGUMENT_MODEL = null;
         private bool isTreeViewCollapseToggle = true;
-        private AboutFrm about = new AboutFrm();
+        private AboutFrm aboutFrm = new AboutFrm();
         public ZipDesigner()
         {
             InitializeComponent();
@@ -41,6 +43,18 @@ namespace OneClickZip
         }
 
 #region Setter Getter
+        private ListviewExtended GetListViewZipDesignerFormObj { get => (ListviewExtended)listViewZipDesignFiles; }
+        
+        private TreeNodeExtended GetSelectedTreeNodeExtended
+        {
+            get
+            {
+                TreeNodeExtended selectedNode = (TreeNodeExtended) treeViewZipDesigner.SelectedNode;
+                if (selectedNode != null) return selectedNode;
+                if (GetListViewZipDesignerFormObj.ReferenceTreeNode != null) return GetListViewZipDesignerFormObj.ReferenceTreeNode;
+                return (TreeNodeExtended)treeViewZipDesigner.Nodes[0];
+            }
+        }
 
 #endregion
 
@@ -63,7 +77,7 @@ namespace OneClickZip
             listViewSearchDirExp.Items.Clear();
             ListViewInterpretor.GenerateListViewExplorerItems(
                 new ListViewInterpretorViewingParamModel(){
-                   TargetListView = listViewSearchDirExp, 
+                   TargetListView = (ListviewExtended) listViewSearchDirExp, 
                    CustomFileItem = new CustomFileItem(cshItem.DisplayName, cshItem),
                    IsEnlistAllDirAndFiles = true,
                    CshItem = cshItem
@@ -80,10 +94,6 @@ namespace OneClickZip
 
         private void ListViewSearchDirExp_ItemDoubleClicked(object sender, EventArgs e)
         {
-            //DEBUG
-            Console.WriteLine("listViewSearchDirExp_ItemDoubleClicked");
-            //DEBUG END
-            
             if (listViewSearchDirExp.SelectedItems.Count > 0)
             {
                 if (IsSelectedNodeStructured())
@@ -91,15 +101,6 @@ namespace OneClickZip
                     TreeNodeInterpreter.PutTheSelectedFilesAndDirOnSelectedTreeNode(
                         listViewZipDesignFiles, treeViewZipDesigner, listViewSearchDirExp.SelectedItems);
                 }
-
-                //DEBUG
-                ListViewItemExtended lvItemEx = (ListViewItemExtended)listViewSearchDirExp.SelectedItems[0];
-                //CShItem cshItem = lvItemEx.CshItem;
-                //Console.WriteLine("\nItem Name: " + cshItem.Text);
-                //Console.WriteLine("Is Folder: " + cshItem.IsFolder);
-                //Console.WriteLine("Path: " + cshItem.Path + "\n");
-                //Console.WriteLine(listViewSearchDirExp.SelectedItems[0].Text);
-                //DEBUG END
             }
         }
 
@@ -131,8 +132,7 @@ namespace OneClickZip
         private void RefreshListViewAfterNodeSelection()
         {
             IsSelectedNodeStructured();
-            TreeNodeExtended selectedNode = (TreeNodeExtended)treeViewZipDesigner.SelectedNode;
-            listViewZipDesignFiles.Tag = selectedNode;
+            TreeNodeExtended selectedNode = GetSelectedTreeNodeExtended;
             ListViewInterpretor.RefreshListViewItemsForZipFileDesigner(listViewZipDesignFiles, selectedNode);
             TreeNodeInterpreter.SelectSelectedNodeBgColor(treeViewZipDesigner);
         }
@@ -160,6 +160,7 @@ namespace OneClickZip
                 {
                     TreeNodeInterpreter.PutTheSelectedFilesAndDirOnSelectedTreeNode(
                         listViewZipDesignFiles, treeViewZipDesigner, lstViewColl);
+                    SortTreeViewZipDesigner();
                 }
             }
         }
@@ -196,6 +197,7 @@ namespace OneClickZip
             {
                 TreeNodeInterpreter.PutTheSelectedFilesAndDirOnSelectedTreeNode(
                     listViewZipDesignFiles, treeViewZipDesigner, listViewSearchDirExp.SelectedItems);
+                SortTreeViewZipDesigner();
             }
         }
 
@@ -206,12 +208,11 @@ namespace OneClickZip
 
         private void RemoveZipFileListViewItem()
         {
-            TreeNodeExtended treeNodeExtended = (TreeNodeExtended)treeViewZipDesigner.SelectedNode;
             listViewZipDesignFiles.BeginUpdate();
             treeViewZipDesigner.BeginUpdate();
             foreach (ListViewItemExtended listViewItem in listViewZipDesignFiles.SelectedItems)
             {
-                treeNodeExtended.RemoveItem(listViewItem.CustomFileItem);
+                listViewItem.ReferenceTreeNode.RemoveItem(listViewItem.CustomFileItem);
                 listViewItem.Remove();
             }
             listViewZipDesignFiles.EndUpdate();
@@ -220,7 +221,8 @@ namespace OneClickZip
 
         private bool IsSelectedNodeStructured()
         {
-            TreeNodeExtended selectedNode = (TreeNodeExtended)treeViewZipDesigner.SelectedNode;
+            TreeNodeExtended selectedNode = GetSelectedTreeNodeExtended;
+
             if (selectedNode.IsFolderIsTreeViewNode)
             {
                 listViewZipDesignFiles.BackColor = Color.Empty;
@@ -238,19 +240,29 @@ namespace OneClickZip
             
             if (e.Label.Trim().Length > 0)
             {
-                if (TreeNodeInterpreter.IsValidNodeName((TreeNodeExtended) treeViewZipDesigner.SelectedNode.Parent, e.Label))
+                String oldName = ((TreeNodeExtended)e.Node).Text.Trim();
+                if (TreeNodeInterpreter.IsValidNodeName((TreeNodeExtended) GetSelectedTreeNodeExtended.Parent, e.Label))
                 {
                     TreeNodeInterpreter.RenameNode((TreeNodeExtended)e.Node, e.Label);
                     e.Node.EndEdit(false); // Stop editing without canceling the label change.
-                    ((TreeNodeExtended)e.Node).Text = e.Label.Trim(); //remove the extra space after editing
+                    ((TreeNodeExtended)e.Node).Text = e.Label.Trim(); //attempt to remove the extra space after editing
+                    //SortTreeViewZipDesigner();
                 }
                 else
                 {
-                    /* Cancel the label edit action, inform the user, and place the node in edit mode again. */
-                    e.CancelEdit = true;
-                    ShowValidationBox("Invalid tree node label.\n"
-                        + "There are invalid characters in the name or an already existing name detected.");
-                    e.Node.BeginEdit();
+                    if (oldName.Equals(e.Label.Trim(), StringComparison.OrdinalIgnoreCase))
+                    {
+                        e.Node.EndEdit(true); //cancel and ignore changes
+                        e.CancelEdit = true;
+                    }
+                    else
+                    {
+                        /* Cancel the label edit action, inform the user, and place the node in edit mode again. */
+                        e.CancelEdit = true;
+                        ShowValidationBox("Invalid tree node label.\n"
+                            + "There are invalid characters in the name or an already existing name detected.");
+                        e.Node.BeginEdit();
+                    }
                 }
             }
             else
@@ -272,20 +284,11 @@ namespace OneClickZip
                 ListViewItemExtended listViewItmEx = (ListViewItemExtended)listView.SelectedItems[0];
 
                 //get the affected equivalent node of the selected folder
-                TreeNodeExtended affectedNode = null;
                 String targetText = listViewItmEx.Text.Trim();
-                foreach (TreeNodeExtended childNode in treeViewZipDesigner.SelectedNode.Nodes)
-                {
-                    //we search for text instead of key, because the one we rename was text, not the key
-                    if(childNode.Text.Trim().Equals(targetText, StringComparison.OrdinalIgnoreCase))
-                    {
-                        affectedNode = childNode;
-                        break;
-                    }
-                }
+                TreeNodeExtended affectedNode = listViewItmEx.ReferenceTreeNode.GetChildNodeByLabel(targetText);
 
                 //because this folder is also the tree node
-                if(affectedNode == null)
+                if (affectedNode == null)
                 {
                     e.CancelEdit = true;
                     ShowValidationBox("Error.\n Can't find the tree node.");
@@ -294,6 +297,10 @@ namespace OneClickZip
                 {
                     TreeNodeInterpreter.RenameNode(affectedNode, e.Label.Trim());
                     affectedNode.Text = e.Label.Trim();
+                    listViewItmEx.SubItems[0].Text = e.Label.Trim();
+                    affectedNode.TreeView.Refresh();
+                    listViewItmEx.ListView.Refresh();
+                    SortTreeViewZipDesigner();
                 }
                 else
                 {
@@ -326,7 +333,7 @@ namespace OneClickZip
         {
             if (e.KeyCode == Keys.F2)
             {
-                editListViewZipFileLabel();
+                EditListViewZipFileLabel();
             }
             else if (e.KeyCode == Keys.Delete)
             {
@@ -334,7 +341,7 @@ namespace OneClickZip
             }
         }
 
-        private void editListViewZipFileLabel()
+        private void EditListViewZipFileLabel()
         {
             if (listViewZipDesignFiles.SelectedItems == null) return;
             if (listViewZipDesignFiles.SelectedItems.Count<=0) return;
@@ -384,12 +391,12 @@ namespace OneClickZip
             if (isTreeViewCollapseToggle)
             {
                 isTreeViewCollapseToggle = false;
-                treeViewZipDesigner.SelectedNode.ExpandAll();
+                GetSelectedTreeNodeExtended.ExpandAll();
             }
             else
             {
                 isTreeViewCollapseToggle = true;
-                treeViewZipDesigner.SelectedNode.Collapse();
+                GetSelectedTreeNodeExtended.Collapse();
             }
         }
 
@@ -412,22 +419,39 @@ namespace OneClickZip
 
         private void listViewZipDesignFiles_DoubleClick(object sender, EventArgs e)
         {
-            if (listViewZipDesignFiles.SelectedItems.Count > 0)
+            ListViewZipDesignFilesOpenOrModifyFoldeRule();
+        }
+
+        private void ListViewZipDesignFilesOpenOrModifyFoldeRule()
+        {
+            if (listViewZipDesignFiles.SelectedItems.Count == 1)
             {
-                ListViewItemExtended listViewItmEx = (ListViewItemExtended) listViewZipDesignFiles.SelectedItems[0];
+                ListViewItemExtended listViewItmEx = (ListViewItemExtended)listViewZipDesignFiles.SelectedItems[0];
 
                 //get the affected equivalent node of the selected folder
-                TreeNodeExtended affectedNode = ((TreeNodeExtended)treeViewZipDesigner.SelectedNode).GetChildNodeByLabel(listViewItmEx.Text);
+                TreeNodeExtended affectedNode = GetSelectedTreeNodeExtended.GetChildNodeByLabel(listViewItmEx.Text);
                 if (affectedNode == null) return;
                 if (affectedNode.IsFolderIsFilterRule)
                 {
-                    ModifyFilterRule();
+                    ModifyFilterRule(affectedNode);
                 }
                 else
                 {
                     treeViewZipDesigner.SelectedNode = affectedNode;
                 }
             }
+        }
+
+        private void SortTreeViewZipDesigner()
+        {
+            //after sorting, the selected node is missing and can be a various reason for a bug to other modules.
+            TreeNodeExtended selectedNode = GetSelectedTreeNodeExtended;
+            //treeViewZipDesigner.CollapseAll();
+            treeViewZipDesigner.BeginUpdate();
+            treeViewZipDesigner.Sort();
+            treeViewZipDesigner.EndUpdate();
+            treeViewZipDesigner.SelectedNode = selectedNode;
+            treeViewZipDesigner.SelectedNode.EnsureVisible();
         }
 
 #endregion
@@ -481,7 +505,7 @@ namespace OneClickZip
             }
         }
 
-        #endregion
+#endregion
 
 #region "Main GUI Controls"
         private void btnCreateFileName_Click(object sender, EventArgs e)
@@ -575,6 +599,7 @@ namespace OneClickZip
             {
                 this.OpenProjectDesignerFile(APPLICATION_ARGUMENT_MODEL.FilePath);
             }
+            treeViewZipDesigner.TreeViewNodeSorter = this.treeNodeSorters;
         }
 
         private void lnlSetTargetLocation_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -762,7 +787,7 @@ namespace OneClickZip
 
         private void aboutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            about.ShowDialog();
+            aboutFrm.ShowDialog();
         }
 
 #endregion
@@ -827,18 +852,64 @@ namespace OneClickZip
             ModifyFilterRule();
         }
 
-        private void ModifyFilterRule()
+        private void ModifyFilterRule(TreeNodeExtended targetNode = null)
         {
-            TreeNodeExtended treeNodeEx = (TreeNodeExtended)treeViewZipDesigner.SelectedNode;
+            TreeNodeExtended treeNodeEx = (targetNode==null) ? (TreeNodeExtended)treeViewZipDesigner.SelectedNode : targetNode;
             FilterRuleFrm filterFrm = new FilterRuleFrm(treeNodeEx.FolderFilterRuleObj);
             filterFrm.ShowDialog();
             treeNodeEx.FolderFilterRuleObj = (FolderFilterRule)filterFrm.FolderFilterRule.Clone();
         }
 
+#endregion
+
+#region Context Strip for Zip File Designer List View
+
+        private void contextMenuStripZipDesignerListView_Opening(object sender, CancelEventArgs e)
+        {
+            toolStripMenuItemOpenFolder.Visible = false;
+            toolStripMenuItemModifyFolderFilterRule.Visible = false;
+            toolStripMenuItemRemoveSelected.Visible = (listViewZipDesignFiles.SelectedItems.Count > 0);
+            toolStripMenuItemRenameSelected.Visible = false;
+
+            if (listViewZipDesignFiles.SelectedItems.Count == 1)
+            {
+                ListViewItemExtended lvie = (ListViewItemExtended)listViewZipDesignFiles.SelectedItems[0];
+                toolStripMenuItemOpenFolder.Visible = lvie.CustomFileItem.IsFolderIsTreeViewNode;
+                toolStripMenuItemModifyFolderFilterRule.Visible = lvie.CustomFileItem.IsFolderIsFilterRule;
+                toolStripMenuItemRenameSelected.Visible = !lvie.ReferenceTreeNode.IsFolderIsFileViewNode;
+                toolStripMenuItemRemoveSelected.Visible = !lvie.ReferenceTreeNode.IsFolderIsFileViewNode;
+            }
+        }
+
+        private void toolStripMenuItemModifyFolderFilterRule_Click(object sender, EventArgs e)
+        {
+            ListViewZipDesignFilesOpenOrModifyFoldeRule();
+        }
+
+        private void toolStripMenuItemOpenFolder_Click(object sender, EventArgs e)
+        {
+            ListViewZipDesignFilesOpenOrModifyFoldeRule();
+        }
+
+        private void toolStripMenuItemRemoveSelected_Click(object sender, EventArgs e)
+        {
+            RemoveZipFileListViewItem();
+        }
+
+        private void toolStripMenuItemRefresh_Click(object sender, EventArgs e)
+        {
+            RefreshListViewAfterNodeSelection();
+        }
+
+        private void toolStripMenuItemRenameSelected_Click(object sender, EventArgs e)
+        {
+            EditListViewZipFileLabel();
+        }
 
 
 
-        #endregion
+
+#endregion
 
 
     }

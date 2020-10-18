@@ -63,7 +63,8 @@ namespace OneClickZip.Includes.Classes
         {
             ArrayList dirList = lvParamModel.DirList;
             ArrayList fileList = lvParamModel.FileList;
-            ListView targetListView = lvParamModel.TargetListView;
+            ListviewExtended targetListView = lvParamModel.TargetListView;
+            targetListView.ReferenceTreeNode = lvParamModel.SelectedTreeNodeExtended;
 
             try
             {
@@ -87,6 +88,12 @@ namespace OneClickZip.Includes.Classes
                         {
                             lvItem = new ListViewItemExtended(fileObj);
                         }
+
+                        if (lvParamModel.SelectedTreeNodeExtended != null)
+                        {
+                            lvItem.ReferenceTreeNode = lvParamModel.SelectedTreeNodeExtended;
+                        }
+
                         targetListView.Items.Add(lvItem);
                     }
                 }
@@ -122,11 +129,10 @@ namespace OneClickZip.Includes.Classes
             targetListView.LargeImageList = DefaultIcons.SYSTEM_ICONS.LargeIconsImageList;
         }
 
-        public static void RefreshListViewItemsForZipFileDesigner(ListView targetListView,  TreeNodeExtended selectedTreeNodeExtended)
+        public static void RefreshListViewItemsForZipFileDesigner(ListviewExtended targetListView,  TreeNodeExtended selectedTreeNodeExtended)
         {
             targetListView.BeginUpdate();
             targetListView.Items.Clear();
-            //bool isRootNode = TreeNodeInterpreter.IsSelectedZipModelNodeRoot(selectedTreeNodeExtended.TreeView);
             foreach (CustomFileItem customeFileItem in selectedTreeNodeExtended.MasterListFilesDir)
             {
                 ListViewInterpretorViewingParamModel commonParam = new ListViewInterpretorViewingParamModel()

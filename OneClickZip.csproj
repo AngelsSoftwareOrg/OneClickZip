@@ -149,11 +149,14 @@
     </Compile>
     <Compile Include="Includes\Classes\DefaultIcons.cs" />
     <Compile Include="Includes\Classes\Extensions\ControlExtensions.cs" />
+    <Compile Include="Includes\Classes\Extensions\ListviewExtended.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Includes\Classes\FileAssociation.cs" />
     <Compile Include="Includes\Classes\FileNameCreator.cs" />
     <Compile Include="Includes\Classes\FolderFilterRule.cs" />
-    <Compile Include="Includes\Classes\ListViewColumnSorterForFileDir.cs" />
-    <Compile Include="Includes\Classes\ListViewColumnSorter.cs" />
+    <Compile Include="Includes\Classes\Sorters\ListViewColumnSorterForFileDir.cs" />
+    <Compile Include="Includes\Classes\Sorters\ListViewColumnSorter.cs" />
     <Compile Include="Includes\Classes\ListViewInterpretor.cs" />
     <Compile Include="Includes\Classes\Extensions\ListViewItemExtended.cs" />
     <Compile Include="Forms\Main.cs">
@@ -163,6 +166,7 @@
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="Includes\Classes\ProjectSession.cs" />
+    <Compile Include="Includes\Classes\Sorters\TreeNodeSorters.cs" />
     <Compile Include="Includes\Classes\SystemFilesDirInfo.cs" />
     <Compile Include="Includes\Classes\SystemIconsImageList.cs" />
     <Compile Include="Includes\Classes\SystemShellDeclaration.cs" />

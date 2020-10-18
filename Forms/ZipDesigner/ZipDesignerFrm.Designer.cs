@@ -1,4 +1,6 @@
-﻿namespace OneClickZip
+﻿using OneClickZip.Includes.Classes.Extensions;
+
+namespace OneClickZip
 {
     partial class ZipDesigner
     {
@@ -60,7 +62,7 @@
             this.panel5 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
-            this.listViewSearchDirExp = new System.Windows.Forms.ListView();
+            this.listViewSearchDirExp = new ListviewExtended();
             this.columnExpFileName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnExpDateModified = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnExpSize = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -77,6 +79,7 @@
             this.expandAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.collapseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addFilterRuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modifyFilterRuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.toolStripTreeView = new System.Windows.Forms.ToolStrip();
@@ -88,7 +91,7 @@
             this.toolStripButtonRename = new System.Windows.Forms.ToolStripButton();
             this.label1 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.listViewZipDesignFiles = new System.Windows.Forms.ListView();
+            this.listViewZipDesignFiles = new ListviewExtended();
             this.columnZipMdlFileName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnZipMdlDateModified = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnZipMdlSize = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -118,7 +121,12 @@
             this.toolStripButtonGenOneClick = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonRunZip = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.addFilterRuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStripZipDesignerListView = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItemOpenFolder = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemModifyFolderFilterRule = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemRemoveSelected = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemRefresh = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemRenameSelected = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerFormMain)).BeginInit();
             this.splitContainerFormMain.Panel1.SuspendLayout();
             this.splitContainerFormMain.Panel2.SuspendLayout();
@@ -152,6 +160,7 @@
             this.toolStripZipDesignerListView.SuspendLayout();
             this.menuZipDesigner.SuspendLayout();
             this.toolStripZipDesignerMain.SuspendLayout();
+            this.contextMenuStripZipDesignerListView.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainerFormMain
@@ -663,7 +672,7 @@
             this.addFilterRuleToolStripMenuItem,
             this.modifyFilterRuleToolStripMenuItem});
             this.ctxMenuZipFileTree.Name = "ctxMenuZipFileTree";
-            this.ctxMenuZipFileTree.Size = new System.Drawing.Size(211, 200);
+            this.ctxMenuZipFileTree.Size = new System.Drawing.Size(196, 172);
             this.ctxMenuZipFileTree.Opening += new System.ComponentModel.CancelEventHandler(this.ctxMenuZipFileTree_Opening);
             // 
             // tsmTvdEditLabel
@@ -700,6 +709,13 @@
             this.removeSelectedToolStripMenuItem.Size = new System.Drawing.Size(195, 24);
             this.removeSelectedToolStripMenuItem.Text = "Remove Selected";
             this.removeSelectedToolStripMenuItem.Click += new System.EventHandler(this.removeSelectedToolStripMenuItem_Click);
+            // 
+            // addFilterRuleToolStripMenuItem
+            // 
+            this.addFilterRuleToolStripMenuItem.Name = "addFilterRuleToolStripMenuItem";
+            this.addFilterRuleToolStripMenuItem.Size = new System.Drawing.Size(195, 24);
+            this.addFilterRuleToolStripMenuItem.Text = "Add Filter Rule";
+            this.addFilterRuleToolStripMenuItem.Click += new System.EventHandler(this.addFilterRuleToolStripMenuItem_Click);
             // 
             // modifyFilterRuleToolStripMenuItem
             // 
@@ -825,6 +841,7 @@
             this.columnZipMdlSize,
             this.columnZipMdlDateCreated,
             this.columnZipMdlType});
+            this.listViewZipDesignFiles.ContextMenuStrip = this.contextMenuStripZipDesignerListView;
             this.listViewZipDesignFiles.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listViewZipDesignFiles.HideSelection = false;
             this.listViewZipDesignFiles.Location = new System.Drawing.Point(0, 0);
@@ -1097,12 +1114,53 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 57);
             // 
-            // addFilterRuleToolStripMenuItem
+            // contextMenuStripZipDesignerListView
             // 
-            this.addFilterRuleToolStripMenuItem.Name = "addFilterRuleToolStripMenuItem";
-            this.addFilterRuleToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
-            this.addFilterRuleToolStripMenuItem.Text = "Add Filter Rule";
-            this.addFilterRuleToolStripMenuItem.Click += new System.EventHandler(this.addFilterRuleToolStripMenuItem_Click);
+            this.contextMenuStripZipDesignerListView.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.contextMenuStripZipDesignerListView.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemOpenFolder,
+            this.toolStripMenuItemModifyFolderFilterRule,
+            this.toolStripMenuItemRemoveSelected,
+            this.toolStripMenuItemRenameSelected,
+            this.toolStripMenuItemRefresh});
+            this.contextMenuStripZipDesignerListView.Name = "contextMenuStripZipDesignerListView";
+            this.contextMenuStripZipDesignerListView.Size = new System.Drawing.Size(244, 152);
+            this.contextMenuStripZipDesignerListView.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripZipDesignerListView_Opening);
+            // 
+            // toolStripMenuItemOpenFolder
+            // 
+            this.toolStripMenuItemOpenFolder.Name = "toolStripMenuItemOpenFolder";
+            this.toolStripMenuItemOpenFolder.Size = new System.Drawing.Size(243, 24);
+            this.toolStripMenuItemOpenFolder.Text = "Open Folder";
+            this.toolStripMenuItemOpenFolder.Click += new System.EventHandler(this.toolStripMenuItemOpenFolder_Click);
+            // 
+            // toolStripMenuItemModifyFolderFilterRule
+            // 
+            this.toolStripMenuItemModifyFolderFilterRule.Name = "toolStripMenuItemModifyFolderFilterRule";
+            this.toolStripMenuItemModifyFolderFilterRule.Size = new System.Drawing.Size(243, 24);
+            this.toolStripMenuItemModifyFolderFilterRule.Text = "Modify Filter Rule";
+            this.toolStripMenuItemModifyFolderFilterRule.Click += new System.EventHandler(this.toolStripMenuItemModifyFolderFilterRule_Click);
+            // 
+            // toolStripMenuItemRemoveSelected
+            // 
+            this.toolStripMenuItemRemoveSelected.Name = "toolStripMenuItemRemoveSelected";
+            this.toolStripMenuItemRemoveSelected.Size = new System.Drawing.Size(243, 24);
+            this.toolStripMenuItemRemoveSelected.Text = "Remove Selected Item(s)";
+            this.toolStripMenuItemRemoveSelected.Click += new System.EventHandler(this.toolStripMenuItemRemoveSelected_Click);
+            // 
+            // toolStripMenuItemRefresh
+            // 
+            this.toolStripMenuItemRefresh.Name = "toolStripMenuItemRefresh";
+            this.toolStripMenuItemRefresh.Size = new System.Drawing.Size(243, 24);
+            this.toolStripMenuItemRefresh.Text = "Refresh";
+            this.toolStripMenuItemRefresh.Click += new System.EventHandler(this.toolStripMenuItemRefresh_Click);
+            // 
+            // toolStripMenuItemRenameSelected
+            // 
+            this.toolStripMenuItemRenameSelected.Name = "toolStripMenuItemRenameSelected";
+            this.toolStripMenuItemRenameSelected.Size = new System.Drawing.Size(243, 24);
+            this.toolStripMenuItemRenameSelected.Text = "Rename Selected";
+            this.toolStripMenuItemRenameSelected.Click += new System.EventHandler(this.toolStripMenuItemRenameSelected_Click);
             // 
             // ZipDesigner
             // 
@@ -1162,6 +1220,7 @@
             this.menuZipDesigner.PerformLayout();
             this.toolStripZipDesignerMain.ResumeLayout(false);
             this.toolStripZipDesignerMain.PerformLayout();
+            this.contextMenuStripZipDesignerListView.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1178,7 +1237,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TreeView treeViewZipDesigner;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.ListView listViewZipDesignFiles;
+        private ListviewExtended listViewZipDesignFiles;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel6;
@@ -1186,7 +1245,7 @@
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Panel panel7;
-        private System.Windows.Forms.ListView listViewSearchDirExp;
+        private ListviewExtended listViewSearchDirExp;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ColumnHeader columnZipMdlFileName;
@@ -1258,5 +1317,11 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonAddExpItems;
         private System.Windows.Forms.ToolStripButton toolStripButtonRemSelected;
         private System.Windows.Forms.ToolStripMenuItem addFilterRuleToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripZipDesignerListView;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemOpenFolder;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemModifyFolderFilterRule;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemRemoveSelected;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemRefresh;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemRenameSelected;
     }
 }

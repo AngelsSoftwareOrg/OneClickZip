@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FileNameCreatorFrm));
             this.panel2 = new System.Windows.Forms.Panel();
             this.listViewInstruction = new System.Windows.Forms.ListView();
             this.colVariable = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -300,6 +301,7 @@
             this.ClientSize = new System.Drawing.Size(961, 519);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
