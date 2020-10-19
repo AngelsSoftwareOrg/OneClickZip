@@ -9,7 +9,7 @@ namespace OneClickZip.Includes.Classes.Extensions
     {
         private CustomFileItem customFileItem;
         private TreeNodeExtended referenceTreeNode;
-
+        private CShItem cshItemObj;
 
         public ListViewItemExtended(CustomFileItem customFileItem) : base(customFileItem.GetCustomFileName)
         {
@@ -21,8 +21,32 @@ namespace OneClickZip.Includes.Classes.Extensions
             this.customFileItem = customFileItem;
             SetDefaultIcon();
         }
+        public ListViewItemExtended(CShItem cshItemObj) : base(cshItemObj.DisplayName)
+        {
+            this.CshItemObj = cshItemObj;
+            GenerateCustomeFileItem();
+            SetDefaultIcon();
+        }
+        public ListViewItemExtended(CShItem cshItemObj, string[] items) : base(items)
+        {
+            this.CshItemObj = cshItemObj;
+            GenerateCustomeFileItem();
+            SetDefaultIcon();
+        }
+        private void GenerateCustomeFileItem()
+        {
+            try
+            {
+                this.customFileItem = new CustomFileItem(this.CshItemObj.DisplayName, this.CshItemObj);
+            }
+            catch (Exception)
+            {
+                this.customFileItem = null;
+            }
+        }
         public CustomFileItem CustomFileItem { get => customFileItem; }
         public TreeNodeExtended ReferenceTreeNode { get => referenceTreeNode; set => referenceTreeNode = value; }
+        public CShItem CshItemObj { get => cshItemObj; set => cshItemObj = value; }
         private void SetDefaultIcon()
         {
             switch (CustomFileItem.FolderType)

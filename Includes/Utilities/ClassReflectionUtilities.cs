@@ -28,5 +28,17 @@ namespace OneClickZip.Includes.Utilities
             }
             return result.ToArray();
         }
+
+        public static Enum GetEnumerableTypeByDescription(Type sourceEnum, String description)
+        {
+            foreach (Enum obj in Enum.GetValues(sourceEnum))
+            {
+                if(GetEnumDescription(obj).Equals(description, StringComparison.OrdinalIgnoreCase))
+                {
+                    return obj;
+                }
+            }
+            return null;
+        }
     }
 }

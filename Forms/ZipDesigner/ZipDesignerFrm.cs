@@ -64,24 +64,37 @@ namespace OneClickZip
         {
             this.listViewSearchDirExp.Activation = System.Windows.Forms.ItemActivation.TwoClick;
             this.listViewSearchDirExp.ItemActivate += new System.EventHandler(this.ListViewSearchDirExp_ItemDoubleClicked);
-            expTreeSearchDir.StartUpDirectory = ExpTree.StartDir.MyDocuments;
+
+            //Debugging
+            //expTreeSearchDir.StartUpDirectory = ExpTreeLib.ExpTree.StartDir.MyDocuments;
+
+            //Releasing
+            expTreeSearchDir.StartUpDirectory = ExpTree.StartDir.Desktop;
         }
        
         private void ExpTreeSearchDir_StartUpDirectoryChanged(ExpTreeLib.ExpTree.StartDir startDir)
         {
-            //TODO: DEBUGGING
-            Console.WriteLine(startDir);
         }
        
         private void ExpTreeSearchDir_ExpTreeNodeSelectedEventHandler(String selectedPath, CShItem cshItem){
             listViewSearchDirExp.Items.Clear();
-            ListViewInterpretor.GenerateListViewExplorerItems(
-                new ListViewInterpretorViewingParamModel(){
-                   TargetListView = (ListviewExtended) listViewSearchDirExp, 
-                   CustomFileItem = new CustomFileItem(cshItem.DisplayName, cshItem),
-                   IsEnlistAllDirAndFiles = true,
-                   CshItem = cshItem
-                });
+            try
+            {
+                ListViewInterpretor.GenerateListViewExplorerItems(
+                    new ListViewInterpretorViewingParamModel()
+                    {
+                        TargetListView = (ListviewExtended)listViewSearchDirExp,
+                        //CustomFileItem = new CustomFileItem(cshItem.DisplayName, cshItem),
+                        IsEnlistAllDirAndFiles = true,
+                        CshItem = cshItem,
+                        ListviewUseCaseType = ListviewUseCase.Explorer
+                    });
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+
         }
 
         /**
@@ -94,14 +107,14 @@ namespace OneClickZip
 
         private void ListViewSearchDirExp_ItemDoubleClicked(object sender, EventArgs e)
         {
-            if (listViewSearchDirExp.SelectedItems.Count > 0)
-            {
-                if (IsSelectedNodeStructured())
-                {
-                    TreeNodeInterpreter.PutTheSelectedFilesAndDirOnSelectedTreeNode(
-                        listViewZipDesignFiles, treeViewZipDesigner, listViewSearchDirExp.SelectedItems);
-                }
-            }
+            //if (listViewSearchDirExp.SelectedItems.Count > 0)
+            //{
+            //    if (IsSelectedNodeStructured())
+            //    {
+            //        TreeNodeInterpreter.PutTheSelectedFilesAndDirOnSelectedTreeNode(
+            //            listViewZipDesignFiles, treeViewZipDesigner, listViewSearchDirExp.SelectedItems);
+            //    }
+            //}
         }
 
         private void listViewSearchDirExp_ItemDragHandler(object sender, ItemDragEventArgs e)
@@ -173,7 +186,7 @@ namespace OneClickZip
         
         private void listViewZipDesignFiles_VisibleChanged(object sender, EventArgs e)
         {
-            ListViewInterpretor.RefreshToShowExplorerIcons(listViewZipDesignFiles);
+            ListViewInterpretor.RefreshToShowZipDesignerIcons(listViewZipDesignFiles);
         }
 
         private TreeNodeExtended AddFolderCommon(FolderType folderType)
@@ -607,6 +620,8 @@ namespace OneClickZip
 
             //If file association is not yet configured
             if (!FileAssociation.IsApplicationProgramAlreadyAssociatedWith()) FileExtensionAssociation();
+
+
         }
 
         private void lnlSetTargetLocation_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

@@ -134,16 +134,25 @@ namespace OneClickZip.Includes.Classes
             ZipArchiveEntry zipArchiveEntry = archiveFile.CreateEntry(zipFileFolderName + fileInfo.Name, CompressionLevelArchiving);
             using (var zipStream = zipArchiveEntry.Open())
             {
-                using (Stream source = File.OpenRead(fullPathOfaFile))
+                try
                 {
-                    Application.DoEvents();
-                    byte[] buffer = new byte[2048];
-                    int bytesRead;
-                    while ((bytesRead = source.Read(buffer, 0, buffer.Length)) > 0)
+                    using (Stream source = File.OpenRead(fullPathOfaFile))
                     {
-                        zipStream.Write(buffer, 0, bytesRead);
+                        Application.DoEvents();
+                        byte[] buffer = new byte[2048];
+                        int bytesRead;
+                        while ((bytesRead = source.Read(buffer, 0, buffer.Length)) > 0)
+                        {
+                            zipStream.Write(buffer, 0, bytesRead);
+                        }
                     }
                 }
+                catch (System.IO.IOException)
+                {
+                    //ignore and go to next file
+                    //one of the case as for One drive, if the file is on the cloud and not yet here locally
+                }
+
             }
             return true;
         }

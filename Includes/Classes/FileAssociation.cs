@@ -51,8 +51,8 @@ namespace OneClickZip.Includes.Classes
         public static bool IsApplicationProgramAlreadyAssociatedWith()
         {
             FileAssociationModel[] fam = new FileAssociationModel[]{
-                                        ResourcesUtil.GetFileAssociationProjectDesignerModel(""),
-                                        ResourcesUtil.GetFileAssociationBatchFileModel(""),
+                                        ResourcesUtil.GetFileAssociationProjectDesignerModel(),
+                                        ResourcesUtil.GetFileAssociationBatchFileModel(),
                                     };
 
             foreach(FileAssociationModel f in fam)

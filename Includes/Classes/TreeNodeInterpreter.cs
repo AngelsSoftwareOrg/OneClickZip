@@ -14,9 +14,13 @@ using System.Windows.Forms;
 
 namespace OneClickZip.Includes.Classes
 {
-    class TreeNodeInterpreter
+    public class TreeNodeInterpreter
     {
         private static readonly char[] INVALID_NODE_NAME_CHARS = new char[] { '@', ',' }; //ORIGINAL{ '@', '.', ',', '!' };
+
+        private static long folderCount = 0;
+        private static long fileCount = 0;
+
 
         ///
         /// true = the node to add are already existing on the current selected tree node
@@ -24,6 +28,8 @@ namespace OneClickZip.Includes.Classes
         ///
         public static bool AddRecursiveNode(TreeNodeExtended targetTreeNode, CustomFileItem customFileItem)
         {
+            folderCount = 0;
+            fileCount = 0;
             bool isExistingParentNode = IsNodeExisting(targetTreeNode, customFileItem);
             TreeNodeExtended selectedNode = AddParentDirectory(targetTreeNode, customFileItem);
             if (isExistingParentNode) return isExistingParentNode;
@@ -194,6 +200,7 @@ namespace OneClickZip.Includes.Classes
             targetListView.BeginUpdate();
             foreach (ListViewItemExtended lvItem in lstViewColl)
             {
+
                 //if node are not yet existed on the currently selected node of the tree
                 if (!AddZipFileNode(targetTreeView, lvItem.CustomFileItem))
                 {
@@ -223,7 +230,7 @@ namespace OneClickZip.Includes.Classes
             TreeNodeExtended parentNode = (TreeNodeExtended)targetTreeView.SelectedNode.Parent;
             TreeNodeExtended selectedNode = (TreeNodeExtended)targetTreeView.SelectedNode;
             TreeNodeExtended nextSelectedNode = parentNode;
-            if (selectedNode.PrevNode != null) nextSelectedNode = (TreeNodeExtended) selectedNode.PrevNode;
+            if (selectedNode.PrevNode != null) nextSelectedNode = (TreeNodeExtended)selectedNode.PrevNode;
             if (selectedNode.NextNode != null) nextSelectedNode = (TreeNodeExtended)selectedNode.NextNode;
 
             parentNode.RemoveItemByNodeName(selectedNode.Text);

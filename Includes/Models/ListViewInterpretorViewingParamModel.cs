@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ExpTreeLib;
 using OneClickZip.Includes.Classes.Extensions;
+using OneClickZip.Includes.Models.Types;
 
 namespace OneClickZip.Includes.Models
 {
@@ -18,6 +19,7 @@ namespace OneClickZip.Includes.Models
         private ArrayList fileList;
         private bool isEnlistAllDirAndFiles;
         private CShItem cshItem;
+        private ListviewUseCase listviewUseCaseType;
 
         public ListViewInterpretorViewingParamModel()
         {
@@ -33,6 +35,6 @@ namespace OneClickZip.Includes.Models
         public bool IsEnlistAllDirAndFiles { get => isEnlistAllDirAndFiles; set => isEnlistAllDirAndFiles = value; }
         public CustomFileItem CustomFileItem { get => customFileItem; set => customFileItem = value; }
         public CShItem CshItem { get => cshItem; set => cshItem = value; }
-
+        public ListviewUseCase ListviewUseCaseType { get => listviewUseCaseType; set => listviewUseCaseType = value; }
     }
 }

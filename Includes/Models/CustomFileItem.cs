@@ -22,6 +22,8 @@ namespace OneClickZip.Includes.Models
         private String filePathFull;
         private FolderType folderType;
         private bool isFolder;
+        private bool isSpecialFolder;
+        private String specialFolderFullPath;
         private String customFileName;
         private DateTime lastWriteTime;
         private DateTime creationTime;
@@ -30,59 +32,65 @@ namespace OneClickZip.Includes.Models
 
         public CustomFileItem()
         {
-            commonInitialization();
+            CommonInitialization();
         }
 
         public CustomFileItem(String fileName)
         {
-            commonInitialization();
+            CommonInitialization();
             this.customFileName = fileName.Trim();
         }
 
         public CustomFileItem(String fileName, CShItem cshItem)
         {
-            commonInitialization();
+            CommonInitialization();
+            String targetPath = cshItem.Path;
+            DealWithSpecialFolders(cshItem.Path, cshItem.DisplayName, ref targetPath);
             this.customFileName = fileName.Trim();
             this.KeyName = cshItem.Name.Trim();
             this.Tag = cshItem.Tag;
             this.lastWriteTime = cshItem.LastWriteTime;
             this.creationTime = cshItem.CreationTime;
-            this.typeName = SystemFilesDirInfo.GetFileTypeDescription(cshItem.Path);
+            this.typeName = SystemFilesDirInfo.GetFileTypeDescription(targetPath);
             this.fileLength = cshItem.Length;
-            this.filePathFull = cshItem.Path;
-            this.isFolder = FileSystemUtilities.IsFullPathIsDirectory(cshItem.Path);
+            this.filePathFull = targetPath;
+            this.isFolder = FileSystemUtilities.IsFullPathIsDirectory(targetPath);
             this.FolderType = (this.isFolder) ? FolderType.TreeView : FolderType.File;
-            SetIconsIndex(cshItem.Path);
+            SetIconsIndex(targetPath);
         }
 
         public CustomFileItem(String fileName, FileInfo fileInfo)
         {
-            commonInitialization();
+            CommonInitialization();
+            String targetPath = fileInfo.FullName;
+            DealWithSpecialFolders(fileInfo.FullName, fileInfo.Name, ref targetPath);
             this.customFileName = fileName.Trim();
             this.KeyName = fileInfo.Name.Trim();
             this.lastWriteTime = fileInfo.LastWriteTime;
             this.creationTime = fileInfo.CreationTime;
-            this.typeName = SystemFilesDirInfo.GetFileTypeDescription(fileInfo.FullName);
+            this.typeName = SystemFilesDirInfo.GetFileTypeDescription(targetPath);
             this.fileLength = fileInfo.Length;
-            this.filePathFull = fileInfo.FullName;
+            this.filePathFull = targetPath;
             this.isFolder = false;
             this.FolderType = FolderType.File;
-            SetIconsIndex(fileInfo.FullName);
+            SetIconsIndex(targetPath);
         }
 
         public CustomFileItem(String fileName, DirectoryInfo directoryInfor)
         {
-            commonInitialization();
+            CommonInitialization();
+            String targetPath = directoryInfor.FullName;
+            DealWithSpecialFolders(directoryInfor.FullName, directoryInfor.Name, ref targetPath);
             this.customFileName = fileName.Trim();
             this.KeyName = directoryInfor.Name.Trim();
             this.lastWriteTime = directoryInfor.LastWriteTime;
             this.creationTime = directoryInfor.CreationTime;
             this.typeName = SystemFilesDirInfo.FOLDER_TYPE_DESCRIPTION;
             this.fileLength = 0;
-            this.filePathFull = directoryInfor.FullName;
+            this.filePathFull = targetPath;
             this.isFolder = true;
             this.FolderType = FolderType.TreeView;
-            SetIconsIndex(directoryInfor.FullName);
+            SetIconsIndex(targetPath);
         }
 
         private void SetIconsIndex(String fullPath)
@@ -91,6 +99,10 @@ namespace OneClickZip.Includes.Models
             {
                 this.IconIndexOpen = DefaultIcons.SYSTEM_ICONS.GetIconIndexForDirectories();
                 this.IconIndexNormal = this.IconIndexOpen;
+            }else if (this.isSpecialFolder)
+            {
+                this.IconIndexOpen = 0;
+                this.IconIndexNormal = 0;
             }
             else
             {
@@ -99,15 +111,39 @@ namespace OneClickZip.Includes.Models
             }
         }
 
-        private void commonInitialization()
+        private void CommonInitialization()
         {
             this.FolderType = FolderType.TreeView;
             this.isFolder = false;
+            this.isSpecialFolder = false;
             this.lastWriteTime = DateTime.Now;
             this.creationTime = DateTime.Now;
             this.typeName = "File Folder";
             this.fileLength = 0;
         }
+        private void DealWithSpecialFolders(String fullPath, String fileName, ref String targetFilePath)
+        {
+            targetFilePath = fullPath;
+
+            this.isSpecialFolder = FileSystemUtilities.IsSpecialFolder(fullPath, fileName);
+            if (this.isSpecialFolder)
+            {
+                this.specialFolderFullPath = FileSystemUtilities.GetSpecialFolderFullPath(fileName);
+
+                //DEBUGGING
+                Console.WriteLine("specialFolderFullPath: " + specialFolderFullPath);
+
+                if (!String.IsNullOrWhiteSpace(this.specialFolderFullPath))
+                {
+                    targetFilePath = this.specialFolderFullPath;
+                }
+                else
+                {
+                    throw new Exception("Invalid Path");
+                }
+            }
+        }
+
 
         public String GetCustomFileName
         {
@@ -133,10 +169,13 @@ namespace OneClickZip.Includes.Models
 
             foreach (DirectoryInfo obj in dInfo)
             {
-                result.Add(new CustomFileItem(obj.Name, obj)
+                if (!FileSystemUtilities.IsSpecialFolder(obj.FullName, obj.Name))
                 {
-                    isFolder = true
-                });
+                    result.Add(new CustomFileItem(obj.Name, obj)
+                    {
+                        isFolder = true
+                    });
+                }
             }
             return result;
         }
@@ -145,15 +184,18 @@ namespace OneClickZip.Includes.Models
         {
             ArrayList result = new ArrayList();
             DirectoryInfo dInfo = new DirectoryInfo(this.filePathFull);
-
             try
             {
                 foreach (FileInfo obj in dInfo.GetFiles())
                 {
-                    result.Add(new CustomFileItem(obj.Name, obj)
+                    if(!FileSystemUtilities.IsSpecialFolder(obj.FullName, obj.Name))
                     {
-                        isFolder = false
-                    });
+                        result.Add(new CustomFileItem(obj.Name, obj)
+                        {
+                            isFolder = false
+                        });
+                    }
+
                 }
             }
             catch (UnauthorizedAccessException) {}

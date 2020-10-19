@@ -16,19 +16,16 @@ namespace OneClickZip.Includes.Classes
 
         public static void GenerateListViewExplorerItems(ListViewInterpretorViewingParamModel lvParamModel)
         {
-            ArrayList dirList = new ArrayList();
-            ArrayList fileList = new ArrayList();
-            CustomFileItem customeFileName = lvParamModel.CustomFileItem;
-            if (customeFileName.GetCustomFileName.Equals(CShItem.strMyComputer))
+            if (lvParamModel.CshItem.DisplayName.Equals(CShItem.strMyComputer))
             {
-                lvParamModel.DirList = customeFileName.GetShellInfoDirectories();
+                lvParamModel.DirList = lvParamModel.CshItem.GetDirectories();
             }
             else
             {
-                lvParamModel.DirList = customeFileName.GetShellInfoDirectories();
-                lvParamModel.FileList = customeFileName.GetShellInfoFiles();
+                lvParamModel.DirList = lvParamModel.CshItem.GetDirectories();
+                lvParamModel.FileList = lvParamModel.CshItem.GetFiles();
             }
-            GenerateListViewCommonProcedure(lvParamModel);
+            GenerateListViewCommonProcedureForExplorer(lvParamModel);
         }
 
         public static void GenerateListViewZipFileViewItems(ListViewInterpretorViewingParamModel lvParamModel) 
@@ -42,7 +39,7 @@ namespace OneClickZip.Includes.Classes
                 lvParamModel.FileList.Add(lvParamModel.CustomFileItem);
             }
 
-            GenerateListViewCommonProcedure(lvParamModel);
+            GenerateListViewCommonProcedureForDesigner(lvParamModel);
         }
 
         public static void GenerateListViewZipFileChildrenViewItems(ListViewInterpretorViewingParamModel lvParamModel)
@@ -56,10 +53,10 @@ namespace OneClickZip.Includes.Classes
             }
             lvParamModel.DirList = lvParamModel.CustomFileItem.GetShellInfoDirectories();
             lvParamModel.FileList = lvParamModel.CustomFileItem.GetShellInfoFiles();
-            GenerateListViewCommonProcedure(lvParamModel);
+            GenerateListViewCommonProcedureForDesigner(lvParamModel);
         }
 
-        private static void GenerateListViewCommonProcedure(ListViewInterpretorViewingParamModel lvParamModel)
+        private static void GenerateListViewCommonProcedureForDesigner(ListViewInterpretorViewingParamModel lvParamModel)
         {
             ArrayList dirList = lvParamModel.DirList;
             ArrayList fileList = lvParamModel.FileList;
@@ -109,6 +106,50 @@ namespace OneClickZip.Includes.Classes
             }
         }
 
+        private static void GenerateListViewCommonProcedureForExplorer(ListViewInterpretorViewingParamModel lvParamModel)
+        {
+            ArrayList dirList = lvParamModel.DirList;
+            ArrayList fileList = lvParamModel.FileList;
+            ListviewExtended targetListView = lvParamModel.TargetListView;
+
+            try
+            {
+                if ((dirList.Count + fileList.Count) > 0)
+                {
+                    dirList.Sort();
+                    fileList.Sort();
+
+                    ArrayList combinationList = new ArrayList();
+                    combinationList.AddRange(dirList);
+                    combinationList.AddRange(fileList);
+
+                    foreach (CShItem fileObj in combinationList)
+                    {
+                        if(!FileSystemUtilities.IsSpecialFolder(fileObj.Path, fileObj.DisplayName)){
+                            ListViewItemExtended lvItem = new ListViewItemExtended(fileObj, new string[] {
+                                            fileObj.DisplayName, //file name
+                                            fileObj.LastWriteTime.ToString(), //date modified
+                                            (fileObj.IsFolder) ? "" : ConverterUtils.HumanReadableFileSize(fileObj.Length, 2), //file size
+                                            fileObj.CreationTime.ToString(), // created date time
+                                            fileObj.TypeName //file type
+                                        });
+                            lvItem.ImageIndex = fileObj.IconIndexNormal;
+                            targetListView.Items.Add(lvItem);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                dirList.Clear();
+                fileList.Clear();
+            }
+        }
+
         private static String[] GetFileObjectDetails(CustomFileItem fileObj)
         {
             return new string[] {
@@ -124,6 +165,12 @@ namespace OneClickZip.Includes.Classes
          * encapsulated procedures to make icons appeared on the list view
          */
         public static void RefreshToShowExplorerIcons(ListView targetListView)
+        {
+            SystemImageListManager.SetListViewImageList(targetListView, false, false);
+            SystemImageListManager.SetListViewImageList(targetListView, true, false);
+        }
+
+        public static void RefreshToShowZipDesignerIcons(ListView targetListView)
         {
             targetListView.SmallImageList = DefaultIcons.SYSTEM_ICONS.SmallIconsImageList;
             targetListView.LargeImageList = DefaultIcons.SYSTEM_ICONS.LargeIconsImageList;
