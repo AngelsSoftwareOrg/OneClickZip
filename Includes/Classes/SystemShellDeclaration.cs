@@ -55,7 +55,12 @@ namespace OneClickZip.Includes.Classes
 		public struct SHFILEINFO
 		{
 			public IntPtr hIcon;
-			public IntPtr iIcon;
+			/// <summary>
+			/// The iIcon field in the C++ struct has type int. On Windows that is a 4 byte signed integer.It corresponds to int in C#.
+			/// You have declared the field as IntPtr in your C# code. That is a signed integer, the same size as a pointer. So it is 4 bytes in 32 bit code, and 8 bytes in 64 bit code. It seems likely that you are running 64 bit code.
+			/// So, the error is the declaration of this field which simply has the wrong type.The solution is to change the type of iIcon to int.
+			/// </summary>
+			public int iIcon; //Originally IntPtr, changed to int because
 			public uint dwAttributes;
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
 			public string szDisplayName;
