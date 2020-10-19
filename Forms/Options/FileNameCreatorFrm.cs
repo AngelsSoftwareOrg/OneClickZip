@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -64,9 +65,6 @@ namespace OneClickZip.Forms.Options
 
         private void FileNameCreatorFrm_Load(object sender, EventArgs e)
         {
-            //DEBUG
-            //txtFileNameFormula.Text = "Sample File Name - $RC{SHA1} - $RC{SHA256} - $RC{SHA512} - $DT{dddd} - $DT{hh} - $DT{ffffff} - $DT{fffffff} - $DT{yyyy}/$DT{MM}/$DT{dd} - $DT{HH}:$DT{mm}:$DT{ss} - $RN{3} - $RN{34,999}";
-            //DEBUG END
         }
 
         private void ListViewInstruction_ItemSelectionChange(object sender, ListViewItemSelectionChangedEventArgs e)
@@ -85,11 +83,13 @@ namespace OneClickZip.Forms.Options
 
         private void BtnCopyVar_Click(object sender, EventArgs e)
         {
+            if (txtSelectedVariable.Text.Length <= 0) return;
             Clipboard.SetText(txtSelectedVariable.Text);
         }
 
         private void BtnInsertVar_Click(object sender, EventArgs e)
         {
+            if (txtSelectedVariable.Text.Length <= 0) return;
             txtFileNameFormula.Text = txtFileNameFormula.Text + " " + txtSelectedVariable.Text;
         }
 
@@ -140,6 +140,11 @@ namespace OneClickZip.Forms.Options
                 MessageBox.Show("Please limit your zip file name within 256 characters", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
+            if (txtSimulatedFilename.Text.Trim().IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+            {
+                MessageBox.Show(@"Your simulated file name has an invalid characters as a file name like ':' and etc...", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
 
             MatchCollection matchValueCol = Regex.Matches(txtFileNameFormula.Text.Trim(), CreatorModel.FORMULA_PATTER_REGEX_COMPLETE);
             if (matchValueCol.Count <= 0)
@@ -153,9 +158,22 @@ namespace OneClickZip.Forms.Options
             return true;
         }
 
-        public FileNameCreator GetFileCreatorName()
+        public FileNameCreator GetFileCreatorNameModel()
         {
             return filenameCreator;
+        }
+
+        private void toolStripMenuItemCopy_Click(object sender, EventArgs e)
+        {
+            if (listViewInstruction.SelectedItems.Count <= 0) return;
+            String formula = listViewInstruction.SelectedItems[0].SubItems[0].Text.Trim();
+            Clipboard.SetText(formula);
+        }
+
+        private void toolStripMenuItemInsert_Click(object sender, EventArgs e)
+        {
+            String formula = listViewInstruction.SelectedItems[0].SubItems[0].Text.Trim();
+            txtFileNameFormula.Text = txtFileNameFormula.Text + " " + formula;
         }
     }
 }

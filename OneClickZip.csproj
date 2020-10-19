@@ -13,6 +13,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -25,7 +26,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -54,19 +54,57 @@
     <StartupObject>
     </StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Logo-icon-64px.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ExpTreeLib, Version=3.0.2.1143, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\ExpTreeLib.3.2.0\lib\ExpTreeLib.dll</HintPath>
     </Reference>
+    <Reference Include="Glob, Version=1.1.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Glob.1.1.8\lib\net46\Glob.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Build, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Build.15.3.409\lib\net46\Microsoft.Build.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Build.Framework, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Build.Framework.15.3.409\lib\net46\Microsoft.Build.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Collections.Immutable, Version=1.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Collections.Immutable.1.3.1\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.IO.Compression, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\System.IO.Compression.4.3.0\lib\net46\System.IO.Compression.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.IO.FileSystem.4.3.0\lib\net46\System.IO.FileSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Linq.4.1.0\lib\net463\System.Linq.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime, Version=4.1.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Runtime.4.3.1\lib\net462\System.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.InteropServices.4.1.0\lib\net462\System.Runtime.InteropServices.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Threading.Thread, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Threading.Thread.4.0.0\lib\net46\System.Threading.Thread.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -79,6 +117,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\Help\AboutFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Help\AboutFrm.Designer.cs">
+      <DependentUpon>AboutFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Options\FilterRuleFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Options\FilterRuleFrm.Designer.cs">
+      <DependentUpon>FilterRuleFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Options\OneClickProcessorFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Options\OneClickProcessorFrm.Designer.cs">
+      <DependentUpon>OneClickProcessorFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Options\FileAssociationFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Options\FileAssociationFrm.Designer.cs">
+      <DependentUpon>FileAssociationFrm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Options\FileNameCreatorFrm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,10 +148,15 @@
       <DependentUpon>FileNameCreatorFrm.cs</DependentUpon>
     </Compile>
     <Compile Include="Includes\Classes\DefaultIcons.cs" />
-    <Compile Include="Includes\Classes\Extensions\TreeNodeSerializable.cs" />
+    <Compile Include="Includes\Classes\Extensions\ControlExtensions.cs" />
+    <Compile Include="Includes\Classes\Extensions\ListviewExtended.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Includes\Classes\FileAssociation.cs" />
     <Compile Include="Includes\Classes\FileNameCreator.cs" />
-    <Compile Include="Includes\Classes\ListViewColumnSorterForFileDir.cs" />
-    <Compile Include="Includes\Classes\ListViewColumnSorter.cs" />
+    <Compile Include="Includes\Classes\FolderFilterRule.cs" />
+    <Compile Include="Includes\Classes\Sorters\ListViewColumnSorterForFileDir.cs" />
+    <Compile Include="Includes\Classes\Sorters\ListViewColumnSorter.cs" />
     <Compile Include="Includes\Classes\ListViewInterpretor.cs" />
     <Compile Include="Includes\Classes\Extensions\ListViewItemExtended.cs" />
     <Compile Include="Forms\Main.cs">
@@ -98,35 +165,67 @@
     <Compile Include="Forms\Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="Includes\Classes\ProjectSession.cs" />
+    <Compile Include="Includes\Classes\Sorters\TreeNodeSorters.cs" />
+    <Compile Include="Includes\Classes\SystemFilesDirInfo.cs" />
     <Compile Include="Includes\Classes\SystemIconsImageList.cs" />
+    <Compile Include="Includes\Classes\SystemShellDeclaration.cs" />
     <Compile Include="Includes\Classes\TreeNodeInterpreter.cs" />
     <Compile Include="Includes\Classes\FileSerialization.cs" />
+    <Compile Include="Includes\Classes\TreeNodeSerialize\GenerateSerializableTreeNode.cs" />
     <Compile Include="Includes\Classes\TreeNodeSerialize\SerializableTreeNode.cs" />
     <Compile Include="Includes\Classes\TreeNodeSerialize\SerializableTreeViewOperation.cs" />
+    <Compile Include="Includes\Classes\ZipArchiving.cs" />
     <Compile Include="Includes\Interface\ICreatorExecutor.cs" />
+    <Compile Include="Includes\Interface\IZipFileTreeNode.cs" />
+    <Compile Include="Includes\Models\ApplicationArgumentModel.cs" />
     <Compile Include="Includes\Models\CreatorModel.cs" />
     <Compile Include="Includes\Models\CustomFileItem.cs" />
+    <Compile Include="Includes\Models\Events\GeneratingSerializeTreeNodeEventArgs.cs" />
+    <Compile Include="Includes\Models\Events\GeneratingSerializeTreeNodeProcessingStage.cs" />
+    <Compile Include="Includes\Models\Events\ZipArchivingEventArgs.cs" />
+    <Compile Include="Includes\Models\Events\ZipProcessingStages.cs" />
+    <Compile Include="Includes\Models\FileAssociationModel.cs" />
     <Compile Include="Includes\Models\ListViewInterpretorViewingParamModel.cs" />
     <Compile Include="Includes\Models\RandomCharsGeneratorModel.cs" />
     <Compile Include="Includes\Models\RandomNumberGeneratorModel.cs" />
     <Compile Include="Includes\Models\DateCreatorModel.cs" />
     <Compile Include="Includes\Classes\Extensions\TreeNodeExtended.cs" />
+    <Compile Include="Includes\Models\Types\FolderType.cs" />
+    <Compile Include="Includes\Models\Types\ListviewUseCase.cs" />
     <Compile Include="Includes\Models\ZipFileModel.cs" />
     <Compile Include="Includes\Models\ZipFileStatisticsModel.cs" />
+    <Compile Include="Includes\Resources\ApplicationSettings.cs" />
     <Compile Include="Includes\Resources\ResourceFilter.cs" />
     <Compile Include="Includes\Resources\ResourcePropertiesModel.cs" />
     <Compile Include="Includes\Resources\ResourcesUtil.cs" />
+    <Compile Include="Includes\Utilities\ClassReflectionUtilities.cs" />
     <Compile Include="Includes\Utilities\ConverterUtils.cs" />
+    <Compile Include="Includes\Utilities\FileSystemUtilities.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Forms\ZipDesigner\ZipDesigner.cs">
+    <Compile Include="Forms\ZipDesigner\ZipDesignerFrm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ZipDesigner\ZipDesigner.Designer.cs">
-      <DependentUpon>ZipDesigner.cs</DependentUpon>
+    <Compile Include="Forms\ZipDesigner\ZipDesignerFrm.Designer.cs">
+      <DependentUpon>ZipDesignerFrm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
+    <EmbeddedResource Include="Forms\Help\AboutFrm.resx">
+      <DependentUpon>AboutFrm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Options\FilterRuleFrm.resx">
+      <DependentUpon>FilterRuleFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Options\OneClickProcessorFrm.resx">
+      <DependentUpon>OneClickProcessorFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Options\FileAssociationFrm.resx">
+      <DependentUpon>FileAssociationFrm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Options\FileNameCreatorFrm.resx">
       <DependentUpon>FileNameCreatorFrm.cs</DependentUpon>
@@ -136,8 +235,8 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ZipDesigner\ZipDesigner.resx">
-      <DependentUpon>ZipDesigner.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ZipDesigner\ZipDesignerFrm.resx">
+      <DependentUpon>ZipDesignerFrm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -170,13 +269,118 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Supporting Files\Exit_20.png" />
+    <None Include="Resources\Supporting Files\design_256.png" />
+    <None Include="Resources\Supporting Files\design_64.png" />
+    <None Include="Resources\Supporting Files\design_48.png" />
+    <None Include="Resources\Supporting Files\design_32.png" />
+    <None Include="Resources\Supporting Files\design_20.png" />
+    <None Include="Resources\Supporting Files\statistic_256.png" />
+    <None Include="Resources\Supporting Files\statistic_64.png" />
+    <None Include="Resources\Supporting Files\statistic_48.png" />
+    <None Include="Resources\Supporting Files\statistic_32.png" />
+    <None Include="Resources\Supporting Files\statistic_20.png" />
+    <None Include="Resources\Supporting Files\remove_collection_256.png" />
+    <None Include="Resources\Supporting Files\add_collection_256.png" />
+    <None Include="Resources\Supporting Files\save_and_exit_256.png" />
+    <None Include="Resources\Supporting Files\save_and_exit_64.png" />
+    <None Include="Resources\Supporting Files\save_and_exit_32.png" />
+    <None Include="Resources\Supporting Files\save_and_exit_20.png" />
+    <None Include="Resources\Supporting Files\save_v1_256.png" />
+    <None Include="Resources\Supporting Files\save_v1_64.png" />
+    <None Include="Resources\Supporting Files\save_v1_48.png" />
+    <None Include="Resources\Supporting Files\save_v1_32.png" />
+    <None Include="Resources\Supporting Files\save_v1_20.png" />
+    <None Include="Resources\Supporting Files\stop_256.png" />
+    <None Include="Resources\Supporting Files\stop_64.png" />
+    <None Include="Resources\Supporting Files\stop_48.png" />
+    <None Include="Resources\Supporting Files\stop_32.png" />
+    <None Include="Resources\Supporting Files\stop_20.png" />
+    <None Include="Resources\Supporting Files\no_connection_256.png" />
+    <None Include="Resources\Supporting Files\no_connection_64.png" />
+    <None Include="Resources\Supporting Files\no_connection_48.png" />
+    <None Include="Resources\Supporting Files\no_connection_32.png" />
+    <None Include="Resources\Supporting Files\no_connection_20.png" />
+    <None Include="Resources\Supporting Files\broom_48.png" />
+    <None Include="Resources\Supporting Files\broom_32.png" />
+    <None Include="Resources\Supporting Files\broom_20.png" />
+    <None Include="Resources\Supporting Files\broom_256.png" />
+    <None Include="Resources\Supporting Files\broom_64.png" />
+    <None Include="Resources\Supporting Files\add_row_20.png" />
+    <None Include="Resources\Supporting Files\copy_to_clipboard_20.png" />
+    <None Include="Resources\Supporting Files\add_row_256.png" />
+    <None Include="Resources\Supporting Files\add_row_64.png" />
+    <None Include="Resources\Supporting Files\add_row_48.png" />
+    <None Include="Resources\Supporting Files\add_row_32.png" />
+    <None Include="Resources\Supporting Files\copy_to_clipboard_32.png" />
+    <None Include="Resources\Supporting Files\copy_to_clipboard_256.png" />
+    <None Include="Resources\Supporting Files\copy_to_clipboard_64.png" />
+    <None Include="Resources\Supporting Files\copy_to_clipboard_48.png" />
+    <None Include="Resources\Supporting Files\Download_Progress_256.png" />
+    <None Include="Resources\Supporting Files\Download_Progress_64.png" />
+    <None Include="Resources\Supporting Files\Download_Progress_48.png" />
+    <None Include="Resources\Supporting Files\Exit_48.png" />
+    <None Include="Resources\Supporting Files\Exit_64.png" />
+    <None Include="Resources\Supporting Files\Exit_32.png" />
+    <None Include="Resources\Supporting Files\Exit_256.png" />
+    <None Include="Resources\Supporting Files\Open_Document_256.png" />
+    <None Include="Resources\Supporting Files\Icon Designer.pptx" />
+    <None Include="Resources\Supporting Files\New_Project_256.png" />
+    <None Include="Resources\Supporting Files\Rename_256.png" />
+    <None Include="Resources\Supporting Files\New_Project_A_256.png" />
+    <None Include="Resources\Supporting Files\Play.png" />
+    <None Include="Resources\Supporting Files\Add_Folder_256.png" />
+    <None Include="Resources\Supporting Files\Add_Filter_Rule_256.png" />
+    <None Include="Resources\Supporting Files\Remove_Folder_list_256.png" />
+    <None Include="Resources\Supporting Files\Remove_Folder_256.png" />
+    <None Include="Resources\Supporting Files\Expand_Collapse_256.png" />
+    <None Include="Resources\Supporting Files\Play_32.png" />
+    <None Include="Resources\Supporting Files\Icons-Raw-batch1.ico" />
+    <None Include="Resources\Supporting Files\Icons-Raw-batch1.png" />
+    <None Include="Resources\Supporting Files\Save-icon-256px.png" />
+    <None Include="Resources\Supporting Files\Save-icon-64px.png" />
+    <None Include="Resources\Supporting Files\Save-icon-48px.png" />
+    <None Include="Resources\Supporting Files\Save-icon-32px.png" />
+    <None Include="Resources\Supporting Files\Save-icon-24px.png" />
+    <None Include="Resources\Supporting Files\Save-icon-16px.png" />
+    <None Include="Resources\Supporting Files\Button-Stop-icon-32px.png" />
+    <None Include="Resources\Supporting Files\Button-Stop-icon-24px.png" />
+    <None Include="Resources\Supporting Files\Button-Stop-icon-16px.png" />
+    <None Include="Resources\Supporting Files\Button-Stop-icon.png" />
+    <None Include="Resources\Supporting Files\Button-Play-icon-128px.png" />
+    <None Include="Resources\Supporting Files\Button-Play-icon-96px.png" />
+    <None Include="Resources\Supporting Files\Button-Play-icon-72px.png" />
+    <None Include="Resources\Supporting Files\Button-Play-icon-64px.png" />
+    <None Include="Resources\Supporting Files\Button-Play-icon-48px.png" />
+    <None Include="Resources\Supporting Files\Button-Play-icon-32px.png" />
+    <None Include="Resources\Supporting Files\Button-Play-icon-24px.png" />
+    <None Include="Resources\Supporting Files\Button-Play-icon-16px.png" />
+    <None Include="Resources\Supporting Files\Button-Stop-icon-96px.png" />
+    <None Include="Resources\Supporting Files\Button-Stop-icon-72px.png" />
+    <None Include="Resources\Supporting Files\Button-Stop-icon-64px.png" />
+    <None Include="Resources\Supporting Files\Button-Stop-icon-48px.png" />
+    <None Include="Resources\Icons\folder_rule_24px.png" />
+    <None Include="Resources\Icons\folder_rule_64px.png" />
+    <None Include="Resources\Icons\folder_rule_32px.png" />
+    <None Include="Resources\Icons\folder_rule_16px.png" />
+    <None Include="Resources\Icons\folder_rule_raw.png" />
+    <None Include="Resources\Supporting Files\Logo-icon-64px.ico" />
+    <None Include="Resources\Supporting Files\Logo-icon-64px.png" />
+    <None Include="Resources\Supporting Files\Logo-icon-32px.png" />
+    <None Include="Resources\Supporting Files\Logo-icon-20px.png" />
+    <None Include="Resources\Supporting Files\Logo-icon-16px.png" />
+    <None Include="Resources\Supporting Files\Logo-icon-512px.png" />
+    <None Include="Resources\Supporting Files\Logo-icon-256px.png" />
+    <None Include="Resources\Supporting Files\Logo-icon-128px.png" />
     <None Include="Resources\Icons\PlusMinus 24px.png" />
     <None Include="Resources\Icons\delete 24px.png" />
     <None Include="Resources\Icons\clear 24px.png" />
     <None Include="Resources\Icons\folder Plus 24px.png" />
     <None Include="Resources\Icons\folder Plus 16px.png" />
     <None Include="Resources\Icons\folder Plus 32px.png" />
-    <None Include="Resources\Icons\folder Plus 32px.jpg" />
+    <Content Include="Logo-icon-64px.ico" />
+    <None Include="Resources\FOLDER_FILTER_EXCLUDE.txt" />
+    <Content Include="Resources\FOLDER_FILTER_HELP.txt" />
     <Content Include="Resources\Icons\folder Plus 512px.png" />
   </ItemGroup>
   <ItemGroup />

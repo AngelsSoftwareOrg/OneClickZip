@@ -2,6 +2,7 @@
 using OneClickZip.Includes.Resources;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace OneClickZip.Includes.Models
 {
+    [Serializable]
     class RandomCharsGeneratorModel : CreatorModel, ICreatorExecutor
     {
         private List<ResourcePropertiesModel> randomCharsGenerator = ResourcesUtil.GetRandomCharsFormulaProperties();
@@ -22,7 +24,8 @@ namespace OneClickZip.Includes.Models
             {
                 { "SHA1",  "HashSha1" },
                 { "SHA256", "HashSha256" },
-                { "SHA512", "HashSha512" }
+                { "SHA512", "HashSha512" },
+                { "RN", "RandomName" }
             };
         }
 
@@ -71,6 +74,11 @@ namespace OneClickZip.Includes.Models
             {
                 return BitConverter.ToString(sha512.ComputeHash(Encoding.UTF8.GetBytes(this.GetDateNowInMillis()))).Replace("-", "");
             }
+        }
+
+        private String RandomName()
+        {
+            return Path.GetRandomFileName();
         }
     }
 }
