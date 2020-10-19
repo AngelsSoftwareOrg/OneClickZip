@@ -21,7 +21,7 @@ namespace OneClickZip
 
             //DEBUG
             Console.WriteLine("~~~~~~~ Program ~~~~~~~");
-            args = new string[]{ "E:\\zuTempOneClickZip\\9 - Test Regular.oczd" };
+            //args = new string[]{ "E:\\zuTempOneClickZip\\9 - Test Regular.oczd" };
 
             Console.WriteLine(args);
             Console.WriteLine();

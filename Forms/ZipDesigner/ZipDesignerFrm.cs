@@ -246,7 +246,6 @@ namespace OneClickZip
                     TreeNodeInterpreter.RenameNode((TreeNodeExtended)e.Node, e.Label);
                     e.Node.EndEdit(false); // Stop editing without canceling the label change.
                     ((TreeNodeExtended)e.Node).Text = e.Label.Trim(); //attempt to remove the extra space after editing
-                    //SortTreeViewZipDesigner();
                 }
                 else
                 {
@@ -607,11 +606,13 @@ namespace OneClickZip
             FolderBrowserDialog browseFolder = new FolderBrowserDialog();
             browseFolder.SelectedPath = ApplicationSettings.GetLastOpenedDirectory();
             browseFolder.ShowNewFolderButton = true;
-            browseFolder.ShowDialog();
-
-            if (String.IsNullOrWhiteSpace(browseFolder.SelectedPath)) return;
-            txtTargetLocation.Text = browseFolder.SelectedPath;
-            ApplicationSettings.SaveLastOpenedDirectory(browseFolder.SelectedPath);
+            DialogResult dr = browseFolder.ShowDialog();
+            if(dr == DialogResult.OK)
+            {
+                if (String.IsNullOrWhiteSpace(browseFolder.SelectedPath)) return;
+                txtTargetLocation.Text = browseFolder.SelectedPath;
+                ApplicationSettings.SaveLastOpenedDirectory(browseFolder.SelectedPath);
+            }
         }
 
         private void toolStripButtonGenOneClick_Click(object sender, EventArgs e)
@@ -648,16 +649,16 @@ namespace OneClickZip
             if (!IsProjectDataCompleted()) return;
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = filterName;
-            saveFileDialog.Title = "Save a File Designer project";
-            saveFileDialog.ShowDialog();
+            saveFileDialog.Title = "Save File Designer project";
+            if (saveFileDialog.ShowDialog() == DialogResult.Cancel) return;
 
             // If the file name is not an empty string open it for saving.
-            if (saveFileDialog.FileName != "")
+            if (!String.IsNullOrWhiteSpace(saveFileDialog.FileName))
             {
                 if (saveFileDialog.CheckPathExists)
                 {
-                    ZipFileModel zipFileModel = new ZipFileModel(TreeNodeInterpreter.GetRootNode(treeViewZipDesigner), PROJECT_SESSION.FileNameCreatorModel);
-                    zipFileModel.SetTreeViewZipFileStructureForFileWriting(TreeNodeInterpreter.GetRootNode(treeViewZipDesigner));
+                    TreeNodeExtended rootNode = TreeNodeInterpreter.GetRootNode(treeViewZipDesigner);
+                    ZipFileModel zipFileModel = new ZipFileModel(rootNode, PROJECT_SESSION.FileNameCreatorModel);
                     zipFileModel.FilePath = saveFileDialog.FileName;
                     zipFileModel.TargetDropFileLocationPath = txtTargetLocation.Text;
                     PROJECT_SESSION.ZipFileModel = zipFileModel;

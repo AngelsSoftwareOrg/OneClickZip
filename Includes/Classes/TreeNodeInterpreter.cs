@@ -188,7 +188,7 @@ namespace OneClickZip.Includes.Classes
             return isExistingNode;
         }
 
-        public static void PutTheSelectedFilesAndDirOnSelectedTreeNode(ListView targetListView, TreeView targetTreeView, ListView.SelectedListViewItemCollection lstViewColl)
+        public static void PutTheSelectedFilesAndDirOnSelectedTreeNode(ListviewExtended targetListView, TreeView targetTreeView, ListView.SelectedListViewItemCollection lstViewColl)
         {
             targetTreeView.BeginUpdate();
             targetListView.BeginUpdate();
@@ -197,7 +197,7 @@ namespace OneClickZip.Includes.Classes
                 //if node are not yet existed on the currently selected node of the tree
                 if (!AddZipFileNode(targetTreeView, lvItem.CustomFileItem))
                 {
-                    TreeNodeExtended selectedNode = (TreeNodeExtended)targetTreeView.SelectedNode;
+                    TreeNodeExtended selectedNode = GetSelectedNode(targetTreeView);
                     AddTagObject(selectedNode, lvItem.CustomFileItem);
                     ListViewInterpretor.GenerateListViewZipFileViewItems(new ListViewInterpretorViewingParamModel()
                     {

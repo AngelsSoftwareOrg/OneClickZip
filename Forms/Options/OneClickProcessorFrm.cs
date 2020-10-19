@@ -67,7 +67,7 @@ namespace OneClickZip.Forms.Options
             txtBoxCurrentAction.Text = "Zip Archiving Stopped...";
             AddLogItems("Archiving Ended", "Successfully stop further zip archiving");
             AddLogItems("Project File", @"Project file that has been processed is ");
-            AddLogItems("Project File", e.ZipFileToCreateFullPath);
+            AddLogItems("Project File", (String.IsNullOrWhiteSpace(e.ZipFileToCreateFullPath) ? "(Project is not yet save...)" : e.ZipFileToCreateFullPath));
             AddLogItems("Zip Archive Location", @"Partial zip file has been save into....");
             AddLogItems("Zip Archive Location", zipArchiving.NewArchiveName);
             linkSaveLogs.Enabled = true;
@@ -82,7 +82,7 @@ namespace OneClickZip.Forms.Options
             txtBoxCurrentAction.Text = "Finished Zip Archiving...";
             AddLogItems("Wrapping up", txtBoxCurrentAction.Text);
             AddLogItems("Project File", @"Project file that has been processed is ");
-            AddLogItems("Project File", e.ZipFileToCreateFullPath);
+            AddLogItems("Project File", (String.IsNullOrWhiteSpace(e.ZipFileToCreateFullPath) ? "(Project is not yet save...)" : e.ZipFileToCreateFullPath));
             AddLogItems("Zip Archive Location", @"Zip file has been save into....");
             AddLogItems("Zip Archive Location", zipArchiving.NewArchiveName);
             linkSaveLogs.Enabled = true;

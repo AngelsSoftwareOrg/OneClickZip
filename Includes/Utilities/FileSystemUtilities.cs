@@ -94,5 +94,6 @@ namespace OneClickZip.Includes.Utilities
                 MessageBox.Show("Log file has been successfully save...", "File saving...");
             }
         }
+
     }
 }

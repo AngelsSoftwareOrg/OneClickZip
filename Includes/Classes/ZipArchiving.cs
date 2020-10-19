@@ -214,13 +214,21 @@ namespace OneClickZip.Includes.Classes
             if (customFile == null)
             {
                 processingStatusEventArgs.ZipFileToCreateFullPath = this.zipFileModel.FilePath;
-                processingStatusEventArgs.FileName = (folderName == "") ? zipFileModel.GetFileName : folderName; 
-                processingStatusEventArgs.IsFolder = FileSystemUtilities.IsFullPathIsDirectory(this.zipFileModel.FilePath);
+                processingStatusEventArgs.FileName = (String.IsNullOrWhiteSpace(folderName)) ? zipFileModel.GetFileName : folderName;
+
+                if (String.IsNullOrWhiteSpace(this.zipFileModel.FilePath))
+                {
+                    processingStatusEventArgs.IsFolder = false;
+                }
+                else
+                {
+                    processingStatusEventArgs.IsFolder = FileSystemUtilities.IsFullPathIsDirectory(this.zipFileModel.FilePath);
+                }
             }
             else
             {
                 processingStatusEventArgs.ZipFileToCreateFullPath = customFile.FilePathFull;
-                processingStatusEventArgs.FileName = (folderName=="") ? customFile.GetCustomFileName : folderName;
+                processingStatusEventArgs.FileName = (String.IsNullOrWhiteSpace(folderName)) ? customFile.GetCustomFileName : folderName;
                 processingStatusEventArgs.IsFolder = customFile.IsFolder;
             }
 
