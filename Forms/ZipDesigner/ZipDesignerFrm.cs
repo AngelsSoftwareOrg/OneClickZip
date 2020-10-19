@@ -663,7 +663,10 @@ namespace OneClickZip
                     zipFileModel.TargetDropFileLocationPath = txtTargetLocation.Text;
                     PROJECT_SESSION.ZipFileModel = zipFileModel;
                     PROJECT_SESSION.SaveProject(saveFileDialog.FileName);
-                    txtZipFileLocation.Text = saveFileDialog.FileName;                    
+                    if(!ResourcesUtil.GetFileBatchFilterName().Equals(filterName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        txtZipFileLocation.Text = saveFileDialog.FileName;
+                    }              
                 }
             }
         }

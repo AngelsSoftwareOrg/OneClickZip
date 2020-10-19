@@ -18,17 +18,8 @@ namespace OneClickZip
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-
-            //DEBUG
-            Console.WriteLine("~~~~~~~ Program ~~~~~~~");
-            //args = new string[]{ "E:\\zuTempOneClickZip\\9 - Test Regular.oczd" };
-
-            Console.WriteLine(args);
-            Console.WriteLine();
-            //END DEBUG
-
             ApplicationArgumentModel applicationArgumentModel = new ApplicationArgumentModel(args);
-            ProjectSession.Instance().ApplicationArgumentModel = applicationArgumentModel; ;
+            ProjectSession.Instance().ApplicationArgumentModel = applicationArgumentModel;
 
             if (applicationArgumentModel.IsOpenProjectBatchFile)
             {
@@ -38,9 +29,6 @@ namespace OneClickZip
             {
                 Application.Run(new ZipDesigner());
             }
-            //Application.Run(new FilterRuleFrm());
-            //Application.Run(new About()); 
-            //Application.Run(new FileAssociationFrm());
         }
     }
 }
