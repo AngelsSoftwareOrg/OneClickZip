@@ -588,6 +588,11 @@ namespace OneClickZip
 
         private void fileAssociationToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            FileExtensionAssociation();
+        }
+
+        private void FileExtensionAssociation()
+        {
             FileAssociationFrm fasscFrm = new FileAssociationFrm();
             fasscFrm.ShowDialog();
         }
@@ -599,6 +604,9 @@ namespace OneClickZip
                 this.OpenProjectDesignerFile(APPLICATION_ARGUMENT_MODEL.FilePath);
             }
             treeViewZipDesigner.TreeViewNodeSorter = this.treeNodeSorters;
+
+            //If file association is not yet configured
+            if (!FileAssociation.IsApplicationProgramAlreadyAssociatedWith()) FileExtensionAssociation();
         }
 
         private void lnlSetTargetLocation_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
