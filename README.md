@@ -153,22 +153,36 @@ Running the Zip packaging is not mandatory within the Designer. How ever, this w
  -- To test out if your filter rule was really working, click the **Preview & Simulation** tab. Just click the **Start Preview/Simulation** button. You can see the affected folders and files matching your filter rule, in which it will include in your Zip Designed output file. If you are now content with your filter rule, click Save and Exit to bind it on the added **Dynamic Folder**.
  
 ![Preview & Simulation](https://i.imgur.com/UaD9I2k.png)
+
  - Once you exit the **Filter Rule Designer** window, you will opt to place the folder name of your choice
+
+
 ![Giving a Name](https://i.imgur.com/3jDfJBQ.png)
+
  - If you want to modify your filter rule on it, just **Double Click** the folder, or **Right Mouse Click**, then choose **Modify Filter Rule**
+ 
+ 
  ![Modify your filter rule](https://i.imgur.com/Qf4otSx.png) 
+ 
  - Run the Zip Packaging and see the result
  
+ 
 ![Run the zip file](https://i.imgur.com/vSUWulv.png)
+
 Finished Archiving
 
 ![Finish Archiving](https://i.imgur.com/7xnsjOD.png)
+
 Here's the generated Zip File
 
+
 ![Zip File](https://i.imgur.com/PxnzTvA.png)
+
 It now contains the two filtered folders content we set out earlier
 
+
 ![Merge Output](https://i.imgur.com/qmzD8Z1.png)
+
 **3. Creating One Click Zip Shortcut** 
  - If you have followed the #1 and #2 guide, you are now ready to convert it to a Shortcut. 
  
@@ -177,19 +191,28 @@ It now contains the two filtered folders content we set out earlier
  -- First is from **Actions menu**
  
 ![Actions Menu](https://i.imgur.com/VrhROIl.png)
+
  -- Second is on the **tool bar**
  
+ 
 ![Toolbar](https://i.imgur.com/G3PNtXx.png)
+
  - Choose where to place your shortcut
  
+ 
 ![My Shortcut](https://i.imgur.com/Bph2T9e.png)
+
 ![The shortcut placement](https://i.imgur.com/WDo1FMR.png)
+
  - Double click the shortcut to execute and start the Archiving
  Upon execution, the program goes directly to archiving
+ 
  ![Archiving directly...](https://i.imgur.com/HDmscdU.png)
  
+ 
  - Open the generated Zip Archived. Inside, we notice that there were several items were added including our shortcut. This is because our filter rule says to include all files in that folder dynamically.
- ![enter image description here](https://i.imgur.com/wMxKkdS.png) 
+ 
+ ![Dynamic Content](https://i.imgur.com/wMxKkdS.png) 
  
 
 
