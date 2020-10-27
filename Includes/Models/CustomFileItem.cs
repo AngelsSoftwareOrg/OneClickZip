@@ -53,7 +53,7 @@ namespace OneClickZip.Includes.Models
             this.creationTime = cshItem.CreationTime;
             this.typeName = SystemFilesDirInfo.GetFileTypeDescription(targetPath);
             this.fileLength = cshItem.Length;
-            this.filePathFull = targetPath;
+            this.filePathFull = @targetPath;
             this.isFolder = FileSystemUtilities.IsFullPathIsDirectory(targetPath);
             this.FolderType = (this.isFolder) ? FolderType.TreeView : FolderType.File;
             SetIconsIndex(targetPath);
@@ -70,7 +70,7 @@ namespace OneClickZip.Includes.Models
             this.creationTime = fileInfo.CreationTime;
             this.typeName = SystemFilesDirInfo.GetFileTypeDescription(targetPath);
             this.fileLength = fileInfo.Length;
-            this.filePathFull = targetPath;
+            this.filePathFull = @targetPath;
             this.isFolder = false;
             this.FolderType = FolderType.File;
             SetIconsIndex(targetPath);
@@ -87,7 +87,7 @@ namespace OneClickZip.Includes.Models
             this.creationTime = directoryInfor.CreationTime;
             this.typeName = SystemFilesDirInfo.FOLDER_TYPE_DESCRIPTION;
             this.fileLength = 0;
-            this.filePathFull = targetPath;
+            this.filePathFull = @targetPath;
             this.isFolder = true;
             this.FolderType = FolderType.TreeView;
             SetIconsIndex(targetPath);
@@ -130,9 +130,6 @@ namespace OneClickZip.Includes.Models
             {
                 this.specialFolderFullPath = FileSystemUtilities.GetSpecialFolderFullPath(fileName);
 
-                //DEBUGGING
-                Console.WriteLine("specialFolderFullPath: " + specialFolderFullPath);
-
                 if (!String.IsNullOrWhiteSpace(this.specialFolderFullPath))
                 {
                     targetFilePath = this.specialFolderFullPath;
@@ -164,7 +161,7 @@ namespace OneClickZip.Includes.Models
         public ArrayList GetShellInfoDirectories()
         {
             ArrayList result = new ArrayList();
-            DirectoryInfo[] dInfo = FileSystemUtilities.GetDirectories(this.filePathFull);
+            DirectoryInfo[] dInfo = FileSystemUtilities.GetDirectories(FilePathFull);
             if (dInfo == null) return result;
 
             foreach (DirectoryInfo obj in dInfo)
@@ -183,7 +180,7 @@ namespace OneClickZip.Includes.Models
         public ArrayList GetShellInfoFiles()
         {
             ArrayList result = new ArrayList();
-            DirectoryInfo dInfo = new DirectoryInfo(this.filePathFull);
+            DirectoryInfo dInfo = new DirectoryInfo(FilePathFull);
             try
             {
                 foreach (FileInfo obj in dInfo.GetFiles())
@@ -299,11 +296,11 @@ namespace OneClickZip.Includes.Models
         public long DirectoriesCount { 
             get 
             {
-                if (FileSystemUtilities.IsFullPathIsDirectory(this.filePathFull))
+                if (FileSystemUtilities.IsFullPathIsDirectory(FilePathFull))
                 {
-                    DirectoryInfo[] dinfo = FileSystemUtilities.GetDirectories(this.filePathFull);
+                    DirectoryInfo[] dinfo = FileSystemUtilities.GetDirectories(filePathFull);
                     if (dinfo == null) return 0;
-                    return FileSystemUtilities.GetDirectories(this.filePathFull).Length;
+                    return FileSystemUtilities.GetDirectories(FilePathFull).Length;
                 }
                 return 0;
             }
@@ -312,12 +309,11 @@ namespace OneClickZip.Includes.Models
         public long FilesCount {
             get
             {
-                DirectoryInfo dInfo = new DirectoryInfo(this.filePathFull);
-                return (FileSystemUtilities.IsFullPathIsDirectory(this.filePathFull) ? dInfo.GetFiles().Length : 0);
+                DirectoryInfo dInfo = new DirectoryInfo(FilePathFull);
+                return (FileSystemUtilities.IsFullPathIsDirectory(FilePathFull) ? dInfo.GetFiles().Length : 0);
             }
         }
-       
-        public string FilePathFull { get => filePathFull; }
 
+        public string FilePathFull { get => @filePathFull; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using OneClickZip.Forms.Help;
+using OneClickZip.Forms.Loading;
 using OneClickZip.Forms.Options;
 using OneClickZip.Includes.Classes;
 using OneClickZip.Includes.Models;
@@ -18,8 +19,15 @@ namespace OneClickZip
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            //debugging
+            args = new string[] {@"E:\zuTempOneClickZip\14 - Test Multiple Folders.oczd"};
+            //
+
+
             ApplicationArgumentModel applicationArgumentModel = new ApplicationArgumentModel(args);
             ProjectSession.Instance().ApplicationArgumentModel = applicationArgumentModel;
+
+            SplashScreenDesignerFrm.GetIntance().Show();
 
             if (applicationArgumentModel.IsOpenProjectBatchFile)
             {

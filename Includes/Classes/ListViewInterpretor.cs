@@ -14,7 +14,7 @@ namespace OneClickZip.Includes.Classes
     public class ListViewInterpretor
     {
 
-        public static void GenerateListViewExplorerItems(ListViewInterpretorViewingParamModel lvParamModel)
+        public void GenerateListViewExplorerItems(ListViewInterpretorViewingParamModel lvParamModel)
         {
             if (lvParamModel.CshItem.DisplayName.Equals(CShItem.strMyComputer))
             {
@@ -28,7 +28,7 @@ namespace OneClickZip.Includes.Classes
             GenerateListViewCommonProcedureForExplorer(lvParamModel);
         }
 
-        public static void GenerateListViewZipFileViewItems(ListViewInterpretorViewingParamModel lvParamModel) 
+        public void GenerateListViewZipFileViewItems(ListViewInterpretorViewingParamModel lvParamModel) 
         {
             if (lvParamModel.CustomFileItem.IsFolder)
             {
@@ -42,7 +42,7 @@ namespace OneClickZip.Includes.Classes
             GenerateListViewCommonProcedureForDesigner(lvParamModel);
         }
 
-        public static void GenerateListViewZipFileChildrenViewItems(ListViewInterpretorViewingParamModel lvParamModel)
+        public void GenerateListViewZipFileChildrenViewItems(ListViewInterpretorViewingParamModel lvParamModel)
         {
             TreeNodeExtended selectedNode = lvParamModel.SelectedTreeNodeExtended;
 
@@ -56,7 +56,7 @@ namespace OneClickZip.Includes.Classes
             GenerateListViewCommonProcedureForDesigner(lvParamModel);
         }
 
-        private static void GenerateListViewCommonProcedureForDesigner(ListViewInterpretorViewingParamModel lvParamModel)
+        private void GenerateListViewCommonProcedureForDesigner(ListViewInterpretorViewingParamModel lvParamModel)
         {
             ArrayList dirList = lvParamModel.DirList;
             ArrayList fileList = lvParamModel.FileList;
@@ -106,7 +106,7 @@ namespace OneClickZip.Includes.Classes
             }
         }
 
-        private static void GenerateListViewCommonProcedureForExplorer(ListViewInterpretorViewingParamModel lvParamModel)
+        private void GenerateListViewCommonProcedureForExplorer(ListViewInterpretorViewingParamModel lvParamModel)
         {
             ArrayList dirList = lvParamModel.DirList;
             ArrayList fileList = lvParamModel.FileList;
@@ -150,7 +150,7 @@ namespace OneClickZip.Includes.Classes
             }
         }
 
-        private static String[] GetFileObjectDetails(CustomFileItem fileObj)
+        private String[] GetFileObjectDetails(CustomFileItem fileObj)
         {
             return new string[] {
                 fileObj.GetCustomFileName, //file name
@@ -164,19 +164,19 @@ namespace OneClickZip.Includes.Classes
         /**
          * encapsulated procedures to make icons appeared on the list view
          */
-        public static void RefreshToShowExplorerIcons(ListView targetListView)
+        public void RefreshToShowExplorerIcons(ListView targetListView)
         {
             SystemImageListManager.SetListViewImageList(targetListView, false, false);
             SystemImageListManager.SetListViewImageList(targetListView, true, false);
         }
 
-        public static void RefreshToShowZipDesignerIcons(ListView targetListView)
+        public void RefreshToShowZipDesignerIcons(ListView targetListView)
         {
             targetListView.SmallImageList = DefaultIcons.SYSTEM_ICONS.SmallIconsImageList;
             targetListView.LargeImageList = DefaultIcons.SYSTEM_ICONS.LargeIconsImageList;
         }
 
-        public static void RefreshListViewItemsForZipFileDesigner(ListviewExtended targetListView,  TreeNodeExtended selectedTreeNodeExtended)
+        public void RefreshListViewItemsForZipFileDesigner(ListviewExtended targetListView,  TreeNodeExtended selectedTreeNodeExtended)
         {
             targetListView.BeginUpdate();
             targetListView.Items.Clear();
@@ -189,7 +189,7 @@ namespace OneClickZip.Includes.Classes
                     CustomFileItem = customeFileItem
                 };
 
-                ListViewInterpretor.GenerateListViewZipFileViewItems(commonParam);
+                GenerateListViewZipFileViewItems(commonParam);
             }
             targetListView.EndUpdate();
         }

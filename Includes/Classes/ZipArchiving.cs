@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.IO.Compression;
+using System.Text;
 using System.Windows.Forms;
+using Ionic.Zip;
 using OneClickZip.Includes.Classes.TreeNodeSerialize;
 using OneClickZip.Includes.Models;
 using OneClickZip.Includes.Models.Events;
@@ -19,7 +21,7 @@ namespace OneClickZip.Includes.Classes
         public event EventHandler<ZipArchivingEventArgs> SerializedTreeNodeGeneratedComplete;
 
         private ZipArchivingEventArgs processingStatusEventArgs;
-
+        private FileStream zipToCreate;
         private String newArchiveName;
         private ZipFileModel zipFileModel;
         private SerializableTreeNode serializableTreeNode;
@@ -28,6 +30,9 @@ namespace OneClickZip.Includes.Classes
         private bool stopProcessingSuccessfull;
         private GenerateSerializableTreeNode generateSerializableTreeNode;
         private CompressionLevel compressionLevelArchiving = CompressionLevel.Optimal;
+        private long processedZipFileSize;
+        private long processedFilesSizeFlusherThreshold = 52428800; //50 * 1024 * 1024; //50MB,just howmany mega bytes would it take before we flush it to storage, just to avoid low memory
+        private long processedFilesSizeFlusherCtr = 0;
 
         public ZipArchiving() 
         {
@@ -35,7 +40,6 @@ namespace OneClickZip.Includes.Classes
             StopProcessing = false;
             StopProcessingSuccessful = false;
         }
-
         public ZipArchiving(String newArchiveName, ZipFileModel zipFileModel, SerializableTreeNode serializableTreeNode)
         {
             this.NewArchiveName = newArchiveName;
@@ -47,6 +51,11 @@ namespace OneClickZip.Includes.Classes
         {
             processingStatusEventArgs = new ZipArchivingEventArgs();
             generateSerializableTreeNode = new GenerateSerializableTreeNode();
+            generateSerializableTreeNode.RuleEnforcementStatus += GenerateSerializableTreeNode_RuleEnforcementStatus;
+        }
+        private void GenerateSerializableTreeNode_RuleEnforcementStatus(object sender, GeneratingSerializeTreeNodeEventArgs e)
+        {
+            UpdateStatusAndRaiseEventProcessingStatusForDynamicGeneration(e.EvaluatedPath);
         }
         public String NewArchiveName
         {
@@ -110,53 +119,52 @@ namespace OneClickZip.Includes.Classes
         }
         private void StartCrawling()
         {
-            using (FileStream zipToCreate = new FileStream(NewArchiveName, FileMode.Create))
+            using (ZipFile archiveFile = new ZipFile(NewArchiveName))
             {
-                using (ZipArchive archiveFile = new ZipArchive(zipToCreate, ZipArchiveMode.Update))
+                archiveFile.AlternateEncodingUsage = ZipOption.AsNecessary;
+
+                UpdateStatusAndRaiseEventProcessingStatus(ZipProcessingStages.ZIP_CREATION);
+                CrawlTreeStructure(serializableTreeNode, archiveFile, null);
+                UpdateStatusAndRaiseEventProcessingStatus(ZipProcessingStages.POST_PROCESSING);
+                archiveFile.Save();
+                if (StopProcessing && StopProcessingSuccessful)
                 {
-                    UpdateStatusAndRaiseEventProcessingStatus(ZipProcessingStages.ZIP_CREATION);
-                    CrawlTreeStructure(serializableTreeNode, archiveFile, null);
-                    if (StopProcessing && StopProcessingSuccessful)
-                    {
-                        StopProcessingRaiseEvent();
-                    }
-                    else
-                    {
-                        FinishedArchivingRaiseEvent();
-                    }
+                    StopProcessingRaiseEvent();
+                }
+                else
+                {
+                    FinishedArchivingRaiseEvent();
                 }
             }
         }
-        private bool AddFileIntoZipArchive(ZipArchive archiveFile, String fullPathOfaFile, String zipFileFolderName)
+        private bool AddFileIntoZipArchive(ZipFile archiveFile, CustomFileItem customFileItem, String zipFileFolderName)
         {
-            FileInfo fileInfo = new FileInfo(fullPathOfaFile);
+            FileInfo fileInfo = new FileInfo(customFileItem.FilePathFull);
             if (!fileInfo.Exists) return false;
-            ZipArchiveEntry zipArchiveEntry = archiveFile.CreateEntry(zipFileFolderName + fileInfo.Name, CompressionLevelArchiving);
-            using (var zipStream = zipArchiveEntry.Open())
-            {
-                try
-                {
-                    using (Stream source = File.OpenRead(fullPathOfaFile))
-                    {
-                        Application.DoEvents();
-                        byte[] buffer = new byte[2048];
-                        int bytesRead;
-                        while ((bytesRead = source.Read(buffer, 0, buffer.Length)) > 0)
-                        {
-                            zipStream.Write(buffer, 0, bytesRead);
-                        }
-                    }
-                }
-                catch (System.IO.IOException)
-                {
-                    //ignore and go to next file
-                    //one of the case as for One drive, if the file is on the cloud and not yet here locally
-                }
+            processedZipFileSize += fileInfo.Length;
 
+            byte[] enodedUTF8 = Encoding.ASCII.GetBytes((zipFileFolderName + 
+                                        FileSystemUtilities.SanitizeFileName(customFileItem.GetCustomFileName)));
+            String customFileName = Encoding.ASCII.GetString(enodedUTF8);
+
+            archiveFile.AddEntry(customFileName, File.OpenRead(customFileItem.FilePathFull));
+            try
+            {
+                //if there's a difference of, e.g. 50MB processed file size, then flush
+                if((processedZipFileSize - processedFilesSizeFlusherCtr) >= processedFilesSizeFlusherThreshold)
+                {
+                    processedFilesSizeFlusherCtr = processedZipFileSize;
+                    archiveFile.Save();
+                }
             }
+            catch (Exception)
+            {
+                //just ignore if cannot accessed the file
+            }
+            
             return true;
         }
-        private void CrawlTreeStructure(SerializableTreeNode serializableTreeNode, ZipArchive archiveFile, String zipFileFolderName)
+        private void CrawlTreeStructure(SerializableTreeNode serializableTreeNode, ZipFile archiveFile, String zipFileFolderName)
         {
             if (IsStopProcessing()) return;
             if (zipFileFolderName == null) zipFileFolderName = "";
@@ -166,7 +174,7 @@ namespace OneClickZip.Includes.Classes
                 if (customFile.IsFolderIsFileViewNode)
                 {
                     IncrementFilesProcessedCountArgs();
-                    if(AddFileIntoZipArchive(archiveFile, customFile.FilePathFull, zipFileFolderName))
+                    if(AddFileIntoZipArchive(archiveFile, customFile, zipFileFolderName))
                     {
                         UpdateStatusAndRaiseEventProgressStatus(ZipProcessingStages.ADDING_FILE, customFile);
                     }
@@ -179,7 +187,7 @@ namespace OneClickZip.Includes.Classes
                 {
                     IncrementFolderProcessedCountArgs();
                     String newFolderName = String.Format("{0}{1}/", zipFileFolderName, customFile.GetCustomFileName);
-                    archiveFile.CreateEntry(newFolderName);
+                    archiveFile.AddDirectoryByName(newFolderName);
                     UpdateStatusAndRaiseEventProgressStatus(ZipProcessingStages.ADDING_FOLDER, customFile, newFolderName);
                 }
                 Application.DoEvents();
@@ -219,7 +227,7 @@ namespace OneClickZip.Includes.Classes
         {
             processingStatusEventArgs.CustomFileItem = customFile;
             processingStatusEventArgs.ProcessingStage = setStage;
-
+            processingStatusEventArgs.ArchiveSize = processedZipFileSize;
             if (customFile == null)
             {
                 processingStatusEventArgs.ZipFileToCreateFullPath = this.zipFileModel.FilePath;
@@ -240,7 +248,6 @@ namespace OneClickZip.Includes.Classes
                 processingStatusEventArgs.FileName = (String.IsNullOrWhiteSpace(folderName)) ? customFile.GetCustomFileName : folderName;
                 processingStatusEventArgs.IsFolder = customFile.IsFolder;
             }
-
             ProgressStatusPercentageArgs();
             return processingStatusEventArgs;
         }
@@ -249,6 +256,8 @@ namespace OneClickZip.Includes.Classes
             processingStatusEventArgs.FilesProcessedCount = 0;
             processingStatusEventArgs.FolderProcessedCount = 0;
             processingStatusEventArgs.ProgressStatusPercentage = 0;
+            processedZipFileSize = 0;
+            processedFilesSizeFlusherCtr = 0;
         }
         private void IncrementFilesProcessedCountArgs()
         {
@@ -268,6 +277,15 @@ namespace OneClickZip.Includes.Classes
         private void UpdateStatusAndRaiseEventProcessingStatus(ZipProcessingStages setStage, CustomFileItem customFile = null)
         {
             GetProcessingStatusEventArgs(setStage, customFile);
+            ProcessingStatus.Invoke(this, processingStatusEventArgs);
+        }
+        private void UpdateStatusAndRaiseEventProcessingStatusForDynamicGeneration(String evaluatedPathPath)
+        {
+            processingStatusEventArgs.CustomFileItem = null;
+            processingStatusEventArgs.ProcessingStage = ZipProcessingStages.GENERATE_SERIALIZED_TREE_NODE_BASE_FILTER_RULE;
+            processingStatusEventArgs.ZipFileToCreateFullPath = evaluatedPathPath;
+            processingStatusEventArgs.FileName = null;
+            processingStatusEventArgs.IsFolder = false;
             ProcessingStatus.Invoke(this, processingStatusEventArgs);
         }
         private void UpdateStatusAndRaiseEventProgressStatus(ZipProcessingStages setStage, CustomFileItem customFile = null, String folderName="")
@@ -308,6 +326,7 @@ namespace OneClickZip.Includes.Classes
                 compressionLevelArchiving = value;
             } 
         }
+        private FileStream ZipToCreate { get => zipToCreate; set => zipToCreate = value; }
         private bool IsStopProcessing()
         {
             if (StopProcessing)

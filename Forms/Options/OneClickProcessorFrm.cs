@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using OneClickZip.Includes.Classes;
@@ -28,13 +30,13 @@ namespace OneClickZip.Forms.Options
         private long elapseTime = 0;
         private ZipArchiving zipArchiving = new ZipArchiving();
         private bool isWindowCanBeClose = false;
+        private bool isStopProcessing;
         public OneClickProcessorFrm()
         {
             InitializeComponent();
             projectSession = ProjectSession.Instance();
             applicationArgumentModel = projectSession.ApplicationArgumentModel;
         }
-
         private void OneClickProcessor_Load(object sender, EventArgs e)
         {
             lblElapsedTime.Text = "00:00:00";
@@ -59,12 +61,12 @@ namespace OneClickZip.Forms.Options
             zipArchiving.SerializedTreeNodeGeneratedComplete += ZipArchiving_SerializedTreeNodeGeneratedComplete;
             OpenProjectFileForZipping();
         }
-
         private void ZipArchiving_StopProcess(object sender, ZipArchivingEventArgs e)
         {
             timerElapseTime.Stop();
             progressBarStatus.Value = progressBarStatus.Maximum;
             txtBoxCurrentAction.Text = "Zip Archiving Stopped...";
+            lblArchivedSize.Text = ConverterUtils.HumanReadableFileSize(e.ArchiveSize, 2);
             AddLogItems("Archiving Ended", "Successfully stop further zip archiving");
             AddLogItems("Project File", @"Project file that has been processed is ");
             AddLogItems("Project File", (String.IsNullOrWhiteSpace(e.ZipFileToCreateFullPath) ? "(Project is not yet save...)" : e.ZipFileToCreateFullPath));
@@ -73,29 +75,103 @@ namespace OneClickZip.Forms.Options
             linkSaveLogs.Enabled = true;
             btnStop.Enabled = false;
             isWindowCanBeClose = true;
+            isStopProcessing = false;
             listViewLogs.EndUpdate();
         }
-
         private void ZipArchiving_FinishedArchiving(object sender, ZipArchivingEventArgs e)
         {
             timerElapseTime.Stop();
-            txtBoxCurrentAction.Text = "Finished Zip Archiving...";
+            lblArchivedSize.Text = ConverterUtils.HumanReadableFileSize(e.ArchiveSize, 2);
             AddLogItems("Wrapping up", txtBoxCurrentAction.Text);
             AddLogItems("Project File", @"Project file that has been processed is ");
             AddLogItems("Project File", (String.IsNullOrWhiteSpace(e.ZipFileToCreateFullPath) ? "(Project is not yet save...)" : e.ZipFileToCreateFullPath));
             AddLogItems("Zip Archive Location", @"Zip file has been save into....");
             AddLogItems("Zip Archive Location", zipArchiving.NewArchiveName);
+            listViewLogs.EndUpdate();
+            CopyOutputToOtherTargetFolders(e);
+            txtBoxCurrentAction.Text = "Finished Zip Archiving...";
+            isStopProcessing = false;
             linkSaveLogs.Enabled = true;
             btnStop.Enabled = false;
             isWindowCanBeClose = true;
-            listViewLogs.EndUpdate();
         }
+        private void CopyOutputToOtherTargetFolders(ZipArchivingEventArgs e)
+        {
+            TargetOutputLocationModel targetOutputLoc = zipModel.TargetOutputLocationModel;
+            List<string> targetLocationsArr = targetOutputLoc.GetTargetLocations();
+            if (targetLocationsArr.Count <= 0) return;
 
+            FileInfo zipOutputFile = new FileInfo(zipArchiving.NewArchiveName);
+            String zipOutputFileName = zipOutputFile.Name;
+            String zipOutputFullFilePathName = zipOutputFile.FullName;
+            long totalFileOutputSize = zipOutputFile.Length * targetLocationsArr.Count;
+            long totalTransferredByte = 0;
+            long totalTransferredByteUpdateProgress = 10485760; //10 * 1024 * 1024, every 10MB
+            long totalTransferredByteUpdateProgressCtr = 0;
+            progressBarStatus.Value = 0;
+
+            foreach (String targetOutputFolder in targetLocationsArr)
+            {
+                String outputFileFullPath = targetOutputFolder + @"\" + zipOutputFileName;
+                if (isStopProcessing) break;
+                try
+                {
+                    int bufferSize = 8 * 1024;
+                    using (FileStream sourceStream = new FileStream(zipOutputFullFilePathName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
+                    {
+                        using (FileStream fileStream = new FileStream(outputFileFullPath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
+                        {
+                            fileStream.SetLength(sourceStream.Length);
+                            int bytesRead = -1;
+                            byte[] bytes = new byte[bufferSize];
+
+                            if (isStopProcessing) break;
+                            while ((bytesRead = sourceStream.Read(bytes, 0, bufferSize)) > 0)
+                            {
+                                fileStream.Write(bytes, 0, bytesRead);
+                                totalTransferredByte += bytesRead;
+
+                                //update progress bar, not that much
+                                if ((totalTransferredByte - totalTransferredByteUpdateProgressCtr) >= totalTransferredByteUpdateProgress)
+                                {
+                                    totalTransferredByteUpdateProgressCtr = totalTransferredByte;
+                                    Application.DoEvents();
+                                    progressBarStatus.Value = ConverterUtils.GetPercentageFloored(totalTransferredByte, totalFileOutputSize);
+                                }
+                            }
+                            fileStream.Flush();
+                            txtBoxCurrentAction.Text = "Copying output Zip Archive to => " + targetOutputFolder;
+                            AddLogItems("Copy Output File", String.Format(@"Copy successful: {0}", outputFileFullPath));
+                        }
+                    }
+                    progressBarStatus.Value = ConverterUtils.GetPercentageFloored(totalTransferredByte, totalFileOutputSize);
+                }
+                catch (Exception ex)
+                {
+                    AddLogItems("Copy Ouput File", String.Format(@"Failed: {0}\{1}. / Error message: {2}", targetOutputFolder, zipOutputFile.Name, ex.Message));
+                    Console.WriteLine(ex);
+                }
+            }
+            if (isStopProcessing)
+            {
+                txtBoxCurrentAction.Text = "Copying has been halted...";
+                AddLogItems("Copy Output File", "Cpoying has been halted...");
+                progressBarStatus.Value = progressBarStatus.Maximum;
+            }
+        }
         private void ZipArchiving_ProgressStatus(object sender, ZipArchivingEventArgs e)
         {
             if(this.progressBarStatus.Value != e.ProgressStatusPercentage)
             {
-                this.progressBarStatus.Value = e.ProgressStatusPercentage;
+
+                if (e.ProgressStatusPercentage > 100)
+                {
+                    this.progressBarStatus.Value = 100;
+                }
+                else
+                {
+                    this.progressBarStatus.Value = e.ProgressStatusPercentage;
+                }              
             }
             DisplayProcessedFile(e);
         }
@@ -107,7 +183,6 @@ namespace OneClickZip.Forms.Options
         {
             DisplayProcessedFile(e);
         }
-
         private void DisplayProcessedFile(ZipArchivingEventArgs e)
         {
             Application.DoEvents();
@@ -121,15 +196,23 @@ namespace OneClickZip.Forms.Options
             }
             else if (e.ProcessingStage == ZipProcessingStages.ADDING_FILE || e.ProcessingStage == ZipProcessingStages.ADDING_FILE_FAILED)
             {
-                String fail = (e.ProcessingStage == ZipProcessingStages.ADDING_FILE) ? "" : "Failed";
-                txtBoxCurrentAction.Text = String.Format("Adding File {0} => ", fail) + e.ZipFileToCreateFullPath;
-                AddLogItems(String.Format("Adding File {0}", fail), e.ZipFileToCreateFullPath);
+                String addingStatus = (e.ProcessingStage == ZipProcessingStages.ADDING_FILE) ? "" : "Failed";
+                txtBoxCurrentAction.Text = String.Format("Adding File {0} => {1}", addingStatus, e.ZipFileToCreateFullPath);
+                AddLogItems(String.Format("Adding File {0}", addingStatus), e.ZipFileToCreateFullPath);
                 lblFilesAdded.Text = String.Format("{0}% > {1}",
                     ConverterUtils.GetPercentageFloored(e.FilesProcessedCount, zipFileStatisticsModel.EstimatedFilesCount),
                     zipFileStatisticsModel.EstimatedFilesCount);
+                lblArchivedSize.Text = ConverterUtils.HumanReadableFileSize(e.ArchiveSize, 2);
+            }
+            else if (e.ProcessingStage == ZipProcessingStages.GENERATE_SERIALIZED_TREE_NODE_BASE_FILTER_RULE)
+            {
+                txtBoxCurrentAction.Text = String.Format("Constructing dynamic filter folder => {0}", e.ZipFileToCreateFullPath);
+            }
+            else if (e.ProcessingStage == ZipProcessingStages.POST_PROCESSING)
+            {
+                txtBoxCurrentAction.Text = "Writing the Zip file into the target folder...";
             }
         }
-
         private void OpenProjectFileForZipping()
         {
             SerializableTreeNode serializedTreeNode = null;
@@ -152,7 +235,6 @@ namespace OneClickZip.Forms.Options
             zipArchiving.CompressionLevelArchiving = CompressionLevel.Optimal;
             zipArchiving.StartArchiving();
         }
-        
         private void GetStatistic(ZipFileStatisticsModel statObj)
         {
             zipFileStatisticsModel = statObj;
@@ -160,13 +242,11 @@ namespace OneClickZip.Forms.Options
             lblTotalFoldersCount.Text = zipFileStatisticsModel.EstimatedFoldersCount.ToString();
             lblEstimatedSize.Text = ConverterUtils.HumanReadableFileSize(zipFileStatisticsModel.EstimatedFileSizeCount, 2);
         }
-        
         private void timerElapseTime_Tick(object sender, EventArgs e)
         {
             elapseTime++;
             lblElapsedTime.Text = ConverterUtils.ConvertToHourMinuteSeconds(elapseTime);
         }
-        
         private void btnExit_Click(object sender, EventArgs e)
         {
             if (isWindowCanBeClose)
@@ -179,13 +259,12 @@ namespace OneClickZip.Forms.Options
                 btnStop_Click(null, null);
             }
         }
-        
         private void btnStop_Click(object sender, EventArgs e)
         {
             zipArchiving.StopArchiving();
             btnStop.Enabled = false;
+            isStopProcessing = true;
         }
-        
         private void AddLogItems(String actionLabel="", String logMessage="")
         {
             listViewLogs.Items.Add(new ListViewItem(new String[]{
@@ -196,7 +275,6 @@ namespace OneClickZip.Forms.Options
 
             listViewLogs.EnsureVisible(listViewLogs.Items.Count-1);
         }
-        
         private void copySelectedLogToolStripMenuItem_Click(object sender, EventArgs e)
         {
             StringBuilder results = new StringBuilder();
@@ -207,7 +285,6 @@ namespace OneClickZip.Forms.Options
             if (listViewLogs.SelectedItems.Count <= 0) return;
             Clipboard.SetText(results.ToString());
         }
-
         private void linkSaveLogs_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -229,12 +306,10 @@ namespace OneClickZip.Forms.Options
                 MessageBox.Show("Log file has been successfully save...", "File saving...");
             }
         }
-
         private void OneClickProcessor_FormClosed(object sender, FormClosedEventArgs e)
         {
             BeforeClosingForm();
         }
-
         private void BeforeClosingForm()
         {
             if (zipArchiving.IsProcessingForceToStop && !zipArchiving.StopProcessingSuccessful)
@@ -247,6 +322,5 @@ namespace OneClickZip.Forms.Options
             }
             this.DialogResult = DialogResult.OK;
         }
-
     }
 }

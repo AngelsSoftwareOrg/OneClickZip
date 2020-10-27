@@ -33,7 +33,7 @@ namespace OneClickZip.Includes.Utilities
         {
             foreach (Enum obj in Enum.GetValues(sourceEnum))
             {
-                if(GetEnumDescription(obj).Equals(description, StringComparison.OrdinalIgnoreCase))
+                if(GetEnumDescription(obj).Equals(description, StringComparison.InvariantCultureIgnoreCase))
                 {
                     return obj;
                 }

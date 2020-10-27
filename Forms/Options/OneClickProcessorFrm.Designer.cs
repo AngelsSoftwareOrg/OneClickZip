@@ -60,6 +60,8 @@
             this.txtBoxCurrentAction = new System.Windows.Forms.TextBox();
             this.progressBarStatus = new System.Windows.Forms.ProgressBar();
             this.timerElapseTime = new System.Windows.Forms.Timer(this.components);
+            this.lblArchivedSize = new System.Windows.Forms.Label();
+            this.lblArchiveSize = new System.Windows.Forms.Label();
             this.panelStatistic.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panelLogs.SuspendLayout();
@@ -94,6 +96,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.lblArchivedSize);
+            this.groupBox1.Controls.Add(this.lblArchiveSize);
             this.groupBox1.Controls.Add(this.lblFoldersCreated);
             this.groupBox1.Controls.Add(this.label13);
             this.groupBox1.Controls.Add(this.lblFilesAdded);
@@ -118,7 +122,7 @@
             // lblFoldersCreated
             // 
             this.lblFoldersCreated.AutoSize = true;
-            this.lblFoldersCreated.Location = new System.Drawing.Point(585, 47);
+            this.lblFoldersCreated.Location = new System.Drawing.Point(525, 47);
             this.lblFoldersCreated.Name = "lblFoldersCreated";
             this.lblFoldersCreated.Size = new System.Drawing.Size(80, 17);
             this.lblFoldersCreated.TabIndex = 10;
@@ -127,7 +131,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(462, 47);
+            this.label13.Location = new System.Drawing.Point(402, 47);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(117, 17);
             this.label13.TabIndex = 9;
@@ -136,7 +140,7 @@
             // lblFilesAdded
             // 
             this.lblFilesAdded.AutoSize = true;
-            this.lblFilesAdded.Location = new System.Drawing.Point(585, 25);
+            this.lblFilesAdded.Location = new System.Drawing.Point(525, 25);
             this.lblFilesAdded.Name = "lblFilesAdded";
             this.lblFilesAdded.Size = new System.Drawing.Size(76, 17);
             this.lblFilesAdded.TabIndex = 8;
@@ -145,7 +149,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(462, 25);
+            this.label9.Location = new System.Drawing.Point(402, 25);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(90, 17);
             this.label9.TabIndex = 7;
@@ -208,7 +212,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(462, 69);
+            this.label15.Location = new System.Drawing.Point(402, 69);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(102, 17);
             this.label15.TabIndex = 0;
@@ -217,7 +221,7 @@
             // lblElapsedTime
             // 
             this.lblElapsedTime.AutoSize = true;
-            this.lblElapsedTime.Location = new System.Drawing.Point(585, 69);
+            this.lblElapsedTime.Location = new System.Drawing.Point(525, 69);
             this.lblElapsedTime.Name = "lblElapsedTime";
             this.lblElapsedTime.Size = new System.Drawing.Size(64, 17);
             this.lblElapsedTime.TabIndex = 0;
@@ -366,6 +370,24 @@
             this.timerElapseTime.Interval = 1000;
             this.timerElapseTime.Tick += new System.EventHandler(this.timerElapseTime_Tick);
             // 
+            // lblArchivedSize
+            // 
+            this.lblArchivedSize.AutoSize = true;
+            this.lblArchivedSize.Location = new System.Drawing.Point(824, 25);
+            this.lblArchivedSize.Name = "lblArchivedSize";
+            this.lblArchivedSize.Size = new System.Drawing.Size(74, 17);
+            this.lblArchivedSize.TabIndex = 12;
+            this.lblArchivedSize.Text = "0.00 bytes";
+            // 
+            // lblArchiveSize
+            // 
+            this.lblArchiveSize.AutoSize = true;
+            this.lblArchiveSize.Location = new System.Drawing.Point(658, 25);
+            this.lblArchiveSize.Name = "lblArchiveSize";
+            this.lblArchiveSize.Size = new System.Drawing.Size(169, 17);
+            this.lblArchiveSize.TabIndex = 11;
+            this.lblArchiveSize.Text = "Processed Archived Size:";
+            // 
             // OneClickProcessorFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -426,5 +448,7 @@
         private System.Windows.Forms.ColumnHeader columnAction;
         private System.Windows.Forms.LinkLabel linkSaveLogs;
         private System.Windows.Forms.Button btnStop;
+        private System.Windows.Forms.Label lblArchivedSize;
+        private System.Windows.Forms.Label lblArchiveSize;
     }
 }

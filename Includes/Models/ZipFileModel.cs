@@ -18,7 +18,7 @@ namespace OneClickZip.Includes.Models
         private SerializableTreeNode treeViewZipFileStructure;
         private FileNameCreator fileNameCreator;
         private String filePath;
-        private String targetDropFileLocationPath;
+        private TargetOutputLocationModel targetOutputLocationModel;
 
         public ZipFileModel()
         {
@@ -31,8 +31,6 @@ namespace OneClickZip.Includes.Models
             this.treeViewZipFileStructure = new SerializableTreeNode();
             SetTreeViewZipFileStructureForFileWriting(treeNodeExtended);
         }
-
-        public string ZipFileName { get => fileNameCreator.FileFormulaName; }
 
         public TreeNodeExtended GetTreeViewZipFileStructure() {
             return SerializableTreeViewOperation.fnPrepareToRead(treeViewZipFileStructure);
@@ -55,22 +53,12 @@ namespace OneClickZip.Includes.Models
         
         public string FilePath { get => filePath; set => filePath = value; }
         
-        public string TargetDropFileLocationPath { 
-            get 
-            {
-                if (String.IsNullOrWhiteSpace(targetDropFileLocationPath)) return FileSystemUtilities.GetDefaultDirectory();
-                if(!Directory.Exists(targetDropFileLocationPath)) return FileSystemUtilities.GetDefaultDirectory();
-                return targetDropFileLocationPath;
-            }
-            set => targetDropFileLocationPath = value; 
-        }
-
         public String GetFullPathFileAndNameOfNewZipArchive
         {
             get
             {
-                String targetPath = TargetDropFileLocationPath.Trim();
-                if(!TargetDropFileLocationPath.EndsWith(@"\")) targetPath += @"\";
+                String targetPath = TargetOutputLocationModel.MainTargetLocation.Trim();
+                if(!TargetOutputLocationModel.MainTargetLocation.EndsWith(@"\")) targetPath += @"\";
                 return String.Format(@"{0}{1}.zip", targetPath, fileNameCreator.GetDerivedFormula());
             }
         }
@@ -91,6 +79,27 @@ namespace OneClickZip.Includes.Models
                     FileInfo fileInfo = new FileInfo(filePath);
                     return fileInfo.Name;
                 }
+            }
+        }
+
+        public TargetOutputLocationModel TargetOutputLocationModel 
+        {
+            get
+            {
+                if (targetOutputLocationModel == null)
+                    targetOutputLocationModel = new TargetOutputLocationModel(FileSystemUtilities.GetDefaultDirectory());
+                if (!Directory.Exists(targetOutputLocationModel.MainTargetLocation))
+                {
+                    TargetOutputLocationModel tmp = new TargetOutputLocationModel(FileSystemUtilities.GetDefaultDirectory());
+                    tmp.AddRange(targetOutputLocationModel.GetTargetLocations());
+                    targetOutputLocationModel = (TargetOutputLocationModel) tmp.Clone();
+                    return targetOutputLocationModel;
+                }
+                return targetOutputLocationModel;
+            }
+            set
+            {
+                targetOutputLocationModel = value;
             }
         }
     }

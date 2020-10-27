@@ -259,6 +259,21 @@ namespace OneClickZip.Includes.Classes.Extensions
             }
             return null;
         }
+    
+        public bool IsNodeExisting(String nodeName)
+        {
+            foreach (TreeNodeExtended currNode in this.Nodes)
+            {
+                if (currNode.Text.Equals(nodeName, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+    
+    
     }
 
 }
