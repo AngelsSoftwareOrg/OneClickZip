@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualBasic.CompilerServices;
+using Microsoft.Win32.SafeHandles;
 
 namespace OneClickZip.Includes.Models.Events
 {
@@ -27,5 +30,6 @@ namespace OneClickZip.Includes.Models.Events
         public CustomFileItem CustomFileItem { get; set; }
         public long FolderProcessedCount { get; set; }
         public long FilesProcessedCount { get; set; }
+        public long ArchiveSize { get; set; }
     }
 }

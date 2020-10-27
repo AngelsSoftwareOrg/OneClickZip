@@ -43,7 +43,7 @@ namespace OneClickZip.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
         public string app_version_patch {
             get {
                 return ((string)(this["app_version_patch"]));
@@ -97,7 +97,7 @@ namespace OneClickZip.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://github.com/AngelsCheeseBurgerOrg/OneClickZip")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://github.com/AngelsSoftwareOrg/OneClickZip")]
         public string about_website_link {
             get {
                 return ((string)(this["about_website_link"]));
@@ -110,10 +110,6 @@ namespace OneClickZip.Properties {
         public string LAST_OPENED_DIRECTORY {
             get {
                 return ((string)(this["LAST_OPENED_DIRECTORY"]));
-            }
-            set
-            {
-                this["LAST_OPENED_DIRECTORY"] = (string)value;
             }
         }
     }

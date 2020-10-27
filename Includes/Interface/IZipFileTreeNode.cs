@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OneClickZip.Includes.Classes;
 using OneClickZip.Includes.Classes.TreeNodeSerialize;
+using OneClickZip.Includes.Models;
 using OneClickZip.Includes.Models.Types;
 
 namespace OneClickZip.Includes.Interface
@@ -19,7 +20,7 @@ namespace OneClickZip.Includes.Interface
         string ToolTipText { get; set; }
         string Text { get; set; }
         List<SerializableTreeNode> Nodes { get; set; }
-        ArrayList MasterListFilesDir { get; set; }
+        List<CustomFileItem> MasterListFilesDir { get; set; }
         bool IsFolderIsTreeViewNode { get; set; }
         bool IsFolderIsFileViewNode { get; set; }
         bool IsRootNode { get; set; }

@@ -58,6 +58,9 @@
     <ApplicationIcon>Logo-icon-64px.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DotNetZip, Version=1.14.0.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
+      <HintPath>packages\DotNetZip.1.14.0\lib\net40\DotNetZip.dll</HintPath>
+    </Reference>
     <Reference Include="ExpTreeLib, Version=3.0.2.1143, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\ExpTreeLib.3.2.0\lib\ExpTreeLib.dll</HintPath>
     </Reference>
@@ -123,6 +126,18 @@
     <Compile Include="Forms\Help\AboutFrm.Designer.cs">
       <DependentUpon>AboutFrm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Loading\CrawlerProgressScreenFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Loading\CrawlerProgressScreenFrm.Designer.cs">
+      <DependentUpon>CrawlerProgressScreenFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Loading\SplashScreenDesignerFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Loading\SplashScreenDesignerFrm.Designer.cs">
+      <DependentUpon>SplashScreenDesignerFrm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Options\FilterRuleFrm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -146,6 +161,12 @@
     </Compile>
     <Compile Include="Forms\Options\FileNameCreatorFrm.Designer.cs">
       <DependentUpon>FileNameCreatorFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Options\TargetLocationsFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Options\TargetLocationsFrm.Designer.cs">
+      <DependentUpon>TargetLocationsFrm.cs</DependentUpon>
     </Compile>
     <Compile Include="Includes\Classes\DefaultIcons.cs" />
     <Compile Include="Includes\Classes\Extensions\ControlExtensions.cs" />
@@ -181,6 +202,7 @@
     <Compile Include="Includes\Models\ApplicationArgumentModel.cs" />
     <Compile Include="Includes\Models\CreatorModel.cs" />
     <Compile Include="Includes\Models\CustomFileItem.cs" />
+    <Compile Include="Includes\Models\Events\CrawlerProgressScreenEventArgs.cs" />
     <Compile Include="Includes\Models\Events\GeneratingSerializeTreeNodeEventArgs.cs" />
     <Compile Include="Includes\Models\Events\GeneratingSerializeTreeNodeProcessingStage.cs" />
     <Compile Include="Includes\Models\Events\ZipArchivingEventArgs.cs" />
@@ -191,6 +213,7 @@
     <Compile Include="Includes\Models\RandomNumberGeneratorModel.cs" />
     <Compile Include="Includes\Models\DateCreatorModel.cs" />
     <Compile Include="Includes\Classes\Extensions\TreeNodeExtended.cs" />
+    <Compile Include="Includes\Models\TargetOutputLocationModel.cs" />
     <Compile Include="Includes\Models\Types\FolderType.cs" />
     <Compile Include="Includes\Models\Types\ListviewUseCase.cs" />
     <Compile Include="Includes\Models\ZipFileModel.cs" />
@@ -215,6 +238,12 @@
       <DependentUpon>AboutFrm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Loading\CrawlerProgressScreenFrm.resx">
+      <DependentUpon>CrawlerProgressScreenFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Loading\SplashScreenDesignerFrm.resx">
+      <DependentUpon>SplashScreenDesignerFrm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
@@ -229,6 +258,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Options\FileNameCreatorFrm.resx">
       <DependentUpon>FileNameCreatorFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Options\TargetLocationsFrm.resx">
+      <DependentUpon>TargetLocationsFrm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -269,6 +301,26 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Supporting Files\actual_used_images\Exit_48.png" />
+    <None Include="Resources\Supporting Files\actual_used_images\Exit_32.png" />
+    <None Include="Resources\Supporting Files\actual_used_images\Exit_20.png" />
+    <None Include="Resources\Supporting Files\actual_used_images\Download_Progress_48.png" />
+    <None Include="Resources\Supporting Files\actual_used_images\design_20.png" />
+    <None Include="Resources\Supporting Files\actual_used_images\copy_to_clipboard_20.png" />
+    <None Include="Resources\Supporting Files\actual_used_images\Button-Stop-icon-24px.png" />
+    <None Include="Resources\Supporting Files\actual_used_images\Button-Play-icon-24px.png" />
+    <None Include="Resources\Supporting Files\actual_used_images\broom_20.png" />
+    <None Include="Resources\Supporting Files\actual_used_images\add_row_20.png" />
+    <None Include="Resources\Supporting Files\actual_used_images\add_collection_256.png" />
+    <None Include="Resources\Supporting Files\actual_used_images\stop_32.png" />
+    <None Include="Resources\Supporting Files\actual_used_images\statistic_20.png" />
+    <None Include="Resources\Supporting Files\actual_used_images\Save-icon-256px.png" />
+    <None Include="Resources\Supporting Files\actual_used_images\Save-icon-24px.png" />
+    <None Include="Resources\Supporting Files\actual_used_images\save_v1_32.png" />
+    <None Include="Resources\Supporting Files\actual_used_images\save_and_exit_32.png" />
+    <None Include="Resources\Supporting Files\actual_used_images\remove_collection_256.png" />
+    <None Include="Resources\Supporting Files\actual_used_images\no_connection_20.png" />
+    <None Include="Resources\Supporting Files\actual_used_images\Icons-Raw-batch1.png" />
     <None Include="Resources\Supporting Files\Exit_20.png" />
     <None Include="Resources\Supporting Files\design_256.png" />
     <None Include="Resources\Supporting Files\design_64.png" />

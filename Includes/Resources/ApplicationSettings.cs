@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OneClickZip.Includes.Classes;
 using OneClickZip.Includes.Utilities;
 
 namespace OneClickZip.Includes.Resources
@@ -12,9 +7,8 @@ namespace OneClickZip.Includes.Resources
     {
         public static String GetLastOpenedDirectory()
         {
-            String dir = Properties.Settings.Default.LAST_OPENED_DIRECTORY;
-            if (dir == null) return FileSystemUtilities.GetDefaultDirectory();
-            if (dir.Trim() == "") return FileSystemUtilities.GetDefaultDirectory();
+            String dir = LastOpenedDirectory;
+            if (String.IsNullOrWhiteSpace(dir)) return FileSystemUtilities.GetDefaultDirectory();
 
             if (FileSystemUtilities.IsFullPathIsDirectory(dir.Trim()))
             {
@@ -27,8 +21,29 @@ namespace OneClickZip.Includes.Resources
         }
         public static void SaveLastOpenedDirectory(String lastOpenedPath)
         {
-            Properties.Settings.Default.LAST_OPENED_DIRECTORY = lastOpenedPath;
+            LastOpenedDirectory = lastOpenedPath;
             Properties.Settings.Default.Save();
+        }
+        private static String LastOpenedDirectory
+        {
+            get{
+                return Properties.Settings.Default.LAST_OPENED_DIRECTORY;
+            }
+            set
+            {
+                Properties.Settings.Default["LAST_OPENED_DIRECTORY"] = (string)value;
+            }
+        }
+        public static String ApplicationVersion
+        {
+            get
+            {
+                return String.Format("v{0}.{1}.{2} {3}",
+                            Properties.Settings.Default.app_version_major,
+                            Properties.Settings.Default.app_version_minor,
+                            Properties.Settings.Default.app_version_patch,
+                            Properties.Settings.Default.app_version_revision);
+            }
         }
     }
 }

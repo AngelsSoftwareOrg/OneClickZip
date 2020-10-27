@@ -1,4 +1,5 @@
 ﻿using ExpTreeLib;
+using OneClickZip.Forms.Loading;
 using OneClickZip.Includes.Classes.Extensions;
 using OneClickZip.Includes.Models;
 using OneClickZip.Includes.Models.Types;
@@ -16,50 +17,115 @@ namespace OneClickZip.Includes.Classes
 {
     public class TreeNodeInterpreter
     {
-        private static readonly char[] INVALID_NODE_NAME_CHARS = new char[] { '@', ',' }; //ORIGINAL{ '@', '.', ',', '!' };
+        private ListViewInterpretor listViewInterpretor = new ListViewInterpretor();
+        private CrawlerProgressScreenFrm crawlerProgressScreen = new CrawlerProgressScreenFrm();
+        private long showProgressDialogCtr = 0;
+        private long showProgressDialogAtThisCount = 50;
+        private bool _cancelBulkAddFilesFolders = false;
 
-        private static long folderCount = 0;
-        private static long fileCount = 0;
+        public TreeNodeInterpreter()
+        {
+            ResetCrawlerDialog();
+            //Bind Events
+            crawlerProgressScreen.CancelProgressEvent += CrawlerProgressScreen_CancelProgressEvent;
+        }
 
+        #region Crawler Progress Dialog Related Functions
+        private void ShowProgressDialogForm()
+        {
+            if (crawlerProgressScreen.Visible) return;
+
+            showProgressDialogCtr++;
+            if (showProgressDialogCtr % showProgressDialogAtThisCount == 0) //show the progress dialog after this count
+            {
+                crawlerProgressScreen.Show();
+            }
+        }
+
+        private void CrawlerProgressScreen_CancelProgressEvent(object sender, Models.Events.CrawlerProgressScreenEventArgs e)
+        {
+            CancelBulkAddFilesFolders = true;
+        }
+
+        private void AddingFolderCrawlerStatus(String fullPathName)
+        {
+            if (!crawlerProgressScreen.Visible) return;
+            crawlerProgressScreen.StatusText = "Adding => " + fullPathName;
+        }
+
+        private void StartCrawlerDialog()
+        {
+            ResetCrawlerDialog();
+        }
+
+        private void ResetCrawlerDialog()
+        {
+            crawlerProgressScreen.ResetForms();
+            crawlerProgressScreen.Title = "Adding files and folders...";
+            showProgressDialogCtr = 0;
+            CancelBulkAddFilesFolders = false;
+            crawlerProgressScreen.Visible = false;
+            crawlerProgressScreen.Hide();
+        }
+
+        public bool CancelBulkAddFilesFolders { get => _cancelBulkAddFilesFolders; set => _cancelBulkAddFilesFolders = value; }
+
+        #endregion
 
         ///
         /// true = the node to add are already existing on the current selected tree node
         /// false = the node to add was not existing on the selected node of the tree
         ///
-        public static bool AddRecursiveNode(TreeNodeExtended targetTreeNode, CustomFileItem customFileItem)
+        public bool AddRecursiveNode(TreeNodeExtended targetTreeNode, CustomFileItem customFileItem)
         {
-            folderCount = 0;
-            fileCount = 0;
-            bool isExistingParentNode = IsNodeExisting(targetTreeNode, customFileItem);
+            bool isExistingParentNode = targetTreeNode.IsNodeExisting(customFileItem.GetCustomFileName);
             TreeNodeExtended selectedNode = AddParentDirectory(targetTreeNode, customFileItem);
             if (isExistingParentNode) return isExistingParentNode;
             if (customFileItem.DirectoriesCount <= 0) return false;
+            AddingFolderCrawlerStatus(customFileItem.FilePathFull);
             AddSubDirectories(selectedNode, customFileItem);
             return isExistingParentNode;
         }
 
-        private static void AddSubDirectories(TreeNodeExtended targetTreeNode, CustomFileItem customFileItem)
+        private void AddSubDirectories(TreeNodeExtended targetTreeNode, CustomFileItem customFileItem)
         {
+            if (CancelBulkAddFilesFolders) return;
             foreach (CustomFileItem itemDir in customFileItem.GetShellInfoDirectories())
             {
-                if (!IsNodeExisting(targetTreeNode, customFileItem))
+
+                //DEBUGGING
+                if (itemDir.FilePathFull.Contains(@"Games") ||
+                    itemDir.FilePathFull.Contains(@"ojt"))
                 {
+                    bool xc = false;
+                }
+
+                Application.DoEvents();
+                if (CancelBulkAddFilesFolders) return;
+                ShowProgressDialogForm();
+                if (!targetTreeNode.IsNodeExisting(itemDir.GetCustomFileName))
+                {
+                    AddingFolderCrawlerStatus(customFileItem.FilePathFull);
                     TreeNodeExtended treeNode = new TreeNodeExtended();
                     treeNode.Name = itemDir.GetCustomFileName; //key of this node
                     treeNode.Text = itemDir.GetCustomFileName;
                     TagAllObjects(treeNode, itemDir);
                     treeNode.SetTreeNodeIcon(itemDir);
                     targetTreeNode.Nodes.Add(treeNode);
-                    TreeNodeInterpreter.AddSubDirectories(treeNode, itemDir);
+                    AddSubDirectories(treeNode, itemDir);
                 }
                 else
                 {
-                    TreeNodeInterpreter.AddSubDirectories((TreeNodeExtended) targetTreeNode.Nodes[0], customFileItem);
+                    AddingFolderCrawlerStatus(itemDir.FilePathFull);
+                    if (targetTreeNode.Nodes.Count > 0)
+                    {
+                        AddSubDirectories((TreeNodeExtended)targetTreeNode.Nodes[0], itemDir);
+                    }
                 }
             }
         }
 
-        public static void AddRootItemFilesAsNode(TreeNodeExtended targetTreeNode, CustomFileItem customeFileItem)
+        public void AddRootItemFilesAsNode(TreeNodeExtended targetTreeNode, CustomFileItem customeFileItem)
         {
             TreeNodeExtended treeNode = new TreeNodeExtended();
             treeNode.Name = customeFileItem.KeyName; //key of this node
@@ -70,7 +136,7 @@ namespace OneClickZip.Includes.Classes
             targetTreeNode.Nodes.Add(treeNode);
         }
 
-        public static TreeNodeExtended AddNewCustomFolderNode(TreeView treeView, FolderType folderType = FolderType.TreeView)
+        public TreeNodeExtended AddNewCustomFolderNode(TreeView treeView, FolderType folderType = FolderType.TreeView)
         {
             TreeNodeExtended selectedNode = (TreeNodeExtended)treeView.SelectedNode;
             CustomFileItem customFileItem = new CustomFileItem(ValidateAndGenerateUniqueName(selectedNode, "New folder"))
@@ -87,7 +153,7 @@ namespace OneClickZip.Includes.Classes
             return treeNode;
         }
         
-        private static String ValidateAndGenerateUniqueName(TreeNodeExtended selectedNode, String startingUniqueName)
+        private String ValidateAndGenerateUniqueName(TreeNodeExtended selectedNode, String startingUniqueName)
         {
             String customFileName = startingUniqueName.ToString() ;
             bool notYetUniqueName = true;
@@ -111,10 +177,10 @@ namespace OneClickZip.Includes.Classes
             return customFileName;
         }
 
-        private static TreeNodeExtended AddParentDirectory(TreeNodeExtended targetTreeNode, CustomFileItem customFileItem)
+        private TreeNodeExtended AddParentDirectory(TreeNodeExtended targetTreeNode, CustomFileItem customFileItem)
         {
             if (!customFileItem.IsFolder) return targetTreeNode;
-            if (IsNodeExisting(targetTreeNode, customFileItem)) return targetTreeNode;
+            if (targetTreeNode.IsNodeExisting(customFileItem.GetCustomFileName)) return targetTreeNode;
             TreeNodeExtended treeNode = new TreeNodeExtended();
             treeNode.Name = customFileItem.GetCustomFileName; //key of this node
             treeNode.Text = customFileItem.GetCustomFileName;
@@ -124,37 +190,28 @@ namespace OneClickZip.Includes.Classes
             return treeNode;
         }
 
-        private static void TagAllObjects(TreeNodeExtended treeNode, CustomFileItem customFileItem)
+        private void TagAllObjects(TreeNodeExtended treeNode, CustomFileItem customFileItem)
         {
             foreach (CustomFileItem cshFile in customFileItem.GetShellInfoFiles())
             {
+                Application.DoEvents();
+                AddingFolderCrawlerStatus(cshFile.FilePathFull);
                 _ = AddTagObject(treeNode, cshFile);
             }
             foreach (CustomFileItem cshFile in customFileItem.GetShellInfoDirectories())
             {
+                Application.DoEvents();
                 _ = AddTagObject(treeNode, cshFile);
             }
         }
         
-        public static ArrayList AddTagObject(TreeNodeExtended treeNode, CustomFileItem customFileItem)
+        public List<CustomFileItem> AddTagObject(TreeNodeExtended treeNode, CustomFileItem customFileItem)
         {
             treeNode.AddItem(customFileItem);
             return treeNode.MasterListFilesDir;
         }
 
-        private static Boolean IsNodeExisting(TreeNodeExtended targetTreeNode, CustomFileItem customFileItem)
-        {
-            foreach(TreeNode currNode in targetTreeNode.Nodes)
-            {
-                if(currNode.Text.Equals(customFileItem.GetCustomFileName, StringComparison.CurrentCultureIgnoreCase))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public static void NewZipStructureProcedure(TreeView targetTreeView, ListviewExtended targetListview)
+        public void NewZipStructureProcedure(TreeView targetTreeView, ListviewExtended targetListview)
         {
             targetTreeView.Nodes.Clear();
             targetListview.Items.Clear();
@@ -165,48 +222,48 @@ namespace OneClickZip.Includes.Classes
             SelectSelectedNodeBgColor(targetTreeView);
         }
 
-        public static bool IsSelectedZipModelNodeRoot(TreeView targetTreeView)
+        public bool IsSelectedZipModelNodeRoot(TreeView targetTreeView)
         {
             return GetSelectedNode(targetTreeView).IsRootNode;
         }
 
-        public static void SelectSelectedNodeBgColor(TreeView targetTreeView)
+        public void SelectSelectedNodeBgColor(TreeView targetTreeView)
         {
             if (targetTreeView.SelectedNode == null) return;
             targetTreeView.SelectedNode.BackColor = Color.Gray;
         }
 
-        public static void RemovePreviousSelectedNodeBgColor(TreeView targetTreeView)
+        public void RemovePreviousSelectedNodeBgColor(TreeView targetTreeView)
         {
             if (targetTreeView.SelectedNode == null) return;
             targetTreeView.SelectedNode.BackColor = Color.Empty;
         }
 
-        public static bool AddZipFileNode(TreeView targetTreeView, CustomFileItem customeFileItem)
+        public bool AddZipFileNode(TreeView targetTreeView, CustomFileItem customFileItem)
         {
             TreeNodeExtended selectedNode = GetSelectedNode(targetTreeView);
-            bool isExistingNode = AddRecursiveNode(selectedNode, customeFileItem);
+            bool isExistingNode = AddRecursiveNode(selectedNode, customFileItem);
 
-            if (IsSelectedZipModelNodeRoot(targetTreeView) && !customeFileItem.IsFolder && !isExistingNode)
+            if (IsSelectedZipModelNodeRoot(targetTreeView) && !customFileItem.IsFolder && !isExistingNode)
             {
-                AddRootItemFilesAsNode(selectedNode, customeFileItem);
+                AddRootItemFilesAsNode(selectedNode, customFileItem);
             }
             return isExistingNode;
         }
 
-        public static void PutTheSelectedFilesAndDirOnSelectedTreeNode(ListviewExtended targetListView, TreeView targetTreeView, ListView.SelectedListViewItemCollection lstViewColl)
+        public void PutTheSelectedFilesAndDirOnSelectedTreeNode(ListviewExtended targetListView, TreeView targetTreeView, ListView.SelectedListViewItemCollection lstViewColl)
         {
             targetTreeView.BeginUpdate();
             targetListView.BeginUpdate();
+            StartCrawlerDialog();
             foreach (ListViewItemExtended lvItem in lstViewColl)
             {
-
                 //if node are not yet existed on the currently selected node of the tree
                 if (!AddZipFileNode(targetTreeView, lvItem.CustomFileItem))
                 {
                     TreeNodeExtended selectedNode = GetSelectedNode(targetTreeView);
                     AddTagObject(selectedNode, lvItem.CustomFileItem);
-                    ListViewInterpretor.GenerateListViewZipFileViewItems(new ListViewInterpretorViewingParamModel()
+                    listViewInterpretor.GenerateListViewZipFileViewItems(new ListViewInterpretorViewingParamModel()
                     {
                         SelectedTreeNodeExtended = selectedNode,
                         TargetListView = (ListviewExtended) targetListView,
@@ -214,11 +271,12 @@ namespace OneClickZip.Includes.Classes
                     });
                 }
             }
+            ResetCrawlerDialog();
             targetTreeView.EndUpdate();
             targetListView.EndUpdate();
         }
 
-        public static void RemoveSelectedNode(TreeView targetTreeView, ListviewExtended targetListView)
+        public void RemoveSelectedNode(TreeView targetTreeView, ListviewExtended targetListView)
         {
             if (targetTreeView.SelectedNode == null) return;
             if (IsSelectedZipModelNodeRoot(targetTreeView))
@@ -238,15 +296,15 @@ namespace OneClickZip.Includes.Classes
             selectedNode.Remove();
             targetTreeView.SelectedNode = nextSelectedNode;
             SelectSelectedNodeBgColor(targetTreeView);
-            ListViewInterpretor.RefreshListViewItemsForZipFileDesigner(targetListView, nextSelectedNode);
+            listViewInterpretor.RefreshListViewItemsForZipFileDesigner(targetListView, nextSelectedNode);
         }
 
-        public static void RefreshToShowTreeViewIcons(TreeView targetTreeView)
+        public void RefreshToShowTreeViewIcons(TreeView targetTreeView)
         {
             targetTreeView.ImageList = DefaultIcons.SYSTEM_ICONS.SmallIconsImageList;
         }
     
-        public static ZipFileStatisticsModel GetZipFileStatisticsModel(TreeView targetTreeview)
+        public ZipFileStatisticsModel GetZipFileStatisticsModel(TreeView targetTreeview)
         {
             ZipFileStatisticsModel statistic = new ZipFileStatisticsModel();
             if (targetTreeview.Nodes.Count <= 0) return statistic;
@@ -254,7 +312,7 @@ namespace OneClickZip.Includes.Classes
             return statistic;
         }
 
-        public static bool IsValidNodeName(TreeNodeExtended targetNode, String nodeName)
+        public bool IsValidNodeName(TreeNodeExtended targetNode, String nodeName)
         {
             nodeName = nodeName.Trim();
             if (nodeName.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0) return false;
@@ -262,7 +320,7 @@ namespace OneClickZip.Includes.Classes
             //The duplicate name count should be one, one means the file itself
             foreach(CustomFileItem item in targetNode.MasterListFilesDir)
             {
-                if (item.GetCustomFileName.Trim().Equals(nodeName, StringComparison.OrdinalIgnoreCase))
+                if (item.GetCustomFileName.Trim().Equals(nodeName, StringComparison.InvariantCultureIgnoreCase))
                 {
                     return false;
                 }
@@ -270,19 +328,19 @@ namespace OneClickZip.Includes.Classes
             return true;
         }
 
-        public static void RenameNode(TreeNodeExtended selectedNode, String newName)
+        public void RenameNode(TreeNodeExtended selectedNode, String newName)
         {
             TreeNodeExtended targetNode = (TreeNodeExtended)selectedNode.Parent;
             targetNode.UpdateCustomFileItemDisplayText(selectedNode.Text, newName);
             selectedNode.Text = (selectedNode.Text + " ").Trim();
         }
     
-        public static TreeNodeExtended GetRootNode(TreeView treeView)
+        public TreeNodeExtended GetRootNode(TreeView treeView)
         {
             return (TreeNodeExtended)treeView.Nodes[0];
         }
 
-        public static void SetTreeNodeFromOpeningAFile(TreeNodeExtended source, TreeNodeExtended destination)
+        public void SetTreeNodeFromOpeningAFile(TreeNodeExtended source, TreeNodeExtended destination)
         {
             //must keep the ROOT node by having this function, so that seeking the root node was only
             //confined within this class.
@@ -295,7 +353,7 @@ namespace OneClickZip.Includes.Classes
             }
         }
     
-        private static TreeNodeExtended GetSelectedNode(TreeView targetTreeView)
+        private TreeNodeExtended GetSelectedNode(TreeView targetTreeView)
         {
             return  (TreeNodeExtended)((targetTreeView.SelectedNode == null)
                             ? targetTreeView.Nodes[0] : targetTreeView.SelectedNode);

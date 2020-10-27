@@ -1,4 +1,5 @@
 ﻿using OneClickZip.Forms.Help;
+using OneClickZip.Forms.Loading;
 using OneClickZip.Forms.Options;
 using OneClickZip.Includes.Classes;
 using OneClickZip.Includes.Models;
@@ -20,13 +21,13 @@ namespace OneClickZip
 
             ApplicationArgumentModel applicationArgumentModel = new ApplicationArgumentModel(args);
             ProjectSession.Instance().ApplicationArgumentModel = applicationArgumentModel;
-
             if (applicationArgumentModel.IsOpenProjectBatchFile)
             {
                 Application.Run(new OneClickProcessorFrm());
             }
             else
             {
+                SplashScreenDesignerFrm.GetIntance().Show();
                 Application.Run(new ZipDesigner());
             }
         }

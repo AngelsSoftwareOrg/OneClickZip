@@ -109,16 +109,17 @@ namespace OneClickZip.Includes.Classes.TreeNodeSerialize
 
         private static void UnserializeTreeNode(SerializableTreeNode source, TreeNodeExtended destination)
         {
+            //destination.IsRootNode = source.IsRootNode; //no need
             destination.Name = source.Name;
             destination.Tag = source.Tag;
             destination.ToolTipText = source.ToolTipText;
-            destination.ImageIndex = source.ImageIndex;
-            destination.Text = source.Text;
-            destination.SelectedImageIndex = source.SelectedImageIndex;
+            destination.Text = source.Text;          
             destination.MasterListFilesDir.AddRange(source.MasterListFilesDir.ToArray());
+            destination.ImageIndex = source.ImageIndex;
+            destination.SelectedImageIndex = source.SelectedImageIndex;
             destination.FolderType = source.FolderType;
             destination.FolderFilterRuleObj = source.FolderFilterRuleObj;
-            //destination.IsRootNode = source.IsRootNode; //no need
+            destination.ResetIconImageIndex();
         }
 
         private static void SerializeTreeNode(TreeNodeExtended source, SerializableTreeNode destination)
@@ -149,10 +150,6 @@ namespace OneClickZip.Includes.Classes.TreeNodeSerialize
             destination.Tag = (source.Tag == null) ? null : source.Tag.ToString();
             destination.Nodes.AddRange(source.Nodes);
         }
-
-
         #endregion
-
-
     }
 }
