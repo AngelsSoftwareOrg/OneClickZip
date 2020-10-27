@@ -1,4 +1,5 @@
 ﻿using OneClickZip.Includes.Resources;
+using OneClickZip.Includes.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,6 +14,7 @@ namespace OneClickZip.Includes.Models
         private List<String> listArguments = new List<String>();
         private String filePath;
         private String fileExtension;
+        private String fileName;
         private readonly String FILE_EXTENSION_FOR_PROJECT_DESIGNER = ResourcesUtil.GetFileDesignerExtensionName().Trim().ToUpper();
         private readonly String FILE_EXTENSION_FOR_PROJECT_BATCH_FILE = ResourcesUtil.GetFileBatchExtensionName().Trim().ToUpper();
         private StringBuilder allArguments;
@@ -37,6 +39,7 @@ namespace OneClickZip.Includes.Models
         {
             FileInfo fInfo = new FileInfo(this.filePath);
             this.fileExtension = fInfo.Extension.Trim().ToUpper();
+            this.fileName = fInfo.Name;
         }
 
         public String FilePath => this.filePath;
@@ -51,7 +54,6 @@ namespace OneClickZip.Includes.Models
                 return FileExtension.Contains(FILE_EXTENSION_FOR_PROJECT_DESIGNER);
             }
         }
-
         public bool IsOpenProjectBatchFile
         {
             get
@@ -60,17 +62,16 @@ namespace OneClickZip.Includes.Models
                 return FileExtension.Contains(FILE_EXTENSION_FOR_PROJECT_BATCH_FILE);
             }
         }
-
         public String GetAllArgs => this.allArguments.ToString();
-
         public bool IsFileOpenCase
         {
             get
             {
-                if (FilePath == null) return false;
-                if (FilePath == "") return false;
+                if (String.IsNullOrWhiteSpace(FilePath)) return false;
+                if (!FileSystemUtilities.IsFileExist(FilePath)) return false;
                 return true;
             }
         }
+        public string FileName { get => fileName; }
     }
 }

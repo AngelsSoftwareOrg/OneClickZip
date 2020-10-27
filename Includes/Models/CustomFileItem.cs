@@ -13,7 +13,7 @@ using OneClickZip.Includes.Utilities;
 namespace OneClickZip.Includes.Models
 {
     [Serializable]
-    public class CustomFileItem : IDisposable, IComparable
+    public class CustomFileItem : IDisposable, IComparable, ICloneable
     {
         private string keyName = String.Empty;
         private int iconIndexNormal = -1;
@@ -47,13 +47,13 @@ namespace OneClickZip.Includes.Models
             String targetPath = cshItem.Path;
             DealWithSpecialFolders(cshItem.Path, cshItem.DisplayName, ref targetPath);
             this.customFileName = fileName.Trim();
-            this.KeyName = cshItem.Name.Trim();
+            this.keyName = cshItem.Name.Trim();
             this.Tag = cshItem.Tag;
             this.lastWriteTime = cshItem.LastWriteTime;
             this.creationTime = cshItem.CreationTime;
             this.typeName = SystemFilesDirInfo.GetFileTypeDescription(targetPath);
             this.fileLength = cshItem.Length;
-            this.filePathFull = targetPath;
+            this.filePathFull = @targetPath;
             this.isFolder = FileSystemUtilities.IsFullPathIsDirectory(targetPath);
             this.FolderType = (this.isFolder) ? FolderType.TreeView : FolderType.File;
             SetIconsIndex(targetPath);
@@ -65,12 +65,12 @@ namespace OneClickZip.Includes.Models
             String targetPath = fileInfo.FullName;
             DealWithSpecialFolders(fileInfo.FullName, fileInfo.Name, ref targetPath);
             this.customFileName = fileName.Trim();
-            this.KeyName = fileInfo.Name.Trim();
+            this.keyName = fileInfo.Name.Trim();
             this.lastWriteTime = fileInfo.LastWriteTime;
             this.creationTime = fileInfo.CreationTime;
             this.typeName = SystemFilesDirInfo.GetFileTypeDescription(targetPath);
             this.fileLength = fileInfo.Length;
-            this.filePathFull = targetPath;
+            this.filePathFull = @targetPath;
             this.isFolder = false;
             this.FolderType = FolderType.File;
             SetIconsIndex(targetPath);
@@ -82,12 +82,12 @@ namespace OneClickZip.Includes.Models
             String targetPath = directoryInfor.FullName;
             DealWithSpecialFolders(directoryInfor.FullName, directoryInfor.Name, ref targetPath);
             this.customFileName = fileName.Trim();
-            this.KeyName = directoryInfor.Name.Trim();
+            this.keyName = directoryInfor.Name.Trim();
             this.lastWriteTime = directoryInfor.LastWriteTime;
             this.creationTime = directoryInfor.CreationTime;
             this.typeName = SystemFilesDirInfo.FOLDER_TYPE_DESCRIPTION;
             this.fileLength = 0;
-            this.filePathFull = targetPath;
+            this.filePathFull = @targetPath;
             this.isFolder = true;
             this.FolderType = FolderType.TreeView;
             SetIconsIndex(targetPath);
@@ -121,6 +121,7 @@ namespace OneClickZip.Includes.Models
             this.typeName = "File Folder";
             this.fileLength = 0;
         }
+        
         private void DealWithSpecialFolders(String fullPath, String fileName, ref String targetFilePath)
         {
             targetFilePath = fullPath;
@@ -129,9 +130,6 @@ namespace OneClickZip.Includes.Models
             if (this.isSpecialFolder)
             {
                 this.specialFolderFullPath = FileSystemUtilities.GetSpecialFolderFullPath(fileName);
-
-                //DEBUGGING
-                Console.WriteLine("specialFolderFullPath: " + specialFolderFullPath);
 
                 if (!String.IsNullOrWhiteSpace(this.specialFolderFullPath))
                 {
@@ -143,7 +141,6 @@ namespace OneClickZip.Includes.Models
                 }
             }
         }
-
 
         public String GetCustomFileName
         {
@@ -164,7 +161,7 @@ namespace OneClickZip.Includes.Models
         public ArrayList GetShellInfoDirectories()
         {
             ArrayList result = new ArrayList();
-            DirectoryInfo[] dInfo = FileSystemUtilities.GetDirectories(this.filePathFull);
+            DirectoryInfo[] dInfo = FileSystemUtilities.GetDirectories(FilePathFull);
             if (dInfo == null) return result;
 
             foreach (DirectoryInfo obj in dInfo)
@@ -183,7 +180,7 @@ namespace OneClickZip.Includes.Models
         public ArrayList GetShellInfoFiles()
         {
             ArrayList result = new ArrayList();
-            DirectoryInfo dInfo = new DirectoryInfo(this.filePathFull);
+            DirectoryInfo dInfo = new DirectoryInfo(FilePathFull);
             try
             {
                 foreach (FileInfo obj in dInfo.GetFiles())
@@ -215,6 +212,18 @@ namespace OneClickZip.Includes.Models
             this.Dispose();
         }
 
+        public object Clone()
+        {
+            CustomFileItem c = (CustomFileItem) this.MemberwiseClone();
+            c.keyName = (String.IsNullOrEmpty(this.keyName) ? null : String.Copy(this.keyName));
+            c.tag = this.tag;
+            c.filePathFull = (String.IsNullOrEmpty(this.filePathFull) ? null : String.Copy(this.filePathFull));
+            c.specialFolderFullPath = (String.IsNullOrEmpty(this.specialFolderFullPath) ? null : String.Copy(this.specialFolderFullPath));
+            c.customFileName = (String.IsNullOrEmpty(this.customFileName) ? null : String.Copy(this.customFileName));
+            c.typeName = (String.IsNullOrEmpty(this.typeName) ? null : String.Copy(this.typeName));
+            //(typeof(FolderType).IsValueType)
+            return c;
+        }
         public bool IsFolderIsFileViewNode
         {
             get
@@ -222,7 +231,6 @@ namespace OneClickZip.Includes.Models
                 return (FolderType == FolderType.File);
             }
         }
-
         public bool IsFolderIsTreeViewNode
         {
             get
@@ -253,7 +261,6 @@ namespace OneClickZip.Includes.Models
                 if (this.FolderType != FolderType.File) this.isFolder = true;
             }
         }
-
         public bool IsFolder { get => isFolder;}
 
         public DateTime LastWriteTime
@@ -288,7 +295,7 @@ namespace OneClickZip.Includes.Models
             }
         }
 
-        public string KeyName { get => keyName; set => keyName = value; }
+        public string KeyName { get => keyName; }
         
         public int IconIndexNormal { get => iconIndexNormal; set => iconIndexNormal = value; }
         
@@ -299,11 +306,11 @@ namespace OneClickZip.Includes.Models
         public long DirectoriesCount { 
             get 
             {
-                if (FileSystemUtilities.IsFullPathIsDirectory(this.filePathFull))
+                if (FileSystemUtilities.IsFullPathIsDirectory(FilePathFull))
                 {
-                    DirectoryInfo[] dinfo = FileSystemUtilities.GetDirectories(this.filePathFull);
+                    DirectoryInfo[] dinfo = FileSystemUtilities.GetDirectories(filePathFull);
                     if (dinfo == null) return 0;
-                    return FileSystemUtilities.GetDirectories(this.filePathFull).Length;
+                    return FileSystemUtilities.GetDirectories(FilePathFull).Length;
                 }
                 return 0;
             }
@@ -312,12 +319,29 @@ namespace OneClickZip.Includes.Models
         public long FilesCount {
             get
             {
-                DirectoryInfo dInfo = new DirectoryInfo(this.filePathFull);
-                return (FileSystemUtilities.IsFullPathIsDirectory(this.filePathFull) ? dInfo.GetFiles().Length : 0);
+                DirectoryInfo dInfo = new DirectoryInfo(FilePathFull);
+                return (FileSystemUtilities.IsFullPathIsDirectory(FilePathFull) ? dInfo.GetFiles().Length : 0);
             }
         }
-       
-        public string FilePathFull { get => filePathFull; }
 
+        public string FilePathFull { get => @filePathFull; }
+
+        // override object.Equals
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+            CustomFileItem objToCompare = (CustomFileItem)obj;
+            return (this.KeyName.Equals(objToCompare.KeyName, StringComparison.InvariantCultureIgnoreCase) &&
+                this.GetCustomFileName.Equals(objToCompare.GetCustomFileName, StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        // override object.GetHashCode
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

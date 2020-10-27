@@ -6,35 +6,42 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using OneClickZip.Includes.Classes;
 
 namespace OneClickZip
 {
     public partial class Main : Form
     {
-        ZipDesigner zipDesignerForm = null;
 
         public Main()
         {
             InitializeComponent();
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Main_Load(object sender, EventArgs e)
         {
-            Close();
+            PopulateTreeViewImageIndex();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+
+
+        private void PopulateTreeViewImageIndex()
         {
-            zipDesignerForm = new ZipDesigner();
-            zipDesignerForm.Show();
-            this.Hide();
-            zipDesignerForm.FormClosed += delegate
+            ImageList smallImageList = DefaultIcons.SYSTEM_ICONS.SmallIconsImageList;
+            treeViewImageIndex.ImageList = smallImageList;
+            ImageList.ImageCollection collection = smallImageList.Images;
+            foreach(String imageKey in collection.Keys)
             {
-                this.Show();
-                zipDesignerForm = null;
-            };
-        }
+                int index = smallImageList.Images.IndexOfKey(imageKey);
 
+                TreeNode treeNode = new TreeNode(imageKey);
+                treeNode.Name = imageKey;
+                treeNode.Text = index + "-" + imageKey;
+                treeNode.ImageIndex = index;
+                treeNode.SelectedImageIndex = index;
+                treeViewImageIndex.Nodes.Add(treeNode);
+            }
+        }
 
     }
 }

@@ -64,6 +64,7 @@ namespace OneClickZip.Includes.Utilities
     
         public static int GetPercentageFloored(long progress=0, long total=0)
         {
+            if (total <= 0) return 0;
             decimal result = ((decimal) progress / (decimal)total) * 100;
             result = Math.Floor(result);
             return int.Parse(result.ToString());

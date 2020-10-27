@@ -26,7 +26,7 @@ namespace OneClickZip.Includes.Classes.TreeNodeSerialize
         private string text = String.Empty;
         private string toolTipText = String.Empty;
 
-        private ArrayList masterListFilesDir = new ArrayList();
+        private List<CustomFileItem> masterListFilesDir = new List<CustomFileItem>();
         private FolderType folderType;
         private bool isRootNode;
         private FolderFilterRule folderFilterRuleObj;
@@ -70,7 +70,7 @@ namespace OneClickZip.Includes.Classes.TreeNodeSerialize
             get { return nodes; }
             set { nodes=value; }
         }
-        public ArrayList MasterListFilesDir { get => masterListFilesDir; set => masterListFilesDir = value; }
+        public List<CustomFileItem> MasterListFilesDir { get => masterListFilesDir; set => masterListFilesDir = value; }
         public void AddItem(CustomFileItem customFileItem)
         {
             MasterListFilesDir.Add(customFileItem);
