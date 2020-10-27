@@ -40,6 +40,7 @@ namespace OneClickZip.Forms.Options
         }
         private void OneClickProcessor_Load(object sender, EventArgs e)
         {
+            SplashScreenDesignerFrm.GetIntance().DisposeInstance();
             lblElapsedTime.Text = "00:00:00";
             lblFilesAdded.Text = "0% > 0";
             lblFoldersCreated.Text = "0% > 0";

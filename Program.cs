@@ -21,14 +21,13 @@ namespace OneClickZip
 
             ApplicationArgumentModel applicationArgumentModel = new ApplicationArgumentModel(args);
             ProjectSession.Instance().ApplicationArgumentModel = applicationArgumentModel;
-
             if (applicationArgumentModel.IsOpenProjectBatchFile)
             {
-                SplashScreenDesignerFrm.GetIntance().Show();
                 Application.Run(new OneClickProcessorFrm());
             }
             else
             {
+                SplashScreenDesignerFrm.GetIntance().Show();
                 Application.Run(new ZipDesigner());
             }
         }

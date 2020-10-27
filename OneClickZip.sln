@@ -5,16 +5,22 @@ VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneClickZip", "OneClickZip.csproj", "{90D4470D-DC6F-477C-9948-D97E121BF304}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "OneClickZipSetup", "..\OneClickZipSetup\OneClickZipSetup.vdproj", "{D2039030-7F4D-4105-ADF8-688C4B6ABC84}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{90D4470D-DC6F-477C-9948-D97E121BF304}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{90D4470D-DC6F-477C-9948-D97E121BF304}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90D4470D-DC6F-477C-9948-D97E121BF304}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{90D4470D-DC6F-477C-9948-D97E121BF304}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{90D4470D-DC6F-477C-9948-D97E121BF304}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90D4470D-DC6F-477C-9948-D97E121BF304}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2039030-7F4D-4105-ADF8-688C4B6ABC84}.Debug|Any CPU.ActiveCfg = Release
+		{D2039030-7F4D-4105-ADF8-688C4B6ABC84}.Debug|Any CPU.Build.0 = Release
+		{D2039030-7F4D-4105-ADF8-688C4B6ABC84}.Release|Any CPU.ActiveCfg = Release
+		{D2039030-7F4D-4105-ADF8-688C4B6ABC84}.Release|Any CPU.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
