@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using OneClickZip.Includes.Resources;
 
 namespace OneClickZip.Forms.Help
 {
@@ -25,11 +26,7 @@ namespace OneClickZip.Forms.Help
             txtBoxEmail.Text = Properties.Settings.Default.about_email;
             txtBoxWebsiteTitle.Text = Properties.Settings.Default.about_website_title;
             txtBoxWebSiteLink.Text = Properties.Settings.Default.about_website_link;
-            txtBoxVersion.Text = String.Format("v{0}.{1}.{2} {3}",
-                                    Properties.Settings.Default.app_version_major,
-                                    Properties.Settings.Default.app_version_minor,
-                                    Properties.Settings.Default.app_version_patch,
-                                    Properties.Settings.Default.app_version_revision);
+            txtBoxVersion.Text = ApplicationSettings.ApplicationVersion;
         }
 
         private void btnExit_Click(object sender, EventArgs e)

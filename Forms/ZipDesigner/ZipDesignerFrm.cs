@@ -658,6 +658,7 @@ namespace OneClickZip
                 this.OpenProjectDesignerFile(APPLICATION_ARGUMENT_MODEL.FilePath);
             }
             treeViewZipDesigner.TreeViewNodeSorter = this.treeNodeSorters;
+            this.Text = String.Format(@"Zip File Designer ( {0} )", ApplicationSettings.ApplicationVersion);
 
             //If file association is not yet configured
             if (!FileAssociation.IsApplicationProgramAlreadyAssociatedWith()) FileExtensionAssociation();

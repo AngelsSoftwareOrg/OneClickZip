@@ -73,7 +73,7 @@
             // 
             // txtBoxStatMsg
             // 
-            this.txtBoxStatMsg.BackColor = System.Drawing.SystemColors.Window;
+            this.txtBoxStatMsg.BackColor = System.Drawing.Color.Gainsboro;
             this.txtBoxStatMsg.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtBoxStatMsg.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtBoxStatMsg.Enabled = false;
@@ -92,7 +92,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Window;
+            this.BackColor = System.Drawing.Color.Gainsboro;
             this.ClientSize = new System.Drawing.Size(515, 387);
             this.ControlBox = false;
             this.Controls.Add(this.panelLoadingMsg);
@@ -106,7 +106,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SplashScreenDesigner";
-            this.TransparencyKey = System.Drawing.Color.White;
+            this.TransparencyKey = System.Drawing.Color.Gainsboro;
             this.Load += new System.EventHandler(this.SplashScreenDesignerFrm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panelImage.ResumeLayout(false);

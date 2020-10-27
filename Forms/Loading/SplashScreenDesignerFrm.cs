@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using OneClickZip.Includes.Classes;
 using OneClickZip.Includes.Models;
+using OneClickZip.Includes.Resources;
 
 namespace OneClickZip.Forms.Loading
 {
@@ -35,12 +36,13 @@ namespace OneClickZip.Forms.Loading
 
         private void SplashScreenDesignerFrm_Load(object sender, EventArgs e)
         {
-            txtBoxStatMsg.Text = "Loading...";
+            txtBoxStatMsg.Text = String.Format(@"App Version {0}. Loading...", ApplicationSettings.ApplicationVersion);
             ApplicationArgumentModel appArg = ProjectSession.Instance().ApplicationArgumentModel;
 
             if (appArg.IsFileOpenCase)
             {
-                txtBoxStatMsg.Text = String.Format(@"Opening project '{0}' ...", appArg.FileName);
+                txtBoxStatMsg.Text = String.Format(@"App Version {0}. Opening project '{1}' ...", 
+                    ApplicationSettings.ApplicationVersion, appArg.FileName);
             }
         }
 

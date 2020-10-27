@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OneClickZip.Includes.Classes;
 using OneClickZip.Includes.Utilities;
 
 namespace OneClickZip.Includes.Resources
@@ -29,7 +24,6 @@ namespace OneClickZip.Includes.Resources
             LastOpenedDirectory = lastOpenedPath;
             Properties.Settings.Default.Save();
         }
-
         private static String LastOpenedDirectory
         {
             get{
@@ -40,6 +34,16 @@ namespace OneClickZip.Includes.Resources
                 Properties.Settings.Default["LAST_OPENED_DIRECTORY"] = (string)value;
             }
         }
-
+        public static String ApplicationVersion
+        {
+            get
+            {
+                return String.Format("v{0}.{1}.{2} {3}",
+                            Properties.Settings.Default.app_version_major,
+                            Properties.Settings.Default.app_version_minor,
+                            Properties.Settings.Default.app_version_patch,
+                            Properties.Settings.Default.app_version_revision);
+            }
+        }
     }
 }
