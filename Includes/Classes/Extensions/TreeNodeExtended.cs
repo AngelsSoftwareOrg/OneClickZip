@@ -16,7 +16,7 @@ namespace OneClickZip.Includes.Classes.Extensions
 {
     public class TreeNodeExtended : TreeNode, ICloneable, IZipFileTreeNode
     {
-        private ArrayList masterListFilesDir = new ArrayList();
+        private List<CustomFileItem> masterListFilesDir = new List<CustomFileItem>();
         private FolderType folderType;
         private bool isRootNode;
         private readonly String ROOT_NODE_NAME = "ROOT";
@@ -79,7 +79,7 @@ namespace OneClickZip.Includes.Classes.Extensions
             newDisplayText = newDisplayText.Trim();
             foreach (CustomFileItem customeFileName in this.masterListFilesDir)
             {
-                if (customeFileName.GetCustomFileName == oldName)
+                if (customeFileName.GetCustomFileName.Equals(oldName, StringComparison.InvariantCultureIgnoreCase))
                 {
                     customeFileName.SetCustomFileName = newDisplayText;
                     break;
@@ -98,7 +98,7 @@ namespace OneClickZip.Includes.Classes.Extensions
                 node.Remove();
             }
         }
-        public ArrayList MasterListFilesDir { get => this.masterListFilesDir; set => this.masterListFilesDir = value; }
+        public List<CustomFileItem> MasterListFilesDir { get => this.masterListFilesDir; set => this.masterListFilesDir = value; }
         public bool IsFolderIsTreeViewNode { 
             get 
             {
@@ -146,7 +146,14 @@ namespace OneClickZip.Includes.Classes.Extensions
             if (FolderType != FolderType.FilterRule) return;
             this.ForeColor = Color.Blue;
         }
-        private void SetIconImage()
+        public void ResetIconImageIndex()
+        {
+            //Dont restore the image index, because index will change base on the batch of files type getting icons on the system
+            this.ImageIndex = -1;
+            this.SelectedImageIndex = -1;
+            RefreshIconImageIndex();
+        }
+        private void RefreshIconImageIndex()
         {
             switch (FolderType)
             {
@@ -155,6 +162,13 @@ namespace OneClickZip.Includes.Classes.Extensions
                     break;
                 case FolderType.TreeView:
                     this.ImageIndex = DefaultIcons.SYSTEM_ICONS.GetIconIndexForDirectories();
+                    break;
+                case FolderType.File:
+                    if(this.ImageIndex < 0 && this.MasterListFilesDir.Count>0)
+                    {
+                        CustomFileItem cst = (CustomFileItem) this.MasterListFilesDir[0];
+                        this.ImageIndex = DefaultIcons.SYSTEM_ICONS.GetIconIndex(cst.FilePathFull);
+                    }
                     break;
                 default:
                     break;
@@ -170,7 +184,7 @@ namespace OneClickZip.Includes.Classes.Extensions
         private void FolderTypeUpdateRoutine()
         {
             SetFilterRuleFolderFontColor();
-            SetIconImage();
+            RefreshIconImageIndex();
         }
         public bool IsRootNode { 
             get
@@ -246,7 +260,6 @@ namespace OneClickZip.Includes.Classes.Extensions
             }
         }
         public FolderFilterRule FolderFilterRuleObj { get => folderFilterRuleObj; set => folderFilterRuleObj = value; }
-
         public TreeNodeExtended GetChildNodeByLabel(String nodeLabel)
         {
             foreach (TreeNodeExtended childNode in this.Nodes)
@@ -259,7 +272,6 @@ namespace OneClickZip.Includes.Classes.Extensions
             }
             return null;
         }
-    
         public bool IsNodeExisting(String nodeName)
         {
             foreach (TreeNodeExtended currNode in this.Nodes)
@@ -271,9 +283,6 @@ namespace OneClickZip.Includes.Classes.Extensions
             }
             return false;
         }
-
-    
-    
     }
 
 }

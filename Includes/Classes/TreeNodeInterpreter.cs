@@ -20,7 +20,7 @@ namespace OneClickZip.Includes.Classes
         private ListViewInterpretor listViewInterpretor = new ListViewInterpretor();
         private CrawlerProgressScreenFrm crawlerProgressScreen = new CrawlerProgressScreenFrm();
         private long showProgressDialogCtr = 0;
-        private long showProgressDialogAtThisCount = 1000;
+        private long showProgressDialogAtThisCount = 50;
         private bool _cancelBulkAddFilesFolders = false;
 
         public TreeNodeInterpreter()
@@ -35,11 +35,11 @@ namespace OneClickZip.Includes.Classes
         {
             if (crawlerProgressScreen.Visible) return;
 
+            showProgressDialogCtr++;
             if (showProgressDialogCtr % showProgressDialogAtThisCount == 0) //show the progress dialog after this count
             {
                 crawlerProgressScreen.Show();
             }
-            showProgressDialogCtr++;
         }
 
         private void CrawlerProgressScreen_CancelProgressEvent(object sender, Models.Events.CrawlerProgressScreenEventArgs e)
@@ -92,10 +92,18 @@ namespace OneClickZip.Includes.Classes
             if (CancelBulkAddFilesFolders) return;
             foreach (CustomFileItem itemDir in customFileItem.GetShellInfoDirectories())
             {
+
+                //DEBUGGING
+                if (itemDir.FilePathFull.Contains(@"Games") ||
+                    itemDir.FilePathFull.Contains(@"ojt"))
+                {
+                    bool xc = false;
+                }
+
                 Application.DoEvents();
                 if (CancelBulkAddFilesFolders) return;
                 ShowProgressDialogForm();
-                if (!targetTreeNode.IsNodeExisting(customFileItem.GetCustomFileName))
+                if (!targetTreeNode.IsNodeExisting(itemDir.GetCustomFileName))
                 {
                     AddingFolderCrawlerStatus(customFileItem.FilePathFull);
                     TreeNodeExtended treeNode = new TreeNodeExtended();
@@ -197,7 +205,7 @@ namespace OneClickZip.Includes.Classes
             }
         }
         
-        public ArrayList AddTagObject(TreeNodeExtended treeNode, CustomFileItem customFileItem)
+        public List<CustomFileItem> AddTagObject(TreeNodeExtended treeNode, CustomFileItem customFileItem)
         {
             treeNode.AddItem(customFileItem);
             return treeNode.MasterListFilesDir;
@@ -231,14 +239,14 @@ namespace OneClickZip.Includes.Classes
             targetTreeView.SelectedNode.BackColor = Color.Empty;
         }
 
-        public bool AddZipFileNode(TreeView targetTreeView, CustomFileItem customeFileItem)
+        public bool AddZipFileNode(TreeView targetTreeView, CustomFileItem customFileItem)
         {
             TreeNodeExtended selectedNode = GetSelectedNode(targetTreeView);
-            bool isExistingNode = AddRecursiveNode(selectedNode, customeFileItem);
+            bool isExistingNode = AddRecursiveNode(selectedNode, customFileItem);
 
-            if (IsSelectedZipModelNodeRoot(targetTreeView) && !customeFileItem.IsFolder && !isExistingNode)
+            if (IsSelectedZipModelNodeRoot(targetTreeView) && !customFileItem.IsFolder && !isExistingNode)
             {
-                AddRootItemFilesAsNode(selectedNode, customeFileItem);
+                AddRootItemFilesAsNode(selectedNode, customFileItem);
             }
             return isExistingNode;
         }
@@ -312,7 +320,7 @@ namespace OneClickZip.Includes.Classes
             //The duplicate name count should be one, one means the file itself
             foreach(CustomFileItem item in targetNode.MasterListFilesDir)
             {
-                if (item.GetCustomFileName.Trim().Equals(nodeName, StringComparison.OrdinalIgnoreCase))
+                if (item.GetCustomFileName.Trim().Equals(nodeName, StringComparison.InvariantCultureIgnoreCase))
                 {
                     return false;
                 }

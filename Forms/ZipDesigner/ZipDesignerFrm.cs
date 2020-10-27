@@ -81,7 +81,7 @@ namespace OneClickZip
 
 #endregion
 
-        #region EXP Dir related functions
+#region EXP Dir related functions
 
         private void ListViewSearchDirExpHandlersAndControlsActivation()
         {
@@ -124,14 +124,14 @@ namespace OneClickZip
 
         private void ListViewSearchDirExp_ItemDoubleClicked(object sender, EventArgs e)
         {
-            //if (listViewSearchDirExp.SelectedItems.Count > 0)
-            //{
-            //    if (IsSelectedNodeStructured())
-            //    {
-            //        TreeNodeInterpreter.PutTheSelectedFilesAndDirOnSelectedTreeNode(
-            //            listViewZipDesignFiles, treeViewZipDesigner, listViewSearchDirExp.SelectedItems);
-            //    }
-            //}
+            if (listViewSearchDirExp.SelectedItems.Count > 0)
+            {
+                ListViewItemExtended listViewItem = (ListViewItemExtended)listViewSearchDirExp.SelectedItems[0];
+                if (listViewItem.CshItemObj.IsFolder)
+                {
+                    expTreeSearchDir.ExpandANode(listViewItem.CshItemObj, true);
+                }
+            }
         }
 
         private void listViewSearchDirExp_ItemDragHandler(object sender, ItemDragEventArgs e)
@@ -149,7 +149,7 @@ namespace OneClickZip
 
         #endregion
 
-        #region ZIP Designer Controls and related functions
+#region ZIP Designer Controls and related functions
 
         private void ZipDesignerHandlersAndActivation()
         {
@@ -316,7 +316,7 @@ namespace OneClickZip
 
             if (e.Label.Trim().Length > 0)
             {
-                ListView listView = (ListView)sender;
+                ListviewExtended listView = (ListviewExtended)sender;
                 ListViewItemExtended listViewItmEx = (ListViewItemExtended)listView.SelectedItems[0];
 
                 //get the affected equivalent node of the selected folder
@@ -329,17 +329,17 @@ namespace OneClickZip
                     e.CancelEdit = true;
                     ShowValidationBox("Error.\n Can't find the tree node.");
                 }
-                else if (treeNodeInterpreter.IsValidNodeName(affectedNode, e.Label.Trim()))
+                else if (treeNodeInterpreter.IsValidNodeName((TreeNodeExtended) affectedNode.Parent, e.Label.Trim()))
                 {
                     treeNodeInterpreter.RenameNode(affectedNode, e.Label.Trim());
                     affectedNode.Text = e.Label.Trim();
                     listViewItmEx.SubItems[0].Text = e.Label.Trim();
                     affectedNode.TreeView.Refresh();
-                    //listViewItmEx.ListView.Refresh();
+                    listViewItmEx.ListView?.Refresh();
                     SortTreeViewZipDesigner();
-                    listViewItmEx.Selected = true;
-                    listViewItmEx.Focused = true;
-                    listViewItmEx.EnsureVisible();
+                    listView.Items[e.Item].Selected = true;
+                    listView.Items[e.Item].Focused = true;
+                    listView.Items[e.Item].EnsureVisible();
                 }
                 else
                 {
@@ -974,13 +974,7 @@ namespace OneClickZip
             EditListViewZipFileLabel();
         }
 
-
-
-
-
-
         #endregion
-
 
     }
 

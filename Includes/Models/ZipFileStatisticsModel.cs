@@ -62,17 +62,20 @@ namespace OneClickZip.Includes.Models
         {
             foreach (CustomFileItem customFileItem in currentNode.MasterListFilesDir)
             {
-                if (!customFileItem.IsFolder)
+                if (!customFileItem.IsGenerallyAFolderType)
                 {
                     statistic.IncrementEstimatedFilesCount();
                     statistic.IncrementEstimatedFileSizeCount(customFileItem.FileLength);
                 }
+                else
+                {
+                    statistic.IncrementEstimatedFoldersCount();
+                }
             }
             foreach (IZipFileTreeNode node in currentNode.Nodes)
             {
-                if (node.IsFolderIsTreeViewNode)
+                if (node.IsGenerallyAFolderType)
                 {
-                    statistic.IncrementEstimatedFoldersCount();
                     TraverseTreeViewForStatistic(node, statistic);
                 }
             }

@@ -206,5 +206,9 @@ namespace OneClickZip.Includes.Utilities
                 .ToArray());
             return invalidCharsRemoved;
         }
+        public static bool IsFileExist(String filePath)
+        {
+            return File.Exists(filePath);
+        }
     }
 }

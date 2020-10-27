@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using OneClickZip.Forms.Loading;
 using OneClickZip.Includes.Classes;
 using OneClickZip.Includes.Classes.Extensions;
 using OneClickZip.Includes.Classes.TreeNodeSerialize;
@@ -99,7 +100,11 @@ namespace OneClickZip.Forms.Options
         {
             TargetOutputLocationModel targetOutputLoc = zipModel.TargetOutputLocationModel;
             List<string> targetLocationsArr = targetOutputLoc.GetTargetLocations();
-            if (targetLocationsArr.Count <= 0) return;
+            if (targetLocationsArr.Count <= 0)
+            {
+                progressBarStatus.Value = progressBarStatus.Maximum;
+                return;
+            }
 
             FileInfo zipOutputFile = new FileInfo(zipArchiving.NewArchiveName);
             String zipOutputFileName = zipOutputFile.Name;
@@ -131,7 +136,7 @@ namespace OneClickZip.Forms.Options
                                 fileStream.Write(bytes, 0, bytesRead);
                                 totalTransferredByte += bytesRead;
 
-                                //update progress bar, not that much
+                                //update progress bar not that much, e.g. every 10MB
                                 if ((totalTransferredByte - totalTransferredByteUpdateProgressCtr) >= totalTransferredByteUpdateProgress)
                                 {
                                     totalTransferredByteUpdateProgressCtr = totalTransferredByte;
@@ -149,9 +154,11 @@ namespace OneClickZip.Forms.Options
                 catch (Exception ex)
                 {
                     AddLogItems("Copy Ouput File", String.Format(@"Failed: {0}\{1}. / Error message: {2}", targetOutputFolder, zipOutputFile.Name, ex.Message));
-                    Console.WriteLine(ex);
+                    //Console.WriteLine(ex);
                 }
             }
+            //In case some locations are not valid anymore
+            progressBarStatus.Value = progressBarStatus.Maximum;
             if (isStopProcessing)
             {
                 txtBoxCurrentAction.Text = "Copying has been halted...";

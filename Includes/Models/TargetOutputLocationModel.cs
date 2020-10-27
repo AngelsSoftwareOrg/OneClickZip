@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualBasic.FileIO;
+using OneClickZip.Includes.Utilities;
 
 namespace OneClickZip.Includes.Models
 {
@@ -35,6 +37,18 @@ namespace OneClickZip.Includes.Models
         public List<String> GetTargetLocations()
         {
             return new List<String>(addedTargetLocations.ToArray());
+        }
+        public List<String> GetTargetLocationsValidated()
+        {
+            List<String> validatedLocations = new List<String>();
+            foreach(String loc in validatedLocations)
+            {
+                if (FileSystemUtilities.IsDirectoryExistInTheSystem(loc))
+                {
+                    validatedLocations.Add(loc);
+                }
+            }
+            return validatedLocations;
         }
         public string MainTargetLocation { get => mainTargetLocation; }
 

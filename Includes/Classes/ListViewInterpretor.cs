@@ -7,6 +7,7 @@ using ExpTreeLib;
 using OneClickZip;
 using OneClickZip.Includes.Classes.Extensions;
 using OneClickZip.Includes.Models;
+using OneClickZip.Includes.Models.Types;
 using OneClickZip.Includes.Utilities;
 
 namespace OneClickZip.Includes.Classes
@@ -79,11 +80,11 @@ namespace OneClickZip.Includes.Classes
                         ListViewItemExtended lvItem=null;
                         if (targetListView.View == View.Details)
                         {
-                            lvItem = new ListViewItemExtended(fileObj, GetFileObjectDetails(fileObj));
+                            lvItem = new ListViewItemExtended((CustomFileItem) fileObj.Clone(), GetFileObjectDetails(fileObj));
                         }
                         else
                         {
-                            lvItem = new ListViewItemExtended(fileObj);
+                            lvItem = new ListViewItemExtended((CustomFileItem) fileObj.Clone());
                         }
 
                         if (lvParamModel.SelectedTreeNodeExtended != null)
@@ -186,7 +187,8 @@ namespace OneClickZip.Includes.Classes
                 {
                     SelectedTreeNodeExtended = selectedTreeNodeExtended,
                     TargetListView = targetListView,
-                    CustomFileItem = customeFileItem
+                    CustomFileItem = customeFileItem,
+                    ListviewUseCaseType = ListviewUseCase.ZipDesigner
                 };
 
                 GenerateListViewZipFileViewItems(commonParam);

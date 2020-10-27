@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using OneClickZip.Includes.Classes;
+using OneClickZip.Includes.Models;
 
 namespace OneClickZip.Forms.Loading
 {
@@ -28,7 +30,19 @@ namespace OneClickZip.Forms.Loading
         public void DisposeInstance()
         {
             Hide();
-            splashScreenDesigner.Dispose(true);
+            if (splashScreenDesigner !=null) splashScreenDesigner.Dispose(true);
         }
+
+        private void SplashScreenDesignerFrm_Load(object sender, EventArgs e)
+        {
+            txtBoxStatMsg.Text = "Loading...";
+            ApplicationArgumentModel appArg = ProjectSession.Instance().ApplicationArgumentModel;
+
+            if (appArg.IsFileOpenCase)
+            {
+                txtBoxStatMsg.Text = String.Format(@"Opening project '{0}' ...", appArg.FileName);
+            }
+        }
+
     }
 }

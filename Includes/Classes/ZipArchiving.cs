@@ -143,9 +143,8 @@ namespace OneClickZip.Includes.Classes
             if (!fileInfo.Exists) return false;
             processedZipFileSize += fileInfo.Length;
 
-            byte[] enodedUTF8 = Encoding.ASCII.GetBytes((zipFileFolderName + 
-                                        FileSystemUtilities.SanitizeFileName(customFileItem.GetCustomFileName)));
-            String customFileName = Encoding.ASCII.GetString(enodedUTF8);
+            String customFileName = (zipFileFolderName + 
+                                    FileSystemUtilities.SanitizeFileName(customFileItem.GetCustomFileName));
 
             archiveFile.AddEntry(customFileName, File.OpenRead(customFileItem.FilePathFull));
             try
@@ -161,7 +160,6 @@ namespace OneClickZip.Includes.Classes
             {
                 //just ignore if cannot accessed the file
             }
-            
             return true;
         }
         private void CrawlTreeStructure(SerializableTreeNode serializableTreeNode, ZipFile archiveFile, String zipFileFolderName)
@@ -171,7 +169,7 @@ namespace OneClickZip.Includes.Classes
 
             foreach (CustomFileItem customFile in serializableTreeNode.MasterListFilesDir)
             {
-                if (customFile.IsFolderIsFileViewNode)
+                if (!customFile.IsGenerallyAFolderType)
                 {
                     IncrementFilesProcessedCountArgs();
                     if(AddFileIntoZipArchive(archiveFile, customFile, zipFileFolderName))

@@ -19,18 +19,12 @@ namespace OneClickZip
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            //debugging
-            args = new string[] {@"E:\zuTempOneClickZip\14 - Test Multiple Folders.oczd"};
-            //
-
-
             ApplicationArgumentModel applicationArgumentModel = new ApplicationArgumentModel(args);
             ProjectSession.Instance().ApplicationArgumentModel = applicationArgumentModel;
 
-            SplashScreenDesignerFrm.GetIntance().Show();
-
             if (applicationArgumentModel.IsOpenProjectBatchFile)
             {
+                SplashScreenDesignerFrm.GetIntance().Show();
                 Application.Run(new OneClickProcessorFrm());
             }
             else
