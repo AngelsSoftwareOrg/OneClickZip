@@ -163,42 +163,6 @@ namespace OneClickZip.Includes.Utilities
 
             return System.Environment.GetFolderPath((Environment.SpecialFolder) targetEnum);
         }
-        public static ArrayList getFileProcesses(string strFile)
-        {
-            ArrayList myProcessArray = new ArrayList();
-            Process myProcess;
-
-            Process[] processes = Process.GetProcesses();
-            int i = 0;
-            for (i = 0; i <= processes.GetUpperBound(0) - 1; i++)
-            {
-                myProcess = processes[i];
-                //if (!myProcess.HasExited) //This will cause an "Access is denied" error
-                if (myProcess.Threads.Count > 0)
-                {
-                    try
-                    {
-                        ProcessModuleCollection modules = myProcess.Modules;
-                        int j = 0;
-                        for (j = 0; j <= modules.Count - 1; j++)
-                        {
-                            if ((modules[j].FileName.ToLower().CompareTo(strFile.ToLower()) == 0))
-                            {
-                                myProcessArray.Add(myProcess);
-                                break;
-                                // TODO: might not be correct. Was : Exit For
-                            }
-                        }
-                    }
-                    catch (Exception exception)
-                    {
-                        //MsgBox(("Error : " & exception.Message)) 
-                    }
-                }
-            }
-
-            return myProcessArray;
-        }
         public static String SanitizeFileName(String fileName)
         {
             string invalidCharsRemoved = new string(fileName

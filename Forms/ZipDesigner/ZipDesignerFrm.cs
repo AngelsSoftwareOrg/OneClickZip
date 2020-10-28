@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ExpTreeLib;
 using OneClickZip.Forms.Help;
@@ -18,10 +11,8 @@ using OneClickZip.Includes.Models;
 using OneClickZip.Includes.Resources;
 using OneClickZip.Includes.Utilities;
 using OneClickZip.Includes.Models.Types;
-using static OneClickZip.Includes.Classes.FileSerialization;
 using OneClickZip.Includes.Classes.Sorters;
 using OneClickZip.Forms.Loading;
-using OneClickZip.Includes.Models.Events;
 
 namespace OneClickZip
 {
@@ -33,9 +24,9 @@ namespace OneClickZip
         private ProjectSession PROJECT_SESSION = ProjectSession.Instance();
         private ApplicationArgumentModel APPLICATION_ARGUMENT_MODEL = null;
         private bool isTreeViewCollapseToggle = true;
-        private AboutFrm aboutFrm = new AboutFrm();
         private TreeNodeInterpreter treeNodeInterpreter = new TreeNodeInterpreter();
         private ListViewInterpretor listViewInterpretor = new ListViewInterpretor();
+        private UpdatesFrm updatesFrm = new UpdatesFrm();
 
         public ZipDesigner()
         {
@@ -552,7 +543,6 @@ namespace OneClickZip
 
 #region "Main GUI Controls"
 
-
         private void SelectAllItemOnListView(ListView targetListView)
         {
             foreach (ListViewItem lvitm in targetListView.Items)
@@ -855,12 +845,18 @@ namespace OneClickZip
 
         private void aboutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            AboutFrm aboutFrm = new AboutFrm();
             aboutFrm.ShowDialog();
         }
 
-#endregion
+        private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            updatesFrm.ShowDialog();
+        }
 
-#region Context Strip for Zip File Tree View
+        #endregion
+
+        #region Context Strip for Zip File Tree View
 
         private void expandToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -911,9 +907,9 @@ namespace OneClickZip
         
         private void ctxMenuZipFileTree_Opening(object sender, CancelEventArgs e)
         {
-            TreeNodeExtended treeNodeEx = (TreeNodeExtended)treeViewZipDesigner.SelectedNode;
-            modifyFilterRuleToolStripMenuItem.Visible = treeNodeEx.IsFolderIsFilterRule;
-            addFilterRuleToolStripMenuItem.Visible = treeNodeEx.IsFolderIsTreeViewNode;
+            TreeNodeExtended treeNodeEx = GetSelectedTreeNodeExtended;
+            modifyFilterRuleToolStripMenuItem.Visible = treeNodeEx.IsFolderIsFilterRule || !treeNodeEx.IsRootNode;
+            addFilterRuleToolStripMenuItem.Visible = treeNodeEx.IsFolderIsTreeViewNode || !treeNodeEx.IsRootNode;
         }
 
         private void modifyFilterRuleToolStripMenuItem_Click(object sender, EventArgs e)

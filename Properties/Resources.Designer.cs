@@ -92,6 +92,16 @@ namespace OneClickZip.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Available_Updates_32px {
+            get {
+                object obj = ResourceManager.GetObject("Available_Updates_32px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap broom_20 {
             get {
                 object obj = ResourceManager.GetObject("broom_20", resourceCulture);
@@ -306,6 +316,16 @@ namespace OneClickZip.Properties {
         internal static System.Drawing.Bitmap folder_Plus_32px {
             get {
                 object obj = ResourceManager.GetObject("folder Plus 32px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap folder_rule_32px {
+            get {
+                object obj = ResourceManager.GetObject("folder_rule_32px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
