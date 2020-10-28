@@ -1,19 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.IO.Compression;
-using System.Linq;
+using System.Media;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using OneClickZip.Forms.Loading;
+using Ionic.Zlib;
 using OneClickZip.Includes.Classes;
-using OneClickZip.Includes.Classes.Extensions;
 using OneClickZip.Includes.Classes.TreeNodeSerialize;
 using OneClickZip.Includes.Models;
 using OneClickZip.Includes.Models.Events;
@@ -40,7 +32,6 @@ namespace OneClickZip.Forms.Options
         }
         private void OneClickProcessor_Load(object sender, EventArgs e)
         {
-            SplashScreenDesignerFrm.GetIntance().DisposeInstance();
             lblElapsedTime.Text = "00:00:00";
             lblFilesAdded.Text = "0% > 0";
             lblFoldersCreated.Text = "0% > 0";
@@ -96,6 +87,7 @@ namespace OneClickZip.Forms.Options
             linkSaveLogs.Enabled = true;
             btnStop.Enabled = false;
             isWindowCanBeClose = true;
+            SystemSounds.Exclamation.Play();
         }
         private void CopyOutputToOtherTargetFolders(ZipArchivingEventArgs e)
         {
@@ -147,15 +139,14 @@ namespace OneClickZip.Forms.Options
                             }
                             fileStream.Flush();
                             txtBoxCurrentAction.Text = "Copying output Zip Archive to => " + targetOutputFolder;
-                            AddLogItems("Copy Output File", String.Format(@"Copy successful: {0}", outputFileFullPath));
+                            AddLogItems("Copy file success", outputFileFullPath);
                         }
                     }
                     progressBarStatus.Value = ConverterUtils.GetPercentageFloored(totalTransferredByte, totalFileOutputSize);
                 }
                 catch (Exception ex)
                 {
-                    AddLogItems("Copy Ouput File", String.Format(@"Failed: {0}\{1}. / Error message: {2}", targetOutputFolder, zipOutputFile.Name, ex.Message));
-                    //Console.WriteLine(ex);
+                    AddLogItems("Copy file failed", String.Format(@"Failed: {0}\{1}. / Error message: {2}", targetOutputFolder, zipOutputFile.Name, ex.Message));
                 }
             }
             //In case some locations are not valid anymore
@@ -163,7 +154,7 @@ namespace OneClickZip.Forms.Options
             if (isStopProcessing)
             {
                 txtBoxCurrentAction.Text = "Copying has been halted...";
-                AddLogItems("Copy Output File", "Cpoying has been halted...");
+                AddLogItems("Copy Output File", "Copying has been halted...");
                 progressBarStatus.Value = progressBarStatus.Maximum;
             }
         }
@@ -223,9 +214,8 @@ namespace OneClickZip.Forms.Options
         }
         private void OpenProjectFileForZipping()
         {
-            SerializableTreeNode serializedTreeNode = null;
-            
-            if(applicationArgumentModel.IsFileOpenCase)
+            SerializableTreeNode serializedTreeNode;
+            if (applicationArgumentModel.IsFileOpenCase)
             {
                 serializedTreeNode = projectSession.GetSerializableTreeNodeBaseOnProjectFile(applicationArgumentModel.FilePath);
             }
@@ -233,14 +223,13 @@ namespace OneClickZip.Forms.Options
             {
                 serializedTreeNode = projectSession.GetSerializableTreeNodeBaseOnZipModel();
             }
-            
             this.zipModel = projectSession.ZipFileModel;
             String newArchiveName = zipModel.GetFullPathFileAndNameOfNewZipArchive;
             this.Text = this.Text + " => " + Path.GetFileName(newArchiveName);
             zipArchiving.NewArchiveName = newArchiveName;
             zipArchiving.SerializableTreeNode = serializedTreeNode;
             zipArchiving.ZipFileModelSource = zipModel;
-            zipArchiving.CompressionLevelArchiving = CompressionLevel.Optimal;
+            zipArchiving.CompressionLevelArchiving = CompressionLevel.BestCompression; ;
             zipArchiving.StartArchiving();
         }
         private void GetStatistic(ZipFileStatisticsModel statObj)

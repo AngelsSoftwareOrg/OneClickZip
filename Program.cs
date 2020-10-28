@@ -21,6 +21,7 @@ namespace OneClickZip
 
             ApplicationArgumentModel applicationArgumentModel = new ApplicationArgumentModel(args);
             ProjectSession.Instance().ApplicationArgumentModel = applicationArgumentModel;
+
             if (applicationArgumentModel.IsOpenProjectBatchFile)
             {
                 Application.Run(new OneClickProcessorFrm());

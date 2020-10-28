@@ -1,9 +1,8 @@
 ﻿using System;
 using System.IO;
-using System.IO.Compression;
-using System.Text;
 using System.Windows.Forms;
 using Ionic.Zip;
+using Ionic.Zlib;
 using OneClickZip.Includes.Classes.TreeNodeSerialize;
 using OneClickZip.Includes.Models;
 using OneClickZip.Includes.Models.Events;
@@ -29,7 +28,7 @@ namespace OneClickZip.Includes.Classes
         private bool stopProcessing;
         private bool stopProcessingSuccessfull;
         private GenerateSerializableTreeNode generateSerializableTreeNode;
-        private CompressionLevel compressionLevelArchiving = CompressionLevel.Optimal;
+        private CompressionLevel compressionLevelArchiving = CompressionLevel.BestCompression;
         private long processedZipFileSize;
         private long processedFilesSizeFlusherThreshold = 52428800; //50 * 1024 * 1024; //50MB,just howmany mega bytes would it take before we flush it to storage, just to avoid low memory
         private long processedFilesSizeFlusherCtr = 0;
@@ -122,6 +121,7 @@ namespace OneClickZip.Includes.Classes
             using (ZipFile archiveFile = new ZipFile(NewArchiveName))
             {
                 archiveFile.AlternateEncodingUsage = ZipOption.AsNecessary;
+                archiveFile.CompressionLevel = Ionic.Zlib.CompressionLevel.BestCompression;
 
                 UpdateStatusAndRaiseEventProcessingStatus(ZipProcessingStages.ZIP_CREATION);
                 CrawlTreeStructure(serializableTreeNode, archiveFile, null);
