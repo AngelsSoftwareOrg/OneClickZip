@@ -16,7 +16,6 @@ namespace OneClickZip.Forms.Help
         public AboutFrm()
         {
             InitializeComponent();
-            
         }
 
         private void About_Load(object sender, EventArgs e)
@@ -25,7 +24,7 @@ namespace OneClickZip.Forms.Help
             txtBoxAuthor.Text = Properties.Settings.Default.about_author;
             txtBoxEmail.Text = Properties.Settings.Default.about_email;
             txtBoxWebsiteTitle.Text = Properties.Settings.Default.about_website_title;
-            txtBoxWebSiteLink.Text = Properties.Settings.Default.about_website_link;
+            txtBoxWebSiteLink.Text = ApplicationSettings.ApplicationWebsiteLink;
             txtBoxVersion.Text = ApplicationSettings.ApplicationVersion;
         }
 

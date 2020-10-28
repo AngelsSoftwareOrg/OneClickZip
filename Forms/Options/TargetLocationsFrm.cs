@@ -1,27 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ExpTreeLib;
 using OneClickZip.Includes.Models;
+using OneClickZip.Includes.Resources;
 using OneClickZip.Includes.Utilities;
 
 namespace OneClickZip.Forms.Options
 {
     public partial class TargetLocationsFrm : Form
     {
-
         private int dynamicControlCtr = 0;
         private String selectedPath;
         private TargetOutputLocationModel targetOutputLocationModel;
-
-
         public TargetLocationsFrm(TargetOutputLocationModel targetOutput=null)
         {
             InitializeComponent();
@@ -31,18 +22,15 @@ namespace OneClickZip.Forms.Options
                 targetOutputLocationModel = (TargetOutputLocationModel)targetOutput.Clone();
             }
         }
-
         private void TargetLocationsFrm_Load(object sender, EventArgs e)
         {
             expTreeExplorer.StartUpDirectory = ExpTree.StartDir.Desktop;
-
-            //Debugging
-            //txtTargetLocationMain.Text = "Sample Location";
-            //AddNewTargetLocationControls("location 1");
-            //AddNewTargetLocationControls("location 2");
-            //AddNewTargetLocationControls("location 3");
-
-            if(targetOutputLocationModel != null)
+            SetUpDefault();
+            expTreeExplorer.ExpandANode(ApplicationSettings.GetLastOpenedDirectory(), true);
+        }
+        private void SetUpDefault()
+        {
+            if (targetOutputLocationModel != null)
             {
                 txtTargetLocationMain.Text = targetOutputLocationModel.MainTargetLocation;
                 foreach (String str in targetOutputLocationModel.GetTargetLocations())
@@ -51,18 +39,15 @@ namespace OneClickZip.Forms.Options
                 }
             }
         }
-
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
-
         private void btnAddOtherFolder_Click(object sender, EventArgs e)
         {
             AddNewTargetLocationControls();
         }
-
         private void AddNewTargetLocationControls(String targetLocation="")
         {
             dynamicControlCtr++;
@@ -76,19 +61,18 @@ namespace OneClickZip.Forms.Options
             labelAddedFolder.Text = "Added Folder: " + dynamicControlCtr;
 
             TextBox txtAddedLocation = new TextBox();
-            txtAddedLocation.Anchor = ((System.Windows.Forms.AnchorStyles)
-                (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            txtAddedLocation.Anchor = ((AnchorStyles) (((AnchorStyles.Top | AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             txtAddedLocation.Location = new System.Drawing.Point(11, 34);
             txtAddedLocation.Name = "txtAddedLocation" + dynamicControlCtr;
-            txtAddedLocation.Size = new System.Drawing.Size(138, 22);
+            txtAddedLocation.Size = new System.Drawing.Size(128, 22);
             txtAddedLocation.TabIndex = ++tabIndex;
             txtAddedLocation.Text = targetLocation;
-            txtAddedLocation.ReadOnly = true;
+            txtAddedLocation.ReadOnly = false;
 
             LinkLabel linkLabelRemove = new LinkLabel();
-            linkLabelRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            linkLabelRemove.Location = new System.Drawing.Point(55, 55);
+            linkLabelRemove.Anchor = ((AnchorStyles)((AnchorStyles.Top | AnchorStyles.Right)));
+            linkLabelRemove.Location = new System.Drawing.Point(45, 55);
             linkLabelRemove.Name = "linLblRemoveAddedLoc" + dynamicControlCtr;
             linkLabelRemove.Size = new System.Drawing.Size(97, 17);
             linkLabelRemove.TabIndex = ++tabIndex;
@@ -96,8 +80,8 @@ namespace OneClickZip.Forms.Options
             linkLabelRemove.Click += LinkLabelRemove_Click;
 
             Button btnAddFolder = new Button();
-            btnAddFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            btnAddFolder.Location = new System.Drawing.Point(155, 26);
+            btnAddFolder.Anchor = ((AnchorStyles)((AnchorStyles.Top | AnchorStyles.Right)));
+            btnAddFolder.Location = new System.Drawing.Point(145, 26);
             btnAddFolder.Name = "btnAddFolder" + dynamicControlCtr;
             btnAddFolder.Size = new System.Drawing.Size(40, 30);
             btnAddFolder.TabIndex = ++tabIndex;
@@ -113,13 +97,16 @@ namespace OneClickZip.Forms.Options
             panelDynamic.Dock = System.Windows.Forms.DockStyle.Top;
             panelDynamic.Location = new System.Drawing.Point(0, 0);
             panelDynamic.Name = "panelDynamic" + dynamicControlCtr;
-            panelDynamic.Size = new System.Drawing.Size(722, 75);
+            panelDynamic.Size = new System.Drawing.Size(400, 75);
             panelDynamic.TabIndex = ++tabIndex;
 
-            panelSetLocations.Controls.Add(panelDynamic);
-            panelSetLocations.Show();
+            int tgtRowIdx = this.tableLayoutPanelSetLocations.RowCount - 1;
+            this.tableLayoutPanelSetLocations.Controls.Add(panelDynamic, 0, tgtRowIdx + 1);
+            this.tableLayoutPanelSetLocations.RowStyles[tgtRowIdx].SizeType = SizeType.AutoSize;
+            this.tableLayoutPanelSetLocations.RowCount += 1;
+            this.tableLayoutPanelSetLocations.RowStyles.Add(new RowStyle(SizeType.AutoSize, 20F));
+            this.tableLayoutPanelSetLocations.ScrollControlIntoView(panelDynamic);
         }
-
         private void BtnAddFolder_Click(object sender, EventArgs e)
         {
             if(!FileSystemUtilities.IsDirectoryExistInTheSystem(SelectedPath)) return;
@@ -138,7 +125,6 @@ namespace OneClickZip.Forms.Options
                 ColorControlBaseOnValidation(addOtherLocation, false);
             } 
         }
-
         private void LinkLabelRemove_Click(object sender, EventArgs e)
         {
             LinkLabel linkLabelRemove = (LinkLabel)sender;
@@ -147,7 +133,6 @@ namespace OneClickZip.Forms.Options
             Panel mainContainer = (Panel)panelContainer.Parent;
             mainContainer.Controls.Remove(panelContainer);
         }
-
         private TextBox AddedLocationTextBoxControl(Panel panelContainer)
         {
             foreach (Control control in panelContainer.Controls)
@@ -159,14 +144,13 @@ namespace OneClickZip.Forms.Options
             }
             return null;
         }
-
         private void expTreeExplorer_ExpTreeNodeSelected(string SelPath, CShItem Item)
         {
             SelectedPath = SelPath;
+            txtSelectedPath.Text = SelPath;
+            ColorControlBaseOnValidation(txtSelectedPath, true);
         }
-
         private string SelectedPath { get => selectedPath; set => selectedPath = value; }
-
         private void btnAddMain_Click(object sender, EventArgs e)
         {
             if (FileSystemUtilities.IsDirectoryExistInTheSystem(SelectedPath)) 
@@ -174,12 +158,11 @@ namespace OneClickZip.Forms.Options
                 txtTargetLocationMain.Text = SelectedPath;
             };
         }
-
         private bool IsUniqueTargetFolder(TextBox sourceControl, String targetFolderPath)
         {
             if (targetFolderPath.Equals(txtTargetLocationMain.Text, StringComparison.InvariantCultureIgnoreCase)) return false;
             //Other Controls
-            foreach (Control control in panelSetLocations.Controls)
+            foreach (Control control in tableLayoutPanelSetLocations.Controls)
             {
                 TextBox txtBoxControl = AddedLocationTextBoxControl((Panel)control);
                 if (txtBoxControl != sourceControl)
@@ -198,7 +181,7 @@ namespace OneClickZip.Forms.Options
             };
 
             targetOutputLocationModel = new TargetOutputLocationModel(txtTargetLocationMain.Text);
-            foreach (Control control in panelSetLocations.Controls)
+            foreach (Control control in tableLayoutPanelSetLocations.Controls)
             {
                 TextBox txtBoxControl = AddedLocationTextBoxControl((Panel)control);
                 targetOutputLocationModel.AddLocation(txtBoxControl.Text);
@@ -213,7 +196,7 @@ namespace OneClickZip.Forms.Options
             if (!IsTextboxValueValid(txtTargetLocationMain)) invalidFormCtr++;
 
             //Other Controls
-            foreach(Control control in panelSetLocations.Controls)
+            foreach(Control control in tableLayoutPanelSetLocations.Controls)
             {
                 TextBox txtBoxControl = AddedLocationTextBoxControl((Panel)control);
                 if (!IsTextboxValueValid(txtBoxControl)) invalidFormCtr++;
@@ -243,7 +226,7 @@ namespace OneClickZip.Forms.Options
         {
             if (isValid)
             {
-                control.BackColor = Color.FromArgb(255, 240, 240, 240);
+                control.BackColor = Color.White; //Color.FromArgb(255, 240, 240, 240); //gray
             }
             else
             {
@@ -255,6 +238,30 @@ namespace OneClickZip.Forms.Options
             get
             {
                 return targetOutputLocationModel;
+            }
+        }
+        private void btnDefault_Click(object sender, EventArgs e)
+        {
+            dynamicControlCtr = 0;
+            ColorControlBaseOnValidation(txtTargetLocationMain,true);
+            tableLayoutPanelSetLocations.Controls.Clear();
+            SetUpDefault();
+        }
+        private void txtSelectedPath_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                if (FileSystemUtilities.IsDirectoryExistInTheSystem(txtSelectedPath.Text))
+                {
+                    ColorControlBaseOnValidation(txtSelectedPath, true);
+                    expTreeExplorer.ExpandANode(SelectedPath, true);
+                    expTreeExplorer.Refresh();
+                    SelectedPath = txtSelectedPath.Text;
+                }
+                else
+                {
+                    ColorControlBaseOnValidation(txtSelectedPath, false);
+                }
             }
         }
 

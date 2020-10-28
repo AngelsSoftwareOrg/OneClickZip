@@ -92,14 +92,6 @@ namespace OneClickZip.Includes.Classes
             if (CancelBulkAddFilesFolders) return;
             foreach (CustomFileItem itemDir in customFileItem.GetShellInfoDirectories())
             {
-
-                //DEBUGGING
-                if (itemDir.FilePathFull.Contains(@"Games") ||
-                    itemDir.FilePathFull.Contains(@"ojt"))
-                {
-                    bool xc = false;
-                }
-
                 Application.DoEvents();
                 if (CancelBulkAddFilesFolders) return;
                 ShowProgressDialogForm();

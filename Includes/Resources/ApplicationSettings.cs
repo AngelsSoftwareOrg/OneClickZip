@@ -45,5 +45,39 @@ namespace OneClickZip.Includes.Resources
                             Properties.Settings.Default.app_version_revision);
             }
         }
+        public static String[] ApplicationVersionSplitted
+        {
+            get
+            {
+                return String.Format("{0}.{1}.{2}.{3}",
+                            Properties.Settings.Default.app_version_major,
+                            Properties.Settings.Default.app_version_minor,
+                            Properties.Settings.Default.app_version_patch,
+                            Properties.Settings.Default.app_version_revision).Split(Char.Parse("."));
+            }
+        }
+        public static String ApplicationWebsiteLink
+        {
+            get
+            {
+                return String.Format(Properties.Settings.Default.about_website_link,
+                    ApplicationOrganizationName,
+                    ApplicationName);
+            }
+        }
+        public static String ApplicationOrganizationName
+        {
+            get
+            {
+                return Properties.Settings.Default.app_organization;
+            }
+        }
+        public static String ApplicationName
+        {
+            get
+            {
+                return Properties.Settings.Default.app_name;
+            }
+        }
     }
 }

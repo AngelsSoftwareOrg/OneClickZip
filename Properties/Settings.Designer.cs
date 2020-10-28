@@ -43,7 +43,7 @@ namespace OneClickZip.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
         public string app_version_patch {
             get {
                 return ((string)(this["app_version_patch"]));
@@ -97,7 +97,7 @@ namespace OneClickZip.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://github.com/AngelsSoftwareOrg/OneClickZip")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://github.com/{0}/{1}")]
         public string about_website_link {
             get {
                 return ((string)(this["about_website_link"]));
@@ -110,6 +110,60 @@ namespace OneClickZip.Properties {
         public string LAST_OPENED_DIRECTORY {
             get {
                 return ((string)(this["LAST_OPENED_DIRECTORY"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://api.github.com")]
+        public string github_api_endpoint {
+            get {
+                return ((string)(this["github_api_endpoint"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("/repos/{0}/{1}/releases/latest")]
+        public string github_api_endpoint_latest_release {
+            get {
+                return ((string)(this["github_api_endpoint_latest_release"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("AngelsSoftwareOrg")]
+        public string app_organization {
+            get {
+                return ((string)(this["app_organization"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("OneClickZip")]
+        public string app_name {
+            get {
+                return ((string)(this["app_name"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("angelsburger90")]
+        public string github_username {
+            get {
+                return ((string)(this["github_username"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("fba0a3bd40a064a")]
+        public string github_access_token {
+            get {
+                return ((string)(this["github_access_token"]));
             }
         }
     }
