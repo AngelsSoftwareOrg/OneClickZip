@@ -33,6 +33,8 @@
             this.btnStop = new System.Windows.Forms.Button();
             this.panelStatistic = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblArchivedSize = new System.Windows.Forms.Label();
+            this.lblArchiveSize = new System.Windows.Forms.Label();
             this.lblFoldersCreated = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.lblFilesAdded = new System.Windows.Forms.Label();
@@ -60,8 +62,6 @@
             this.txtBoxCurrentAction = new System.Windows.Forms.TextBox();
             this.progressBarStatus = new System.Windows.Forms.ProgressBar();
             this.timerElapseTime = new System.Windows.Forms.Timer(this.components);
-            this.lblArchivedSize = new System.Windows.Forms.Label();
-            this.lblArchiveSize = new System.Windows.Forms.Label();
             this.panelStatistic.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panelLogs.SuspendLayout();
@@ -118,6 +118,24 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Processing Details";
+            // 
+            // lblArchivedSize
+            // 
+            this.lblArchivedSize.AutoSize = true;
+            this.lblArchivedSize.Location = new System.Drawing.Point(824, 25);
+            this.lblArchivedSize.Name = "lblArchivedSize";
+            this.lblArchivedSize.Size = new System.Drawing.Size(74, 17);
+            this.lblArchivedSize.TabIndex = 12;
+            this.lblArchivedSize.Text = "0.00 bytes";
+            // 
+            // lblArchiveSize
+            // 
+            this.lblArchiveSize.AutoSize = true;
+            this.lblArchiveSize.Location = new System.Drawing.Point(658, 25);
+            this.lblArchiveSize.Name = "lblArchiveSize";
+            this.lblArchiveSize.Size = new System.Drawing.Size(169, 17);
+            this.lblArchiveSize.TabIndex = 11;
+            this.lblArchiveSize.Text = "Processed Archived Size:";
             // 
             // lblFoldersCreated
             // 
@@ -370,24 +388,6 @@
             this.timerElapseTime.Interval = 1000;
             this.timerElapseTime.Tick += new System.EventHandler(this.timerElapseTime_Tick);
             // 
-            // lblArchivedSize
-            // 
-            this.lblArchivedSize.AutoSize = true;
-            this.lblArchivedSize.Location = new System.Drawing.Point(824, 25);
-            this.lblArchivedSize.Name = "lblArchivedSize";
-            this.lblArchivedSize.Size = new System.Drawing.Size(74, 17);
-            this.lblArchivedSize.TabIndex = 12;
-            this.lblArchivedSize.Text = "0.00 bytes";
-            // 
-            // lblArchiveSize
-            // 
-            this.lblArchiveSize.AutoSize = true;
-            this.lblArchiveSize.Location = new System.Drawing.Point(658, 25);
-            this.lblArchiveSize.Name = "lblArchiveSize";
-            this.lblArchiveSize.Size = new System.Drawing.Size(169, 17);
-            this.lblArchiveSize.TabIndex = 11;
-            this.lblArchiveSize.Text = "Processed Archived Size:";
-            // 
             // OneClickProcessorFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -399,6 +399,7 @@
             this.Controls.Add(this.panelButtons);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "OneClickProcessorFrm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "One Click Zip Creator";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OneClickProcessor_FormClosed);
             this.Load += new System.EventHandler(this.OneClickProcessor_Load);

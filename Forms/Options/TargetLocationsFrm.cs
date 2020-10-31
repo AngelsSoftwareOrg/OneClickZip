@@ -74,7 +74,7 @@ namespace OneClickZip.Forms.Options
             linkLabelRemove.Anchor = ((AnchorStyles)((AnchorStyles.Top | AnchorStyles.Right)));
             linkLabelRemove.Location = new System.Drawing.Point(45, 55);
             linkLabelRemove.Name = "linLblRemoveAddedLoc" + dynamicControlCtr;
-            linkLabelRemove.Size = new System.Drawing.Size(97, 17);
+            linkLabelRemove.Size = new System.Drawing.Size(120, 17);
             linkLabelRemove.TabIndex = ++tabIndex;
             linkLabelRemove.Text = "Remove Folder " + dynamicControlCtr;
             linkLabelRemove.Click += LinkLabelRemove_Click;

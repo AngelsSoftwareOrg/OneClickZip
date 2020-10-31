@@ -43,7 +43,7 @@ namespace OneClickZip.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
         public string app_version_patch {
             get {
                 return ((string)(this["app_version_patch"]));

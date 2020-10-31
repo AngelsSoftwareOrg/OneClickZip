@@ -63,6 +63,11 @@ namespace OneClickZip.Includes.Classes
             FileSerialization.SaveObjectToFile(Serialization.BinarySerialization, fullFilePath, ZipFileModel);
         }
 
+        public void SaveProject(String fullFilePath, ZipFileModel customZipModel)
+        {
+            FileSerialization.SaveObjectToFile(Serialization.BinarySerialization, fullFilePath, customZipModel);
+        }
+
         public void SaveCurrentLoadedProject()
         {
             FileSerialization.SaveObjectToFile(Serialization.BinarySerialization, ZipFileModel.FilePath, ZipFileModel);
