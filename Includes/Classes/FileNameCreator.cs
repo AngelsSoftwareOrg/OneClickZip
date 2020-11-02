@@ -11,7 +11,7 @@ using OneClickZip.Includes.Resources;
 namespace OneClickZip.Includes.Classes
 {
     [Serializable]
-    public class FileNameCreator
+    public class FileNameCreator: ICloneable
     {
         private String fileFormulaName;
         private List<ICreatorExecutor> formulaDerivatorGenerator = new List<ICreatorExecutor>
@@ -20,7 +20,6 @@ namespace OneClickZip.Includes.Classes
             new RandomNumberGeneratorModel(),
             new RandomCharsGeneratorModel()
         };
-
         public FileNameCreator()
         {
         }
@@ -28,7 +27,6 @@ namespace OneClickZip.Includes.Classes
         {
             this.FileFormulaName = fileFormulaName;
         }
-
         public String GetDerivedFormula()
         {
             String result = this.FileFormulaName;
@@ -41,7 +39,6 @@ namespace OneClickZip.Includes.Classes
             }
             return result.Trim();
         }
-
         public List<ResourcePropertiesModel> GetResourcePropertiesList(bool includeHeader = false)
         {
             List<ResourcePropertiesModel> resource = new List<ResourcePropertiesModel>();
@@ -52,8 +49,12 @@ namespace OneClickZip.Includes.Classes
             }
             return resource;
         }
-
         public string FileFormulaName { get => fileFormulaName; set => fileFormulaName = value; }
-
+        public object Clone()
+        {
+            FileNameCreator fnc = new FileNameCreator();
+            fnc.FileFormulaName = String.Copy(this.FileFormulaName);
+            return fnc;
+        }
     }
 }
