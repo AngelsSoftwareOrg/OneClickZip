@@ -125,6 +125,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FileAssociationFrm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "FileAssociation";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FileAssociationFrm_FormClosing);
             this.Load += new System.EventHandler(this.FileAssociationFrm_Load);

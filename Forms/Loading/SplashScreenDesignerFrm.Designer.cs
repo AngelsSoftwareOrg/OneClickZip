@@ -62,11 +62,12 @@
             // 
             // panelLoadingMsg
             // 
+            this.panelLoadingMsg.BackColor = System.Drawing.Color.White;
             this.panelLoadingMsg.Controls.Add(this.txtBoxStatMsg);
             this.panelLoadingMsg.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelLoadingMsg.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panelLoadingMsg.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.panelLoadingMsg.Location = new System.Drawing.Point(0, 354);
+            this.panelLoadingMsg.Location = new System.Drawing.Point(0, 359);
             this.panelLoadingMsg.Name = "panelLoadingMsg";
             this.panelLoadingMsg.Size = new System.Drawing.Size(515, 33);
             this.panelLoadingMsg.TabIndex = 2;
@@ -77,8 +78,8 @@
             this.txtBoxStatMsg.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtBoxStatMsg.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtBoxStatMsg.Enabled = false;
-            this.txtBoxStatMsg.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBoxStatMsg.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.txtBoxStatMsg.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBoxStatMsg.ForeColor = System.Drawing.SystemColors.InfoText;
             this.txtBoxStatMsg.Location = new System.Drawing.Point(0, 0);
             this.txtBoxStatMsg.Multiline = true;
             this.txtBoxStatMsg.Name = "txtBoxStatMsg";
@@ -93,7 +94,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gainsboro;
-            this.ClientSize = new System.Drawing.Size(515, 387);
+            this.ClientSize = new System.Drawing.Size(515, 392);
             this.ControlBox = false;
             this.Controls.Add(this.panelLoadingMsg);
             this.Controls.Add(this.panelImage);

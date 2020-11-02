@@ -306,6 +306,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FileNameCreatorFrm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "File Name Creator";
             this.Load += new System.EventHandler(this.FileNameCreatorFrm_Load);
             this.panel2.ResumeLayout(false);

@@ -595,6 +595,7 @@
             this.Controls.Add(this.panelButtons);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FilterRuleFrm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Files and Folders Filter Rule";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FilterRuleFrm_FormClosed);
             this.Load += new System.EventHandler(this.FilterRuleFrm_Load);

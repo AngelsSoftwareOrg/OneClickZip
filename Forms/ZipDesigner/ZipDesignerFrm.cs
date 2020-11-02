@@ -712,15 +712,19 @@ namespace OneClickZip
                 if (saveFileDialog.CheckPathExists)
                 {
                     TreeNodeExtended rootNode = treeNodeInterpreter.GetRootNode(treeViewZipDesigner);
-                    ZipFileModel zipFileModel = new ZipFileModel(rootNode, PROJECT_SESSION.FileNameCreatorModel);
+                    ZipFileModel zipFileModel = new ZipFileModel(rootNode, (FileNameCreator) PROJECT_SESSION.FileNameCreatorModel.Clone());
                     zipFileModel.FilePath = saveFileDialog.FileName;
                     zipFileModel.TargetOutputLocationModel = (TargetOutputLocationModel)TargetOutputLocationModelObj.Clone();
-                    PROJECT_SESSION.ZipFileModel = zipFileModel;
-                    PROJECT_SESSION.SaveProject(saveFileDialog.FileName);
-                    if(!ResourcesUtil.GetFileBatchFilterName().Equals(filterName, StringComparison.OrdinalIgnoreCase))
+                    if(ResourcesUtil.GetFileBatchFilterName().Equals(filterName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        PROJECT_SESSION.SaveProject(saveFileDialog.FileName, zipFileModel);
+                    }
+                    else
                     {
                         txtZipFileLocation.Text = saveFileDialog.FileName;
-                    }              
+                        PROJECT_SESSION.ZipFileModel = zipFileModel;
+                        PROJECT_SESSION.SaveProject(saveFileDialog.FileName);
+                    }           
                 }
             }
         }
@@ -908,8 +912,16 @@ namespace OneClickZip
         private void ctxMenuZipFileTree_Opening(object sender, CancelEventArgs e)
         {
             TreeNodeExtended treeNodeEx = GetSelectedTreeNodeExtended;
-            modifyFilterRuleToolStripMenuItem.Visible = treeNodeEx.IsFolderIsFilterRule || !treeNodeEx.IsRootNode;
-            addFilterRuleToolStripMenuItem.Visible = treeNodeEx.IsFolderIsTreeViewNode || !treeNodeEx.IsRootNode;
+            if (treeNodeEx.IsRootNode)
+            {
+                modifyFilterRuleToolStripMenuItem.Visible = false;
+                addFilterRuleToolStripMenuItem.Visible = true;
+            }
+            else
+            {
+                modifyFilterRuleToolStripMenuItem.Visible = treeNodeEx.IsFolderIsFilterRule;
+                addFilterRuleToolStripMenuItem.Visible = !treeNodeEx.IsFolderIsFilterRule;
+            }
         }
 
         private void modifyFilterRuleToolStripMenuItem_Click(object sender, EventArgs e)
