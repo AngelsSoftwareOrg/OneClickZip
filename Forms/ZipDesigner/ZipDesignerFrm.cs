@@ -27,7 +27,7 @@ namespace OneClickZip
         private TreeNodeInterpreter treeNodeInterpreter = new TreeNodeInterpreter();
         private ListViewInterpretor listViewInterpretor = new ListViewInterpretor();
         private UpdatesFrm updatesFrm = new UpdatesFrm();
-
+        private TargetLocationsFrm targetLocationFrm = null;
         public ZipDesigner()
         {
             InitializeComponent();
@@ -658,7 +658,15 @@ namespace OneClickZip
 
         private void lnlSetTargetLocation_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            TargetLocationsFrm targetLocationFrm = new TargetLocationsFrm(TargetOutputLocationModelObj);
+            if(targetLocationFrm == null)
+            {
+                targetLocationFrm = new TargetLocationsFrm(TargetOutputLocationModelObj);
+            }
+            else
+            {
+                targetLocationFrm.TargetOutputLocationModel = TargetOutputLocationModelObj;
+            }
+
             if(targetLocationFrm.ShowDialog() == DialogResult.OK)
             {
                 TargetOutputLocationModelObj = targetLocationFrm.TargetOutputLocationModel;

@@ -43,7 +43,7 @@ namespace OneClickZip.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        [global::System.Configuration.DefaultSettingValueAttribute("6")]
         public string app_version_patch {
             get {
                 return ((string)(this["app_version_patch"]));
@@ -160,7 +160,7 @@ namespace OneClickZip.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("fba0a3bd40a064a")]
+        [global::System.Configuration.DefaultSettingValueAttribute("xxx_fba0a3bd40a064a_xxx")]
         public string github_access_token {
             get {
                 return ((string)(this["github_access_token"]));
