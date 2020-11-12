@@ -59,7 +59,7 @@ namespace OneClickZip.Includes.Models
             {
                 String targetPath = TargetOutputLocationModel.MainTargetLocation.Trim();
                 if(!TargetOutputLocationModel.MainTargetLocation.EndsWith(@"\")) targetPath += @"\";
-                return String.Format(@"{0}{1}.zip", targetPath, fileNameCreator.GetDerivedFormula());
+                return (String.Format(@"{0}{1}.zip", targetPath, fileNameCreator.GetDerivedFormula()));
             }
         }
 
@@ -100,6 +100,14 @@ namespace OneClickZip.Includes.Models
             set
             {
                 targetOutputLocationModel = value;
+            }
+        }
+
+        public String MainTargetLocationDirectory
+        {
+            get
+            {
+                return targetOutputLocationModel.MainTargetLocation;
             }
         }
     }

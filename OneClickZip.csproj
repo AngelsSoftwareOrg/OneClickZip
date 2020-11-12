@@ -57,6 +57,18 @@
   <PropertyGroup>
     <ApplicationIcon>Logo-icon-64px.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>59518C383005733FF62356A2D987114FD4139985</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>OneClickZip_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="DotNetZip, Version=1.14.0.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
       <HintPath>packages\DotNetZip.1.14.0\lib\net40\DotNetZip.dll</HintPath>
@@ -293,6 +305,7 @@
     <EmbeddedResource Include="Forms\ZipDesigner\ZipDesignerFrm.resx">
       <DependentUpon>ZipDesignerFrm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="OneClickZip_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
