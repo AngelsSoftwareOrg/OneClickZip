@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Security.AccessControl;
+using System.Security.Principal;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -18,7 +21,6 @@ namespace OneClickZip.Includes.Utilities
         private static readonly String SPECIAL_FOLDER_PATTERN = @".*?\{.*?\}";
         private static List<KeyValuePair<String, Environment.SpecialFolder>> SPECIAL_FOLDERS_MANUAL_MATCHMAKING;
         private static readonly List<char> INVALID_FILE_PATH_CHARACTERS;
-
         static FileSystemUtilities() {
             SPECIAL_FOLDERS = new List<string>();
             SPECIAL_FOLDERS_MANUAL_MATCHMAKING = new List<KeyValuePair<string, Environment.SpecialFolder>>();
@@ -173,6 +175,57 @@ namespace OneClickZip.Includes.Utilities
         public static bool IsFileExist(String filePath)
         {
             return File.Exists(filePath);
+        }
+        public static bool MakeDirectory(String directoryPath)
+        {
+            try
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+        public static bool IsDirectoryHasReadAndWritePermission(String directoryPath)
+        {
+            try
+            {
+                bool writeable = false;
+                WindowsPrincipal principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
+                DirectorySecurity security = Directory.GetAccessControl(directoryPath);
+                AuthorizationRuleCollection authRules = security.GetAccessRules(true, true, typeof(SecurityIdentifier));
+
+                foreach (FileSystemAccessRule accessRule in authRules)
+                {
+                    if (principal.IsInRole(accessRule.IdentityReference as SecurityIdentifier))
+                    {
+                        if ((FileSystemRights.WriteData & accessRule.FileSystemRights) == FileSystemRights.WriteData)
+                        {
+                            if (accessRule.AccessControlType == AccessControlType.Allow)
+                            {
+                                writeable = true;
+                            }
+                            else if (accessRule.AccessControlType == AccessControlType.Deny)
+                            {
+                                //Deny usually overrides any Allow
+                                return false;
+                            }
+
+                        }
+                    }
+                }
+                return writeable;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

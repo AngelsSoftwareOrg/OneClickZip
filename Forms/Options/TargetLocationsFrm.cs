@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using ExpTreeLib;
@@ -33,6 +34,7 @@ namespace OneClickZip.Forms.Options
             if (targetOutputLocationModel != null)
             {
                 txtTargetLocationMain.Text = targetOutputLocationModel.MainTargetLocation;
+                tableLayoutPanelSetLocations.Controls.Clear();
                 foreach (String str in targetOutputLocationModel.GetTargetLocations())
                 {
                     AddNewTargetLocationControls(str);
@@ -46,7 +48,9 @@ namespace OneClickZip.Forms.Options
         }
         private void btnAddOtherFolder_Click(object sender, EventArgs e)
         {
-            AddNewTargetLocationControls();
+            AddNewTargetLocationControls(
+                (FileSystemUtilities.IsDirectoryExistInTheSystem(SelectedPath) 
+                        ? SelectedPath : ""));
         }
         private void AddNewTargetLocationControls(String targetLocation="")
         {
@@ -109,21 +113,29 @@ namespace OneClickZip.Forms.Options
         }
         private void BtnAddFolder_Click(object sender, EventArgs e)
         {
-            if(!FileSystemUtilities.IsDirectoryExistInTheSystem(SelectedPath)) return;
+            if (!FileSystemUtilities.IsDirectoryExistInTheSystem(SelectedPath)) return;
 
             Button genericButton = (Button)sender;
             Panel panelContainer = (Panel)genericButton.Parent;
             TextBox addOtherLocation = AddedLocationTextBoxControl(panelContainer);
-            if(IsUniqueTargetFolder(addOtherLocation, SelectedPath))
+            if (!IsUniqueTargetLocation(addOtherLocation))
             {
-                addOtherLocation.Text = SelectedPath;
-                ColorControlBaseOnValidation(addOtherLocation, true);
+                MessageBox.Show("Duplicate target folder found. Please choose a unique folder...", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        private bool IsUniqueTargetLocation(TextBox sourceLocation)
+        {
+            if (IsUniqueTargetFolder(sourceLocation, SelectedPath))
+            {
+                sourceLocation.Text = SelectedPath;
+                ColorControlBaseOnValidation(sourceLocation, true);
+                return true;
             }
             else
             {
-                MessageBox.Show("Duplicate target folder found. Please choose a unique folder...", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ColorControlBaseOnValidation(addOtherLocation, false);
-            } 
+                ColorControlBaseOnValidation(sourceLocation, false);
+            }
+            return false;
         }
         private void LinkLabelRemove_Click(object sender, EventArgs e)
         {
@@ -195,11 +207,23 @@ namespace OneClickZip.Forms.Options
             int invalidFormCtr = 0;
             if (!IsTextboxValueValid(txtTargetLocationMain)) invalidFormCtr++;
 
+            List<String> targets = new List<string>();
+            targets.Add(txtTargetLocationMain.Text);
+
             //Other Controls
-            foreach(Control control in tableLayoutPanelSetLocations.Controls)
+            foreach (Control control in tableLayoutPanelSetLocations.Controls)
             {
                 TextBox txtBoxControl = AddedLocationTextBoxControl((Panel)control);
                 if (!IsTextboxValueValid(txtBoxControl)) invalidFormCtr++;
+                if (targets.Contains(txtBoxControl.Text))
+                {
+                    invalidFormCtr++;
+                    _ = IsUniqueTargetLocation(txtBoxControl);
+                }
+                else
+                {
+                    targets.Add(txtBoxControl.Text);
+                }
             }
 
             return (invalidFormCtr<=0);
@@ -238,6 +262,10 @@ namespace OneClickZip.Forms.Options
             get
             {
                 return targetOutputLocationModel;
+            }
+            set
+            {
+                targetOutputLocationModel = (TargetOutputLocationModel) value.Clone();
             }
         }
         private void btnDefault_Click(object sender, EventArgs e)

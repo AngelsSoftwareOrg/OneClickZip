@@ -15,6 +15,7 @@ After you design your own Zip Files content, you can make a shortcut of your des
  To compare, this program will let you design first your Zip File structures before committing to Zip It. 
   
   Here are the following features this program offers 
+  
  **1. Dynamic Zip File Name.**
  - Useful to prevent overwriting the same zip file if you want to maintain a series of backup
  
@@ -96,10 +97,16 @@ The installer setup is straight forward like any other installers out there.
 
 To associate the One Click Zip extension on the file System, open the program and 
 
+
 Click the File Association menu option. 
+
+
 ![File Association](https://i.imgur.com/1RfwDaB.png)
+
 ![File Association](https://i.imgur.com/CUmbC6Z.png)
+
 ![File Association](https://i.imgur.com/7xjBGbK.png)
+
 ![File Association](https://i.imgur.com/XAO7bjX.png)
 
 

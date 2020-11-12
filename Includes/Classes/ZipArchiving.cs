@@ -118,23 +118,30 @@ namespace OneClickZip.Includes.Classes
         }
         private void StartCrawling()
         {
-            using (ZipFile archiveFile = new ZipFile(NewArchiveName))
+            try
             {
-                archiveFile.AlternateEncodingUsage = ZipOption.AsNecessary;
-                archiveFile.CompressionLevel = Ionic.Zlib.CompressionLevel.BestCompression;
+                using (ZipFile archiveFile = new ZipFile(NewArchiveName))
+                {
+                    archiveFile.AlternateEncodingUsage = ZipOption.AsNecessary;
+                    archiveFile.CompressionLevel = Ionic.Zlib.CompressionLevel.BestCompression;
 
-                UpdateStatusAndRaiseEventProcessingStatus(ZipProcessingStages.ZIP_CREATION);
-                CrawlTreeStructure(serializableTreeNode, archiveFile, null);
-                UpdateStatusAndRaiseEventProcessingStatus(ZipProcessingStages.POST_PROCESSING);
-                archiveFile.Save();
-                if (StopProcessing && StopProcessingSuccessful)
-                {
-                    StopProcessingRaiseEvent();
+                    UpdateStatusAndRaiseEventProcessingStatus(ZipProcessingStages.ZIP_CREATION);
+                    CrawlTreeStructure(serializableTreeNode, archiveFile, null);
+                    UpdateStatusAndRaiseEventProcessingStatus(ZipProcessingStages.POST_PROCESSING);
+                    archiveFile.Save();
+                    if (StopProcessing && StopProcessingSuccessful)
+                    {
+                        StopProcessingRaiseEvent();
+                    }
+                    else
+                    {
+                        FinishedArchivingRaiseEvent();
+                    }
                 }
-                else
-                {
-                    FinishedArchivingRaiseEvent();
-                }
+            }
+            catch (Exception)
+            {
+                StopProcessingRaiseEvent();
             }
         }
         private bool AddFileIntoZipArchive(ZipFile archiveFile, CustomFileItem customFileItem, String zipFileFolderName)
@@ -145,21 +152,20 @@ namespace OneClickZip.Includes.Classes
 
             String customFileName = (zipFileFolderName + 
                                     FileSystemUtilities.SanitizeFileName(customFileItem.GetCustomFileName));
-
-            archiveFile.AddEntry(customFileName, File.OpenRead(customFileItem.FilePathFull));
             try
             {
+                archiveFile.AddEntry(customFileName, File.OpenRead(customFileItem.FilePathFull));
+
                 //if there's a difference of, e.g. 50MB processed file size, then flush
-                if((processedZipFileSize - processedFilesSizeFlusherCtr) >= processedFilesSizeFlusherThreshold)
+                if ((processedZipFileSize - processedFilesSizeFlusherCtr) >= processedFilesSizeFlusherThreshold)
                 {
                     processedFilesSizeFlusherCtr = processedZipFileSize;
                     archiveFile.Save();
                 }
             }
-            catch (Exception)
-            {
-                //just ignore if cannot accessed the file
-            }
+            //just ignore if cannot accessed the file
+            catch (UnauthorizedAccessException) { return false; }
+            catch (Exception) { return false; }
             return true;
         }
         private void CrawlTreeStructure(SerializableTreeNode serializableTreeNode, ZipFile archiveFile, String zipFileFolderName)

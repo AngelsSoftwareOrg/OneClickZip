@@ -114,6 +114,13 @@ namespace OneClickZip.Forms.Options
                 if (isStopProcessing) break;
                 try
                 {
+                    if (!IsDirectoryValidAndAccessible(targetOutputFolder))
+                    {
+                        AddLogItems("Copy file failed", String.Format(@"Failed to place the file [{1}] in [{0}] due to folder is not accessible" +
+                                        @" or no read and write permission", targetOutputFolder, zipOutputFile.Name));
+                        continue;
+                    }
+
                     int bufferSize = 8 * 1024;
                     using (FileStream sourceStream = new FileStream(zipOutputFullFilePathName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
                     {
@@ -224,13 +231,24 @@ namespace OneClickZip.Forms.Options
                 serializedTreeNode = projectSession.GetSerializableTreeNodeBaseOnZipModel();
             }
             this.zipModel = projectSession.ZipFileModel;
-            String newArchiveName = zipModel.GetFullPathFileAndNameOfNewZipArchive;
-            this.Text = this.Text + " => " + Path.GetFileName(newArchiveName);
-            zipArchiving.NewArchiveName = newArchiveName;
-            zipArchiving.SerializableTreeNode = serializedTreeNode;
-            zipArchiving.ZipFileModelSource = zipModel;
-            zipArchiving.CompressionLevelArchiving = CompressionLevel.BestCompression; ;
-            zipArchiving.StartArchiving();
+            if (IsDirectoryValidAndAccessible(this.zipModel.MainTargetLocationDirectory))
+            {
+                String newArchiveName = zipModel.GetFullPathFileAndNameOfNewZipArchive;
+                this.Text = this.Text + " => " + Path.GetFileName(newArchiveName);
+                zipArchiving.NewArchiveName = newArchiveName;
+                zipArchiving.SerializableTreeNode = serializedTreeNode;
+                zipArchiving.ZipFileModelSource = zipModel;
+                zipArchiving.CompressionLevelArchiving = CompressionLevel.BestCompression;
+                zipArchiving.StartArchiving();
+            }
+            else
+            {
+                MessageBox.Show(String.Format("The target location for archiving '{0}' is not accessible!", 
+                    this.zipModel.MainTargetLocationDirectory), 
+                    "Access Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                isWindowCanBeClose = true;
+                btnStop.Enabled = false;
+            }
         }
         private void GetStatistic(ZipFileStatisticsModel statObj)
         {
@@ -284,24 +302,7 @@ namespace OneClickZip.Forms.Options
         }
         private void linkSaveLogs_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = ResourcesUtil.GetFileLogFilterName();
-            saveFileDialog.Title = "Save a log file";
-            DialogResult dr = saveFileDialog.ShowDialog();
-
-            if(dr == DialogResult.OK)
-            {
-                using (StreamWriter file = new StreamWriter(saveFileDialog.FileName))
-                {
-                    foreach(ListViewItem lvItem in listViewLogs.Items)
-                    {
-                        file.WriteLine(lvItem.SubItems[0].Text + "\t" +
-                                        lvItem.SubItems[1].Text + "\t" +
-                                        lvItem.SubItems[2].Text + "\t");
-                    }
-                }
-                MessageBox.Show("Log file has been successfully save...", "File saving...");
-            }
+            FileSystemUtilities.SaveListViewItemsToLogFile(listViewLogs);
         }
         private void OneClickProcessor_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -319,5 +320,15 @@ namespace OneClickZip.Forms.Options
             }
             this.DialogResult = DialogResult.OK;
         }
+        private bool IsDirectoryValidAndAccessible(String dirPath)
+        {
+            if (!FileSystemUtilities.IsDirectoryExistInTheSystem(dirPath))
+            {
+                if (!FileSystemUtilities.MakeDirectory(dirPath)) return false;
+            }
+            if (!FileSystemUtilities.IsDirectoryHasReadAndWritePermission(dirPath)) return false;
+            return true;
+        }
+    
     }
 }
