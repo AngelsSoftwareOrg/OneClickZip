@@ -163,7 +163,7 @@ namespace OneClickZip.Includes.Classes
                     archiveFile.Save();
                 }
             }
-            //just ignore if cannot accessed the file
+            //just ignore if cannot access the file
             catch (UnauthorizedAccessException) { return false; }
             catch (Exception) { return false; }
             return true;

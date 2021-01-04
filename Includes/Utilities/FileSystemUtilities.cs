@@ -21,7 +21,8 @@ namespace OneClickZip.Includes.Utilities
         private static readonly String SPECIAL_FOLDER_PATTERN = @".*?\{.*?\}";
         private static List<KeyValuePair<String, Environment.SpecialFolder>> SPECIAL_FOLDERS_MANUAL_MATCHMAKING;
         private static readonly List<char> INVALID_FILE_PATH_CHARACTERS;
-        static FileSystemUtilities() {
+        static FileSystemUtilities()
+        {
             SPECIAL_FOLDERS = new List<string>();
             SPECIAL_FOLDERS_MANUAL_MATCHMAKING = new List<KeyValuePair<string, Environment.SpecialFolder>>();
             SPECIAL_FOLDERS.AddRange(ClassReflectionUtilities.GetEnumerableOptions(typeof(Environment.SpecialFolder)));
@@ -41,7 +42,7 @@ namespace OneClickZip.Includes.Utilities
                     return true;
                 }
             }
-            catch (Exception )
+            catch (Exception)
             {
                 return false;
             }
@@ -89,11 +90,11 @@ namespace OneClickZip.Includes.Utilities
         public static FileInfo[] GetFiles(String pathName)
         {
             DirectoryInfo dInfo = new DirectoryInfo(pathName);
-            FileInfo[] result=null;
+            FileInfo[] result = null;
             if (!dInfo.Exists) return result;
             try
             {
-                if(FileSystemUtilities.IsDirectoryAttribute(dInfo)) result = dInfo.GetFiles();
+                if (FileSystemUtilities.IsDirectoryAttribute(dInfo)) result = dInfo.GetFiles();
             }
             catch (UnauthorizedAccessException) { }
             return result;
@@ -163,7 +164,7 @@ namespace OneClickZip.Includes.Utilities
             }
             if (targetEnum == null) return null;
 
-            return System.Environment.GetFolderPath((Environment.SpecialFolder) targetEnum);
+            return System.Environment.GetFolderPath((Environment.SpecialFolder)targetEnum);
         }
         public static String SanitizeFileName(String fileName)
         {
@@ -226,6 +227,14 @@ namespace OneClickZip.Includes.Utilities
             {
                 return false;
             }
+        }
+        public static bool isDriveReady(String path)
+        {
+            foreach (DriveInfo removableDrive in DriveInfo.GetDrives().Where(d => d.IsReady))
+            {
+                if (path.StartsWith(removableDrive.RootDirectory.Name)) return true;
+            }
+            return false;
         }
     }
 }
