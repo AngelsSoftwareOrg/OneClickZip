@@ -231,11 +231,14 @@ namespace OneClickZip.Forms.Options
         {
             folderBrowserDialog.SelectedPath = ApplicationSettings.GetLastOpenedDirectory();
             folderBrowserDialog.ShowNewFolderButton = true;
-            folderBrowserDialog.ShowDialog();
+            DialogResult dr = folderBrowserDialog.ShowDialog();
 
-            if (String.IsNullOrWhiteSpace(folderBrowserDialog.SelectedPath)) return;
-            txtBoxTargetDir.Text = folderBrowserDialog.SelectedPath;
-            ApplicationSettings.SaveLastOpenedDirectory(folderBrowserDialog.SelectedPath);
+            if(dr == DialogResult.OK)
+            {
+                if (String.IsNullOrWhiteSpace(folderBrowserDialog.SelectedPath)) return;
+                txtBoxTargetDir.Text = folderBrowserDialog.SelectedPath;
+                ApplicationSettings.SaveLastOpenedDirectory(folderBrowserDialog.SelectedPath);
+            }
         }
         private void comboBoxTimeSpanOption_SelectedValueChanged(object sender, EventArgs e)
         {

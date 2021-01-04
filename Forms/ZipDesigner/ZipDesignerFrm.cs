@@ -58,7 +58,7 @@ namespace OneClickZip
             }
         }
 
-        public TargetOutputLocationModel TargetOutputLocationModelObj
+        private TargetOutputLocationModel TargetOutputLocationModelObj
         { 
             get 
             { 
@@ -138,7 +138,7 @@ namespace OneClickZip
             }
         }
 
-        #endregion
+#endregion
 
 #region ZIP Designer Controls and related functions
 
@@ -447,7 +447,7 @@ namespace OneClickZip
 
         private void treeViewZipDesigner_DoubleClick(object sender, EventArgs e)
         {
-            TreeNodeExtended targetNode = (TreeNodeExtended)treeViewZipDesigner.SelectedNode;
+            TreeNodeExtended targetNode = GetSelectedTreeNodeExtended;
             if (targetNode == null) return;
             if (targetNode.IsFolderIsFilterRule) ModifyFilterRule();
         }
@@ -868,7 +868,7 @@ namespace OneClickZip
 
         #endregion
 
-        #region Context Strip for Zip File Tree View
+#region Context Strip for Zip File Tree View
 
         private void expandToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -939,7 +939,7 @@ namespace OneClickZip
 
         private void ModifyFilterRule(TreeNodeExtended targetNode = null)
         {
-            TreeNodeExtended treeNodeEx = (targetNode==null) ? (TreeNodeExtended)treeViewZipDesigner.SelectedNode : targetNode;
+            TreeNodeExtended treeNodeEx = (targetNode==null) ? GetSelectedTreeNodeExtended : targetNode;
             FilterRuleFrm filterFrm = new FilterRuleFrm(treeNodeEx.FolderFilterRuleObj);
             filterFrm.ShowDialog();
             treeNodeEx.FolderFilterRuleObj = (FolderFilterRule)filterFrm.FolderFilterRule.Clone();
