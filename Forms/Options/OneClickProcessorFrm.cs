@@ -322,6 +322,7 @@ namespace OneClickZip.Forms.Options
         }
         private bool IsDirectoryValidAndAccessible(String dirPath)
         {
+            if (!FileSystemUtilities.isDriveReady(dirPath)) return false;
             if (!FileSystemUtilities.IsDirectoryExistInTheSystem(dirPath))
             {
                 if (!FileSystemUtilities.MakeDirectory(dirPath)) return false;
@@ -329,6 +330,5 @@ namespace OneClickZip.Forms.Options
             if (!FileSystemUtilities.IsDirectoryHasReadAndWritePermission(dirPath)) return false;
             return true;
         }
-    
     }
 }
