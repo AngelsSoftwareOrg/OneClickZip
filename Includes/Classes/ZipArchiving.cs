@@ -139,8 +139,11 @@ namespace OneClickZip.Includes.Classes
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
+#if DEBUG
+                Console.WriteLine(e);
+#endif
                 StopProcessingRaiseEvent();
             }
         }
@@ -154,7 +157,8 @@ namespace OneClickZip.Includes.Classes
                                     FileSystemUtilities.SanitizeFileName(customFileItem.GetCustomFileName));
             try
             {
-                archiveFile.AddEntry(customFileName, File.OpenRead(customFileItem.FilePathFull));
+                if(!archiveFile.ContainsEntry(customFileName))
+                    archiveFile.AddEntry(customFileName, File.OpenRead(customFileItem.FilePathFull));
 
                 //if there's a difference of, e.g. 50MB processed file size, then flush
                 if ((processedZipFileSize - processedFilesSizeFlusherCtr) >= processedFilesSizeFlusherThreshold)
@@ -191,7 +195,7 @@ namespace OneClickZip.Includes.Classes
                 {
                     IncrementFolderProcessedCountArgs();
                     String newFolderName = String.Format("{0}{1}/", zipFileFolderName, customFile.GetCustomFileName);
-                    archiveFile.AddDirectoryByName(newFolderName);
+                    if (!archiveFile.ContainsEntry(newFolderName)) archiveFile.AddDirectoryByName(newFolderName);
                     UpdateStatusAndRaiseEventProgressStatus(ZipProcessingStages.ADDING_FOLDER, customFile, newFolderName);
                 }
                 Application.DoEvents();
