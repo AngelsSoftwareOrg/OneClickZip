@@ -36,13 +36,13 @@ namespace OneClickZip.Forms.Loading
 
         private void SplashScreenDesignerFrm_Load(object sender, EventArgs e)
         {
-            txtBoxStatMsg.Text = String.Format(@"App Version {0}. Loading...", ApplicationSettings.ApplicationVersion);
+            txtBoxStatMsg.Text = String.Format(@"App Version {0}. Loading...", ApplicationSettings.ApplicationVersionDisplay);
             ApplicationArgumentModel appArg = ProjectSession.Instance().ApplicationArgumentModel;
 
             if (appArg.IsFileOpenCase)
             {
                 txtBoxStatMsg.Text = String.Format(@"App Version {0}. Opening project '{1}' ...", 
-                    ApplicationSettings.ApplicationVersion, appArg.FileName);
+                    ApplicationSettings.ApplicationVersionDisplay, appArg.FileName);
             }
         }
 

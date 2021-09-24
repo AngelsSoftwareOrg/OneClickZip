@@ -46,10 +46,14 @@ namespace OneClickZip.Forms.Options
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
-        private void btnAddOtherFolder_Click(object sender, EventArgs e)
+        private void btnAddOtherFolder1_Click(object sender, EventArgs e)
+        {
+            AddOtherFolder();
+        }
+        private void AddOtherFolder()
         {
             AddNewTargetLocationControls(
-                (FileSystemUtilities.IsDirectoryExistInTheSystem(SelectedPath) 
+                (FileSystemUtilities.IsDirectoryExistInTheSystem(SelectedPath)
                         ? SelectedPath : ""));
         }
         private void AddNewTargetLocationControls(String targetLocation="")
@@ -281,10 +285,10 @@ namespace OneClickZip.Forms.Options
             {
                 if (FileSystemUtilities.IsDirectoryExistInTheSystem(txtSelectedPath.Text))
                 {
-                    ColorControlBaseOnValidation(txtSelectedPath, true);
-                    expTreeExplorer.ExpandANode(SelectedPath, true);
-                    expTreeExplorer.Refresh();
                     SelectedPath = txtSelectedPath.Text;
+                    ColorControlBaseOnValidation(txtSelectedPath, true);
+                    expTreeExplorer.ExpandANode(txtSelectedPath.Text, true);
+                    expTreeExplorer.Refresh();
                 }
                 else
                 {

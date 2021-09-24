@@ -449,7 +449,7 @@ namespace OneClickZip.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 25000.
+        ///   Looks up a localized string similar to 100000.
         /// </summary>
         internal static string SERIALIZED_TREE_NODE_GENERATION_PREVIEW_LIMIT {
             get {

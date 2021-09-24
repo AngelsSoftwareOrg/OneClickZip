@@ -38,6 +38,7 @@ namespace OneClickZip.Includes.Classes
         public ZipFileModel OpenProjectSession(String fileFullPath)
         {
             ZipFileModel = FileSerialization.LoadObjectToFile<ZipFileModel>(Serialization.BinarySerialization, fileFullPath);
+            ZipFileModel.FilePath = fileFullPath;
             return ZipFileModel;
         }
 

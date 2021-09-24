@@ -506,13 +506,12 @@
             // btnSaveLog
             // 
             this.btnSaveLog.Image = global::OneClickZip.Properties.Resources.Save_icon_24px;
-            this.btnSaveLog.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSaveLog.Location = new System.Drawing.Point(180, 4);
             this.btnSaveLog.Name = "btnSaveLog";
             this.btnSaveLog.Size = new System.Drawing.Size(127, 56);
             this.btnSaveLog.TabIndex = 4;
             this.btnSaveLog.Text = "Save Logs";
-            this.btnSaveLog.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSaveLog.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSaveLog.UseVisualStyleBackColor = true;
             this.btnSaveLog.Visible = false;
             this.btnSaveLog.Click += new System.EventHandler(this.btnSaveLog_Click);
@@ -520,13 +519,12 @@
             // btnStopPreview
             // 
             this.btnStopPreview.Image = global::OneClickZip.Properties.Resources.Button_Stop_icon_24px;
-            this.btnStopPreview.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnStopPreview.Location = new System.Drawing.Point(7, 4);
             this.btnStopPreview.Name = "btnStopPreview";
             this.btnStopPreview.Size = new System.Drawing.Size(167, 56);
             this.btnStopPreview.TabIndex = 3;
             this.btnStopPreview.Text = "Stop Preview / Simulation";
-            this.btnStopPreview.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnStopPreview.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnStopPreview.UseVisualStyleBackColor = true;
             this.btnStopPreview.Visible = false;
             this.btnStopPreview.Click += new System.EventHandler(this.btnStopPreview_Click);
@@ -535,12 +533,12 @@
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.Image = global::OneClickZip.Properties.Resources.save_v1_32;
-            this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSave.Location = new System.Drawing.Point(654, 4);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(161, 56);
             this.btnSave.TabIndex = 2;
             this.btnSave.Text = "Save";
+            this.btnSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
@@ -549,12 +547,12 @@
             this.btnCancelExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancelExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancelExit.Image = global::OneClickZip.Properties.Resources.Exit_32;
-            this.btnCancelExit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCancelExit.Location = new System.Drawing.Point(1013, 4);
             this.btnCancelExit.Name = "btnCancelExit";
             this.btnCancelExit.Size = new System.Drawing.Size(147, 56);
             this.btnCancelExit.TabIndex = 1;
             this.btnCancelExit.Text = "Exit";
+            this.btnCancelExit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCancelExit.UseVisualStyleBackColor = true;
             this.btnCancelExit.Click += new System.EventHandler(this.btnCancelExit_Click);
             // 
@@ -562,12 +560,12 @@
             // 
             this.btnSaveAndExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSaveAndExit.Image = global::OneClickZip.Properties.Resources.save_and_exit_32;
-            this.btnSaveAndExit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSaveAndExit.Location = new System.Drawing.Point(821, 4);
             this.btnSaveAndExit.Name = "btnSaveAndExit";
             this.btnSaveAndExit.Size = new System.Drawing.Size(186, 56);
             this.btnSaveAndExit.TabIndex = 0;
             this.btnSaveAndExit.Text = "Save and Exit";
+            this.btnSaveAndExit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSaveAndExit.UseVisualStyleBackColor = true;
             this.btnSaveAndExit.Click += new System.EventHandler(this.btnSaveAndExit_Click);
             // 

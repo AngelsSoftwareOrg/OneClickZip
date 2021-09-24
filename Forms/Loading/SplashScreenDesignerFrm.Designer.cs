@@ -46,10 +46,11 @@
             this.pictureBox1.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.InitialImage")));
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(515, 348);
+            this.pictureBox1.Size = new System.Drawing.Size(841, 473);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.WaitOnLoad = true;
             // 
             // panelImage
             // 
@@ -57,7 +58,7 @@
             this.panelImage.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelImage.Location = new System.Drawing.Point(0, 0);
             this.panelImage.Name = "panelImage";
-            this.panelImage.Size = new System.Drawing.Size(515, 348);
+            this.panelImage.Size = new System.Drawing.Size(841, 473);
             this.panelImage.TabIndex = 1;
             // 
             // panelLoadingMsg
@@ -67,24 +68,24 @@
             this.panelLoadingMsg.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelLoadingMsg.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panelLoadingMsg.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.panelLoadingMsg.Location = new System.Drawing.Point(0, 359);
+            this.panelLoadingMsg.Location = new System.Drawing.Point(0, 451);
             this.panelLoadingMsg.Name = "panelLoadingMsg";
-            this.panelLoadingMsg.Size = new System.Drawing.Size(515, 33);
+            this.panelLoadingMsg.Size = new System.Drawing.Size(841, 33);
             this.panelLoadingMsg.TabIndex = 2;
             // 
             // txtBoxStatMsg
             // 
-            this.txtBoxStatMsg.BackColor = System.Drawing.Color.Gainsboro;
+            this.txtBoxStatMsg.BackColor = System.Drawing.Color.White;
             this.txtBoxStatMsg.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtBoxStatMsg.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtBoxStatMsg.Enabled = false;
             this.txtBoxStatMsg.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBoxStatMsg.ForeColor = System.Drawing.SystemColors.InfoText;
+            this.txtBoxStatMsg.ForeColor = System.Drawing.SystemColors.MenuText;
             this.txtBoxStatMsg.Location = new System.Drawing.Point(0, 0);
             this.txtBoxStatMsg.Multiline = true;
             this.txtBoxStatMsg.Name = "txtBoxStatMsg";
             this.txtBoxStatMsg.ReadOnly = true;
-            this.txtBoxStatMsg.Size = new System.Drawing.Size(515, 33);
+            this.txtBoxStatMsg.Size = new System.Drawing.Size(841, 33);
             this.txtBoxStatMsg.TabIndex = 1;
             this.txtBoxStatMsg.Text = "Loading...";
             this.txtBoxStatMsg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -94,7 +95,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gainsboro;
-            this.ClientSize = new System.Drawing.Size(515, 392);
+            this.ClientSize = new System.Drawing.Size(841, 484);
             this.ControlBox = false;
             this.Controls.Add(this.panelLoadingMsg);
             this.Controls.Add(this.panelImage);
