@@ -3,20 +3,28 @@
 
 #define MyAppName "One Click Zip TESTING ONLY"
 #define MyAppNameForRegistry "One_Click_Zip_Designer"
+#define MyAppNameForRegistryBatch "One_Click_Zip_Designer_Batch"
 #define MyAppVersion "1.0.9.0"
 #define MyAppPublisher "AngelsSoftwareOrg"
 #define MyAppURL "https://github.com/" + MyAppPublisher + "/"
-#define MyAppExeName "One Click Zip.exe"
-#define MyAppAssocName MyAppNameForRegistry + " File"
+#define MyAppExeName "OneClickZip.exe"
 #define MyAppAssocExt ".oczd"
-#define MyAppAssocKey StringChange(MyAppAssocName, " ", "") + MyAppAssocExt
-#define InstallerName "once_click_zip"
-#define MyDesktopIcon "D:\Development\WorkSpace00002\OneClickZip\Logo-icon-64px.ico"
+#define MyAppAssocExtBatch ".oczb"
+#define MyAppAssocName MyAppNameForRegistry
+#define MyAppAssocKey StringChange(MyAppAssocName, " ", "")
+#define MyAppAssocNameBatch MyAppNameForRegistryBatch
+#define MyAppAssocKeyBatch StringChange(MyAppAssocNameBatch, " ", "")
+#define InstallerName "one_click_zip"
+#define IconMain "Logo-icon-64px.ico"
+#define IconBatch "Logo-icon-batch-64px.ico"
+#define IconSourceLocation "D:\Development\WorkSpace00002\OneClickZip\Resources\Icons\" 
+#define MyDesktopIcon IconSourceLocation + IconMain
+#define MyDesktopIconBatch IconSourceLocation + IconBatch
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{EFD9C419-F8D0-456E-ABE0-608A502770C6}
+AppId={{A3A3D4DF-5454-488D-86E6-149EBE5621D5}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 ;AppVerName={#MyAppName} {#MyAppVersion}
@@ -34,9 +42,11 @@ PrivilegesRequiredOverridesAllowed=dialog
 OutputDir=D:\Development\WorkSpace00002\OneClickZip\Setup
 OutputBaseFilename={#InstallerName}_{#MyAppVersion}_setup
 SetupIconFile={#MyDesktopIcon}
+UninstallDisplayIcon={app}\{#IconMain}
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
+UsePreviousAppDir=no
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -47,14 +57,26 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 [Files]
 Source: "D:\Development\WorkSpace00002\OneClickZip\bin\Release\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Development\WorkSpace00002\OneClickZip\bin\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#MyDesktopIcon}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyDesktopIconBatch}"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
-Root: HKCU; Subkey: "Software\Classes\{#MyAppAssocExt}\OpenWithProgids"; ValueType: string; ValueName: "{#MyAppAssocKey}"; ValueData: ""; Flags: uninsdeletevalue
+;~~~~~ DESIGNER ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Root: HKCU; Subkey: "Software\Classes\{#MyAppAssocExt}"; ValueType: string; ValueName: ""; ValueData: "{#MyAppAssocKey}"; Flags: uninsdeletevalue
 Root: HKCU; Subkey: "Software\Classes\{#MyAppAssocKey}"; ValueType: string; ValueName: ""; ValueData: "{#MyAppAssocName}"; Flags: uninsdeletekey
-Root: HKCU; Subkey: "Software\Classes\{#MyAppAssocKey}\DefaultIcon"; ValueType: string; ValueName: {#MyDesktopIcon}; ValueData: "{app}\{#MyAppExeName},0"
+Root: HKCU; Subkey: "Software\Classes\{#MyAppAssocKey}\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: {#MyDesktopIcon}
 Root: HKCU; Subkey: "Software\Classes\{#MyAppAssocKey}\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" ""%1"""
-Root: HKCU; Subkey: "Software\Classes\Applications\{#MyAppExeName}\SupportedTypes"; ValueType: string; ValueName: {#MyAppAssocExt}; ValueData: ""
+
+;~~~~~ BATCH ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Root: HKCU; Subkey: "Software\Classes\{#MyAppAssocExtBatch}"; ValueType: string; ValueName: ""; ValueData: "{#MyAppAssocKeyBatch}"; Flags: uninsdeletevalue
+Root: HKCU; Subkey: "Software\Classes\{#MyAppAssocKeyBatch}"; ValueType: string; ValueName: ""; ValueData: "{#MyAppAssocNameBatch}"; Flags: uninsdeletekey
+Root: HKCU; Subkey: "Software\Classes\{#MyAppAssocKeyBatch}\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: {#MyDesktopIconBatch}
+Root: HKCU; Subkey: "Software\Classes\{#MyAppAssocKeyBatch}\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" ""%1"""
+
+;~~~~~ OTHERS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+;Root: HKCU; Subkey: "Software\Classes\Applications\{#MyAppExeName}\SupportedTypes"; ValueType: string; ValueName: {#MyAppAssocExt}; ValueData: ""
+
 
 [Icons]
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
