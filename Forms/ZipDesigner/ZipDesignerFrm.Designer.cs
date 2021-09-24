@@ -62,12 +62,6 @@ namespace OneClickZip
             this.panel5 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
-            this.listViewSearchDirExp = new OneClickZip.Includes.Classes.Extensions.ListviewExtended();
-            this.columnExpFileName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnExpDateModified = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnExpSize = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnExpDateCreated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnExpType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel7 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.splitContainerZipDesigner = new System.Windows.Forms.SplitContainer();
@@ -91,12 +85,6 @@ namespace OneClickZip
             this.toolStripButtonRename = new System.Windows.Forms.ToolStripButton();
             this.label1 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.listViewZipDesignFiles = new OneClickZip.Includes.Classes.Extensions.ListviewExtended();
-            this.columnZipMdlFileName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnZipMdlDateModified = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnZipMdlSize = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnZipMdlDateCreated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnZipMdlType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStripZipDesignerListView = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemOpenFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemModifyFolderFilterRule = new System.Windows.Forms.ToolStripMenuItem();
@@ -128,6 +116,18 @@ namespace OneClickZip
             this.toolStripButtonGenOneClick = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonRunZip = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.listViewSearchDirExp = new OneClickZip.Includes.Classes.Extensions.ListviewExtended();
+            this.columnExpFileName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnExpDateModified = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnExpSize = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnExpDateCreated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnExpType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.listViewZipDesignFiles = new OneClickZip.Includes.Classes.Extensions.ListviewExtended();
+            this.columnZipMdlFileName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnZipMdlDateModified = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnZipMdlSize = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnZipMdlDateCreated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnZipMdlType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerFormMain)).BeginInit();
             this.splitContainerFormMain.Panel1.SuspendLayout();
             this.splitContainerFormMain.Panel2.SuspendLayout();
@@ -198,10 +198,9 @@ namespace OneClickZip
             // 
             this.btnRunZip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRunZip.Image = ((System.Drawing.Image)(resources.GetObject("btnRunZip.Image")));
-            this.btnRunZip.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRunZip.Location = new System.Drawing.Point(229, 11);
+            this.btnRunZip.Location = new System.Drawing.Point(209, 11);
             this.btnRunZip.Name = "btnRunZip";
-            this.btnRunZip.Size = new System.Drawing.Size(113, 45);
+            this.btnRunZip.Size = new System.Drawing.Size(133, 45);
             this.btnRunZip.TabIndex = 5;
             this.btnRunZip.Text = "Run Zip";
             this.btnRunZip.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -422,13 +421,13 @@ namespace OneClickZip
             // 
             this.btnCreateFileName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCreateFileName.Image = global::OneClickZip.Properties.Resources.design_20;
-            this.btnCreateFileName.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCreateFileName.Location = new System.Drawing.Point(117, 66);
             this.btnCreateFileName.Margin = new System.Windows.Forms.Padding(4);
             this.btnCreateFileName.Name = "btnCreateFileName";
             this.btnCreateFileName.Size = new System.Drawing.Size(222, 28);
             this.btnCreateFileName.TabIndex = 4;
             this.btnCreateFileName.Text = "Design your Zip Name";
+            this.btnCreateFileName.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCreateFileName.UseVisualStyleBackColor = true;
             this.btnCreateFileName.Click += new System.EventHandler(this.btnCreateFileName_Click);
             // 
@@ -547,57 +546,6 @@ namespace OneClickZip
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(592, 159);
             this.panel8.TabIndex = 2;
-            // 
-            // listViewSearchDirExp
-            // 
-            this.listViewSearchDirExp.AllowDrop = true;
-            this.listViewSearchDirExp.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnExpFileName,
-            this.columnExpDateModified,
-            this.columnExpSize,
-            this.columnExpDateCreated,
-            this.columnExpType});
-            this.listViewSearchDirExp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listViewSearchDirExp.FullRowSelect = true;
-            this.listViewSearchDirExp.GridLines = true;
-            this.listViewSearchDirExp.HideSelection = false;
-            this.listViewSearchDirExp.Location = new System.Drawing.Point(0, 0);
-            this.listViewSearchDirExp.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.listViewSearchDirExp.Name = "listViewSearchDirExp";
-            this.listViewSearchDirExp.ReferenceTreeNode = null;
-            this.listViewSearchDirExp.Size = new System.Drawing.Size(592, 159);
-            this.listViewSearchDirExp.TabIndex = 1;
-            this.listViewSearchDirExp.UseCompatibleStateImageBehavior = false;
-            this.listViewSearchDirExp.View = System.Windows.Forms.View.Details;
-            this.listViewSearchDirExp.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.listViewSearchDirExp_ColumnClickHandler);
-            this.listViewSearchDirExp.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.listViewSearchDirExp_ItemDragHandler);
-            this.listViewSearchDirExp.VisibleChanged += new System.EventHandler(this.ListViewSearchDirExp_VisibleChanged);
-            this.listViewSearchDirExp.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listViewSearchDirExp_KeyDown);
-            // 
-            // columnExpFileName
-            // 
-            this.columnExpFileName.Text = "File Name";
-            this.columnExpFileName.Width = 194;
-            // 
-            // columnExpDateModified
-            // 
-            this.columnExpDateModified.Text = "Date Modified";
-            this.columnExpDateModified.Width = 86;
-            // 
-            // columnExpSize
-            // 
-            this.columnExpSize.Text = "Size";
-            this.columnExpSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // columnExpDateCreated
-            // 
-            this.columnExpDateCreated.Text = "Date Created";
-            this.columnExpDateCreated.Width = 115;
-            // 
-            // columnExpType
-            // 
-            this.columnExpType.Text = "Type";
-            this.columnExpType.Width = 120;
             // 
             // panel7
             // 
@@ -835,58 +783,6 @@ namespace OneClickZip
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(592, 268);
             this.panel3.TabIndex = 2;
-            // 
-            // listViewZipDesignFiles
-            // 
-            this.listViewZipDesignFiles.AllowDrop = true;
-            this.listViewZipDesignFiles.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnZipMdlFileName,
-            this.columnZipMdlDateModified,
-            this.columnZipMdlSize,
-            this.columnZipMdlDateCreated,
-            this.columnZipMdlType});
-            this.listViewZipDesignFiles.ContextMenuStrip = this.contextMenuStripZipDesignerListView;
-            this.listViewZipDesignFiles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listViewZipDesignFiles.FullRowSelect = true;
-            this.listViewZipDesignFiles.GridLines = true;
-            this.listViewZipDesignFiles.HideSelection = false;
-            this.listViewZipDesignFiles.Location = new System.Drawing.Point(0, 0);
-            this.listViewZipDesignFiles.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.listViewZipDesignFiles.Name = "listViewZipDesignFiles";
-            this.listViewZipDesignFiles.ReferenceTreeNode = null;
-            this.listViewZipDesignFiles.Size = new System.Drawing.Size(592, 268);
-            this.listViewZipDesignFiles.TabIndex = 1;
-            this.listViewZipDesignFiles.UseCompatibleStateImageBehavior = false;
-            this.listViewZipDesignFiles.View = System.Windows.Forms.View.Details;
-            this.listViewZipDesignFiles.AfterLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this.listViewZipDesignFiles_AfterLabelEdit);
-            this.listViewZipDesignFiles.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.listViewZipDesignFiles_ColumnClickHandler);
-            this.listViewZipDesignFiles.VisibleChanged += new System.EventHandler(this.listViewZipDesignFiles_VisibleChanged);
-            this.listViewZipDesignFiles.DragDrop += new System.Windows.Forms.DragEventHandler(this.ListViewZipDesignFiles_DragDropHandler);
-            this.listViewZipDesignFiles.DragEnter += new System.Windows.Forms.DragEventHandler(this.ListViewZipDesignFiles_DragEnter);
-            this.listViewZipDesignFiles.DoubleClick += new System.EventHandler(this.listViewZipDesignFiles_DoubleClick);
-            this.listViewZipDesignFiles.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listViewZipDesignFiles_KeyDown);
-            // 
-            // columnZipMdlFileName
-            // 
-            this.columnZipMdlFileName.Text = "File Name";
-            this.columnZipMdlFileName.Width = 122;
-            // 
-            // columnZipMdlDateModified
-            // 
-            this.columnZipMdlDateModified.Text = "Date Modified";
-            // 
-            // columnZipMdlSize
-            // 
-            this.columnZipMdlSize.Text = "Size";
-            this.columnZipMdlSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // columnZipMdlDateCreated
-            // 
-            this.columnZipMdlDateCreated.Text = "Date Created";
-            // 
-            // columnZipMdlType
-            // 
-            this.columnZipMdlType.Text = "Type";
             // 
             // contextMenuStripZipDesignerListView
             // 
@@ -1176,6 +1072,109 @@ namespace OneClickZip
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 57);
+            // 
+            // listViewSearchDirExp
+            // 
+            this.listViewSearchDirExp.AllowDrop = true;
+            this.listViewSearchDirExp.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnExpFileName,
+            this.columnExpDateModified,
+            this.columnExpSize,
+            this.columnExpDateCreated,
+            this.columnExpType});
+            this.listViewSearchDirExp.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listViewSearchDirExp.FullRowSelect = true;
+            this.listViewSearchDirExp.GridLines = true;
+            this.listViewSearchDirExp.HideSelection = false;
+            this.listViewSearchDirExp.Location = new System.Drawing.Point(0, 0);
+            this.listViewSearchDirExp.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.listViewSearchDirExp.Name = "listViewSearchDirExp";
+            this.listViewSearchDirExp.ReferenceTreeNode = null;
+            this.listViewSearchDirExp.Size = new System.Drawing.Size(592, 159);
+            this.listViewSearchDirExp.TabIndex = 1;
+            this.listViewSearchDirExp.UseCompatibleStateImageBehavior = false;
+            this.listViewSearchDirExp.View = System.Windows.Forms.View.Details;
+            this.listViewSearchDirExp.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.listViewSearchDirExp_ColumnClickHandler);
+            this.listViewSearchDirExp.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.listViewSearchDirExp_ItemDragHandler);
+            this.listViewSearchDirExp.VisibleChanged += new System.EventHandler(this.ListViewSearchDirExp_VisibleChanged);
+            this.listViewSearchDirExp.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listViewSearchDirExp_KeyDown);
+            // 
+            // columnExpFileName
+            // 
+            this.columnExpFileName.Text = "File Name";
+            this.columnExpFileName.Width = 194;
+            // 
+            // columnExpDateModified
+            // 
+            this.columnExpDateModified.Text = "Date Modified";
+            this.columnExpDateModified.Width = 86;
+            // 
+            // columnExpSize
+            // 
+            this.columnExpSize.Text = "Size";
+            this.columnExpSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // columnExpDateCreated
+            // 
+            this.columnExpDateCreated.Text = "Date Created";
+            this.columnExpDateCreated.Width = 115;
+            // 
+            // columnExpType
+            // 
+            this.columnExpType.Text = "Type";
+            this.columnExpType.Width = 120;
+            // 
+            // listViewZipDesignFiles
+            // 
+            this.listViewZipDesignFiles.AllowDrop = true;
+            this.listViewZipDesignFiles.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnZipMdlFileName,
+            this.columnZipMdlDateModified,
+            this.columnZipMdlSize,
+            this.columnZipMdlDateCreated,
+            this.columnZipMdlType});
+            this.listViewZipDesignFiles.ContextMenuStrip = this.contextMenuStripZipDesignerListView;
+            this.listViewZipDesignFiles.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listViewZipDesignFiles.FullRowSelect = true;
+            this.listViewZipDesignFiles.GridLines = true;
+            this.listViewZipDesignFiles.HideSelection = false;
+            this.listViewZipDesignFiles.Location = new System.Drawing.Point(0, 0);
+            this.listViewZipDesignFiles.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.listViewZipDesignFiles.Name = "listViewZipDesignFiles";
+            this.listViewZipDesignFiles.ReferenceTreeNode = null;
+            this.listViewZipDesignFiles.Size = new System.Drawing.Size(592, 268);
+            this.listViewZipDesignFiles.TabIndex = 1;
+            this.listViewZipDesignFiles.UseCompatibleStateImageBehavior = false;
+            this.listViewZipDesignFiles.View = System.Windows.Forms.View.Details;
+            this.listViewZipDesignFiles.AfterLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this.listViewZipDesignFiles_AfterLabelEdit);
+            this.listViewZipDesignFiles.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.listViewZipDesignFiles_ColumnClickHandler);
+            this.listViewZipDesignFiles.VisibleChanged += new System.EventHandler(this.listViewZipDesignFiles_VisibleChanged);
+            this.listViewZipDesignFiles.DragDrop += new System.Windows.Forms.DragEventHandler(this.ListViewZipDesignFiles_DragDropHandler);
+            this.listViewZipDesignFiles.DragEnter += new System.Windows.Forms.DragEventHandler(this.ListViewZipDesignFiles_DragEnter);
+            this.listViewZipDesignFiles.DoubleClick += new System.EventHandler(this.listViewZipDesignFiles_DoubleClick);
+            this.listViewZipDesignFiles.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listViewZipDesignFiles_KeyDown);
+            // 
+            // columnZipMdlFileName
+            // 
+            this.columnZipMdlFileName.Text = "File Name";
+            this.columnZipMdlFileName.Width = 122;
+            // 
+            // columnZipMdlDateModified
+            // 
+            this.columnZipMdlDateModified.Text = "Date Modified";
+            // 
+            // columnZipMdlSize
+            // 
+            this.columnZipMdlSize.Text = "Size";
+            this.columnZipMdlSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // columnZipMdlDateCreated
+            // 
+            this.columnZipMdlDateCreated.Text = "Date Created";
+            // 
+            // columnZipMdlType
+            // 
+            this.columnZipMdlType.Text = "Type";
             // 
             // ZipDesigner
             // 
