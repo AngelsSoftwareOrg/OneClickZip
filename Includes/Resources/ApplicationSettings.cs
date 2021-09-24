@@ -34,7 +34,7 @@ namespace OneClickZip.Includes.Resources
                 Properties.Settings.Default["LAST_OPENED_DIRECTORY"] = (string)value;
             }
         }
-        public static String ApplicationVersion
+        public static String ApplicationVersionDisplay
         {
             get
             {
@@ -54,6 +54,17 @@ namespace OneClickZip.Includes.Resources
                             Properties.Settings.Default.app_version_minor,
                             Properties.Settings.Default.app_version_patch,
                             Properties.Settings.Default.app_version_revision).Split(Char.Parse("."));
+            }
+        }
+        public static String ApplicationVersion
+        {
+            get
+            {
+                return String.Format("{0}.{1}.{2}.{3}",
+                            Properties.Settings.Default.app_version_major,
+                            Properties.Settings.Default.app_version_minor,
+                            Properties.Settings.Default.app_version_patch,
+                            Properties.Settings.Default.app_version_revision);
             }
         }
         public static String ApplicationWebsiteLink

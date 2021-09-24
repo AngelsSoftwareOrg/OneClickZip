@@ -13,6 +13,7 @@ using OneClickZip.Includes.Utilities;
 using OneClickZip.Includes.Models.Types;
 using OneClickZip.Includes.Classes.Sorters;
 using OneClickZip.Forms.Loading;
+using AngelsRepositoryLib;
 
 namespace OneClickZip
 {
@@ -26,7 +27,6 @@ namespace OneClickZip
         private bool isTreeViewCollapseToggle = true;
         private TreeNodeInterpreter treeNodeInterpreter = new TreeNodeInterpreter();
         private ListViewInterpretor listViewInterpretor = new ListViewInterpretor();
-        private UpdatesFrm updatesFrm = new UpdatesFrm();
         private TargetLocationsFrm targetLocationFrm = null;
         public ZipDesigner()
         {
@@ -648,7 +648,7 @@ namespace OneClickZip
                 this.OpenProjectDesignerFile(APPLICATION_ARGUMENT_MODEL.FilePath);
             }
             treeViewZipDesigner.TreeViewNodeSorter = this.treeNodeSorters;
-            this.Text = String.Format(@"Zip File Designer ( {0} )", ApplicationSettings.ApplicationVersion);
+            this.Text = String.Format(@"Zip File Designer ( {0} )", ApplicationSettings.ApplicationVersionDisplay);
 
             //If file association is not yet configured
             if (!FileAssociation.IsApplicationProgramAlreadyAssociatedWith()) FileExtensionAssociation();
@@ -863,7 +863,15 @@ namespace OneClickZip
 
         private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            updatesFrm.ShowDialog();
+            try
+            {
+                UpdatesFrm updateFrm = new UpdatesFrm(ApplicationSettings.ApplicationName, ApplicationSettings.ApplicationVersion);
+                updateFrm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         #endregion

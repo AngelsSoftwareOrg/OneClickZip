@@ -24,8 +24,9 @@ namespace OneClickZip.Forms.Options
         private FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
         private GenerateSerializableTreeNode generateSerializableTreeNode = new GenerateSerializableTreeNode();
         private bool isFormAlreadyLoaded = false;
-        private readonly long PREVIEW_LIMIT = long.Parse(ResourcesUtil.GetSerializedTreeNodeGenerationPreviewLimit());
-
+        private long PREVIEW_LIMIT = long.Parse(ResourcesUtil.GetSerializedTreeNodeGenerationPreviewLimit());
+        private int TXT_LOG_HIT_SHOW_VALUE = 100;
+        private int TXT_LOG_HIT_CTR_VALUE = 0;
         public FilterRuleFrm(FolderFilterRule originalFolderFilterRule=null)
         {
             InitializeComponent();
@@ -126,7 +127,10 @@ namespace OneClickZip.Forms.Options
         }
         private void SetLabelProcessingText(String actionLabel, String description)
         {
-            txtBoxProcessLog.Text = String.Format("{0} => {1}", actionLabel, description);
+            if(TXT_LOG_HIT_CTR_VALUE++%TXT_LOG_HIT_SHOW_VALUE == 0)
+            {
+                txtBoxProcessLog.Text = String.Format("{0} => {1}", actionLabel, description);
+            }
         }
         private void SetDescriptionForPreviewLimit()
         {
@@ -274,6 +278,7 @@ namespace OneClickZip.Forms.Options
         }
         private void btnStartPreview_Click(object sender, EventArgs e)
         {
+            TXT_LOG_HIT_CTR_VALUE = 0;
             OnGenerationProcessing_ButtonsHandlings(true);
             listViewLogs.Items.Clear();
             listViewLogs.BeginUpdate();

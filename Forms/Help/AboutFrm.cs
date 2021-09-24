@@ -25,7 +25,7 @@ namespace OneClickZip.Forms.Help
             txtBoxEmail.Text = Properties.Settings.Default.about_email;
             txtBoxWebsiteTitle.Text = Properties.Settings.Default.about_website_title;
             txtBoxWebSiteLink.Text = ApplicationSettings.ApplicationWebsiteLink;
-            txtBoxVersion.Text = ApplicationSettings.ApplicationVersion;
+            txtBoxVersion.Text = ApplicationSettings.ApplicationVersionDisplay;
         }
 
         private void btnExit_Click(object sender, EventArgs e)

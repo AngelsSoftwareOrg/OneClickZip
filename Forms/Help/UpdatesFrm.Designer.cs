@@ -42,13 +42,12 @@
             // 
             this.btnCheckForUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCheckForUpdate.Image = global::OneClickZip.Properties.Resources.Available_Updates_32px;
-            this.btnCheckForUpdate.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnCheckForUpdate.Location = new System.Drawing.Point(313, 17);
+            this.btnCheckForUpdate.Location = new System.Drawing.Point(378, 29);
             this.btnCheckForUpdate.Name = "btnCheckForUpdate";
-            this.btnCheckForUpdate.Size = new System.Drawing.Size(179, 71);
+            this.btnCheckForUpdate.Size = new System.Drawing.Size(179, 59);
             this.btnCheckForUpdate.TabIndex = 0;
             this.btnCheckForUpdate.Text = "Check for Update";
-            this.btnCheckForUpdate.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnCheckForUpdate.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCheckForUpdate.UseVisualStyleBackColor = true;
             this.btnCheckForUpdate.Click += new System.EventHandler(this.btnCheckForUpdate_Click);
             // 
@@ -58,7 +57,7 @@
             this.panelRelease.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelRelease.Location = new System.Drawing.Point(0, 0);
             this.panelRelease.Name = "panelRelease";
-            this.panelRelease.Size = new System.Drawing.Size(678, 267);
+            this.panelRelease.Size = new System.Drawing.Size(678, 268);
             this.panelRelease.TabIndex = 1;
             // 
             // richTxtBoxMessage
@@ -68,7 +67,7 @@
             this.richTxtBoxMessage.Location = new System.Drawing.Point(0, 0);
             this.richTxtBoxMessage.Name = "richTxtBoxMessage";
             this.richTxtBoxMessage.ReadOnly = true;
-            this.richTxtBoxMessage.Size = new System.Drawing.Size(678, 267);
+            this.richTxtBoxMessage.Size = new System.Drawing.Size(678, 268);
             this.richTxtBoxMessage.TabIndex = 0;
             this.richTxtBoxMessage.Text = "";
             // 
@@ -77,7 +76,7 @@
             this.panelButtons.Controls.Add(this.btnExit);
             this.panelButtons.Controls.Add(this.btnCheckForUpdate);
             this.panelButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelButtons.Location = new System.Drawing.Point(0, 267);
+            this.panelButtons.Location = new System.Drawing.Point(0, 268);
             this.panelButtons.Name = "panelButtons";
             this.panelButtons.Size = new System.Drawing.Size(678, 100);
             this.panelButtons.TabIndex = 3;
@@ -87,13 +86,12 @@
             this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnExit.Image = global::OneClickZip.Properties.Resources.Exit_32;
-            this.btnExit.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnExit.Location = new System.Drawing.Point(498, 17);
+            this.btnExit.Location = new System.Drawing.Point(563, 29);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(168, 71);
+            this.btnExit.Size = new System.Drawing.Size(103, 59);
             this.btnExit.TabIndex = 1;
             this.btnExit.Text = "Exit";
-            this.btnExit.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnExit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
@@ -102,7 +100,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnExit;
-            this.ClientSize = new System.Drawing.Size(678, 367);
+            this.ClientSize = new System.Drawing.Size(678, 368);
             this.Controls.Add(this.panelRelease);
             this.Controls.Add(this.panelButtons);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
