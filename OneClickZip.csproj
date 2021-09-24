@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>OneClickZip</RootNamespace>
     <AssemblyName>OneClickZip</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -142,12 +142,6 @@
     <Compile Include="Forms\Help\AboutFrm.Designer.cs">
       <DependentUpon>AboutFrm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Help\UpdatesFrm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Help\UpdatesFrm.Designer.cs">
-      <DependentUpon>UpdatesFrm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\Loading\CrawlerProgressScreenFrm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -269,9 +263,6 @@
     <EmbeddedResource Include="Forms\Help\AboutFrm.resx">
       <DependentUpon>AboutFrm.cs</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Help\UpdatesFrm.resx">
-      <DependentUpon>UpdatesFrm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Loading\CrawlerProgressScreenFrm.resx">
       <DependentUpon>CrawlerProgressScreenFrm.cs</DependentUpon>
@@ -453,6 +444,11 @@
     <None Include="Resources\folder_rule_32px.png" />
     <Content Include="Resources\Icons\folder Plus 512px.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\AngelsRepositoryLib\AngelsRepositoryLib.csproj">
+      <Project>{2bdf0f2d-b753-49e4-836c-fbf071c0c066}</Project>
+      <Name>AngelsRepositoryLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

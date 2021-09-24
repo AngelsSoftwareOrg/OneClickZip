@@ -9,10 +9,10 @@
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="app_version_patch" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">8</Value>
+      <Value Profile="(Default)">9</Value>
     </Setting>
     <Setting Name="app_version_revision" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">r1</Value>
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="about_title" Type="System.String" Scope="Application">
       <Value Profile="(Default)">One Click Zip 2020</Value>

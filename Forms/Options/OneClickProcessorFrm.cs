@@ -32,7 +32,7 @@ namespace OneClickZip.Forms.Options
         }
         private void OneClickProcessor_Load(object sender, EventArgs e)
         {
-            this.Text = String.Format(@"One Click Zip Creator ( {0} )", ApplicationSettings.ApplicationVersion);
+            this.Text = String.Format(@"One Click Zip Creator ( {0} )", ApplicationSettings.ApplicationVersionDisplay);
             lblElapsedTime.Text = "00:00:00";
             lblFilesAdded.Text = "0% > 0";
             lblFoldersCreated.Text = "0% > 0";
