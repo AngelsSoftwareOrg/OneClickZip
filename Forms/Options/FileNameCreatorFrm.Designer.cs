@@ -140,26 +140,25 @@
             // btnSaveExit
             // 
             this.btnSaveExit.Image = global::OneClickZip.Properties.Resources.Exit_20;
-            this.btnSaveExit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSaveExit.Location = new System.Drawing.Point(812, 180);
+            this.btnSaveExit.Location = new System.Drawing.Point(775, 180);
             this.btnSaveExit.Margin = new System.Windows.Forms.Padding(4);
             this.btnSaveExit.Name = "btnSaveExit";
-            this.btnSaveExit.Size = new System.Drawing.Size(145, 35);
+            this.btnSaveExit.Size = new System.Drawing.Size(182, 35);
             this.btnSaveExit.TabIndex = 6;
             this.btnSaveExit.Text = "Save and Exit";
-            this.btnSaveExit.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSaveExit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSaveExit.UseVisualStyleBackColor = true;
             this.btnSaveExit.Click += new System.EventHandler(this.btnSaveExit_Click);
             // 
             // btnSimulateFormula
             // 
             this.btnSimulateFormula.Image = global::OneClickZip.Properties.Resources.no_connection_20;
-            this.btnSimulateFormula.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSimulateFormula.Location = new System.Drawing.Point(457, 180);
             this.btnSimulateFormula.Name = "btnSimulateFormula";
-            this.btnSimulateFormula.Size = new System.Drawing.Size(348, 36);
+            this.btnSimulateFormula.Size = new System.Drawing.Size(311, 36);
             this.btnSimulateFormula.TabIndex = 14;
             this.btnSimulateFormula.Text = "Simulate now your file name formula";
+            this.btnSimulateFormula.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSimulateFormula.UseVisualStyleBackColor = true;
             this.btnSimulateFormula.Click += new System.EventHandler(this.BtnSimulateFormula_Click);
             // 
@@ -228,12 +227,12 @@
             // btnClearFilename
             // 
             this.btnClearFilename.Image = global::OneClickZip.Properties.Resources.broom_20;
-            this.btnClearFilename.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnClearFilename.Location = new System.Drawing.Point(4, 173);
             this.btnClearFilename.Name = "btnClearFilename";
             this.btnClearFilename.Size = new System.Drawing.Size(259, 36);
             this.btnClearFilename.TabIndex = 17;
             this.btnClearFilename.Text = "Clear File Name";
+            this.btnClearFilename.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnClearFilename.UseVisualStyleBackColor = true;
             this.btnClearFilename.Click += new System.EventHandler(this.btnClearFilename_Click);
             // 

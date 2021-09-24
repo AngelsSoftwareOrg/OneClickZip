@@ -90,12 +90,12 @@
             this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnExit.Image = global::OneClickZip.Properties.Resources.Exit_48;
-            this.btnExit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnExit.Location = new System.Drawing.Point(557, 6);
+            this.btnExit.Location = new System.Drawing.Point(637, 7);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(200, 56);
+            this.btnExit.Size = new System.Drawing.Size(120, 56);
             this.btnExit.TabIndex = 1;
             this.btnExit.Text = "Exit";
+            this.btnExit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
@@ -103,13 +103,12 @@
             // 
             this.btnAssociateNow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAssociateNow.Image = global::OneClickZip.Properties.Resources.Download_Progress_48;
-            this.btnAssociateNow.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAssociateNow.Location = new System.Drawing.Point(181, 6);
+            this.btnAssociateNow.Location = new System.Drawing.Point(261, 7);
             this.btnAssociateNow.Name = "btnAssociateNow";
             this.btnAssociateNow.Size = new System.Drawing.Size(370, 56);
             this.btnAssociateNow.TabIndex = 0;
             this.btnAssociateNow.Text = "Associate these extensions now on the system";
-            this.btnAssociateNow.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnAssociateNow.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAssociateNow.UseVisualStyleBackColor = true;
             this.btnAssociateNow.Click += new System.EventHandler(this.btnAssociateNow_Click);
             // 
