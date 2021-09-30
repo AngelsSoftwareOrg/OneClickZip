@@ -4,7 +4,7 @@
 #define MyAppName "One Click Zip"
 #define MyAppNameForRegistry "One_Click_Zip_Designer"
 #define MyAppNameForRegistryBatch "One_Click_Zip_Designer_Batch"
-#define MyAppVersion "1.0.9.0"
+#define MyAppVersion "1.0.10.0"
 #define MyAppPublisher "AngelsSoftwareOrg"
 #define MyAppURL "https://github.com/" + MyAppPublisher + "/"
 #define MyAppExeName "OneClickZip.exe"
@@ -24,7 +24,7 @@
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{C527D9E0-4448-4F17-93A9-177C0E26464F}
+AppId={{09C4FCCE-CBDC-4719-967B-E8B07ED2E71B}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 ;AppVerName={#MyAppName} {#MyAppVersion}

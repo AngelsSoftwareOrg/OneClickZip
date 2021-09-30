@@ -105,6 +105,7 @@ namespace OneClickZip.Includes.Classes
             {
                 if (streeNodeEx.IsFolderIsFilterRule)
                 {
+                    generateSerializableTreeNode.SerializableTreeNodeObj = new SerializableTreeNode();
                     generateSerializableTreeNode.FolderFilterRuleObj = (FolderFilterRule)streeNodeEx.FolderFilterRuleObj.Clone();
                     generateSerializableTreeNode.StartGeneration();
                     SerializableTreeViewOperation.SerializeTreeNodeShallowCopy(
