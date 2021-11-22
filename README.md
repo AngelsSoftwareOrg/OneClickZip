@@ -1,4 +1,5 @@
 
+
 # One Click Zip
 by: Ryan Seth Roldan
 
@@ -76,8 +77,13 @@ Here are some of the scenario's I think where it can be useful...
 As times goes by, people are creative enough to create new memes, and you don't have a good excuse not to love it, thus your collections increases, and the need to back those up will prompt you to do something about it, thus this tool was for you.
 ![Memes collections](https://i.imgur.com/Dr9QZfU.png)
 
+# Data Source
+### *GITHUB API for Application Updates
+When there's an available software updates, this application can determine thru connecting to GITHUB API for the latest release. It will parse the necessary data and compare with the application version to inform the user for the latest updates. 
 
-## Installation
+Connecting to API endpoint -> https://api.github.com/repos/xx/xx/releases/latest
+
+# Installation
 
 1. Download and extract the latest Installer released on the [One Click Zip Github Release site](https://github.com/AngelsCheeseBurgerOrg/OneClickZip/releases/)
 ![Release Site](https://i.imgur.com/4c3yKHj.png)
@@ -95,10 +101,8 @@ The installer setup is straight forward like any other installers out there.
 
 ![File Association on the File System](https://i.imgur.com/14sDavq.png)
 
-To associate the One Click Zip extension on the file System, open the program and 
-
-
-Click the File Association menu option. 
+## (Optional) File Association
+In case the file association didn't kick in during the installation (using the latest installer available), to associate the file extensions on the File System, open the program and click the File Association menu option. 
 
 
 ![File Association](https://i.imgur.com/1RfwDaB.png)
@@ -112,7 +116,7 @@ Click the File Association menu option.
 
 
 
-## File Association
+## File Extensions
 
 This icon represents the Zip File Designer format file. 
 
@@ -125,6 +129,7 @@ This icon represents the One Click Zip shortcut that can be executed anywhere to
 
 This is how it seen on the file System
 ![File Association seen on the File System](https://i.imgur.com/14sDavq.png)
+
 ## How to use the application - Documentation
 Please refer to the release documentation.
 This will serve you a simple guideline how to navigate the application and test your first One Click Zip designer and batch save file.
@@ -145,14 +150,11 @@ This will serve you a simple guideline how to navigate the application and test 
 - Mapped drive
 2. Add **Check for latest Updates** option
 3. Improve system caching of Zip File Designer, so that insane number of files will not let the tool choke up.
-
-## TODO's
-Here are the things I think in improving of this tool...
 1. Making copies to several targeted locations as mention on #1, will include the capability to place a prefix or suffix on the file name of your choice. It will help you to determine and categorize the file as intent.
 2. Add the selected folder as "Dynamic Filter Folder" which enable the user not to manually add a single folder and include all of its content dynamically.
 3. During installation, ensure the file association will set in...
 4. Improve the operation and process of saving the designer and one click batch
-5. imrpove the operation surrounding the "Dynamic Folder" when archiving when involving a super large result set that it will consume more memories.
+5. Improve the operation surrounding the "Dynamic Folder" when archiving when involving a super large result set that it will consume more memories.
 
 ## Technologies
 
